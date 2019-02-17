@@ -1,0 +1,29 @@
+spring:
+  cache:
+    ehcache:
+      config: classpath:config/ehcache.xml
+    type: ehcache
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot_template?useUnicode=true&characterEncoding=utf8
+    username: root
+  devtools:
+    restart:
+      enabled: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: sql/**/*Mapper.xml
+  type-aliases-package: com.jm.springboottemplategradle.**.
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 30m
+  tomcat:
+    uri-encoding: utf-8
