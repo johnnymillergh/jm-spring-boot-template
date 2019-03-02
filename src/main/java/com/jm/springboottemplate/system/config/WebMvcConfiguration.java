@@ -41,7 +41,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     }
 
     /**
-     * Register suffix pattern: *.do, *.action
+     * Register suffix pattern: *.do, *.action, .html etc.
      *
      * @param dispatcherServlet
      * @return
@@ -51,7 +51,15 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         ServletRegistrationBean<DispatcherServlet> servletServletRegistrationBean =
                 new ServletRegistrationBean<>(dispatcherServlet);
         servletServletRegistrationBean.addUrlMappings("*.do");
-        servletServletRegistrationBean.addUrlMappings("*.action");
+        servletServletRegistrationBean.addUrlMappings("*.html");
+        servletServletRegistrationBean.addUrlMappings("*.css");
+        servletServletRegistrationBean.addUrlMappings("*.js");
+        servletServletRegistrationBean.addUrlMappings("*.png");
+        servletServletRegistrationBean.addUrlMappings("*.gif");
+        servletServletRegistrationBean.addUrlMappings("*.ico");
+        servletServletRegistrationBean.addUrlMappings("*.jpeg");
+        servletServletRegistrationBean.addUrlMappings("*.jpeg");
+        servletServletRegistrationBean.addUrlMappings("*.png");
         return servletServletRegistrationBean;
     }
 }
