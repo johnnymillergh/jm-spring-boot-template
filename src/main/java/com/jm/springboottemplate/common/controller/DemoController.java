@@ -1,5 +1,6 @@
 package com.jm.springboottemplate.common.controller;
 
+import com.jm.springboottemplate.common.domain.Book;
 import com.jm.springboottemplate.common.domain.TestTable;
 import com.jm.springboottemplate.common.service.DemoService;
 import com.jm.springboottemplate.system.exception.BizException;
@@ -7,6 +8,9 @@ import com.jm.springboottemplate.system.response.ResponseBodyBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +34,10 @@ public class DemoController {
 
     @Autowired
     private DemoService demoService;
+    @Autowired
+    private RedisTemplate redisTemplate;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @ResponseBody
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
@@ -62,5 +70,23 @@ public class DemoController {
     @RequestMapping(value = "/bixExceptionTest", method = RequestMethod.GET)
     public void bizExceptionTest() {
         throw new BizException(new NullPointerException("I can't do that!"));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/redisTest", method = RequestMethod.GET)
+    public ResponseBodyBean redisTest() {
+        ValueOperations<String, String> operations1 = stringRedisTemplate.opsForValue();
+        String bookName = "Call Me by Your Name";
+        operations1.set("name", bookName);
+        logger.error("Save value into Redis: {}", bookName);
+        logger.error("Get value from Redis: {}", operations1.get("name"));
+        ValueOperations<String, Object> operations2 = redisTemplate.opsForValue();
+        Book book = new Book();
+        book.setId(1);
+        book.setName(bookName);
+        book.setAuthor("Andre Aciman");
+        operations2.set("book", book);
+        logger.error("Get value from Redis: {}", operations2.get("book"));
+        return ResponseBodyBean.responseSuccess(operations2.get("book"));
     }
 }
