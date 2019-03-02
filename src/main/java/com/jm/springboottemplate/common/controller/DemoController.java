@@ -1,6 +1,6 @@
 package com.jm.springboottemplate.common.controller;
 
-import com.jm.springboottemplate.common.service.TestService;
+import com.jm.springboottemplate.common.service.DemoService;
 import com.jm.springboottemplate.system.exception.BizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Description: CommonController, change description here.
+ * Description: DemoController, change description here.
  *
  * @author: Johnny Miller (鍾俊)
  * @email: johnnysviva@outlook.com
@@ -22,10 +22,10 @@ import java.util.Map;
  * @time: 16:16
  **/
 @Controller
-@RequestMapping("/commonController")
-public class CommonController {
+@RequestMapping("/demo")
+public class DemoController {
     @Autowired
-    private TestService testService;
+    private DemoService demoService;
 
     @ResponseBody
     @RequestMapping("/hello.do")
@@ -36,7 +36,7 @@ public class CommonController {
     @ResponseBody
     @RequestMapping("/getTestRecordById/{id}.do")
     public Object getTestRecordById(@PathVariable Integer id) {
-        return testService.getById(id);
+        return demoService.getById(id);
     }
 
     @ResponseBody

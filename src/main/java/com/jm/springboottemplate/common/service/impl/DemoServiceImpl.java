@@ -2,12 +2,12 @@ package com.jm.springboottemplate.common.service.impl;
 
 import com.jm.springboottemplate.common.dao.TestTableDao;
 import com.jm.springboottemplate.common.domain.TestTable;
-import com.jm.springboottemplate.common.service.TestService;
+import com.jm.springboottemplate.common.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Description: TestServiceImpl, change description here.
+ * Description: DemoServiceImpl, change description here.
  *
  * @author: Johnny Miller (鍾俊)
  * @email: johnnysviva@outlook.com
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @time: 16:45
  **/
 @Service
-public class TestServiceImpl implements TestService {
+public class DemoServiceImpl implements DemoService {
     @Autowired
     private TestTableDao testTableDao;
 
