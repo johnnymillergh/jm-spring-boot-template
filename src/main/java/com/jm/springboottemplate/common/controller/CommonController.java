@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Description: CommonController, change description here.
  *
@@ -21,15 +26,25 @@ public class CommonController {
     @Autowired
     private TestService testService;
 
-    @RequestMapping("/hello")
     @ResponseBody
+    @RequestMapping("/hello")
     public String hello() {
         return "Welcome!";
     }
 
-    @RequestMapping("/getTestRecordById/{id}")
     @ResponseBody
+    @RequestMapping("/getTestRecordById/{id}")
     public Object getTestRecordById(@PathVariable Integer id) {
         return testService.getById(id);
+    }
+
+    @ResponseBody
+    @RequestMapping("/jsonTest")
+    public Map jsonTest() {
+        Map<String, Object> map = new HashMap<>(10);
+        map.put("datetime", new Date());
+        map.put("timestamp", new Timestamp(System.currentTimeMillis()));
+        map.put("long", new Long("123456789987656123"));
+        return map;
     }
 }
