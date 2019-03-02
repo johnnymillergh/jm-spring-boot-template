@@ -19,7 +19,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: sql/**/*Mapper.xml
-  type-aliases-package: com.jm.springboottemplategradle.**.
+  type-aliases-package: com.jm.springboottemplate.**.
 server:
   port: 8080
   servlet:

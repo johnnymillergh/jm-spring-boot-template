@@ -3,4 +3,4 @@ spring:
     active: dev
 server:
   servlet:
-    context-path: "/springboottemplategradle"
+    context-path: "/springboottemplate"
