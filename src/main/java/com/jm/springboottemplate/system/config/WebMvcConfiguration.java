@@ -58,7 +58,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         servletServletRegistrationBean.addUrlMappings("*.gif");
         servletServletRegistrationBean.addUrlMappings("*.ico");
         servletServletRegistrationBean.addUrlMappings("*.jpeg");
-        servletServletRegistrationBean.addUrlMappings("*.jpeg");
+        servletServletRegistrationBean.addUrlMappings("*.jpg");
         servletServletRegistrationBean.addUrlMappings("*.png");
         return servletServletRegistrationBean;
     }
