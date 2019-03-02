@@ -32,9 +32,9 @@ public class ErrorController extends BasicErrorController {
 
     @Override
     public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
-        Map<String, Object> body = getErrorAttributes(request, isIncludeStackTrace(request, MediaType.ALL));
-        body.put("errorMessage", "Oops!");
         HttpStatus httpStatus = getStatus(request);
+        Map<String, Object> body = getErrorAttributes(request, isIncludeStackTrace(request, MediaType.ALL));
+        body.put("message", httpStatus.getReasonPhrase());
         return new ResponseEntity<>(body, httpStatus);
     }
 }
