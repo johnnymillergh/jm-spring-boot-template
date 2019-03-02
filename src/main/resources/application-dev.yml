@@ -1,8 +1,8 @@
 spring:
   cache:
-    ehcache:
-      config: classpath:config/ehcache.xml
-    type: ehcache
+    cache-names: c1,c2
+    redis:
+      time-to-live: 1800s
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: 123456
