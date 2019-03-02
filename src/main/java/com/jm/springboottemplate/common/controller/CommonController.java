@@ -1,6 +1,7 @@
 package com.jm.springboottemplate.common.controller;
 
 import com.jm.springboottemplate.common.service.TestService;
+import com.jm.springboottemplate.system.exception.BizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,5 +47,10 @@ public class CommonController {
         map.put("timestamp", new Timestamp(System.currentTimeMillis()));
         map.put("long", new Long("123456789987656123"));
         return map;
+    }
+
+    @RequestMapping("/bixExceptionTest.do")
+    public void bizExceptionTest() {
+        throw new BizException(new NullPointerException("I can't do that!"));
     }
 }
