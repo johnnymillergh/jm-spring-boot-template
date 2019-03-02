@@ -44,7 +44,7 @@ public class DemoController {
         TestTable testTable = demoService.getById(id);
         if (testTable == null) {
             return ResponseBodyBean.setResponse(null, "The data does not exist.",
-                    ResponseBodyBean.ResponseBodyBeanStatusEnum.NO_CONTENT.getCode());
+                    ResponseBodyBean.ResponseBodyBeanStatusEnum.WARNING.getCode());
         }
         return ResponseBodyBean.responseSuccess(testTable);
     }

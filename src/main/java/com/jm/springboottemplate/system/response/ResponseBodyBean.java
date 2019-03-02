@@ -110,9 +110,9 @@ public class ResponseBodyBean implements Serializable {
          */
         SUCCESS(200, "Success"),
         /**
-         * No content
+         * Waring or no content
          */
-        NO_CONTENT(204, "No content"),
+        WARNING(204, "Warning or no content"),
         /**
          * Failure
          */
