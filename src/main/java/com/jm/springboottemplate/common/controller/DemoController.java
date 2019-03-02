@@ -42,6 +42,10 @@ public class DemoController {
     @RequestMapping(value = "/getTestRecordById/{id}", method = RequestMethod.GET)
     public ResponseBodyBean getTestRecordById(@PathVariable Integer id) {
         TestTable testTable = demoService.getById(id);
+        if (testTable == null) {
+            return ResponseBodyBean.setResponse(null, "The data does not exist.",
+                    ResponseBodyBean.ResponseBodyBeanStatusEnum.NO_CONTENT.getCode());
+        }
         return ResponseBodyBean.responseSuccess(testTable);
     }
 

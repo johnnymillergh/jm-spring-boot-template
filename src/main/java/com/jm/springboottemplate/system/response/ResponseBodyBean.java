@@ -110,6 +110,10 @@ public class ResponseBodyBean implements Serializable {
          */
         SUCCESS(200, "Success"),
         /**
+         * No content
+         */
+        NO_CONTENT(204, "No content"),
+        /**
          * Failure
          */
         FAILURE(500, "Failure");
