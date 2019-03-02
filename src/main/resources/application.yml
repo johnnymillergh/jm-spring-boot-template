@@ -4,3 +4,6 @@ spring:
 server:
   servlet:
     context-path: "/springboottemplate"
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
