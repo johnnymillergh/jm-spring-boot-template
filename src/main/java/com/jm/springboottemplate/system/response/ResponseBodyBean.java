@@ -46,6 +46,13 @@ public class ResponseBodyBean implements Serializable {
         return responseBodyBean;
     }
 
+    public static ResponseBodyBean responseSuccess(String message) {
+        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
+        responseBodyBean.message = message;
+        responseBodyBean.status = ResponseBodyBeanStatusEnum.SUCCESS.getCode();
+        return responseBodyBean;
+    }
+
     public static ResponseBodyBean responseSuccess(Object data, String message) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.data = data;

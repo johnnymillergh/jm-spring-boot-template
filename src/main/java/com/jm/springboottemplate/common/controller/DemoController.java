@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,5 +90,15 @@ public class DemoController {
         operations2.set("book", book);
         logger.error("Get value from Redis: {}", operations2.get("book"));
         return ResponseBodyBean.responseSuccess(operations2.get("book"));
+    }
+
+    @ResponseBody
+    @PostMapping("/bookValidation")
+    public ResponseBodyBean bookValidation(@Validated Book book, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseBodyBean.setResponse(null, "Error count = " + bindingResult.getErrorCount(),
+                    ResponseBodyBean.ResponseBodyBeanStatusEnum.WARNING.getCode());
+        }
+        return ResponseBodyBean.responseSuccess("No error");
     }
 }

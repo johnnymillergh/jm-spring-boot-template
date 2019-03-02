@@ -1,5 +1,8 @@
 package com.jm.springboottemplate.common.domain;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -13,8 +16,13 @@ import java.io.Serializable;
 public class Book implements Serializable {
     private static final long serialVersionUID = -5317595529610149889L;
 
+    @DecimalMin(value = "1")
     private Integer id;
+    @NotEmpty
+    @Size(max = 100)
     private String name;
+    @NotEmpty
+    @Size(max = 50)
     private String author;
 
     public Integer getId() {
