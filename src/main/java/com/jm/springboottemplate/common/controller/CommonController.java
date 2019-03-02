@@ -27,19 +27,19 @@ public class CommonController {
     private TestService testService;
 
     @ResponseBody
-    @RequestMapping("/hello")
+    @RequestMapping("/hello.do")
     public String hello() {
         return "Welcome!";
     }
 
     @ResponseBody
-    @RequestMapping("/getTestRecordById/{id}")
+    @RequestMapping("/getTestRecordById/{id}.do")
     public Object getTestRecordById(@PathVariable Integer id) {
         return testService.getById(id);
     }
 
     @ResponseBody
-    @RequestMapping("/jsonTest")
+    @RequestMapping("/jsonTest.do")
     public Map jsonTest() {
         Map<String, Object> map = new HashMap<>(10);
         map.put("datetime", new Date());
