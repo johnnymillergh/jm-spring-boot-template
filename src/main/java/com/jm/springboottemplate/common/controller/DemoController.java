@@ -42,14 +42,14 @@ public class DemoController {
     private StringRedisTemplate stringRedisTemplate;
 
     @ResponseBody
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    @GetMapping("/hello")
     public ResponseBodyBean hello(HttpServletRequest request) {
         logger.debug(request.getServletPath());
         return ResponseBodyBean.responseSuccess("Hello world!", "Welcome to my website.");
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getTestRecordById/{id}", method = RequestMethod.GET)
+    @GetMapping("/getTestRecordById/{id}")
     public ResponseBodyBean getTestRecordById(@PathVariable Integer id) {
         TestTable testTable = demoService.getById(id);
         if (testTable == null) {
@@ -60,7 +60,7 @@ public class DemoController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/jsonTest", method = RequestMethod.GET)
+    @GetMapping("/jsonTest")
     public ResponseBodyBean jsonTest() {
         Map<String, Object> map = new HashMap<>(10);
         map.put("datetime", new Date());
@@ -69,13 +69,13 @@ public class DemoController {
         return ResponseBodyBean.responseSuccess(map);
     }
 
-    @RequestMapping(value = "/bixExceptionTest", method = RequestMethod.GET)
+    @GetMapping("/bixExceptionTest")
     public void bizExceptionTest() {
         throw new BizException(new NullPointerException("I can't do that!"));
     }
 
     @ResponseBody
-    @RequestMapping(value = "/redisTest", method = RequestMethod.GET)
+    @GetMapping("/redisTest")
     public ResponseBodyBean redisTest() {
         ValueOperations<String, String> operations1 = stringRedisTemplate.opsForValue();
         String bookName = "Call Me by Your Name";
