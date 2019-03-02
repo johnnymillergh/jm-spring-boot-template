@@ -7,10 +7,7 @@ import com.jm.springboottemplate.system.response.ResponseBodyBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -26,7 +23,7 @@ import java.util.Map;
  * @date: 2019-02-07
  * @time: 16:16
  **/
-@Controller
+@RestController
 @RequestMapping("/demo")
 public class DemoController {
     private static Logger logger = LoggerFactory.getLogger(DemoController.class);
@@ -35,21 +32,21 @@ public class DemoController {
     private DemoService demoService;
 
     @ResponseBody
-    @RequestMapping("/hello")
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public ResponseBodyBean hello(HttpServletRequest request) {
         logger.debug(request.getServletPath());
         return ResponseBodyBean.responseSuccess("Hello world!", "Welcome to my website.");
     }
 
     @ResponseBody
-    @RequestMapping("/getTestRecordById/{id}")
+    @RequestMapping(value = "/getTestRecordById/{id}", method = RequestMethod.GET)
     public ResponseBodyBean getTestRecordById(@PathVariable Integer id) {
         TestTable testTable = demoService.getById(id);
         return ResponseBodyBean.responseSuccess(testTable);
     }
 
     @ResponseBody
-    @RequestMapping("/jsonTest")
+    @RequestMapping(value = "/jsonTest", method = RequestMethod.GET)
     public ResponseBodyBean jsonTest() {
         Map<String, Object> map = new HashMap<>(10);
         map.put("datetime", new Date());
@@ -58,7 +55,7 @@ public class DemoController {
         return ResponseBodyBean.responseSuccess(map);
     }
 
-    @RequestMapping("/bixExceptionTest")
+    @RequestMapping(value = "/bixExceptionTest", method = RequestMethod.GET)
     public void bizExceptionTest() {
         throw new BizException(new NullPointerException("I can't do that!"));
     }
