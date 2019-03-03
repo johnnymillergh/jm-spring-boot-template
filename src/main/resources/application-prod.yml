@@ -5,10 +5,10 @@ spring:
     type: ehcache
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: 123456
+    password: H'Tkh9@!*_/B'_j
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://127.0.0.1:3306/spring_boot_template?useUnicode=true&characterEncoding=utf8
-    username: root
+    username: spring_boot_template_w
   devtools:
     restart:
       enabled: true
