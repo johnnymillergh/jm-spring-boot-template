@@ -52,4 +52,15 @@ public class ProjectPropertyUtils {
         assert model != null;
         return model.getArtifactId();
     }
+
+    /**
+     * Get the name of project
+     *
+     * @return Name of project
+     */
+    public static String getName() {
+        Model model = getModel();
+        assert model != null;
+        return model.getName();
+    }
 }

@@ -1,6 +1,9 @@
 package com.jm.springboottemplate;
 
+import com.jm.springboottemplate.common.util.ProjectPropertyUtils;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -19,9 +22,12 @@ import org.springframework.cache.annotation.EnableCaching;
 @MapperScan("com.jm.springboottemplate.*.mapper")
 @EnableCaching
 public class Application {
+    private static Logger logger = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        System.out.println("Congratulations! SpringBootTemplate Started!");
+        logger.error("Congratulations! [{}:{}] has started up successfully!", ProjectPropertyUtils.getName(),
+                ProjectPropertyUtils.getVersion());
     }
 }
 
