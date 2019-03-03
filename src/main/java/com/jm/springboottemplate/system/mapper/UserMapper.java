@@ -18,7 +18,19 @@ import java.util.List;
 @Mapper
 @Component
 public interface UserMapper {
+    /**
+     * Get user by username.
+     *
+     * @param username Username.
+     * @return User.
+     */
     User getUserByUsername(String username);
 
+    /**
+     * Get the roles that user has by userId.
+     *
+     * @param userId userId.
+     * @return List of role that user has.
+     */
     List<Role> getUserRolesByUserId(Integer userId);
 }

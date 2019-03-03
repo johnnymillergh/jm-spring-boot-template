@@ -15,5 +15,11 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface TestTableMapper {
+    /**
+     * Get test table data by ID.
+     *
+     * @param id Primary key of test_table.
+     * @return Test table data.
+     */
     TestTable getById(Integer id);
 }

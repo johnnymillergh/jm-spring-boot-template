@@ -17,5 +17,10 @@ import java.util.List;
 @Component
 @Mapper
 public interface MenuMapper {
+    /**
+     * Get all menus.
+     *
+     * @return List of menu.
+     */
     List<Menu> getAllMenus();
 }

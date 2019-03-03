@@ -20,7 +20,6 @@ public class DemoServiceImpl implements DemoService {
     private TestTableMapper testTableMapper;
 
     @Override
-
     public TestTable getById(Integer id) {
         return testTableMapper.getById(id);
     }

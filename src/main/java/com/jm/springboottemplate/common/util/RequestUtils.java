@@ -17,12 +17,12 @@ public class RequestUtils {
      * Get request user's IP and port information.
      * If the request is through reverse proxy, this method will not work out.
      *
-     * @param request
-     * @return
+     * @param request HTTP request.
+     * @return user's IP and port information.
      */
     public static String getRequestIpAndPort(HttpServletRequest request) {
         String ip = request.getHeader("X-Real-IP");
-        Integer port = request.getRemotePort();
+        int port = request.getRemotePort();
         if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
             return ip;
         }

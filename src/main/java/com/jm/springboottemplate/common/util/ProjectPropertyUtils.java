@@ -17,9 +17,9 @@ import java.io.IOException;
  **/
 public class ProjectPropertyUtils {
     /**
-     * Get model of project property
+     * Get model of project property.
      *
-     * @return
+     * @return model of project property.
      */
     private static Model getModel() {
         try {
@@ -32,9 +32,9 @@ public class ProjectPropertyUtils {
     }
 
     /**
-     * Get the version number of project
+     * Get the version number of project.
      *
-     * @return Version number
+     * @return Version number.
      */
     public static String getVersion() {
         Model model = getModel();
@@ -43,9 +43,9 @@ public class ProjectPropertyUtils {
     }
 
     /**
-     * Get the artifact id of project
+     * Get the artifact id of project.
      *
-     * @return Artifact id
+     * @return Artifact id.
      */
     public static String getArtifactId() {
         Model model = getModel();
@@ -54,9 +54,9 @@ public class ProjectPropertyUtils {
     }
 
     /**
-     * Get the name of project
+     * Get the name of project.
      *
-     * @return Name of project
+     * @return Name of project.
      */
     public static String getName() {
         Model model = getModel();
