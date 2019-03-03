@@ -1,7 +1,7 @@
 package com.jm.springboottemplate.common.service.impl;
 
-import com.jm.springboottemplate.common.dao.TestTableDao;
 import com.jm.springboottemplate.common.domain.TestTable;
+import com.jm.springboottemplate.common.mapper.TestTableMapper;
 import com.jm.springboottemplate.common.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class DemoServiceImpl implements DemoService {
     @Autowired
-    private TestTableDao testTableDao;
+    private TestTableMapper testTableMapper;
 
     @Override
 
     public TestTable getById(Integer id) {
-        return testTableDao.getById(id);
+        return testTableMapper.getById(id);
     }
 }

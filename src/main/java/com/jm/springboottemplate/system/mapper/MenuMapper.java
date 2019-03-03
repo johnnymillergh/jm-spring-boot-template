@@ -1,4 +1,4 @@
-package com.jm.springboottemplate.system.dao;
+package com.jm.springboottemplate.system.mapper;
 
 import com.jm.springboottemplate.system.domain.Menu;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,6 +16,6 @@ import java.util.List;
  **/
 @Component
 @Mapper
-public interface MenuDao {
+public interface MenuMapper {
     List<Menu> getAllMenus();
 }

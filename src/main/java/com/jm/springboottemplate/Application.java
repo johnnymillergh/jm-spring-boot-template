@@ -16,7 +16,7 @@ import org.springframework.cache.annotation.EnableCaching;
  **/
 @SpringBootApplication
 @ServletComponentScan
-@MapperScan("com.jm.springboottemplate.*.dao")
+@MapperScan("com.jm.springboottemplate.*.mapper")
 @EnableCaching
 public class Application {
     public static void main(String[] args) {

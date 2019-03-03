@@ -1,4 +1,4 @@
-package com.jm.springboottemplate.system.dao;
+package com.jm.springboottemplate.system.mapper;
 
 import com.jm.springboottemplate.system.domain.Role;
 import com.jm.springboottemplate.system.domain.User;
@@ -17,7 +17,7 @@ import java.util.List;
  **/
 @Mapper
 @Component
-public interface UserDao {
+public interface UserMapper {
     User getUserByUsername(String username);
 
     List<Role> getUserRolesByUserId(Integer userId);

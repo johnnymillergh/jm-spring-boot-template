@@ -1,8 +1,8 @@
 package com.jm.springboottemplate.system.config;
 
-import com.jm.springboottemplate.system.dao.MenuDao;
 import com.jm.springboottemplate.system.domain.Menu;
 import com.jm.springboottemplate.system.domain.Role;
+import com.jm.springboottemplate.system.mapper.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -26,13 +26,13 @@ import java.util.List;
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     AntPathMatcher antPathMatcher = new AntPathMatcher();
     @Autowired
-    MenuDao menuDao;
+    MenuMapper menuMapper;
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object)
             throws IllegalArgumentException {
         String requestUrl = ((FilterInvocation) object).getRequestUrl();
-        List<Menu> allMenus = menuDao.getAllMenus();
+        List<Menu> allMenus = menuMapper.getAllMenus();
         for (Menu menu : allMenus) {
             if (antPathMatcher.match(menu.getPattern(), requestUrl)) {
                 List<Role> roles = menu.getRoles();

@@ -1,7 +1,7 @@
 package com.jm.springboottemplate.system.service.impl;
 
-import com.jm.springboottemplate.system.dao.UserDao;
 import com.jm.springboottemplate.system.domain.User;
+import com.jm.springboottemplate.system.mapper.UserMapper;
 import com.jm.springboottemplate.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,15 +19,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.getUserByUsername(username);
+        User user = userMapper.getUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("This account doesn't exist!");
         }
-        user.setRoles(userDao.getUserRolesByUserId(user.getUserId()));
+        user.setRoles(userMapper.getUserRolesByUserId(user.getUserId()));
         return user;
     }
 }

@@ -2,8 +2,8 @@ package com.jm.springboottemplate.service;
 
 import com.jm.springboottemplate.common.domain.TestTable;
 import com.jm.springboottemplate.common.service.DemoService;
-import com.jm.springboottemplate.system.dao.UserDao;
 import com.jm.springboottemplate.system.domain.Role;
+import com.jm.springboottemplate.system.mapper.UserMapper;
 import com.jm.springboottemplate.system.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,7 +30,7 @@ public class DemoServiceTest {
     @Autowired
     private UserService userService;
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Test
     public void getByIdTest() {
@@ -41,7 +41,7 @@ public class DemoServiceTest {
 
     @Test
     public void getUserByUsernameTest() {
-        List<Role> roles = userDao.getUserRolesByUserId(1);
+        List<Role> roles = userMapper.getUserRolesByUserId(1);
         System.out.println(roles);
     }
 }

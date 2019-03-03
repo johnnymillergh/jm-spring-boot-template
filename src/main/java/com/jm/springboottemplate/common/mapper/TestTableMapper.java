@@ -1,4 +1,4 @@
-package com.jm.springboottemplate.common.dao;
+package com.jm.springboottemplate.common.mapper;
 
 import com.jm.springboottemplate.common.domain.TestTable;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Component;
  **/
 @Mapper
 @Component
-public interface TestTableDao {
+public interface TestTableMapper {
     TestTable getById(Integer id);
 }
