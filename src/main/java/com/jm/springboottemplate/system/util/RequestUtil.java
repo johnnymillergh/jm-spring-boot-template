@@ -1,18 +1,18 @@
-package com.jm.springboottemplate.common.util;
+package com.jm.springboottemplate.system.util;
 
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Description: RequestUtils, change description here.
+ * Description: RequestUtil, change description here.
  *
  * @author: Johnny Miller (鍾俊)
  * @email: johnnysviva@outlook.com
  * @date: 2019-03-02
  * @time: 20:00
  **/
-public class RequestUtils {
+public class RequestUtil {
     /**
      * Get request user's IP and port information.
      * If the request is through reverse proxy, this method will not work out.

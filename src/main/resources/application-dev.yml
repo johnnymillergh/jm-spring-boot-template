@@ -20,7 +20,7 @@ spring:
     host: localhost
     port: 6379
     password: 123456
-    jedis:
+    lettuce:
       pool:
         max-active: 8
         max-idle: 8
@@ -33,8 +33,24 @@ mybatis:
   type-aliases-package: com.jm.springboottemplate.**.
 server:
   port: 8080
-  servlet:
-    session:
-      timeout: 30m
   tomcat:
     uri-encoding: utf-8
+jwt:
+  config:
+    ttl: 1800000
+    ttl-for-remember-me: 604800000
+custom:
+  config:
+    ignores:
+      # POST Requests need to be ignored.
+      post:
+        - "/auth/register"
+        - "/auth/login"
+        - "/auth/logout"
+      # Request need to be ignored that matches pattern.
+      pattern:
+        - "/swagger-resources/**"
+        - "/v2/api-docs/**"
+        - "/webjars/**"
+        - "/swagger-ui.html"
+        - "/error"

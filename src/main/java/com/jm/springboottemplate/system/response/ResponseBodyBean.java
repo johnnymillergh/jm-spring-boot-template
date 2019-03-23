@@ -1,5 +1,10 @@
 package com.jm.springboottemplate.system.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jm.springboottemplate.system.constant.IUniversalStatus;
+import com.jm.springboottemplate.system.constant.UniversalStatus;
+import com.jm.springboottemplate.system.exception.base.BaseException;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,74 +18,103 @@ import java.util.Date;
  **/
 public class ResponseBodyBean implements Serializable {
     private static final long serialVersionUID = -6799356701376964494L;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date timestamp = new Date();
-    private Integer status = ResponseBodyBeanStatusEnum.SUCCESS.getCode();
+    /**
+     * Default status is SUCCESS[200]
+     */
+    private Integer status = UniversalStatus.SUCCESS.getCode();
     private String message;
     private Object data;
 
-    public ResponseBodyBean setResponse(Object data) {
+    public static ResponseBodyBean ofStatus(IUniversalStatus status) {
+        return setResponse(status.getCode(), status.getMessage(), null);
+    }
+
+    public static ResponseBodyBean ofStatus(IUniversalStatus status, Object data) {
+        return setResponse(status.getCode(), status.getMessage(), data);
+    }
+
+    public static ResponseBodyBean ofData(Object data) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.data = data;
         return responseBodyBean;
     }
 
-    public ResponseBodyBean setResponse(Object data, String message) {
+    public static ResponseBodyBean ofMessage(String message) {
+        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
+        responseBodyBean.message = message;
+        return responseBodyBean;
+    }
+
+    public static ResponseBodyBean ofDataAndMessage(Object data, String message) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.data = data;
         responseBodyBean.message = message;
         return responseBodyBean;
     }
 
-    public static ResponseBodyBean setResponse(Object data, String message, Integer status) {
+    public static ResponseBodyBean setResponse(Integer status, String message, Object data) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.data = data;
-        responseBodyBean.message = message;
         responseBodyBean.status = status;
+        responseBodyBean.message = message;
+        responseBodyBean.data = data;
         return responseBodyBean;
     }
 
-    public static ResponseBodyBean responseSuccess(Object data) {
+    public static ResponseBodyBean ofSuccess(Object data) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.data = data;
-        responseBodyBean.status = ResponseBodyBeanStatusEnum.SUCCESS.getCode();
+        responseBodyBean.status = UniversalStatus.SUCCESS.getCode();
         return responseBodyBean;
     }
 
-    public static ResponseBodyBean responseSuccess(String message) {
+    public static ResponseBodyBean ofSuccess(String message) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.message = message;
-        responseBodyBean.status = ResponseBodyBeanStatusEnum.SUCCESS.getCode();
+        responseBodyBean.status = UniversalStatus.SUCCESS.getCode();
         return responseBodyBean;
     }
 
-    public static ResponseBodyBean responseSuccess(Object data, String message) {
+    public static ResponseBodyBean ofSuccess(Object data, String message) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.data = data;
-        responseBodyBean.status = ResponseBodyBeanStatusEnum.SUCCESS.getCode();
+        responseBodyBean.status = UniversalStatus.SUCCESS.getCode();
         responseBodyBean.message = message;
         return responseBodyBean;
     }
 
-    public static ResponseBodyBean responseFailure(String message) {
+    public static ResponseBodyBean ofFailure(String message) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.message = message;
-        responseBodyBean.status = ResponseBodyBeanStatusEnum.FAILURE.getCode();
+        responseBodyBean.status = UniversalStatus.FAILURE.getCode();
         return responseBodyBean;
     }
 
-    public static ResponseBodyBean responseFailure(Object data) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.data = data;
-        responseBodyBean.status = ResponseBodyBeanStatusEnum.FAILURE.getCode();
-        return responseBodyBean;
-    }
-
-    public static ResponseBodyBean responseFailure(Object data, String message) {
+    public static ResponseBodyBean ofFailure(Object data) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.data = data;
-        responseBodyBean.status = ResponseBodyBeanStatusEnum.FAILURE.getCode();
+        responseBodyBean.status = UniversalStatus.FAILURE.getCode();
+        return responseBodyBean;
+    }
+
+    public static ResponseBodyBean ofFailure(Object data, String message) {
+        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
+        responseBodyBean.data = data;
+        responseBodyBean.status = UniversalStatus.FAILURE.getCode();
         responseBodyBean.message = message;
         return responseBodyBean;
+    }
+
+    /**
+     * Response an exception.
+     *
+     * @param t   exception
+     * @param <T> Sub class of {@link BaseException}
+     * @return Exception information
+     */
+    public static <T extends BaseException> ResponseBodyBean ofException(T t) {
+        return setResponse(t.getCode(), t.getMessage(), t.getData());
     }
 
     public Date getTimestamp() {
@@ -109,35 +143,5 @@ public class ResponseBodyBean implements Serializable {
 
     public void setData(Object data) {
         this.data = data;
-    }
-
-    public static enum ResponseBodyBeanStatusEnum {
-        /**
-         * Success
-         */
-        SUCCESS(200, "Success"),
-        /**
-         * Waring or no content
-         */
-        WARNING(204, "Warning or no content"),
-        /**
-         * Failure
-         */
-        FAILURE(500, "Failure");
-        private Integer code;
-        private String name;
-
-        ResponseBodyBeanStatusEnum(Integer code, String name) {
-            this.code = code;
-            this.name = name;
-        }
-
-        public Integer getCode() {
-            return code;
-        }
-
-        public String getName() {
-            return name;
-        }
     }
 }

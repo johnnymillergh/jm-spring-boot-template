@@ -1,36 +1,57 @@
 package com.jm.springboottemplate.system.mapper;
 
-import com.jm.springboottemplate.system.domain.Role;
-import com.jm.springboottemplate.system.domain.User;
+import com.jm.springboottemplate.system.domain.persistance.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
- * Description: UserDao, change description here.
+ * Description: UserMapper, change description here.
  *
  * @author: Johnny Miller (鍾俊)
  * @email: johnnysviva@outlook.com
- * @date: 2019-03-03
- * @time: 11:17
+ * @date: 2019-03-02
+ * @time: 17:32
  **/
 @Mapper
 @Component
 public interface UserMapper {
     /**
-     * Get user by username.
+     * Find by username, email or Phone.
      *
-     * @param username Username.
-     * @return User.
+     * @param username Username
+     * @param email    Email
+     * @param phone    phone
+     * @return User information.
      */
-    User getUserByUsername(String username);
+    Optional<User> findByUsernameOrEmailOrPhone(@Param("username") String username,
+                                                @Param("email") String email,
+                                                @Param("phone") String phone);
 
     /**
-     * Get the roles that user has by userId.
+     * 根据用户名列表查询用户列表
      *
-     * @param userId userId.
-     * @return List of role that user has.
+     * @param usernameList 用户名列表
+     * @return 用户列表
      */
-    List<Role> getUserRolesByUserId(Integer userId);
+    List<User> findByUsernameIn(List<String> usernameList);
+
+    /**
+     * Save user
+     *
+     * @param user A new user.
+     * @return Last inserted ID.
+     */
+    Long save(User user);
+
+    /**
+     * Register
+     *
+     * @param user User info
+     * @return Registered user ID
+     */
+    Long register(User user);
 }

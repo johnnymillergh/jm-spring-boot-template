@@ -1,8 +1,7 @@
 package com.jm.springboottemplate.system.config;
 
-import com.jm.springboottemplate.system.interceptor.RequestRecordingInterceptor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,6 +15,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  **/
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
+    private static final long MAX_AGE_SECS = 3600;
+
     /**
      * 1. Config static path pattern
      * 2. Config static resource location
@@ -29,7 +30,10 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new RequestRecordingInterceptor()).addPathPatterns("/**");
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
+                .maxAge(MAX_AGE_SECS);
     }
 }

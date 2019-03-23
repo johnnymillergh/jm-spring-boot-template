@@ -1,6 +1,6 @@
 package com.jm.springboottemplate.system.config;
 
-import com.jm.springboottemplate.common.util.ProjectPropertyUtils;
+import com.jm.springboottemplate.system.util.ProjectPropertyUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * Description: Swagger 2 Config.
  * API Documentation at
- * http://localhost:8080/springboottemplate/swagger-ui.html
+ * <a>http://localhost:8080/springboottemplate/swagger-ui.html<a/>
  *
  * @author: Johnny Miller (鍾俊)
  * @email: johnnysviva@outlook.com
@@ -40,8 +40,8 @@ public class Swagger2Configuration {
                 .title("API Documentation for SpringBootTemplate Project")
                 .contact(new Contact("Johnny Miller", "http://github.com/johnnymillergh",
                         "johnnysviva@outlook.com"))
-                .version(ProjectPropertyUtils.getVersion())
-                .description(ProjectPropertyUtils.getArtifactId())
+                .version(ProjectPropertyUtil.getVersion())
+                .description(ProjectPropertyUtil.getArtifactId())
                 .build();
     }
 }

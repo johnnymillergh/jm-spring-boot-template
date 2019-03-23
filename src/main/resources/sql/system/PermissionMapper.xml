@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jm.springboottemplate.system.mapper.PermissionMapper">
+    <select id="selectByRoleIdList" resultType="com.jm.springboottemplate.system.domain.persistance.Permission">
+        SELECT DISTINCT sec_permission.*
+        FROM sec_permission LEFT JOIN sec_role_permission ON sec_permission.id = sec_role_permission.permission_id
+        LEFT JOIN sec_role ON sec_role.id = sec_role_permission.role_id
+        WHERE sec_role.id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <![CDATA[
+        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.mapper.PermissionMapper,sqlid:selectByRoleIdList*/
+        ]]>
+    </select>
+</mapper>

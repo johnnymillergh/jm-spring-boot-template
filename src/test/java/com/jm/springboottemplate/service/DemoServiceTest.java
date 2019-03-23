@@ -2,17 +2,12 @@ package com.jm.springboottemplate.service;
 
 import com.jm.springboottemplate.common.domain.TestTable;
 import com.jm.springboottemplate.common.service.DemoService;
-import com.jm.springboottemplate.system.domain.Role;
-import com.jm.springboottemplate.system.mapper.UserMapper;
-import com.jm.springboottemplate.system.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 /**
  * Description: DemoServiceTest, change description here.
@@ -27,10 +22,6 @@ import java.util.List;
 public class DemoServiceTest {
     @Autowired
     private DemoService demoService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private UserMapper userMapper;
 
     @Test
     public void getByIdTest() {
@@ -41,7 +32,5 @@ public class DemoServiceTest {
 
     @Test
     public void getUserByUsernameTest() {
-        List<Role> roles = userMapper.getUserRolesByUserId(1);
-        System.out.println(roles);
     }
 }

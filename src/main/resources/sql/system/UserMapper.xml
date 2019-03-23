@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jm.springboottemplate.system.mapper.UserMapper">
-    <select id="getUserByUsername" resultType="com.jm.springboottemplate.system.domain.User">
+    <select id="getUserByUsername" resultType="com.jm.springboottemplate.system.domain.persistance.User">
         SELECT u.user_id AS userId,
                u.username,
                u.password,
@@ -14,15 +14,50 @@
         ]]>
     </select>
 
-    <select id="getUserRolesByUserId" resultType="com.jm.springboottemplate.system.domain.Role">
-        SELECT r.role_id AS roleId,
-               r.name,
-               r.name_zh AS nameZh
-        FROM user_role ur
-                 LEFT JOIN role r ON ur.role_id = r.role_id
-        WHERE ur.user_id = #{userId}
+    <select id="findByUsernameOrEmailOrPhone" resultType="com.jm.springboottemplate.system.domain.persistance.User">
+        SELECT su.id,
+               su.username,
+               su.password,
+               su.nickname,
+               su.phone,
+               su.email,
+               su.birthday,
+               su.sex,
+               su.status,
+               su.create_time AS createTime,
+               su.update_time AS updateTime
+        FROM sec_user su
+        <where>
+            <if test="username != null">
+                su.username = #{username}
+            </if>
+            <if test="phone != null">
+                or su.phone = #{phone}
+            </if>
+            <if test="email != null">
+                or su.email = #{email}
+            </if>
+        </where>
         <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserDao,sqlid:getUserRolesByUserId*/
+        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:findByUsernameOrEmailOrPhone*/
         ]]>
     </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sec_user(username, password, nickname, phone, email, birthday, sex, status, create_time,
+                             update_time)
+            VALUES (#{username}, #{password}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex}, #{status}, now(),
+                   now())
+        <![CDATA[
+        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:save*/
+        ]]>
+    </insert>
+
+    <insert id="register" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sec_user(username, password, status, create_time, update_time)
+            VALUES (#{username}, #{password}, 1,  now(), now())
+        <![CDATA[
+        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:register*/
+        ]]>
+    </insert>
 </mapper>
