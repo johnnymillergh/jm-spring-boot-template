@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jm.springboottemplate.system.mapper.UserMapper">
-    <select id="getUserByUsername" resultType="com.jm.springboottemplate.system.domain.persistance.User">
-        SELECT u.user_id AS userId,
-               u.username,
-               u.password,
-               u.enabled,
-               u.locked
-        FROM user u
-        WHERE username = #{username}
-        <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserDao,sqlid:getUserByUsername*/
-        ]]>
-    </select>
-
     <select id="findByUsernameOrEmailOrPhone" resultType="com.jm.springboottemplate.system.domain.persistance.User">
         SELECT su.id,
                su.username,
@@ -26,7 +13,7 @@
                su.status,
                su.create_time AS createTime,
                su.update_time AS updateTime
-        FROM sec_user su
+        FROM t_user su
         <where>
             <if test="username != null">
                 su.username = #{username}
@@ -44,7 +31,7 @@
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO sec_user(username, password, nickname, phone, email, birthday, sex, status, create_time,
+        INSERT INTO t_user(username, password, nickname, phone, email, birthday, sex, status, create_time,
                              update_time)
             VALUES (#{username}, #{password}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex}, #{status}, now(),
                    now())
@@ -54,7 +41,7 @@
     </insert>
 
     <insert id="register" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO sec_user(username, password, status, create_time, update_time)
+        INSERT INTO t_user(username, password, status, create_time, update_time)
             VALUES (#{username}, #{password}, 1,  now(), now())
         <![CDATA[
         /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:register*/

@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jm.springboottemplate.system.mapper.RoleMapper">
     <select id="selectByUserId" resultType="com.jm.springboottemplate.system.domain.persistance.Role">
-        SELECT sec_role.*
-        FROM sec_role,
-             sec_user,
-             sec_user_role
-        WHERE sec_user.id = sec_user_role.user_id
-          AND sec_role.id = sec_user_role.role_id
-          AND sec_user.id = #{userId}
+        SELECT t_role.*
+        FROM t_role,
+             t_user,
+             t_user_role
+        WHERE t_user.id = t_user_role.user_id
+          AND t_role.id = t_user_role.role_id
+          AND t_user.id = #{userId}
         <![CDATA[
         /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.mapper.RoleMapper,sqlid:selectByUserId*/
         ]]>
