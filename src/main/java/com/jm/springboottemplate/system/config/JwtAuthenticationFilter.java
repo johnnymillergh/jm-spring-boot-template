@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         String accessorInformation = "[" + RequestUtil.getRequestIpAndPort(request) + "] requested access. URL: "
                 + request.getServletPath();
-        logger.error(accessorInformation);
+        log.error(accessorInformation);
 
         if (checkIgnores(request)) {
             filterChain.doFilter(request, response);
