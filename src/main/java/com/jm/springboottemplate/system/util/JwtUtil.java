@@ -31,13 +31,12 @@ import java.util.concurrent.TimeUnit;
  * @date: 2019-03-03
  * @time: 13:40
  **/
-@EnableConfigurationProperties(JwtConfiguration.class)
-@Configuration
 @Slf4j
+@Configuration
+@EnableConfigurationProperties(JwtConfiguration.class)
 public class JwtUtil {
     @Autowired
     private JwtConfiguration jwtConfiguration;
-
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
@@ -51,8 +50,8 @@ public class JwtUtil {
      * @param authorities Granted Authority
      * @return JWT
      */
-    public String createJWT(Boolean rememberMe, Long id, String subject, List<String> roles, Collection<?
-            extends GrantedAuthority> authorities) {
+    public String createJWT(Boolean rememberMe, Long id, String subject, List<String> roles,
+                            Collection<? extends GrantedAuthority> authorities) {
         Date now = new Date();
         JwtBuilder builder = Jwts.builder()
                 .setId(id.toString())
@@ -60,9 +59,10 @@ public class JwtUtil {
                 .setIssuedAt(now)
                 .signWith(SignatureAlgorithm.HS256, jwtConfiguration.getSigningKey())
                 .claim("roles", roles);
-        // .claim("authorities", authorities);
+        // TODO: Don't generate authority information in JWT.
+        //  .claim("authorities", authorities)
 
-        // Set expire duration of JWT
+        // Set expire duration of JWT.
         Long ttl = rememberMe ? jwtConfiguration.getTtlForRememberMe() : jwtConfiguration.getTtl();
         if (ttl > 0) {
             builder.setExpiration(DateUtil.offsetMillisecond(now, ttl.intValue()));
@@ -146,7 +146,8 @@ public class JwtUtil {
         String jwt = getJwtFromRequest(request);
         String username = getUsernameFromJWT(jwt);
         // Delete JWT from redis
-        stringRedisTemplate.delete(Constants.REDIS_JWT_KEY_PREFIX + username);
+        Boolean result = stringRedisTemplate.delete(Constants.REDIS_JWT_KEY_PREFIX + username);
+        log.error("Invalidate JWT. Username = {}, result = {}", username, result);
     }
 
     /**
@@ -167,9 +168,9 @@ public class JwtUtil {
      * @return JWT
      */
     public String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StrUtil.isNotBlank(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+        String bearerToken = request.getHeader(Constants.REQUEST_HEADER_KEY);
+        if (StrUtil.isNotBlank(bearerToken) && bearerToken.startsWith(Constants.JWT_PREFIX)) {
+            return bearerToken.substring(Constants.JWT_PREFIX.length());
         }
         return null;
     }
