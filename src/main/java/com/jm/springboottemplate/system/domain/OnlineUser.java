@@ -3,7 +3,7 @@ package com.jm.springboottemplate.system.domain;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jm.springboottemplate.system.constant.Constants;
-import com.jm.springboottemplate.system.domain.persistance.User;
+import com.jm.springboottemplate.system.domain.persistence.User;
 import lombok.Data;
 
 /**

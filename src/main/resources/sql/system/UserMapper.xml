@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jm.springboottemplate.system.mapper.UserMapper">
-    <select id="findByUsernameOrEmailOrPhone" resultType="com.jm.springboottemplate.system.domain.persistance.User">
+    <select id="findByUsernameOrEmailOrPhone" resultType="user">
         SELECT su.id,
                su.username,
                su.password,

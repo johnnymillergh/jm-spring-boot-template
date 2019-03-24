@@ -4,7 +4,7 @@ import com.jm.springboottemplate.system.constant.UniversalStatus;
 import com.jm.springboottemplate.system.domain.JwtResponse;
 import com.jm.springboottemplate.system.domain.payload.Login;
 import com.jm.springboottemplate.system.domain.payload.Register;
-import com.jm.springboottemplate.system.domain.persistance.User;
+import com.jm.springboottemplate.system.domain.persistence.User;
 import com.jm.springboottemplate.system.exception.SecurityException;
 import com.jm.springboottemplate.system.mapper.UserMapper;
 import com.jm.springboottemplate.system.response.ResponseBodyBean;

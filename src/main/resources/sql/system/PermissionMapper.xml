@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jm.springboottemplate.system.mapper.PermissionMapper">
-    <select id="selectByRoleIdList" resultType="com.jm.springboottemplate.system.domain.persistance.Permission">
+    <select id="selectByRoleIdList" resultType="com.jm.springboottemplate.system.domain.persistence.Permission">
         SELECT DISTINCT t_permission.*
         FROM t_permission LEFT JOIN t_role_permission ON t_permission.id = t_role_permission.permission_id
         LEFT JOIN t_role ON t_role.id = t_role_permission.role_id

@@ -1,4 +1,4 @@
-package com.jm.springboottemplate.system.domain.persistance;
+package com.jm.springboottemplate.system.domain.persistence;
 
 import lombok.Data;
 

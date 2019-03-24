@@ -1,7 +1,7 @@
 package com.jm.springboottemplate.repository;
 
 import cn.hutool.core.date.DateTime;
-import com.jm.springboottemplate.system.domain.persistance.User;
+import com.jm.springboottemplate.system.domain.persistence.User;
 import com.jm.springboottemplate.system.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

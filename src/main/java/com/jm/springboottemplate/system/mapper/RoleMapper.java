@@ -1,6 +1,6 @@
 package com.jm.springboottemplate.system.mapper;
 
-import com.jm.springboottemplate.system.domain.persistance.Role;
+import com.jm.springboottemplate.system.domain.persistence.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

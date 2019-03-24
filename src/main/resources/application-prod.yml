@@ -4,11 +4,12 @@ spring:
     redis:
       time-to-live: 1800s
   datasource:
+    name: datasource-one
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: H'Tkh9@!*_/B'_j
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://127.0.0.1:3306/spring_boot_template?useUnicode=true&characterEncoding=utf8
     username: spring_boot_template_w
+    password: H'Tkh9@!*_/B'_j
   devtools:
     restart:
       enabled: true
@@ -31,7 +32,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: sql/**/*Mapper.xml
-  type-aliases-package: com.jm.springboottemplate.**.
+  type-aliases-package: com.jm.springboottemplate
 server:
   port: 8080
   tomcat:

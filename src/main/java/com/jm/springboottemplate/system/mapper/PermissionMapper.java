@@ -1,6 +1,6 @@
 package com.jm.springboottemplate.system.mapper;
 
-import com.jm.springboottemplate.system.domain.persistance.Permission;
+import com.jm.springboottemplate.system.domain.persistence.Permission;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

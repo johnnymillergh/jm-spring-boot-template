@@ -2,9 +2,9 @@ package com.jm.springboottemplate.system.service.impl;
 
 import com.jm.springboottemplate.system.constant.UniversalStatus;
 import com.jm.springboottemplate.system.domain.UserPrincipal;
-import com.jm.springboottemplate.system.domain.persistance.Permission;
-import com.jm.springboottemplate.system.domain.persistance.Role;
-import com.jm.springboottemplate.system.domain.persistance.User;
+import com.jm.springboottemplate.system.domain.persistence.Permission;
+import com.jm.springboottemplate.system.domain.persistence.Role;
+import com.jm.springboottemplate.system.domain.persistence.User;
 import com.jm.springboottemplate.system.exception.SecurityException;
 import com.jm.springboottemplate.system.mapper.PermissionMapper;
 import com.jm.springboottemplate.system.mapper.RoleMapper;
