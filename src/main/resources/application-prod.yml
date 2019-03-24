@@ -1,8 +1,8 @@
 spring:
   cache:
-    ehcache:
-      config: classpath:config/ehcache.xml
-    type: ehcache
+    cache-names: c1,c2
+    redis:
+      time-to-live: 1800s
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: H'Tkh9@!*_/B'_j
@@ -15,6 +15,18 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: 123456
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -22,8 +34,15 @@ mybatis:
   type-aliases-package: com.jm.springboottemplate.**.
 server:
   port: 8080
-  servlet:
-    session:
-      timeout: 30m
   tomcat:
     uri-encoding: utf-8
+custom:
+  config:
+    ignores:
+      # POST Requests need to be ignored.
+      post:
+        - "/auth/register"
+        - "/auth/login"
+        - "/auth/logout"
+      # Request need to be ignored that matches pattern.
+      pattern:
