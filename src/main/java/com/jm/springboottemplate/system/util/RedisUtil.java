@@ -26,8 +26,12 @@ import java.util.List;
 @Component
 @Slf4j
 public class RedisUtil {
+    private final StringRedisTemplate stringRedisTemplate;
+
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    public RedisUtil(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     /**
      * 分页获取指定格式key，使用 scan 命令代替 keys 命令，在大数据量的情况下可以提高查询效率
@@ -39,9 +43,10 @@ public class RedisUtil {
      */
     public PageResult<String> findKeysForPage(String patternKey, int currentPage, int pageSize) {
         ScanOptions options = ScanOptions.scanOptions()
-                .match(patternKey)
-                .build();
+                                         .match(patternKey)
+                                         .build();
         RedisConnectionFactory factory = stringRedisTemplate.getConnectionFactory();
+        assert factory != null;
         RedisConnection rc = factory.getConnection();
         Cursor<byte[]> cursor = rc.scan(options);
 

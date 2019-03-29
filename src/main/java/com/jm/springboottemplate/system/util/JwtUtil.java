@@ -35,10 +35,15 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableConfigurationProperties(JwtConfiguration.class)
 public class JwtUtil {
+    private final JwtConfiguration jwtConfiguration;
+    private final StringRedisTemplate stringRedisTemplate;
+
     @Autowired
-    private JwtConfiguration jwtConfiguration;
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    public JwtUtil(JwtConfiguration jwtConfiguration,
+                   StringRedisTemplate stringRedisTemplate) {
+        this.jwtConfiguration = jwtConfiguration;
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     /**
      * Create JWT.
@@ -54,11 +59,11 @@ public class JwtUtil {
                             Collection<? extends GrantedAuthority> authorities) {
         Date now = new Date();
         JwtBuilder builder = Jwts.builder()
-                .setId(id.toString())
-                .setSubject(subject)
-                .setIssuedAt(now)
-                .signWith(SignatureAlgorithm.HS256, jwtConfiguration.getSigningKey())
-                .claim("roles", roles);
+                                 .setId(id.toString())
+                                 .setSubject(subject)
+                                 .setIssuedAt(now)
+                                 .signWith(SignatureAlgorithm.HS256, jwtConfiguration.getSigningKey())
+                                 .claim("roles", roles);
         // TODO: Don't generate authority information in JWT.
         //  .claim("authorities", authorities)
 
@@ -71,7 +76,7 @@ public class JwtUtil {
         String jwt = builder.compact();
         // Store new JWT in Redis
         stringRedisTemplate.opsForValue()
-                .set(Constants.REDIS_JWT_KEY_PREFIX + subject, jwt, ttl, TimeUnit.MILLISECONDS);
+                           .set(Constants.REDIS_JWT_KEY_PREFIX + subject, jwt, ttl, TimeUnit.MILLISECONDS);
         return jwt;
     }
 
@@ -85,7 +90,7 @@ public class JwtUtil {
     public String createJWT(Authentication authentication, Boolean rememberMe) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         return createJWT(rememberMe, userPrincipal.getId(), userPrincipal.getUsername(), userPrincipal.getRoles(),
-                userPrincipal.getAuthorities());
+                         userPrincipal.getAuthorities());
     }
 
     /**
@@ -97,9 +102,9 @@ public class JwtUtil {
     public Claims parseJWT(String jwt) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(jwtConfiguration.getSigningKey())
-                    .parseClaimsJws(jwt)
-                    .getBody();
+                                .setSigningKey(jwtConfiguration.getSigningKey())
+                                .parseClaimsJws(jwt)
+                                .getBody();
 
             String username = claims.getSubject();
             String redisKey = Constants.REDIS_JWT_KEY_PREFIX + username;
@@ -113,8 +118,7 @@ public class JwtUtil {
             // Check if current JWT is equal to the one in Redis.
             // If it's noe equal, that indicates current user has signed out or logged in before.
             // Both situations reveal the JWT expired.
-            String redisToken = stringRedisTemplate.opsForValue()
-                    .get(redisKey);
+            String redisToken = stringRedisTemplate.opsForValue().get(redisKey);
             if (!StrUtil.equals(jwt, redisToken)) {
                 throw new SecurityException(UniversalStatus.TOKEN_OUT_OF_CONTROL);
             }

@@ -109,8 +109,7 @@ public enum UniversalStatus implements IUniversalStatus {
     public static UniversalStatus fromCode(Integer code) {
         UniversalStatus[] universalStatuses = UniversalStatus.values();
         for (UniversalStatus universalStatus : universalStatuses) {
-            if (universalStatus.getCode()
-                    .equals(code)) {
+            if (universalStatus.getCode().equals(code)) {
                 return universalStatus;
             }
         }

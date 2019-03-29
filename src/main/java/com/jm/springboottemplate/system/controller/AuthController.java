@@ -16,13 +16,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Description: Authentication and authorization controller for user signing up, login and logout.
@@ -36,14 +34,26 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final BCryptPasswordEncoder encoder;
+    private final UserMapper userMapper;
+
     @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private BCryptPasswordEncoder encoder;
-    @Autowired
-    private UserMapper userMapper;
+    public AuthController(AuthenticationManager authenticationManager,
+                          JwtUtil jwtUtil,
+                          BCryptPasswordEncoder encoder,
+                          UserMapper userMapper) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+        this.encoder = encoder;
+        this.userMapper = userMapper;
+    }
+
+    @GetMapping("/checkUsernameUniqueness")
+    public void checkUsernameUniqueness(@NotEmpty String username) {
+
+    }
 
     @PostMapping("/register")
     public ResponseBodyBean register(@Valid @RequestBody Register register) {
@@ -60,8 +70,9 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseBodyBean login(@Valid @RequestBody Login login) {
         Authentication authentication =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsernameOrEmailOrPhone(),
-                        login.getPassword()));
+                authenticationManager
+                        .authenticate(new UsernamePasswordAuthenticationToken(login.getUsernameOrEmailOrPhone(),
+                                                                              login.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

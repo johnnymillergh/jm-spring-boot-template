@@ -17,12 +17,12 @@ public class Login {
     /**
      * Username/Email/Phone
      */
-    @NotBlank(message = "Login token cannot be empty.")
+    @NotBlank(message = "Login token is required")
     private String usernameOrEmailOrPhone;
     /**
      * Password
      */
-    @NotBlank(message = "Password cannot be empty.")
+    @NotBlank(message = "Password is required")
     private String password;
     /**
      * Remember me

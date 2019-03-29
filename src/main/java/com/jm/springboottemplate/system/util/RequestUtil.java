@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
  **/
 public class RequestUtil {
     /**
-     * Get request user's IP and port information.
-     * If the request is through reverse proxy, this method will not work out.
+     * Get request user's IP and port information. If the request is through reverse proxy, this method will not work
+     * out.
      *
      * @param request HTTP request.
      * @return user's IP and port information.

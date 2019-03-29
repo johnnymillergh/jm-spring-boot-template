@@ -25,7 +25,6 @@ public class PageResult<T> implements Serializable {
      * Page row data
      */
     private List<T> rows;
-
     /**
      * Total rows
      */

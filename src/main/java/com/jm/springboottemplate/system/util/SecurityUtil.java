@@ -26,14 +26,26 @@ public class SecurityUtil {
     }
 
     /**
+     * Get current use's id.
+     *
+     * @return Current use's id
+     */
+    public static Long getCurrentUserId() {
+        UserPrincipal currentUser = getCurrentUser();
+        assert currentUser != null;
+        assert currentUser.getId() != null;
+        return currentUser.getId();
+    }
+
+    /**
      * Get current user.
      *
      * @return Current user. Return null if user is anonymous.
      */
-    public static UserPrincipal getCurrentUser() {
+    private static UserPrincipal getCurrentUser() {
         Object userInfo = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
+                                               .getAuthentication()
+                                               .getPrincipal();
         if (userInfo instanceof UserDetails) {
             return (UserPrincipal) userInfo;
         }

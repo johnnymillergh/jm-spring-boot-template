@@ -3,6 +3,7 @@ package com.jm.springboottemplate.system.domain.payload;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * Description: Register, change description here.
@@ -17,11 +18,13 @@ public class Register {
     /**
      * Username
      */
-    @NotEmpty(message = "Username cannot be empty.")
+    @Size(max = 50)
+    @NotEmpty(message = "Username is required")
     private String username;
     /**
      * Password
      */
-    @NotEmpty(message = "Password cannot be empty.")
+    @Size(min = 8, max = 24)
+    @NotEmpty(message = "Password is required")
     private String password;
 }

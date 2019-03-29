@@ -10,8 +10,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/spring_boot_template?useUnicode=true&characterEncoding=utf8
     username: spring_boot_template_w
     password: H'Tkh9@!*_/B'_j
-    druidLoginName: "johnny"
-    druidPassword: "123456"
   devtools:
     restart:
       enabled: true

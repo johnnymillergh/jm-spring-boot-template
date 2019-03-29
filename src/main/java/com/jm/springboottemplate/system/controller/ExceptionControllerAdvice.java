@@ -44,36 +44,39 @@ public class ExceptionControllerAdvice {
 
         if (exception instanceof NoHandlerFoundException) {
             log.error("[GlobalExceptionCapture] NoHandlerFoundException: Request URL = {}, HTTP method = {}",
-                    ((NoHandlerFoundException) exception).getRequestURL(),
-                    ((NoHandlerFoundException) exception).getHttpMethod());
+                      ((NoHandlerFoundException) exception).getRequestURL(),
+                      ((NoHandlerFoundException) exception).getHttpMethod());
             return ResponseBodyBean.ofStatus(UniversalStatus.NOT_FOUND);
         } else if (exception instanceof HttpRequestMethodNotSupportedException) {
             log.error("[GlobalExceptionCapture] HttpRequestMethodNotSupportedException: " +
-                            "Current method is {}, Support HTTP method = {}",
-                    ((HttpRequestMethodNotSupportedException) exception).getMethod(),
-                    JSONUtil.toJsonStr(((HttpRequestMethodNotSupportedException) exception).getSupportedHttpMethods()));
+                              "Current method is {}, Support HTTP method = {}",
+                      ((HttpRequestMethodNotSupportedException) exception).getMethod(),
+                      JSONUtil.toJsonStr(
+                              ((HttpRequestMethodNotSupportedException) exception).getSupportedHttpMethods()));
             return ResponseBodyBean.ofStatus(UniversalStatus.METHOD_NOT_ALLOWED);
         } else if (exception instanceof MethodArgumentNotValidException) {
             log.error("[GlobalExceptionCapture] MethodArgumentNotValidException", exception);
             return ResponseBodyBean.setResponse(UniversalStatus.BAD_REQUEST.getCode(),
-                    ((MethodArgumentNotValidException) exception).getBindingResult()
-                            .getAllErrors()
-                            .get(0)
-                            .getDefaultMessage(), null);
+                                                ((MethodArgumentNotValidException) exception).getBindingResult()
+                                                                                             .getAllErrors()
+                                                                                             .get(0)
+                                                                                             .getDefaultMessage(),
+                                                null);
         } else if (exception instanceof ConstraintViolationException) {
             log.error("[GlobalExceptionCapture] ConstraintViolationException", exception);
             return ResponseBodyBean.setResponse(UniversalStatus.BAD_REQUEST.getCode(),
-                    CollUtil.getFirst(((ConstraintViolationException) exception).getConstraintViolations())
-                            .getMessage(), null);
+                                                CollUtil.getFirst(((ConstraintViolationException) exception)
+                                                                          .getConstraintViolations())
+                                                        .getMessage(), null);
         } else if (exception instanceof MethodArgumentTypeMismatchException) {
             log.error("[GlobalExceptionCapture] MethodArgumentTypeMismatchException: " +
-                            "Parameter name = {}, Exception information: {}",
-                    ((MethodArgumentTypeMismatchException) exception).getName(),
-                    ((MethodArgumentTypeMismatchException) exception).getMessage());
+                              "Parameter name = {}, Exception information: {}",
+                      ((MethodArgumentTypeMismatchException) exception).getName(),
+                      ((MethodArgumentTypeMismatchException) exception).getMessage());
             return ResponseBodyBean.ofStatus(UniversalStatus.PARAM_NOT_MATCH);
         } else if (exception instanceof HttpMessageNotReadableException) {
             log.error("[GlobalExceptionCapture] HttpMessageNotReadableException: {}",
-                    ((HttpMessageNotReadableException) exception).getMessage());
+                      ((HttpMessageNotReadableException) exception).getMessage());
             return ResponseBodyBean.ofStatus(UniversalStatus.PARAM_NOT_NULL);
         } else if (exception instanceof BadCredentialsException) {
             log.error("[GlobalExceptionCapture] BadCredentialsException: {}", exception.getMessage());
@@ -86,7 +89,7 @@ public class ExceptionControllerAdvice {
             return ResponseBodyBean.setResponse(UniversalStatus.ROLE_NOT_FOUND.getCode(), exception.getMessage(), null);
         } else if (exception instanceof BaseException) {
             log.error("[GlobalExceptionCapture] BaseException: Status code: {}, {}",
-                    ((BaseException) exception).getCode(), exception.getMessage());
+                      ((BaseException) exception).getCode(), exception.getMessage());
             return ResponseBodyBean.ofException((BaseException) exception);
         }
         log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage());

@@ -39,15 +39,23 @@ import java.util.Set;
 @Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    private final CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
+    private final JwtUtil jwtUtil;
+    private final CustomConfiguration customConfiguration;
+
     @Autowired
-    private CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private CustomConfiguration customConfiguration;
+    public JwtAuthenticationFilter(CustomUserDetailsServiceImpl customUserDetailsServiceImpl,
+                                   JwtUtil jwtUtil,
+                                   CustomConfiguration customConfiguration) {
+        this.customUserDetailsServiceImpl = customUserDetailsServiceImpl;
+        this.jwtUtil = jwtUtil;
+        this.customConfiguration = customConfiguration;
+    }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+    @SuppressWarnings("NullableProblems")
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String accessorInformation = "[" + RequestUtil.getRequestIpAndPort(request) + "] requested access. URL: "
                 + request.getServletPath();
@@ -70,7 +78,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext()
-                        .setAuthentication(authentication);
+                                     .setAuthentication(authentication);
                 filterChain.doFilter(request, response);
             } catch (SecurityException e) {
                 ResponseUtil.renderJson(response, e);

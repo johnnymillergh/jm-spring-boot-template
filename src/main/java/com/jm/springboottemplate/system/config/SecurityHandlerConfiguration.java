@@ -19,6 +19,6 @@ public class SecurityHandlerConfiguration {
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> ResponseUtil.renderJson(response,
-                UniversalStatus.FORBIDDEN, null);
+                                                                                     UniversalStatus.FORBIDDEN, null);
     }
 }

@@ -18,4 +18,6 @@ public class CustomConfiguration {
      * Ignore URLs
      */
     private IgnoreConfiguration ignores;
+    private String druidLoginName;
+    private String druidPassword;
 }

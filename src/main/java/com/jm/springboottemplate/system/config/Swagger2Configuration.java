@@ -13,8 +13,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Description: Swagger 2 Config.
- * API Documentation at
+ * Description: Swagger 2 Config. API Documentation at
  * <a>http://localhost:8080/springboottemplate/swagger-ui.html<a/>
  *
  * @author: Johnny Miller (鍾俊)
@@ -39,7 +38,7 @@ public class Swagger2Configuration {
         return new ApiInfoBuilder()
                 .title("API Documentation for SpringBootTemplate Project")
                 .contact(new Contact("Johnny Miller", "http://github.com/johnnymillergh",
-                        "johnnysviva@outlook.com"))
+                                     "johnnysviva@outlook.com"))
                 .version(ProjectPropertyUtil.getVersion())
                 .description(ProjectPropertyUtil.getArtifactId())
                 .build();

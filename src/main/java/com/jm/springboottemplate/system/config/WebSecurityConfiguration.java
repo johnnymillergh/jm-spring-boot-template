@@ -31,14 +31,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableConfigurationProperties(CustomConfiguration.class)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private final CustomConfiguration customConfiguration;
+    private final AccessDeniedHandler accessDeniedHandler;
+    private final CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Autowired
-    private CustomConfiguration customConfiguration;
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
-    @Autowired
-    private CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    public WebSecurityConfiguration(CustomConfiguration customConfiguration,
+                                    AccessDeniedHandler accessDeniedHandler,
+                                    CustomUserDetailsServiceImpl customUserDetailsServiceImpl,
+                                    JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.customConfiguration = customConfiguration;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.customUserDetailsServiceImpl = customUserDetailsServiceImpl;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
     @Bean
     public BCryptPasswordEncoder encoder() {
@@ -58,33 +65,31 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
         http.cors()
-                // 关闭 CSRF
-                .and().csrf().disable()
-                // 登录行为由自己实现，参考 AuthController#login
-                .formLogin().disable()
-                .httpBasic().disable()
+            // 关闭 CSRF
+            .and().csrf().disable()
+            // 登录行为由自己实现，参考 AuthController#login
+            .formLogin().disable()
+            .httpBasic().disable()
 
-                // 认证请求
-                .authorizeRequests()
-                // 所有请求都需要登录访问
-                .anyRequest()
-                .authenticated()
-                // RBAC 动态 url 认证
-                .anyRequest()
-                .access("@rbacAuthorityService.hasPermission(request,authentication)")
+            // 认证请求
+            .authorizeRequests()
+            // 所有请求都需要登录访问
+            .anyRequest()
+            .authenticated()
+            // RBAC 动态 url 认证
+            .anyRequest()
+            .access("@rbacAuthorityService.hasPermission(request,authentication)")
 
-                // 登出行为由自己实现，参考 AuthController#logout
-                .and().logout().disable()
-                // Session 管理
-                .sessionManagement()
-                // 因为使用了JWT，所以这里不管理 Session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            // 登出行为由自己实现，参考 AuthController#logout
+            .and().logout().disable()
+            // Session 管理
+            .sessionManagement()
+            // 因为使用了JWT，所以这里不管理 Session
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                // 异常处理
-                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
-        // @formatter:on
+            // 异常处理
+            .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
         // 添加自定义 JWT 过滤器
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -119,7 +124,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // 忽略 OPTIONS
         customConfiguration.getIgnores().getOptions().forEach(url -> and.ignoring().antMatchers(HttpMethod.OPTIONS,
-                url));
+                                                                                                url));
 
         // 忽略 TRACE
         customConfiguration.getIgnores().getTrace().forEach(url -> and.ignoring().antMatchers(HttpMethod.TRACE, url));

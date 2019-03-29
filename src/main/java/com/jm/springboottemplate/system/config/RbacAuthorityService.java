@@ -38,12 +38,18 @@ import java.util.stream.Collectors;
  **/
 @Component
 public class RbacAuthorityService {
+    private final RoleMapper roleMapper;
+    private final PermissionMapper permissionMapper;
+    private final RequestMappingHandlerMapping mapping;
+
     @Autowired
-    private RoleMapper roleMapper;
-    @Autowired
-    private PermissionMapper permissionMapper;
-    @Autowired
-    private RequestMappingHandlerMapping mapping;
+    public RbacAuthorityService(RoleMapper roleMapper,
+                                PermissionMapper permissionMapper,
+                                RequestMappingHandlerMapping mapping) {
+        this.roleMapper = roleMapper;
+        this.permissionMapper = permissionMapper;
+        this.mapping = mapping;
+    }
 
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         checkRequest(request);
@@ -57,19 +63,20 @@ public class RbacAuthorityService {
 
             List<Role> roles = roleMapper.selectByUserId(userId);
             List<Long> roleIds = roles.stream()
-                    .map(Role::getId)
-                    .collect(Collectors.toList());
+                                      .map(Role::getId)
+                                      .collect(Collectors.toList());
             List<Permission> permissions = permissionMapper.selectByRoleIdList(roleIds);
 
             // Filter button permission for frond-end
             List<Permission> btnPerms = permissions.stream()
-                    // Sieve out page permissions
-                    .filter(permission -> Objects.equals(permission.getType(), PermissionType.BUTTON.getType()))
-                    // Sieve out permission that has no URL
-                    .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
-                    // Sieve out permission that has no method
-                    .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
-                    .collect(Collectors.toList());
+                                                   // Sieve out page permissions
+                                                   .filter(permission -> Objects.equals(permission.getType(),
+                                                                                        PermissionType.BUTTON.getType()))
+                                                   // Sieve out permission that has no URL
+                                                   .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
+                                                   // Sieve out permission that has no method
+                                                   .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
+                                                   .collect(Collectors.toList());
 
             for (Permission btnPerm : btnPerms) {
                 AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(btnPerm.getUrl(), btnPerm.getMethod());
@@ -103,7 +110,7 @@ public class RbacAuthorityService {
             AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(uri);
             if (antPathMatcher.matches(request)) {
                 if (!urlMapping.get(uri)
-                        .contains(currentMethod)) {
+                               .contains(currentMethod)) {
                     throw new SecurityException(UniversalStatus.METHOD_NOT_ALLOWED);
                 } else {
                     return;
@@ -128,14 +135,14 @@ public class RbacAuthorityService {
         handlerMethods.forEach((k, v) -> {
             // 获取当前 key 下的获取所有URL
             Set<String> url = k.getPatternsCondition()
-                    .getPatterns();
+                               .getPatterns();
             RequestMethodsRequestCondition method = k.getMethodsCondition();
 
             // 为每个URL添加所有的请求方法
             url.forEach(s -> urlMapping.putAll(s, method.getMethods()
-                    .stream()
-                    .map(Enum::toString)
-                    .collect(Collectors.toList())));
+                                                        .stream()
+                                                        .map(Enum::toString)
+                                                        .collect(Collectors.toList())));
         });
 
         return urlMapping;
