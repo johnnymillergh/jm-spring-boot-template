@@ -12,6 +12,6 @@ jwt:
     ttl: 1800000
     ttl-for-remember-me: 604800000
 custom:
-  config:
+  configuration:
     druid-login-name: "johnny"
     druid-password: 123456

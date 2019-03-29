@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date: 2019-03-23
  * @time: 14:24
  **/
-@ConfigurationProperties(prefix = "custom.config")
+@ConfigurationProperties(prefix = "custom.configuration")
 @Data
 public class CustomConfiguration {
     /**
