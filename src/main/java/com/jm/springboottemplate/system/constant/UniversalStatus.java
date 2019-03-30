@@ -56,16 +56,20 @@ public enum UniversalStatus implements IUniversalStatus {
     /**
      * Bad request
      */
-    BAD_REQUEST(40001, "Bad request."),
+    BAD_REQUEST(400, "Bad request."),
     /**
      * Param not matched
      */
-    PARAM_NOT_MATCH(40002, "Param not matched. " +
+    PARAM_NOT_MATCH(40001, "Param not matched. " +
             "The request could not be fulfilled due to the incorrect syntax of the request."),
     /**
      * Param not null
      */
-    PARAM_NOT_NULL(40003, "Param not null."),
+    PARAM_NOT_NULL(40002, "Param not null."),
+    /**
+     * Param invalid
+     */
+    PARAM_INVALID(40003, "Param invalid."),
     /**
      * User disabled
      */
