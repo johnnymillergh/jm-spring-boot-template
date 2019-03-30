@@ -19,7 +19,7 @@ public enum UniversalStatus implements IUniversalStatus {
     /**
      * Log out successfully
      */
-    LOGOUT(200, "Log out successfully"),
+    LOGOUT(20001, "Log out successfully"),
     /**
      * Error or failure
      */
