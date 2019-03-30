@@ -20,9 +20,9 @@ public interface Constants {
      */
     String REDIS_JWT_KEY_PREFIX = ProjectPropertyUtil.getArtifactId() + ":jwt:";
     /**
-     * Key of request header.
+     * Token key of request header.
      */
-    String REQUEST_HEADER_KEY = "Authorization";
+    String REQUEST_TOKEN_KEY = "Authorization";
     /**
      * Prefix of JWT.
      */

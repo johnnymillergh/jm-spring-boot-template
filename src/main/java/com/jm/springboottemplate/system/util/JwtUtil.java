@@ -172,7 +172,7 @@ public class JwtUtil {
      * @return JWT
      */
     public String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader(Constants.REQUEST_HEADER_KEY);
+        String bearerToken = request.getHeader(Constants.REQUEST_TOKEN_KEY);
         if (StrUtil.isNotBlank(bearerToken) && bearerToken.startsWith(Constants.JWT_PREFIX)) {
             return bearerToken.substring(Constants.JWT_PREFIX.length());
         }

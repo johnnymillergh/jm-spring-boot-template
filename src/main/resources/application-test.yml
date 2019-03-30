@@ -39,7 +39,7 @@ server:
   tomcat:
     uri-encoding: utf-8
 custom:
-  config:
+  configuration:
     ignores:
       # POST Requests need to be ignored.
       post:
