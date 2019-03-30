@@ -16,15 +16,21 @@ import javax.validation.constraints.Size;
 @Data
 public class Register {
     /**
-     * Username
+     * Username (Unique)
      */
-    @Size(max = 50)
-    @NotEmpty(message = "Username is required")
+    @Size(min = 4, max = 50, message = "length of username must be between 4 and 50")
+    @NotEmpty(message = "username is required")
     private String username;
+    /**
+     * Email (Unique)
+     */
+    @Size(max = 30, message = "length of email cannot exceed 30")
+    @NotEmpty(message = "email is required")
+    private String email;
     /**
      * Password
      */
-    @Size(min = 8, max = 24, message = "Length of password must be between 8 and 24")
-    @NotEmpty(message = "Password is required")
+    @Size(min = 8, max = 30, message = "length of password must be between 8 and 24")
+    @NotEmpty(message = "password is required")
     private String password;
 }

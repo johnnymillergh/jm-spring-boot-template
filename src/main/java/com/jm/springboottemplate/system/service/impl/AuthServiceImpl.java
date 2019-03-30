@@ -1,11 +1,11 @@
 package com.jm.springboottemplate.system.service.impl;
 
 import com.jm.springboottemplate.system.domain.persistence.User;
+import com.jm.springboottemplate.system.mapper.UserMapper;
 import com.jm.springboottemplate.system.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Description: AuthServiceImpl, change description here.
@@ -17,13 +17,29 @@ import java.util.Map;
  **/
 @Service
 public class AuthServiceImpl implements AuthService {
-    @Override
-    public Map checkUsernameUniqueness(String username) {
-        Map<String, Object> resultMap = new HashMap<>(3);
-        return resultMap;
+    private final UserMapper userMapper;
+
+    @Autowired
+    public AuthServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
     }
 
     @Override
-    public void register(User user) {
+    public boolean checkUsernameUniqueness(String username) {
+        Integer count = userMapper.checkUsernameUniqueness(username);
+        return count == 0;
+    }
+
+    @Override
+    public boolean checkEmailUniqueness(String email) {
+        Integer count = userMapper.checkEmailUniqueness(email);
+        return count == 0;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public User register(User user) {
+        userMapper.register(user);
+        return user;
     }
 }

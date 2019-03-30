@@ -2,8 +2,6 @@ package com.jm.springboottemplate.system.service;
 
 import com.jm.springboottemplate.system.domain.persistence.User;
 
-import java.util.Map;
-
 /**
  * Description: AuthService, change description here.
  *
@@ -17,14 +15,22 @@ public interface AuthService {
      * Check uniqueness of username.
      *
      * @param username Username string
-     * @return Map
+     * @return true - username available; false - username not available
      */
-    Map checkUsernameUniqueness(String username);
+    boolean checkUsernameUniqueness(String username);
+
+    /**
+     * Check uniqueness of email.
+     *
+     * @param email email string
+     * @return true - email available; false - email not available
+     */
+    boolean checkEmailUniqueness(String email);
 
     /**
      * Register a new user.
      *
      * @param user new user
      */
-    void register(User user);
+    User register(User user);
 }

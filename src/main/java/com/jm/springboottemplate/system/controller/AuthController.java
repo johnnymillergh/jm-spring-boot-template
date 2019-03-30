@@ -6,10 +6,11 @@ import com.jm.springboottemplate.system.domain.payload.Login;
 import com.jm.springboottemplate.system.domain.payload.Register;
 import com.jm.springboottemplate.system.domain.persistence.User;
 import com.jm.springboottemplate.system.exception.SecurityException;
-import com.jm.springboottemplate.system.mapper.UserMapper;
 import com.jm.springboottemplate.system.response.ResponseBodyBean;
+import com.jm.springboottemplate.system.service.AuthService;
 import com.jm.springboottemplate.system.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 
 /**
  * Description: Authentication and authorization controller for user signing up, login and logout.
@@ -37,30 +37,48 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder encoder;
-    private final UserMapper userMapper;
+    private final AuthService authService;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager,
                           JwtUtil jwtUtil,
                           BCryptPasswordEncoder encoder,
-                          UserMapper userMapper) {
+                          AuthService authService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.encoder = encoder;
-        this.userMapper = userMapper;
+        this.authService = authService;
     }
 
     @GetMapping("/checkUsernameUniqueness")
-    public void checkUsernameUniqueness(@NotEmpty String username) {
+    public ResponseBodyBean checkUsernameUniqueness(String username) {
+        if (StringUtils.isBlank(username)) {
+            return ResponseBodyBean.ofStatus(UniversalStatus.PARAM_INVALID);
+        }
+        if (authService.checkUsernameUniqueness(username)) {
+            return ResponseBodyBean.ofSuccess("username available");
+        }
+        return ResponseBodyBean.ofFailure("username not available");
+    }
 
+    @GetMapping("/checkEmailUniqueness")
+    public ResponseBodyBean checkEmailUniqueness(String email) {
+        if (StringUtils.isBlank(email)) {
+            return ResponseBodyBean.ofStatus(UniversalStatus.PARAM_INVALID);
+        }
+        if (authService.checkEmailUniqueness(email)) {
+            return ResponseBodyBean.ofSuccess("email available");
+        }
+        return ResponseBodyBean.ofFailure("email not available");
     }
 
     @PostMapping("/register")
     public ResponseBodyBean register(@Valid @RequestBody Register register) {
         User user = new User();
         user.setUsername(register.getUsername());
+        user.setEmail(register.getEmail());
         user.setPassword(encoder.encode(register.getPassword()));
-        userMapper.register(user);
+        authService.register(user);
         if (user.getId() > 0) {
             return ResponseBodyBean.ofSuccess("Registered successfully.");
         }

@@ -32,6 +32,22 @@ public interface UserMapper {
                                                 @Param("phone") String phone);
 
     /**
+     * Check uniqueness of username.
+     *
+     * @param username Username string
+     * @return the count of username occurrence
+     */
+    Integer checkUsernameUniqueness(String username);
+
+    /**
+     * Check uniqueness of email.
+     *
+     * @param email Email string
+     * @return the count of email occurrence
+     */
+    Integer checkEmailUniqueness(String email);
+
+    /**
      * 根据用户名列表查询用户列表
      *
      * @param usernameList 用户名列表
