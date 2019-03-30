@@ -48,6 +48,7 @@ custom:
         - "/auth/logout"
       # Request need to be ignored that matches pattern.
       pattern:
+        - "/auth/**"
         - "/swagger-resources/**"
         - "/v2/api-docs/**"
         - "/webjars/**"

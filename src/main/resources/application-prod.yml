@@ -42,10 +42,8 @@ custom:
     ignores:
       # POST Requests need to be ignored.
       post:
-        - "/auth/register"
-        - "/auth/login"
-        - "/auth/logout"
       # Request need to be ignored that matches pattern.
       pattern:
+        - "/auth/**"
         - "/error"
         - "/druid/**"
