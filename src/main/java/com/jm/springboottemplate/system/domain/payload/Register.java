@@ -24,7 +24,7 @@ public class Register {
     /**
      * Password
      */
-    @Size(min = 8, max = 24)
+    @Size(min = 8, max = 24, message = "Length of password must be between 8 and 24")
     @NotEmpty(message = "Password is required")
     private String password;
 }

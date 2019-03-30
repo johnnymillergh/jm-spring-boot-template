@@ -27,15 +27,15 @@ public enum UniversalStatus implements IUniversalStatus {
     /**
      * Failure
      */
-    FAILURE(500, "Failure"),
+    FAILURE(50001, "Failure"),
     /**
      * Warning
      */
-    WARNING(500, "Warning"),
+    WARNING(50002, "Warning"),
     /**
      * Role not found
      */
-    ROLE_NOT_FOUND(500, "Role not found."),
+    ROLE_NOT_FOUND(50003, "Role not found."),
     /**
      * Unauthorized
      */
@@ -56,16 +56,16 @@ public enum UniversalStatus implements IUniversalStatus {
     /**
      * Bad request
      */
-    BAD_REQUEST(400, "Bad request."),
+    BAD_REQUEST(40001, "Bad request."),
     /**
      * Param not matched
      */
-    PARAM_NOT_MATCH(400, "Param not matched. " +
+    PARAM_NOT_MATCH(40002, "Param not matched. " +
             "The request could not be fulfilled due to the incorrect syntax of the request."),
     /**
      * Param not null
      */
-    PARAM_NOT_NULL(400, "Param not null."),
+    PARAM_NOT_NULL(40003, "Param not null."),
     /**
      * User disabled
      */
@@ -73,24 +73,24 @@ public enum UniversalStatus implements IUniversalStatus {
     /**
      * Username or password error
      */
-    USERNAME_OR_PASSWORD_ERROR(5001, "Username or password error."),
+    USERNAME_OR_PASSWORD_ERROR(50004, "Username or password error."),
     /**
      * Token expired
      */
-    TOKEN_EXPIRED(5002, "Token expired."),
+    TOKEN_EXPIRED(50005, "Token expired."),
     /**
      * Token parse error
      */
-    TOKEN_PARSE_ERROR(5002, "Token parse error."),
+    TOKEN_PARSE_ERROR(50006, "Token parse error."),
     /**
      * Token out of control
      */
-    TOKEN_OUT_OF_CONTROL(5003, "Token out of control. " +
+    TOKEN_OUT_OF_CONTROL(50007, "Token out of control. " +
             "Current user has logged in before. Please try to reset current password or sign in again."),
     /**
      * Kick out self 无法手动踢出自己，请尝试退出登录操作！
      */
-    KICK_OUT_SELF(5004, "Cannot kick self out. Please try to sign in again.");
+    KICK_OUT_SELF(50008, "Cannot kick self out. Please try to sign in again.");
 
     /**
      * Code of status
