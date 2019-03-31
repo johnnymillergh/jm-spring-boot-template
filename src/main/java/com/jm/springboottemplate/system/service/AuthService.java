@@ -33,4 +33,12 @@ public interface AuthService {
      * @param user new user
      */
     User register(User user);
+
+    /**
+     * Validate username.
+     *
+     * @param username username string
+     * @return true - username is valid; false - username is not valid
+     */
+    boolean validateUsername(String username);
 }

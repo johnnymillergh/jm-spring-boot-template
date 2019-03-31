@@ -85,12 +85,17 @@ public class AuthController {
         return ResponseBodyBean.ofFailure("Registered failure.");
     }
 
+    @GetMapping("/validateUsername/{username}")
+    public ResponseBodyBean validateUsername(@PathVariable String username) {
+        boolean validateResult = authService.validateUsername(username);
+        return validateResult ? ResponseBodyBean.ofSuccess("Valid username.") :
+                ResponseBodyBean.ofFailure("Invalid username.");
+    }
+
     @PostMapping("/login")
     public ResponseBodyBean login(@Valid @RequestBody Login login) {
-        Authentication authentication =
-                authenticationManager
-                        .authenticate(new UsernamePasswordAuthenticationToken(login.getUsernameOrEmailOrPhone(),
-                                                                              login.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(login.getUsernameOrEmailOrPhone(), login.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

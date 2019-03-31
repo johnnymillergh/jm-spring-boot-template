@@ -43,9 +43,14 @@ custom:
     ignores:
       # POST Requests need to be ignored.
       post:
+        - "/auth/register"
+        - "/auth/login"
+      get:
+        - "/auth/checkUsernameUniqueness"
+        - "/auth/checkEmailUniqueness"
+        - "/auth/validateUsername/**"
       # Request need to be ignored that matches pattern.
       pattern:
-        - "/auth/**"
         - "/swagger-resources/**"
         - "/v2/api-docs/**"
         - "/webjars/**"

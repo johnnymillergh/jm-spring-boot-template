@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -48,14 +47,6 @@ public interface UserMapper {
     Integer checkEmailUniqueness(String email);
 
     /**
-     * 根据用户名列表查询用户列表
-     *
-     * @param usernameList 用户名列表
-     * @return 用户列表
-     */
-    List<User> findByUsernameIn(List<String> usernameList);
-
-    /**
      * Save user
      *
      * @param user A new user.
@@ -70,4 +61,12 @@ public interface UserMapper {
      * @return Registered user ID
      */
     Long register(User user);
+
+    /**
+     * Get count of username by username.
+     *
+     * @param username Username string
+     * @return Count of username
+     */
+    Integer getUsernameCountByUsername(String username);
 }

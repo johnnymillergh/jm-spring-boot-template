@@ -3,6 +3,7 @@ package com.jm.springboottemplate.system.service.impl;
 import com.jm.springboottemplate.system.domain.persistence.User;
 import com.jm.springboottemplate.system.mapper.UserMapper;
 import com.jm.springboottemplate.system.service.AuthService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,5 +42,14 @@ public class AuthServiceImpl implements AuthService {
     public User register(User user) {
         userMapper.register(user);
         return user;
+    }
+
+    @Override
+    public boolean validateUsername(String username) {
+        if (StringUtils.isBlank(username)) {
+            return false;
+        }
+        Integer countOfUsername = userMapper.getUsernameCountByUsername(username);
+        return countOfUsername != 0;
     }
 }

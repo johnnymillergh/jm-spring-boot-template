@@ -59,4 +59,10 @@
         /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:register*/
         ]]>
     </insert>
+
+    <select id="getUsernameCountByUsername" resultType="integer">
+        SELECT count(1)
+        FROM t_user tu
+        WHERE tu.username = #{username}
+    </select>
 </mapper>
