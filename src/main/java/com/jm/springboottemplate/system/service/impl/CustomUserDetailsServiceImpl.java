@@ -29,12 +29,18 @@ import java.util.stream.Collectors;
  **/
 @Service
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
+    private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
+    private final PermissionMapper permissionMapper;
+
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private RoleMapper roleMapper;
-    @Autowired
-    private PermissionMapper permissionMapper;
+    public CustomUserDetailsServiceImpl(UserMapper userMapper,
+                                        RoleMapper roleMapper,
+                                        PermissionMapper permissionMapper) {
+        this.userMapper = userMapper;
+        this.roleMapper = roleMapper;
+        this.permissionMapper = permissionMapper;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmailOrPhone) throws UsernameNotFoundException {
