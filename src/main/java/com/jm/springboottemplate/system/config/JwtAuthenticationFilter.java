@@ -61,6 +61,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 + request.getServletPath();
         log.error(accessorInformation);
 
+        // Check if disable Web Security.
+        if (customConfiguration.getWebSecurityDisabled()) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (checkIgnores(request)) {
             filterChain.doFilter(request, response);
             return;

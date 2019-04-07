@@ -20,4 +20,9 @@ public class CustomConfiguration {
     private IgnoreConfiguration ignores;
     private String druidLoginName;
     private String druidPassword;
+    /**
+     * <p>Web security feature switch. Default is false.</p>
+     * true - disable web security; false - enable web security.
+     */
+    private Boolean webSecurityDisabled = false;
 }

@@ -40,6 +40,7 @@ server:
     uri-encoding: utf-8
 custom:
   configuration:
+    web-security-disabled: true
     ignores:
       # POST Requests need to be ignored.
       post:
