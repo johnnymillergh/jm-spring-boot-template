@@ -19,8 +19,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class Application {
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
         SpringApplication.run(Application.class, args);
-        log.error("Congratulations! [{}:v{}] has started up successfully!", ProjectPropertyUtil.getName(),
-                  ProjectPropertyUtil.getVersion());
+        long endTime = System.currentTimeMillis();
+        log.error("Congratulations! [{}:v{}] has started up successfully! Deployment duration: {} seconds ({} ms)",
+                  ProjectPropertyUtil.getName(),
+                  ProjectPropertyUtil.getVersion(),
+                  (endTime - startTime) / 1000,
+                  (endTime - startTime));
     }
 }
