@@ -55,7 +55,7 @@ public class User {
      */
     private Date createTime;
     /**
-     * Update time
+     * Modify time
      */
-    private Date updateTime;
+    private Date modifyTime;
 }

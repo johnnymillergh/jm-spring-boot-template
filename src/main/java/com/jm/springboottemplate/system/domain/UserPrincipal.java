@@ -75,9 +75,9 @@ public class UserPrincipal implements UserDetails {
      */
     private Date createTime;
     /**
-     * Update time
+     * Modify time
      */
-    private Date updateTime;
+    private Date modifyTime;
     /**
      * Roles that user has
      */
@@ -88,18 +88,16 @@ public class UserPrincipal implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public static UserPrincipal create(User user, List<Role> roles, List<Permission> permissions) {
-        List<String> roleNames = roles.stream()
-                .map(Role::getName)
-                .collect(Collectors.toList());
+        List<String> roleNames = roles.stream().map(Role::getName).collect(Collectors.toList());
 
         List<GrantedAuthority> authorities = permissions.stream()
-                .filter(permission -> StrUtil.isNotBlank(permission.getPermission()))
-                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
-                .collect(Collectors.toList());
+                                                        .filter(permission -> StrUtil.isNotBlank(permission.getPermission()))
+                                                        .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                                                        .collect(Collectors.toList());
 
         return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getNickname(),
-                user.getPhone(), user.getEmail(), user.getBirthday(), user.getSex(), user.getStatus(),
-                user.getCreateTime(), user.getUpdateTime(), roleNames, authorities);
+                                 user.getPhone(), user.getEmail(), user.getBirthday(), user.getSex(), user.getStatus(),
+                                 user.getCreateTime(), user.getModifyTime(), roleNames, authorities);
     }
 
     @Override

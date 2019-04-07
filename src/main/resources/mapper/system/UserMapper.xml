@@ -12,7 +12,7 @@
                su.sex,
                su.status,
                su.create_time AS createTime,
-               su.update_time AS updateTime
+               su.modify_time AS modifyTime
         FROM t_user su
         <where>
             <if test="username != null">
@@ -53,7 +53,7 @@
     </insert>
 
     <insert id="register" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_user(username, password, email, status, create_time, update_time)
+        INSERT INTO t_user(username, password, email, status, create_time, modify_time)
         VALUES (#{username}, #{password}, #{email}, 1, now(), now())
         <![CDATA[
         /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:register*/

@@ -31,7 +31,7 @@ public class Role {
      */
     private Date createTime;
     /**
-     * Update time
+     * Modify time
      */
-    private Date updateTime;
+    private Date modifyTime;
 }

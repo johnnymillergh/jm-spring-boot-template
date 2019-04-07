@@ -1,0 +1,1 @@
+This file will be deleted when directory '/note' has tow or more sub directories.
