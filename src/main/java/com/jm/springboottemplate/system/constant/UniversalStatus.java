@@ -73,7 +73,7 @@ public enum UniversalStatus implements IUniversalStatus {
     /**
      * User disabled
      */
-    USER_DISABLED(403, "User disabled."),
+    USER_DISABLED(40301, "User disabled."),
     /**
      * Username or password error
      */

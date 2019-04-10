@@ -17,15 +17,15 @@ public class Permission {
      */
     private Long id;
     /**
-     * Permission name
-     */
-    private String name;
-    /**
      * URL.
      * If type is equal to 1 (page), it stands for route.
      * If type is equal to 2 (button), it stands for API's url.
      */
     private String url;
+    /**
+     * Permission description
+     */
+    private String description;
     /**
      * Permission type. Page-1, Button-2
      */

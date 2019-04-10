@@ -6,8 +6,10 @@ import com.jm.springboottemplate.common.service.DemoService;
 import com.jm.springboottemplate.system.constant.UniversalStatus;
 import com.jm.springboottemplate.system.exception.BizException;
 import com.jm.springboottemplate.system.response.ResponseBodyBean;
+import com.jm.springboottemplate.system.service.ApiService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -32,27 +34,36 @@ import java.util.*;
  * @time: 16:16
  **/
 @Slf4j
+@Api(value = "Demo Controller", tags = {"demo", "test"})
 @RestController
 @RequestMapping("/demo")
 public class DemoController {
-    @Autowired
-    private DemoService demoService;
-    @Autowired
-    private RedisTemplate redisTemplate;
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-    @Autowired
-    private WebApplicationContext applicationContext;
+    private final DemoService demoService;
+    private final RedisTemplate redisTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
+    private final WebApplicationContext applicationContext;
+    private final ApiService apiService;
 
-    @ResponseBody
+    public DemoController(DemoService demoService,
+                          RedisTemplate redisTemplate,
+                          StringRedisTemplate stringRedisTemplate,
+                          WebApplicationContext applicationContext, ApiService apiService) {
+        this.demoService = demoService;
+        this.redisTemplate = redisTemplate;
+        this.stringRedisTemplate = stringRedisTemplate;
+        this.applicationContext = applicationContext;
+        this.apiService = apiService;
+    }
+
     @GetMapping("/hello")
+    @ApiOperation(value = "Hello", notes = "Test hello")
     public ResponseBodyBean hello(HttpServletRequest request) {
         log.debug(request.getServletPath());
         return ResponseBodyBean.ofSuccess("Hello world!", "Welcome to my website.");
     }
 
-    @ResponseBody
     @GetMapping("/getTestRecordById/{id}")
+    @ApiOperation(value = "Get test record by id", notes = "id is required")
     public ResponseBodyBean getTestRecordById(@PathVariable Integer id) {
         TestTable testTable = demoService.getById(id);
         if (testTable == null) {
@@ -61,8 +72,8 @@ public class DemoController {
         return ResponseBodyBean.ofSuccess(testTable);
     }
 
-    @ResponseBody
     @GetMapping("/jsonTest")
+    @ApiOperation(value = "Json test")
     public ResponseBodyBean jsonTest() {
         Map<String, Object> map = new HashMap<>(10);
         map.put("datetime", new Date());
@@ -72,12 +83,14 @@ public class DemoController {
     }
 
     @GetMapping("/bixExceptionTest")
+    @ApiOperation(value = "Test exception")
     public void bizExceptionTest() {
         throw new BizException(new NullPointerException("I can't do that!"));
     }
 
-    @ResponseBody
+    @SuppressWarnings("unchecked")
     @GetMapping("/redisTest")
+    @ApiOperation(value = "Test Redis")
     public ResponseBodyBean redisTest() {
         ValueOperations<String, String> operations1 = stringRedisTemplate.opsForValue();
         String bookName = "Call Me by Your Name";
@@ -94,18 +107,18 @@ public class DemoController {
         return ResponseBodyBean.ofSuccess(operations2.get("book"));
     }
 
-    @ResponseBody
     @PostMapping("/bookValidation")
+    @ApiOperation(value = "Test validation")
     public ResponseBodyBean bookValidation(@Validated Book book, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseBodyBean.setResponse(UniversalStatus.PARAM_NOT_MATCH.getCode(),
-                    "Error count = " + bindingResult.getErrorCount(), null);
+                                                "Error count = " + bindingResult.getErrorCount(), null);
         }
         return ResponseBodyBean.ofSuccess("No error");
     }
 
     @GetMapping("/getAllUrl")
-    @ResponseBody
+    @ApiOperation(value = "Get all url")
     public List<String> getAllUrl() {
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         //获取url与类和方法的对应信息
@@ -117,5 +130,17 @@ public class DemoController {
             urlList.addAll(patterns);
         }
         return urlList;
+    }
+
+    @GetMapping("/getAllApi")
+    @ApiOperation(value = "getAllController")
+    public ResponseBodyBean getAllController() {
+        return ResponseBodyBean.ofSuccess(apiService.getAllControllerClass());
+    }
+
+    @GetMapping("/getApiByFullClassName")
+    @ApiOperation(value = "getApiByFullClassName")
+    public ResponseBodyBean getApiByFullClassName(String fullClassName, Integer apiStatus) {
+        return apiService.getPermissionsByClassFullName(fullClassName, apiStatus);
     }
 }

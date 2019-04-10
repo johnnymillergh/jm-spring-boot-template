@@ -1,6 +1,7 @@
 package com.jm.springboottemplate.controller;
 
 import com.jm.springboottemplate.common.service.DemoService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
  **/
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class DemoControllerTest {
     @Autowired
     private DemoService demoService;
@@ -40,13 +42,26 @@ public class DemoControllerTest {
 
     @Test
     public void helloTest() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
-                MockMvcRequestBuilders.get("/demo/hello")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-        ).andExpect(MockMvcResultMatchers.status()
-                .isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/demo/hello")
+                                                                    .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                                     .andExpect(MockMvcResultMatchers.status()
+                                                                     .isOk())
+                                     .andDo(MockMvcResultHandlers.print())
+                                     .andReturn();
         System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void getAllUrlTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/demo/getAllApi")
+                                                                    .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                                     .andExpect(MockMvcResultMatchers.status()
+                                                                     .isOk())
+                                     .andDo(MockMvcResultHandlers.print())
+                                     .andReturn();
+        log.error("Result = {}", mvcResult.getResponse().getContentAsString());
+        log.error("Simple name: {}, name: {}",
+                  DemoControllerTest.class.getSimpleName(),
+                  DemoControllerTest.class.getPackage().getName());
     }
 }
