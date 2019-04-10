@@ -43,10 +43,8 @@
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_user(username, password, nickname, phone, email, birthday, sex, status, create_time,
-                           update_time)
-        VALUES (#{username}, #{password}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex}, #{status}, now(),
-                now())
+        INSERT INTO t_user(username, password, nickname, phone, email, birthday, sex, status, create_time, modify_time)
+        VALUES (#{username}, #{password}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex}, #{status}, now(), now())
         <![CDATA[
         /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:save*/
         ]]>

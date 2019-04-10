@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: @env@
 server:
   servlet:
     context-path: "/springboottemplate"
