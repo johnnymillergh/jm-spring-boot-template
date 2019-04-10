@@ -66,7 +66,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // Check if disable Web Security.
         if (customConfiguration.getWebSecurityDisabled()) {
-            http.authorizeRequests().anyRequest().permitAll();
+            http.authorizeRequests().anyRequest().permitAll().and().csrf().disable();
             return;
         }
 
