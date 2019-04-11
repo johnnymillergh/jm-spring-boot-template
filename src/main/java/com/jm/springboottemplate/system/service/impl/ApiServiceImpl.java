@@ -75,7 +75,8 @@ public class ApiServiceImpl implements ApiService {
     }
 
     /**
-     * Get permissions by class.
+     * <p>Get permissions by class.</p>
+     * <p>Permission model contains URL(API) information.</p>
      *
      * @param clazz class
      * @return permission list (API list)
@@ -129,7 +130,7 @@ public class ApiServiceImpl implements ApiService {
                 uri.setMethod("POST");
             }
             if (apiOperation != null) {
-                uri.setDescription(apiOperation.value());
+                uri.setDescription(apiOperation.notes());
             }
             result.add(uri);
         }

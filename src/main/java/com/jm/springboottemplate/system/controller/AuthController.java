@@ -9,6 +9,8 @@ import com.jm.springboottemplate.system.exception.SecurityException;
 import com.jm.springboottemplate.system.response.ResponseBodyBean;
 import com.jm.springboottemplate.system.service.AuthService;
 import com.jm.springboottemplate.system.util.JwtUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("/auth")
+@Api(value = "Auth Controller", tags = {"auth"})
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
@@ -51,6 +54,7 @@ public class AuthController {
     }
 
     @GetMapping("/checkUsernameUniqueness")
+    @ApiOperation(value = "Check username uniqueness", notes = "Check username uniqueness")
     public ResponseBodyBean checkUsernameUniqueness(String username) {
         if (StringUtils.isBlank(username)) {
             return ResponseBodyBean.ofStatus(UniversalStatus.PARAM_INVALID);
@@ -62,6 +66,7 @@ public class AuthController {
     }
 
     @GetMapping("/checkEmailUniqueness")
+    @ApiOperation(value = "Check email uniqueness", notes = "Check email uniqueness")
     public ResponseBodyBean checkEmailUniqueness(String email) {
         if (StringUtils.isBlank(email)) {
             return ResponseBodyBean.ofStatus(UniversalStatus.PARAM_INVALID);
@@ -73,6 +78,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    @ApiOperation(value = "Register", notes = "Register (create an account)")
     public ResponseBodyBean register(@Valid @RequestBody Register register) {
         User user = new User();
         user.setUsername(register.getUsername());
@@ -86,6 +92,8 @@ public class AuthController {
     }
 
     @GetMapping("/validateUsername/{username}")
+    @ApiOperation(value = "Validate username", notes = "Validate username for user login. " +
+            "If the username do not exist, response failure")
     public ResponseBodyBean validateUsername(@PathVariable String username) {
         boolean validateResult = authService.validateUsername(username);
         return validateResult ? ResponseBodyBean.ofSuccess("Valid username.") :
@@ -93,6 +101,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @ApiOperation(value = "Login", notes = "Login (Sign in)")
     public ResponseBodyBean login(@Valid @RequestBody Login login) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(login.getUsernameOrEmailOrPhone(), login.getPassword()));
@@ -104,6 +113,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
+    @ApiOperation(value = "Logout", notes = "Logout (Sign out)")
     public ResponseBodyBean logout(HttpServletRequest request) {
         try {
             jwtUtil.invalidateJWT(request);

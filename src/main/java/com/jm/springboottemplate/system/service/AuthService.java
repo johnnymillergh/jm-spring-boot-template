@@ -30,7 +30,8 @@ public interface AuthService {
     /**
      * Register a new user.
      *
-     * @param user new user
+     * @param user new user.
+     * @return the new user stored in db with ID (primary key).
      */
     User register(User user);
 
