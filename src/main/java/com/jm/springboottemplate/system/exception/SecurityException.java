@@ -25,12 +25,4 @@ public class SecurityException extends BaseException {
     public SecurityException(UniversalStatus universalStatus, Object data) {
         super(universalStatus, data);
     }
-
-    public SecurityException(Integer code, String message) {
-        super(code, message);
-    }
-
-    public SecurityException(Integer code, String message, Object data) {
-        super(code, message, data);
-    }
 }

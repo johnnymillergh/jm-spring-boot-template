@@ -17,12 +17,22 @@ import lombok.EqualsAndHashCode;
 public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 5049763892480652887L;
 
+    /**
+     * Code is REQUIRED. Default code is 500.
+     */
     private Integer code;
+    /**
+     * Message is REQUIRED. Default message is: Error. A generic status for an error in the server itself.
+     */
     private String message;
     private Object data;
 
+    private BaseException() {
+        this.code = UniversalStatus.ERROR.getCode();
+        this.message = UniversalStatus.ERROR.getMessage();
+    }
+
     public BaseException(UniversalStatus universalStatus) {
-        super(universalStatus.getMessage());
         this.code = universalStatus.getCode();
         this.message = universalStatus.getMessage();
     }
@@ -32,26 +42,23 @@ public class BaseException extends RuntimeException {
         this.data = data;
     }
 
-    public BaseException(Integer code, String message) {
-        super(message);
-        this.code = code;
+    public BaseException(UniversalStatus universalStatus, String message) {
+        this(universalStatus);
         this.message = message;
     }
 
-    public BaseException(Integer code, String message, Object data) {
-        this(code, message);
-        this.data = data;
-    }
-
     public BaseException(String message) {
-        super(message);
+        this();
+        this.message = message;
     }
 
     public BaseException(String message, Throwable throwable) {
-        super(message, throwable);
+        this(message);
+        super.setStackTrace(throwable.getStackTrace());
     }
 
     public BaseException(Throwable throwable) {
-        super(throwable);
+        this(throwable.getMessage());
+        super.setStackTrace(throwable.getStackTrace());
     }
 }
