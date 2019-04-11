@@ -19,12 +19,10 @@ public class JwtConfiguration {
      * JWT signing key, which is equal to the string value of group id of project.
      */
     private String signingKey = ProjectPropertyUtil.getGroupId();
-
     /**
      * Time to live of JWT. Default: 3 * 600000 milliseconds {@code 30 min}.
      */
     private Long ttl = 3 * 600000L;
-
     /**
      * Time to live of JWT for remember me, Default: 7 * 86400000 {@code 7 天}
      */

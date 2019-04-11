@@ -1,7 +1,5 @@
 package com.jm.springboottemplate.system.service;
 
-import com.jm.springboottemplate.system.response.ResponseBodyBean;
-
 import java.util.List;
 
 /**
@@ -24,7 +22,8 @@ public interface ApiService {
      * Get permissions by class's full name.
      *
      * @param classFullName full name of class.
+     * @param apiStatus     api status.
      * @return permission list.
      */
-    ResponseBodyBean getPermissionsByClassFullName(String classFullName, Integer apiStatus);
+    List getApiByClassFullName(String classFullName, Integer apiStatus);
 }

@@ -131,16 +131,4 @@ public class DemoController {
         }
         return urlList;
     }
-
-    @GetMapping("/getAllApi")
-    @ApiOperation(value = "getAllController")
-    public ResponseBodyBean getAllController() {
-        return ResponseBodyBean.ofSuccess(apiService.getAllControllerClass());
-    }
-
-    @GetMapping("/getApiByFullClassName")
-    @ApiOperation(value = "getApiByFullClassName")
-    public ResponseBodyBean getApiByFullClassName(String fullClassName, Integer apiStatus) {
-        return apiService.getPermissionsByClassFullName(fullClassName, apiStatus);
-    }
 }

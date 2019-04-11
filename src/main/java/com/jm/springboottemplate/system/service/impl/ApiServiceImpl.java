@@ -3,8 +3,8 @@ package com.jm.springboottemplate.system.service.impl;
 import com.jm.springboottemplate.system.constant.ApiStatus;
 import com.jm.springboottemplate.system.domain.Uri;
 import com.jm.springboottemplate.system.domain.persistence.Permission;
+import com.jm.springboottemplate.system.exception.BizException;
 import com.jm.springboottemplate.system.mapper.PermissionMapper;
-import com.jm.springboottemplate.system.response.ResponseBodyBean;
 import com.jm.springboottemplate.system.service.ApiService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -62,17 +62,16 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public ResponseBodyBean getPermissionsByClassFullName(String classFullName, Integer apiStatus) {
+    public List getApiByClassFullName(String classFullName, Integer apiStatus) {
         Class<?> clazz;
         try {
             clazz = Class.forName(classFullName);
         } catch (ClassNotFoundException e) {
             log.error("Error occurred when find class by className. {}", e.getMessage());
-            return ResponseBodyBean.ofFailure("Class not found.");
+            throw new BizException("Error occurred when find class by className. " + e.getMessage());
         }
         ApiStatus status = ApiStatus.getByStatus(apiStatus);
-        List resultMap = getPermissionsByClass(clazz, status);
-        return ResponseBodyBean.ofSuccess(resultMap);
+        return getPermissionsByClass(clazz, status);
     }
 
     /**
