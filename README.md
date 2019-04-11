@@ -37,17 +37,38 @@ This project uses [Java 8](http://nodejs.org). Go check them out if you don't ha
 
 3. Click the green triangle to Run.
 
-## Badge
+## Standard Controller Template
 
-If your README is compliant with Standard-Readme and you're on GitHub, it would be great if you could add the badge. This allows people to link back to this Spec, and helps adoption of the README. The badge is **not required**.
+A standard controller should be simple, good to read and maintain. It's  just a data transfer bridge for front-end and back-end and exposures APIs. Here is a standard controller template.
 
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+```java
+/**
+ * Description: StandardController, change description here.
+ *
+ * @author: Johnny Miller (鍾俊)
+ * @email: johnnysviva@outlook.com
+ * @date: 2019-04-11
+ * @time: 13:36
+ **/
+@RestController
+@RequestMapping("/standard")
+@Api(value = "Standard Controller", tags = {"tag-for-controller"})
+public class StandardController {
+    private final DemoService demoService;
 
-To add in Markdown format, use this code:
+    public StandardController(DemoService demoService) {
+        this.demoService = demoService;
+    }
 
-```markdown
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+    @GetMapping("/some-path")
+    @ApiOperation(value = "somePath", notes = "Notes for some path")
+    public ResponseBodyBean somePath(String param) {
+        return ResponseBodyBean.ofSuccess("Response message" + param);
+    }
+}
 ```
+
+
 
 ## Related Efforts
 
