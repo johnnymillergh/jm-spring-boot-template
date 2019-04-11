@@ -4,6 +4,7 @@ import com.jm.springboottemplate.system.response.ResponseBodyBean;
 import com.jm.springboottemplate.system.service.ApiService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,9 @@ public class ApiManagementController {
     @GetMapping("/getApiByControllerClass")
     @ApiOperation(value = "Get API by controller", notes = "Get API by controller")
     public ResponseBodyBean getApiByControllerClass(String controllerClass, Integer apiStatus) {
+        if (StringUtils.isBlank(controllerClass)) {
+            return ResponseBodyBean.ofFailure("controllerClass is not empty");
+        }
         return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(controllerClass, apiStatus));
     }
 }

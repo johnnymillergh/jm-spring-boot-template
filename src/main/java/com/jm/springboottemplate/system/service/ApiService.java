@@ -1,6 +1,7 @@
 package com.jm.springboottemplate.system.service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description: ApiService, change description here.
@@ -25,5 +26,5 @@ public interface ApiService {
      * @param apiStatus     api status.
      * @return permission list.
      */
-    List getApiByClassFullName(String classFullName, Integer apiStatus);
+    Map getApiByClassFullName(String classFullName, Integer apiStatus);
 }

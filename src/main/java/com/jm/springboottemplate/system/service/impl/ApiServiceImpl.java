@@ -8,6 +8,7 @@ import com.jm.springboottemplate.system.mapper.PermissionMapper;
 import com.jm.springboottemplate.system.service.ApiService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,7 +63,7 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public List getApiByClassFullName(String classFullName, Integer apiStatus) {
+    public Map getApiByClassFullName(String classFullName, Integer apiStatus) {
         Class<?> clazz;
         try {
             clazz = Class.forName(classFullName);
@@ -79,12 +80,16 @@ public class ApiServiceImpl implements ApiService {
      * <p>Permission model contains URL(API) information.</p>
      *
      * @param clazz class
-     * @return permission list (API list)
+     * @return permission list (API list), inUseApiCount, idledApiCount
      */
-    private List getPermissionsByClass(Class<?> clazz, ApiStatus apiStatus) {
+    private Map getPermissionsByClass(Class<?> clazz, ApiStatus apiStatus) {
         boolean restControllerExisted = clazz.isAnnotationPresent(RestController.class);
         if (!restControllerExisted) {
-            return null;
+            Map<String, Object> resultMap = new HashMap<>(4);
+            resultMap.put("apiList", null);
+            resultMap.put("inUseApiCount", null);
+            resultMap.put("idledApiCount", null);
+            return resultMap;
         }
         List<Uri> result = new ArrayList<>();
         RequestMapping restControllersRequestMappingAnnotation = clazz.getAnnotation(RequestMapping.class);
@@ -92,8 +97,19 @@ public class ApiServiceImpl implements ApiService {
         if (restControllersRequestMappingAnnotation != null) {
             urlPrefix = restControllersRequestMappingAnnotation.value()[0];
         }
+        if (StringUtils.isBlank(urlPrefix)) {
+            Map<String, Object> resultMap = new HashMap<>(4);
+            resultMap.put("apiList", result);
+            resultMap.put("inUseApiCount", null);
+            resultMap.put("idledApiCount", null);
+            return resultMap;
+        }
         if (apiStatus == ApiStatus.IN_USED) {
+            Map<String, Object> resultMap = new HashMap<>(4);
             List<Permission> permissions = permissionMapper.findApisByUrlPrefix(urlPrefix);
+            int allMethodCount = clazz.getDeclaredMethods().length;
+            int inUseApiCount = permissions.size();
+            int idledApiCount = allMethodCount - inUseApiCount;
             for (Permission permission : permissions) {
                 Uri uri = new Uri();
                 uri.setUrl(permission.getUrl());
@@ -101,13 +117,22 @@ public class ApiServiceImpl implements ApiService {
                 uri.setDescription(permission.getDescription());
                 result.add(uri);
             }
-            return result;
+            resultMap.put("apiList", result);
+            resultMap.put("inUseApiCount", inUseApiCount);
+            resultMap.put("idledApiCount", idledApiCount);
+            return resultMap;
         }
         // Get all methods declared in class.
         Method[] methods = clazz.getDeclaredMethods();
+        int allMethodCount = clazz.getDeclaredMethods().length;
         if (methods.length == 0) {
-            return result;
+            Map<String, Object> resultMap = new HashMap<>(4);
+            resultMap.put("apiList", result);
+            resultMap.put("inUseApiCount", null);
+            resultMap.put("idledApiCount", null);
+            return resultMap;
         }
+        Map<String, Object> resultMap = new HashMap<>(4);
         for (Method method : methods) {
             if (method.getModifiers() != Modifier.PUBLIC) {
                 continue;
@@ -143,6 +168,11 @@ public class ApiServiceImpl implements ApiService {
             }
             iterator.remove();
         }
-        return result;
+        int idledApiCount = result.size();
+        int inUseApiCount = allMethodCount - idledApiCount;
+        resultMap.put("apiList", result);
+        resultMap.put("inUseApiCount", inUseApiCount);
+        resultMap.put("idledApiCount", idledApiCount);
+        return resultMap;
     }
 }
