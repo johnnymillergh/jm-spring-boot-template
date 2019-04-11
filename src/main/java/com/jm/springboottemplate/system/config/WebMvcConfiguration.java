@@ -3,7 +3,7 @@ package com.jm.springboottemplate.system.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
  * Description: WebMvcConfiguration, Spring MVC Configurations.
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @time: 12:34
  **/
 @Configuration
-public class WebMvcConfiguration implements WebMvcConfigurer {
+public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     private static final long MAX_AGE_SECS = 3600;
 
     /**
@@ -27,6 +27,11 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        super.addResourceHandlers(registry);
     }
 
     @Override

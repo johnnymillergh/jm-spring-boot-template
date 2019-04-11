@@ -67,7 +67,7 @@ public class ApiServiceImpl implements ApiService {
         try {
             clazz = Class.forName(classFullName);
         } catch (ClassNotFoundException e) {
-            log.error("Error occurred when find class by className. {}", e.getMessage());
+            log.error("Error occurred when find class by className. {}", e.getMessage(), e);
             throw new BizException("Error occurred when find class by className. " + e.getMessage());
         }
         ApiStatus status = ApiStatus.getByStatus(apiStatus);

@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 
 /**
  * Description: DruidConfiguration, change description here.
+ * <a href="http://localhost:8080/springboottemplate/druid/index.html">Click me to view Druid Monitor</a>
  *
  * @author: Johnny Miller (鍾俊)
  * @email: johnnysviva@outlook.com
