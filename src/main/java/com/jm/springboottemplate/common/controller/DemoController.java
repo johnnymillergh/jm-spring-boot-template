@@ -28,10 +28,8 @@ import java.util.*;
 /**
  * Description: DemoController, used for testing new features.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-02-07
- * @time: 16:16
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-02-07 16:16
  **/
 @Slf4j
 @Api(value = "Demo Controller", tags = {"demo", "test"})

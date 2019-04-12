@@ -5,10 +5,8 @@ import com.jm.springboottemplate.system.util.ProjectPropertyUtil;
 /**
  * Description: Constants
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 18:46
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23, email: 18:46
  **/
 public interface Constants {
     /**

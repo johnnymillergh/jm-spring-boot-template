@@ -27,10 +27,8 @@ import javax.validation.Valid;
 /**
  * Description: Authentication and authorization controller for user signing up, login and logout.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 14:54
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 14:54
  **/
 @Slf4j
 @RestController

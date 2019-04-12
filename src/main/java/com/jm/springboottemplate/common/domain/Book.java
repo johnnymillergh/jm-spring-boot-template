@@ -8,10 +8,8 @@ import java.io.Serializable;
 /**
  * Description: Book, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-02
- * @time: 22:34
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-02 22:34
  **/
 public class Book implements Serializable {
     private static final long serialVersionUID = -5317595529610149889L;

@@ -10,10 +10,8 @@ import java.util.List;
 /**
  * Description: PageResult
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 22:24
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 22:24
  **/
 @Data
 @NoArgsConstructor

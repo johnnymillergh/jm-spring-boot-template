@@ -5,10 +5,8 @@ import lombok.Data;
 /**
  * Description: PageCondition, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-02
- * @time: 17:38
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-02 17:38
  **/
 @Data
 public class PageCondition {

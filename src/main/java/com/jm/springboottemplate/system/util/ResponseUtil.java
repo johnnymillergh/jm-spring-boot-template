@@ -12,10 +12,8 @@ import java.io.IOException;
 /**
  * Description: ResponseUtil
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 18:02
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 18:02
  **/
 @Slf4j
 public class ResponseUtil {

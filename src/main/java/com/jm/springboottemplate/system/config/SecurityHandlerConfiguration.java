@@ -9,10 +9,8 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 /**
  * Description: Security handler configuration.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-26
- * @time: 14:30
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-26 14:30
  **/
 @Configuration
 public class SecurityHandlerConfiguration {

@@ -22,10 +22,8 @@ import java.util.stream.Collectors;
 /**
  * Description: Custom user detail service.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-03
- * @time: 13:40
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-03 13:40
  **/
 @Service
 public class CustomUserDetailsServiceImpl implements UserDetailsService {

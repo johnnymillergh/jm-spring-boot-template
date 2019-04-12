@@ -17,10 +17,8 @@ import java.util.Map;
 /**
  * Description: ErrorController, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-02
- * @time: 16:56
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-02 16:56
  **/
 @RestController
 public class ErrorController extends BasicErrorController {

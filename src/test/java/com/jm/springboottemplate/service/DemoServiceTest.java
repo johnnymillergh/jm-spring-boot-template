@@ -15,10 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 /**
  * Description: DemoServiceTest, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-03
- * @time: 09:50
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-03 09:50
  **/
 @RunWith(SpringRunner.class)
 @SpringBootTest

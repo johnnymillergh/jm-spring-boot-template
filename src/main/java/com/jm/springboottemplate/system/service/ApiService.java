@@ -1,15 +1,13 @@
 package com.jm.springboottemplate.system.service;
 
-import java.util.List;
-import java.util.Map;
+import com.jm.springboottemplate.system.domain.response.Api;
+import com.jm.springboottemplate.system.domain.response.ApiController;
 
 /**
  * Description: ApiService, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-04-07
- * @time: 13:30
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-04-07 13:30
  **/
 public interface ApiService {
     /**
@@ -17,7 +15,7 @@ public interface ApiService {
      *
      * @return controller list.
      */
-    List getAllControllerClass();
+    ApiController getAllControllerClass();
 
     /**
      * Get permissions by class's full name.
@@ -26,5 +24,5 @@ public interface ApiService {
      * @param apiStatus     api status.
      * @return permission list.
      */
-    Map getApiByClassFullName(String classFullName, Integer apiStatus);
+    Api getApiByClassFullName(String classFullName, Integer apiStatus);
 }

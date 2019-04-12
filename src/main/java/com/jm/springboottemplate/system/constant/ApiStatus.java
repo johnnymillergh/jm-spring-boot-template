@@ -5,10 +5,8 @@ import lombok.Getter;
 /**
  * Description: ApiStatus, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-04-07
- * @time: 23:32
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-04-07 23:32
  **/
 @Getter
 public enum ApiStatus {

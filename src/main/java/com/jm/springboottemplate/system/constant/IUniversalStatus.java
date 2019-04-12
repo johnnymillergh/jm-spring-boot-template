@@ -3,10 +3,8 @@ package com.jm.springboottemplate.system.constant;
 /**
  * Description: IUniversalStatus, interface of RESTful API Status code
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 16:48
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 16:48
  **/
 public interface IUniversalStatus {
     /**

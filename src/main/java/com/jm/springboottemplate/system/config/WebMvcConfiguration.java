@@ -8,10 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 /**
  * Description: WebMvcConfiguration, Spring MVC Configurations.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-02
- * @time: 12:34
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-02 12:34
  **/
 @Configuration
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {

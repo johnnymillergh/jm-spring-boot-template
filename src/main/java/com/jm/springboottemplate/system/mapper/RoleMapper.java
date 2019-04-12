@@ -9,10 +9,8 @@ import java.util.List;
 /**
  * Description: RoleMapper, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-02
- * @time: 17:52
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-02 17:52
  **/
 @Mapper
 @Component

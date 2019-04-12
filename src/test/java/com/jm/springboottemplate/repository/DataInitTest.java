@@ -17,10 +17,8 @@ import java.util.Date;
 /**
  * Description: DataInitTest.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 15:08
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 15:08
  **/
 @Slf4j
 @RunWith(SpringRunner.class)

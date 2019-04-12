@@ -7,10 +7,8 @@ import lombok.EqualsAndHashCode;
 /**
  * Description: BaseException, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 16:23
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 16:23
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data

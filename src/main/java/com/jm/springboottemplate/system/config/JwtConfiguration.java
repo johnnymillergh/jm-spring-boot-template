@@ -7,10 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * Description: JWT configuration
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 14:24
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 14:24
  **/
 @ConfigurationProperties(prefix = "jwt.config")
 @Data

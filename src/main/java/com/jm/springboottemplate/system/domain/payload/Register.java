@@ -8,10 +8,8 @@ import javax.validation.constraints.Size;
 /**
  * Description: Register, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 19:48
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 19:48
  **/
 @Data
 public class Register {

@@ -11,10 +11,8 @@ import java.util.Date;
 /**
  * Description: ResponseBodyBean, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-02
- * @time: 17:52
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-02 17:52
  **/
 public class ResponseBodyBean implements Serializable {
     private static final long serialVersionUID = -6799356701376964494L;

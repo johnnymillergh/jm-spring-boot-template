@@ -7,10 +7,8 @@ import java.util.Date;
 /**
  * Description: Role, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 19:50
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 19:50
  **/
 @Data
 public class Role {

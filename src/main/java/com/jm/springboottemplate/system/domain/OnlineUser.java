@@ -9,10 +9,8 @@ import lombok.Data;
 /**
  * Description: OnlineUser
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 20:52
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 20:52
  **/
 @Data
 public class OnlineUser {

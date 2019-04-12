@@ -9,10 +9,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * Description: Application, entrance of the project.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-02-17
- * @time: 17:11
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-02-17 17:11
  **/
 @Slf4j
 @SpringBootApplication

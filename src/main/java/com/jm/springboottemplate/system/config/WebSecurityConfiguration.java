@@ -20,10 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * Description: Web security configuration.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-26
- * @time: 14:28
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-26 14:28
  **/
 @Slf4j
 @Configuration

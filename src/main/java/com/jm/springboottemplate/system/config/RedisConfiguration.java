@@ -15,10 +15,8 @@ import java.io.Serializable;
 /**
  * Description: Redis configuration.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 14:27
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 14:27
  **/
 @Configuration
 @AutoConfigureAfter(RedisAutoConfiguration.class)

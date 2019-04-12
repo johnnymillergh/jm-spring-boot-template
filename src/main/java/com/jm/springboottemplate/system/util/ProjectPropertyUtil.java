@@ -10,10 +10,8 @@ import java.io.IOException;
 /**
  * Description: Project Property Utils.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-02-07
- * @time: 18:02
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-02-07 18:02
  **/
 public class ProjectPropertyUtil {
     /**

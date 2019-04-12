@@ -15,8 +15,8 @@
 // *
 // * @package: com.xkcoding.rbac.security.controller
 // * @description: 监控 Controller，在线用户，手动踢出用户等功能
-// * @author: yangkai.shen
-// * @date: Created in 2018-12-11 20:55
+// * @author yangkai.shen
+// * @date Created in 2018-12-11 20:55
 // * @copyright: Copyright (c) 2018
 // * @version: V1.0
 // * @modified: yangkai.shen

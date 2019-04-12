@@ -11,10 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Description: AuthServiceImpl, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-28
- * @time: 20:25
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-28 20:25
  **/
 @Service
 public class AuthServiceImpl implements AuthService {

@@ -7,10 +7,8 @@ import java.util.Date;
 /**
  * Description: User
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-23
- * @time: 19:51
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-23 19:51
  **/
 @Data
 public class User {

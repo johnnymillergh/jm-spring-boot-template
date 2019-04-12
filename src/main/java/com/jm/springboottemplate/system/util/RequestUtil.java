@@ -7,10 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Description: RequestUtil, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-02
- * @time: 20:00
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-02 20:00
  **/
 public class RequestUtil {
     /**

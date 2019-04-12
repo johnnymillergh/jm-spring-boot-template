@@ -1,8 +1,9 @@
 package com.jm.springboottemplate.system.service.impl;
 
 import com.jm.springboottemplate.system.constant.ApiStatus;
-import com.jm.springboottemplate.system.domain.Uri;
 import com.jm.springboottemplate.system.domain.persistence.Permission;
+import com.jm.springboottemplate.system.domain.response.Api;
+import com.jm.springboottemplate.system.domain.response.ApiController;
 import com.jm.springboottemplate.system.exception.BizException;
 import com.jm.springboottemplate.system.mapper.PermissionMapper;
 import com.jm.springboottemplate.system.service.ApiService;
@@ -26,10 +27,8 @@ import java.util.*;
 /**
  * Description: ApiServiceImpl, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-04-07
- * @time: 13:33
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-04-07 13:33
  **/
 @Slf4j
 @Service
@@ -44,8 +43,8 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public List getAllControllerClass() {
-        List<Map> resultList = new ArrayList<>();
+    public ApiController getAllControllerClass() {
+        ApiController apiController = new ApiController();
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // handlerMethodMap -> URL:HandlerMethod
         Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = mapping.getHandlerMethods();
@@ -54,16 +53,16 @@ public class ApiServiceImpl implements ApiService {
             controllerMap.put(String.valueOf(entry.getValue().getBean()), entry.getValue().getBeanType());
         }
         for (Map.Entry<String, Class> entry : controllerMap.entrySet()) {
-            Map<String, Object> singleMap = new HashMap<>(4);
-            singleMap.put("className", entry.getValue().getSimpleName());
-            singleMap.put("packageName", entry.getValue().getPackage().getName());
-            resultList.add(singleMap);
+            ApiController.ApiControllerSubclass apiControllerSubclass = new ApiController.ApiControllerSubclass();
+            apiControllerSubclass.setClassName(entry.getValue().getSimpleName());
+            apiControllerSubclass.setPackageName(entry.getValue().getPackage().getName());
+            apiController.getControllerList().add(apiControllerSubclass);
         }
-        return resultList;
+        return apiController;
     }
 
     @Override
-    public Map getApiByClassFullName(String classFullName, Integer apiStatus) {
+    public Api getApiByClassFullName(String classFullName, Integer apiStatus) {
         Class<?> clazz;
         try {
             clazz = Class.forName(classFullName);
@@ -79,58 +78,47 @@ public class ApiServiceImpl implements ApiService {
      * <p>Get permissions by class.</p>
      * <p>Permission model contains URL(API) information.</p>
      *
-     * @param clazz class
+     * @param clazz     class
+     * @param apiStatus API status
      * @return permission list (API list), inUseApiCount, idledApiCount
      */
-    private Map getPermissionsByClass(Class<?> clazz, ApiStatus apiStatus) {
+    private Api getPermissionsByClass(Class<?> clazz, ApiStatus apiStatus) {
         boolean restControllerExisted = clazz.isAnnotationPresent(RestController.class);
         if (!restControllerExisted) {
-            Map<String, Object> resultMap = new HashMap<>(4);
-            resultMap.put("apiList", null);
-            resultMap.put("inUseApiCount", null);
-            resultMap.put("idledApiCount", null);
-            return resultMap;
+            return new Api();
         }
-        List<Uri> result = new ArrayList<>();
+        List<Api.Uri> result = new ArrayList<>();
         RequestMapping restControllersRequestMappingAnnotation = clazz.getAnnotation(RequestMapping.class);
         String urlPrefix = "";
         if (restControllersRequestMappingAnnotation != null) {
             urlPrefix = restControllersRequestMappingAnnotation.value()[0];
         }
         if (StringUtils.isBlank(urlPrefix)) {
-            Map<String, Object> resultMap = new HashMap<>(4);
-            resultMap.put("apiList", result);
-            resultMap.put("inUseApiCount", null);
-            resultMap.put("idledApiCount", null);
-            return resultMap;
+            return new Api();
         }
         if (apiStatus == ApiStatus.IN_USED) {
-            Map<String, Object> resultMap = new HashMap<>(4);
+            Api api = new Api();
             List<Permission> permissions = permissionMapper.findApisByUrlPrefix(urlPrefix);
             int allMethodCount = clazz.getDeclaredMethods().length;
             int inUseApiCount = permissions.size();
             int idledApiCount = allMethodCount - inUseApiCount;
             for (Permission permission : permissions) {
-                Uri uri = new Uri();
+                Api.Uri uri = new Api.Uri();
                 uri.setUrl(permission.getUrl());
                 uri.setMethod(permission.getMethod());
                 uri.setDescription(permission.getDescription());
                 result.add(uri);
             }
-            resultMap.put("apiList", result);
-            resultMap.put("inUseApiCount", inUseApiCount);
-            resultMap.put("idledApiCount", idledApiCount);
-            return resultMap;
+            api.setApiList(result);
+            api.setIdledApiCount(idledApiCount);
+            api.setInUseApiCount(inUseApiCount);
+            return api;
         }
         // Get all methods declared in class.
         Method[] methods = clazz.getDeclaredMethods();
         int allMethodCount = clazz.getDeclaredMethods().length;
         if (methods.length == 0) {
-            Map<String, Object> resultMap = new HashMap<>(4);
-            resultMap.put("apiList", result);
-            resultMap.put("inUseApiCount", null);
-            resultMap.put("idledApiCount", null);
-            return resultMap;
+            return new Api();
         }
         Map<String, Object> resultMap = new HashMap<>(4);
         for (Method method : methods) {
@@ -146,7 +134,7 @@ public class ApiServiceImpl implements ApiService {
             GetMapping getMapping = method.getAnnotation(GetMapping.class);
             PostMapping postMapping = method.getAnnotation(PostMapping.class);
             ApiOperation apiOperation = method.getAnnotation(ApiOperation.class);
-            Uri uri = new Uri();
+            Api.Uri uri = new Api.Uri();
             if (getMapping != null) {
                 uri.setUrl(urlPrefix + getMapping.value()[0]);
                 uri.setMethod("GET");
@@ -159,9 +147,9 @@ public class ApiServiceImpl implements ApiService {
             }
             result.add(uri);
         }
-        Iterator<Uri> iterator = result.iterator();
+        Iterator<Api.Uri> iterator = result.iterator();
         while (iterator.hasNext()) {
-            Uri uri = iterator.next();
+            Api.Uri uri = iterator.next();
             Permission permissions = permissionMapper.findApiByUrl(uri.getUrl());
             if (permissions == null) {
                 continue;
@@ -170,9 +158,10 @@ public class ApiServiceImpl implements ApiService {
         }
         int idledApiCount = result.size();
         int inUseApiCount = allMethodCount - idledApiCount;
-        resultMap.put("apiList", result);
-        resultMap.put("inUseApiCount", inUseApiCount);
-        resultMap.put("idledApiCount", idledApiCount);
-        return resultMap;
+        Api api = new Api();
+        api.setApiList(result);
+        api.setIdledApiCount(idledApiCount);
+        api.setInUseApiCount(inUseApiCount);
+        return api;
     }
 }

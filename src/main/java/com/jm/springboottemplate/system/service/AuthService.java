@@ -5,10 +5,8 @@ import com.jm.springboottemplate.system.domain.persistence.User;
 /**
  * Description: AuthService, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-03-28
- * @time: 20:23
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-03-28 20:23
  **/
 public interface AuthService {
     /**

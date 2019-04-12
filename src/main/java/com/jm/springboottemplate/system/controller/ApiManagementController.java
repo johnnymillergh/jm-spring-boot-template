@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Description: ApiManagementController, change description here.
  *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-04-11
- * @time: 10:02
+ * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
+ * @date 2019-04-11 10:02
  **/
 @RestController
 @RequestMapping("/apiManagement")
