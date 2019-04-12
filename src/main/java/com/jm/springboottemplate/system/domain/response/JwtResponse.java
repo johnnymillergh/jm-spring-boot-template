@@ -1,4 +1,4 @@
-package com.jm.springboottemplate.system.domain;
+package com.jm.springboottemplate.system.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
