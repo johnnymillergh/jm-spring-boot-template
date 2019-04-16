@@ -39,4 +39,10 @@ public class ApiManagementController {
         }
         return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(controllerClass, apiStatus));
     }
+
+    @GetMapping("/getApiAnalysis")
+    @ApiOperation(value = "Get API analysis", notes = "Get API analysis")
+    public ResponseBodyBean getApiAnalysis(String classFullName) {
+        return ResponseBodyBean.ofSuccess(apiService.getApiAnalysis(classFullName));
+    }
 }

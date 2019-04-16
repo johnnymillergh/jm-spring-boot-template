@@ -1,6 +1,7 @@
 package com.jm.springboottemplate.system.service;
 
 import com.jm.springboottemplate.system.domain.response.Api;
+import com.jm.springboottemplate.system.domain.response.ApiAnalysis;
 import com.jm.springboottemplate.system.domain.response.ApiController;
 
 /**
@@ -25,4 +26,12 @@ public interface ApiService {
      * @return permission list.
      */
     Api getApiByClassFullName(String classFullName, Integer apiStatus);
+
+    /**
+     * Get API analysis.
+     *
+     * @param classFullName Full name of class.
+     * @return API analysis.
+     */
+    ApiAnalysis getApiAnalysis(String classFullName);
 }

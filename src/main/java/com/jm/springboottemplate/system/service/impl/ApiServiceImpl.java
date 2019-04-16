@@ -3,6 +3,7 @@ package com.jm.springboottemplate.system.service.impl;
 import com.jm.springboottemplate.system.constant.ApiStatus;
 import com.jm.springboottemplate.system.domain.persistence.Permission;
 import com.jm.springboottemplate.system.domain.response.Api;
+import com.jm.springboottemplate.system.domain.response.ApiAnalysis;
 import com.jm.springboottemplate.system.domain.response.ApiController;
 import com.jm.springboottemplate.system.exception.BizException;
 import com.jm.springboottemplate.system.mapper.PermissionMapper;
@@ -74,9 +75,18 @@ public class ApiServiceImpl implements ApiService {
         return getPermissionsByClass(clazz, status);
     }
 
+    @Override
+    public ApiAnalysis getApiAnalysis(String classFullName) {
+        if (StringUtils.isBlank(classFullName)) {
+
+        }
+        return null;
+    }
+
     /**
      * <p>Get permissions by class.</p>
      * <p>Permission model contains URL(API) information.</p>
+     * TODO: Refactor this method which has more than 80 lines of code.
      *
      * @param clazz     class
      * @param apiStatus API status
