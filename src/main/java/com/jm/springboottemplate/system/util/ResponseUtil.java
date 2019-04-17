@@ -17,7 +17,7 @@ import java.io.IOException;
  **/
 @Slf4j
 public class ResponseUtil {
-    public static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     /**
      * Write data JSON to response.
@@ -33,9 +33,9 @@ public class ResponseUtil {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(200);
             response.getWriter()
-                    .write(mapper.writeValueAsString(ResponseBodyBean.ofStatus(status, data)));
+                    .write(MAPPER.writeValueAsString(ResponseBodyBean.ofStatus(status, data)));
         } catch (IOException e) {
-            log.error("Response output exception.", e);
+            log.error("Error occurred when responding a data JSON.", e);
         }
     }
 
@@ -52,9 +52,9 @@ public class ResponseUtil {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(200);
             response.getWriter()
-                    .write(mapper.writeValueAsString(ResponseBodyBean.ofException(exception)));
+                    .write(MAPPER.writeValueAsString(ResponseBodyBean.ofException(exception)));
         } catch (IOException e) {
-            log.error("Response output exception.", e);
+            log.error("Error occurred when responding an exception JSON.", e);
         }
     }
 }
