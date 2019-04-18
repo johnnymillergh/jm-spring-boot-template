@@ -18,7 +18,7 @@ public class JwtConfiguration {
 
     public JwtConfiguration(ProjectProperty projectProperty) {
         this.signingKey = projectProperty.getArtifactId();
-        log.error("signingKey: {}", this.signingKey);
+        log.error("JWT signing key: {}", this.signingKey);
     }
 
     /**
