@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -105,35 +106,35 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) {
-//        WebSecurity and = web.ignoring().and();
-//
-//        // 忽略 GET
-//        customConfiguration.getIgnores().getGet().forEach(url -> and.ignoring().antMatchers(HttpMethod.GET, url));
-//
-//        // 忽略 POST
-//        customConfiguration.getIgnores().getPost().forEach(url -> and.ignoring().antMatchers(HttpMethod.POST, url));
-//
-//        // 忽略 DELETE
-//        customConfiguration.getIgnores().getDelete().forEach(url -> and.ignoring().antMatchers(HttpMethod.DELETE,
-//        url));
-//
-//        // 忽略 PUT
-//        customConfiguration.getIgnores().getPut().forEach(url -> and.ignoring().antMatchers(HttpMethod.PUT, url));
-//
-//        // 忽略 HEAD
-//        customConfiguration.getIgnores().getHead().forEach(url -> and.ignoring().antMatchers(HttpMethod.HEAD, url));
-//
-//        // 忽略 PATCH
-//        customConfiguration.getIgnores().getPatch().forEach(url -> and.ignoring().antMatchers(HttpMethod.PATCH, url));
-//
-//        // 忽略 OPTIONS
-//        customConfiguration.getIgnores().getOptions().forEach(url -> and.ignoring().antMatchers(HttpMethod.OPTIONS,
-//                                                                                                url));
-//
-//        // 忽略 TRACE
-//        customConfiguration.getIgnores().getTrace().forEach(url -> and.ignoring().antMatchers(HttpMethod.TRACE, url));
-//
-//        // 按照请求格式忽略
-//        customConfiguration.getIgnores().getPattern().forEach(url -> and.ignoring().antMatchers(url));
+        WebSecurity and = web.ignoring().and();
+
+        // 忽略 GET
+        customConfiguration.getIgnores().getGet().forEach(url -> and.ignoring().antMatchers(HttpMethod.GET, url));
+
+        // 忽略 POST
+        customConfiguration.getIgnores().getPost().forEach(url -> and.ignoring().antMatchers(HttpMethod.POST, url));
+
+        // 忽略 DELETE
+        customConfiguration.getIgnores().getDelete().forEach(url -> and.ignoring().antMatchers(HttpMethod.DELETE,
+        url));
+
+        // 忽略 PUT
+        customConfiguration.getIgnores().getPut().forEach(url -> and.ignoring().antMatchers(HttpMethod.PUT, url));
+
+        // 忽略 HEAD
+        customConfiguration.getIgnores().getHead().forEach(url -> and.ignoring().antMatchers(HttpMethod.HEAD, url));
+
+        // 忽略 PATCH
+        customConfiguration.getIgnores().getPatch().forEach(url -> and.ignoring().antMatchers(HttpMethod.PATCH, url));
+
+        // 忽略 OPTIONS
+        customConfiguration.getIgnores().getOptions().forEach(url -> and.ignoring().antMatchers(HttpMethod.OPTIONS,
+                                                                                                url));
+
+        // 忽略 TRACE
+        customConfiguration.getIgnores().getTrace().forEach(url -> and.ignoring().antMatchers(HttpMethod.TRACE, url));
+
+        // 按照请求格式忽略
+        customConfiguration.getIgnores().getPattern().forEach(url -> and.ignoring().antMatchers(url));
     }
 }
