@@ -1,6 +1,7 @@
 package com.jm.springboottemplate.system.constant;
 
-import com.jm.springboottemplate.system.util.ProjectPropertyUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * Description: Constants
@@ -8,41 +9,48 @@ import com.jm.springboottemplate.system.util.ProjectPropertyUtil;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23, email: 18:46
  **/
-public interface Constants {
+@Slf4j
+@Component
+public class Constants {
+
+    public Constants(ProjectProperty projectProperty) {
+        Constants.REDIS_JWT_KEY_PREFIX = projectProperty.getArtifactId() + ":jwt:";
+    }
+
     /**
      * Super user
      */
-    String SU = "root";
+    public static final String SU = "root";
     /**
      * Key prefix of JWT stored in Redis.
      */
-    String REDIS_JWT_KEY_PREFIX = ProjectPropertyUtil.getArtifactId() + ":jwt:";
+    public static String REDIS_JWT_KEY_PREFIX;
     /**
      * Token key of request header.
      */
-    String REQUEST_TOKEN_KEY = "Authorization";
+    public static final String REQUEST_TOKEN_KEY = "Authorization";
     /**
      * Prefix of JWT.
      */
-    String JWT_PREFIX = "Bearer ";
+    public static final String JWT_PREFIX = "Bearer ";
     /**
      * Star sign
      */
-    String ASTERISK = "*";
+    public static final String ASTERISK = "*";
     /**
      * At sign
      */
-    String AT_SIGN = "@";
+    public static final String AT_SIGN = "@";
     /**
      * Default current page
      */
-    Integer DEFAULT_CURRENT_PAGE = 1;
+    public static final Integer DEFAULT_CURRENT_PAGE = 1;
     /**
      * Default page size
      */
-    Integer DEFAULT_PAGE_SIZE = 10;
+    public static final Integer DEFAULT_PAGE_SIZE = 10;
     /**
      * Anonymous user's username
      */
-    String ANONYMOUS_NAME = "Anonymous User";
+    public static final String ANONYMOUS_NAME = "Anonymous User";
 }

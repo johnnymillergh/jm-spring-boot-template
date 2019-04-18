@@ -1,6 +1,6 @@
 package com.jm.springboottemplate.system.config;
 
-import com.jm.springboottemplate.system.util.ProjectPropertyUtil;
+import com.jm.springboottemplate.system.constant.ProjectProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -23,6 +23,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class Swagger2Configuration {
+    private final ProjectProperty projectProperty;
+
+    public Swagger2Configuration(ProjectProperty projectProperty) {
+        this.projectProperty = projectProperty;
+    }
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -38,8 +44,8 @@ public class Swagger2Configuration {
                 .title("API Documentation for SpringBootTemplate Project")
                 .contact(new Contact("Johnny Miller", "http://github.com/johnnymillergh",
                                      "johnnysviva@outlook.com"))
-                .version(ProjectPropertyUtil.getVersion())
-                .description(ProjectPropertyUtil.getArtifactId())
+                .version(projectProperty.getVersion())
+                .description(projectProperty.getArtifactId())
                 .build();
     }
 }

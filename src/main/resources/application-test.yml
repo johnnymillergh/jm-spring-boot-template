@@ -9,7 +9,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://127.0.0.1:3306/spring_boot_template?useUnicode=true&characterEncoding=utf8
     username: spring_boot_template_w
-    password: H'Tkh9@!*_/B'_j
+    password: y7km4r9CzM8!J?(
   devtools:
     restart:
       enabled: true

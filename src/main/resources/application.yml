@@ -11,6 +11,15 @@ server:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+project:
+  property:
+    group-id: @groupId@
+    artifact-id: @artifactId@
+    version: @version@
+    name: @name@
+    description: @description@
+    jdk-version: @java.version@
+    current-environment: @env@
 jwt:
   config:
     ttl: 1800000

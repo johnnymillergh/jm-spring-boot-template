@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 14:24
  **/
-@ConfigurationProperties(prefix = "custom.configuration")
 @Data
+@ConfigurationProperties(prefix = "custom.configuration")
 public class CustomConfiguration {
     /**
      * Ignore URLs

@@ -1,7 +1,8 @@
 package com.jm.springboottemplate.system.config;
 
-import com.jm.springboottemplate.system.util.ProjectPropertyUtil;
+import com.jm.springboottemplate.system.constant.ProjectProperty;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -10,13 +11,20 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 14:24
  **/
-@ConfigurationProperties(prefix = "jwt.config")
 @Data
+@Slf4j
+@ConfigurationProperties(prefix = "jwt.config")
 public class JwtConfiguration {
+
+    public JwtConfiguration(ProjectProperty projectProperty) {
+        this.signingKey = projectProperty.getArtifactId();
+        log.error("signingKey: {}", this.signingKey);
+    }
+
     /**
      * JWT signing key, which is equal to the string value of group id of project.
      */
-    private String signingKey = ProjectPropertyUtil.getGroupId();
+    private String signingKey;
     /**
      * Time to live of JWT. Default: 3 * 600000 milliseconds {@code 30 min}.
      */
