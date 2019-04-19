@@ -85,7 +85,7 @@ public class ApiServiceImpl implements ApiService {
                 String clazzFullName = acs.getPackageName() + "." + acs.getClassName();
                 Api api = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USED.getStatus());
                 apiAnalysis.appendIdledApiCount(api.getIdledApiCount());
-                apiAnalysis.appendInUseAPiCount(api.getInUseApiCount());
+                apiAnalysis.appendInUseApiCount(api.getInUseApiCount());
             }
             apiAnalysis.calculateSum();
             return apiAnalysis;
@@ -93,7 +93,7 @@ public class ApiServiceImpl implements ApiService {
         // Query API statistics of specific class scope.
         Api api = this.getApiByClassFullName(classFullName, ApiStatus.IN_USED.getStatus());
         apiAnalysis.appendIdledApiCount(api.getIdledApiCount());
-        apiAnalysis.appendInUseAPiCount(api.getInUseApiCount());
+        apiAnalysis.appendInUseApiCount(api.getInUseApiCount());
         apiAnalysis.calculateSum();
         return apiAnalysis;
     }

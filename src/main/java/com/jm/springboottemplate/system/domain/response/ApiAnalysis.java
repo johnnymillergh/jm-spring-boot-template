@@ -13,17 +13,17 @@ import lombok.Data;
 public class ApiAnalysis {
     private Integer totalApiCount = 0;
     private Integer idledApiCount = 0;
-    private Integer inUseAPiCount = 0;
+    private Integer inUseApiCount = 0;
 
     public void appendIdledApiCount(Integer count) {
         this.idledApiCount = NumberUtil.parseInt(NumberUtil.add(this.idledApiCount, count).toString());
     }
 
-    public void appendInUseAPiCount(Integer count) {
-        this.inUseAPiCount = NumberUtil.parseInt(NumberUtil.add(this.inUseAPiCount, count).toString());
+    public void appendInUseApiCount(Integer count) {
+        this.inUseApiCount = NumberUtil.parseInt(NumberUtil.add(this.inUseApiCount, count).toString());
     }
 
     public void calculateSum() {
-        this.totalApiCount = this.idledApiCount + this.inUseAPiCount;
+        this.totalApiCount = this.idledApiCount + this.inUseApiCount;
     }
 }
