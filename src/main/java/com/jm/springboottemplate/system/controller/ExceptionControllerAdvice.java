@@ -90,7 +90,7 @@ public class ExceptionControllerAdvice {
                       ((BaseException) exception).getCode(), exception.getMessage());
             return ResponseBodyBean.ofException((BaseException) exception);
         }
-        log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage());
+        log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage(), exception);
         return ResponseBodyBean.ofStatus(UniversalStatus.ERROR);
     }
 }
