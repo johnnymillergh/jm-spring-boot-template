@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  **/
 @Data
 @Slf4j
-@ConfigurationProperties(prefix = "jwt.config")
+@ConfigurationProperties(prefix = "jwt.configuration")
 public class JwtConfiguration {
 
     public JwtConfiguration(ProjectProperty projectProperty) {

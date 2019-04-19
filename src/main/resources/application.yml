@@ -21,7 +21,7 @@ project:
     jdk-version: @java.version@
     current-environment: @env@
 jwt:
-  config:
+  configuration:
     ttl: 1800000
     ttl-for-remember-me: 604800000
 custom:
