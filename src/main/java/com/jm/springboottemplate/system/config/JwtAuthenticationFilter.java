@@ -55,9 +55,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String accessorInformation = "[" + RequestUtil.getRequestIpAndPort(request) + "] requested access. URL: "
-                + request.getServletPath();
-        log.error(accessorInformation);
+        log.error("[{}] Client requested access. URL: {}",
+                  RequestUtil.getRequestIpAndPort(request),
+                  request.getServletPath());
 
         // Check if disable Web Security.
         if (customConfiguration.getWebSecurityDisabled()) {
