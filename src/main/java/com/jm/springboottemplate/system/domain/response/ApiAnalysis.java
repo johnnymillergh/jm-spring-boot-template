@@ -1,5 +1,6 @@
 package com.jm.springboottemplate.system.domain.response;
 
+import cn.hutool.core.util.NumberUtil;
 import lombok.Data;
 
 /**
@@ -10,7 +11,19 @@ import lombok.Data;
  **/
 @Data
 public class ApiAnalysis {
-    private Integer totalApiCount;
-    private Integer idledApiCount;
-    private Integer inUseAPiCount;
+    private Integer totalApiCount = 0;
+    private Integer idledApiCount = 0;
+    private Integer inUseAPiCount = 0;
+
+    public void appendIdledApiCount(Integer count) {
+        this.idledApiCount = NumberUtil.parseInt(NumberUtil.add(this.idledApiCount, count).toString());
+    }
+
+    public void appendInUseAPiCount(Integer count) {
+        this.inUseAPiCount = NumberUtil.parseInt(NumberUtil.add(this.inUseAPiCount, count).toString());
+    }
+
+    public void calculateSum() {
+        this.totalApiCount = this.idledApiCount + this.inUseAPiCount;
+    }
 }

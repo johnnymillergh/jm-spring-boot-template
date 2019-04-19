@@ -68,8 +68,8 @@ public class ApiServiceImpl implements ApiService {
         try {
             clazz = Class.forName(classFullName);
         } catch (ClassNotFoundException e) {
-            log.error("Error occurred when find class by className. {}", e.getMessage(), e);
-            throw new BizException("Error occurred when find class by className. " + e.getMessage());
+            log.error("Error occurred when find class by classFullName. {}", e.getMessage(), e);
+            throw new BizException("Error occurred when find class by classFullName. " + e.getMessage());
         }
         ApiStatus status = ApiStatus.getByStatus(apiStatus);
         return getPermissionsByClass(clazz, status);
@@ -77,10 +77,25 @@ public class ApiServiceImpl implements ApiService {
 
     @Override
     public ApiAnalysis getApiAnalysis(String classFullName) {
+        ApiAnalysis apiAnalysis = new ApiAnalysis();
         if (StringUtils.isBlank(classFullName)) {
-
+            // Query API statistics of global scope.
+            ApiController apiController = this.getAllControllerClass();
+            for (ApiController.ApiControllerSubclass acs : apiController.getControllerList()) {
+                String clazzFullName = acs.getPackageName() + "." + acs.getClassName();
+                Api api = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USED.getStatus());
+                apiAnalysis.appendIdledApiCount(api.getIdledApiCount());
+                apiAnalysis.appendInUseAPiCount(api.getInUseApiCount());
+            }
+            apiAnalysis.calculateSum();
+            return apiAnalysis;
         }
-        return null;
+        // Query API statistics of specific class scope.
+        Api api = this.getApiByClassFullName(classFullName, ApiStatus.IN_USED.getStatus());
+        apiAnalysis.appendIdledApiCount(api.getIdledApiCount());
+        apiAnalysis.appendInUseAPiCount(api.getInUseApiCount());
+        apiAnalysis.calculateSum();
+        return apiAnalysis;
     }
 
     /**
