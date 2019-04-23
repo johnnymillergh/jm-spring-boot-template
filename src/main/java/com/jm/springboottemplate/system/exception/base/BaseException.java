@@ -18,17 +18,12 @@ public class BaseException extends RuntimeException {
     /**
      * Code is REQUIRED. Default code is 500.
      */
-    private Integer code;
+    private Integer code = UniversalStatus.ERROR.getCode();
     /**
      * Message is REQUIRED. Default message is: Error. A generic status for an error in the server itself.
      */
     private String message;
     private Object data;
-
-    private BaseException() {
-        this.code = UniversalStatus.ERROR.getCode();
-        this.message = UniversalStatus.ERROR.getMessage();
-    }
 
     public BaseException(UniversalStatus universalStatus) {
         this.code = universalStatus.getCode();
@@ -46,7 +41,6 @@ public class BaseException extends RuntimeException {
     }
 
     public BaseException(String message) {
-        this();
         this.message = message;
     }
 
