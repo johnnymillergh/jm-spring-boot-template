@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- The complete logback manual documents the latest version of logback framework at https://logback.qos.ch/manual/ -->
 <configuration debug="true">
     <!--  Converter Class Configuration  -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
