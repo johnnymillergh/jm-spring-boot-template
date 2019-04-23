@@ -8,6 +8,10 @@ spring:
 server:
   servlet:
     context-path: /springboottemplate
+  tomcat:
+    uri-encoding: UTF-8
+logging:
+  config: classpath:configuration/logback-spring.xml
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl

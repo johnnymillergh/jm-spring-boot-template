@@ -35,8 +35,6 @@ mybatis:
   type-aliases-package: com.jm.springboottemplate
 server:
   port: 8080
-  tomcat:
-    uri-encoding: utf-8
 custom:
   configuration:
     ignores:

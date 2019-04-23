@@ -32,12 +32,11 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
+    log-prefix: TestMyBatisLogPrefix
   mapper-locations: mapper/**/*Mapper.xml
   type-aliases-package: com.jm.springboottemplate
 server:
   port: 8080
-  tomcat:
-    uri-encoding: utf-8
 custom:
   configuration:
     ignores:
