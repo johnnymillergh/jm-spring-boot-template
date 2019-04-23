@@ -1,4 +1,8 @@
+### Custom Ignored ###
 /target/
+/logs-dev/
+/logs-test/
+/logs-prod/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -23,7 +27,3 @@
 /nbdist/
 /.nb-gradle/
 /build/
-/target/
-/logs-dev/
-/logs-test/
-/logs-prod/
