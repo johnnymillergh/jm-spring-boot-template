@@ -1,6 +1,7 @@
 package com.jm.springboottemplate;
 
 import com.jm.springboottemplate.system.constant.ProjectProperty;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Slf4j
 @SpringBootApplication
 @EnableTransactionManagement
+@EnableEncryptableProperties
 public class Application {
     private static ProjectProperty projectProperty;
 

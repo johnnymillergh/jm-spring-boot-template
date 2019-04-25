@@ -30,5 +30,8 @@ jwt:
     ttl-for-remember-me: 604800000
 custom:
   configuration:
-    druid-login-name: johnny
-    druid-password: 123456
+    druid-login-name: ENC(v81zk6uOH72fTKZTWxbOgg==)
+    druid-password: ENC(99HsmfWW2K8z3t1jUb0fZg==)
+jasypt:
+  encryptor:
+    password: ThisIsAPrivateKeyOfJasypt
