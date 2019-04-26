@@ -13,6 +13,32 @@
     <version>1.2.0-SNAPSHOT</version>
     <name>Spring Boot Template</name>
     <description>Demo project for Spring Boot</description>
+    <url>https://github.com/johnnymillergh/SpringBootTemplate</url>
+    <inceptionYear>2019</inceptionYear>
+    <organization>
+        <name>JM Software, Inc.</name>
+        <url>https://github.com/johnnymillergh</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Johnny Miller (锺俊)</name>
+            <email>johnnysviva@outlook.com</email>
+            <url>https://www.linkedin.com/in/johnny-miller-206b6a148</url>
+            <organization>JM Software, Inc.</organization>
+            <organizationUrl>https://github.com/johnnymillergh</organizationUrl>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/johnnymillergh/SpringBootTemplate/issues</url>
+    </issueManagement>
 
     <properties>
         <java.version>1.8</java.version>
