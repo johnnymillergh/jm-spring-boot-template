@@ -30,7 +30,6 @@ spring:
         min-idle: 0
 mybatis:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
   mapper-locations: mapper/**/*Mapper.xml
   type-aliases-package: com.jm.springboottemplate

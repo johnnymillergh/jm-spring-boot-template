@@ -12,6 +12,11 @@ server:
     uri-encoding: UTF-8
 logging:
   config: classpath:configuration/logback-spring.xml
+  # Configure logging level of project as DEBUG to enable SQL logging and other logging.
+  level:
+    com:
+      jm:
+        springboottemplate: DEBUG
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
