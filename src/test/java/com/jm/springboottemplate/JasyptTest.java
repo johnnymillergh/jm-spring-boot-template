@@ -1,5 +1,6 @@
 package com.jm.springboottemplate;
 
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
@@ -23,6 +24,7 @@ public class JasyptTest {
     @Autowired
     StringEncryptor encryptor;
 
+    @ToString
     private class EncryptedInformation {
         // MySQL
         String urlOfDataSource = encryptor.encrypt(
