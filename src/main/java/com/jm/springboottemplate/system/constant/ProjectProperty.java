@@ -30,6 +30,7 @@ import java.util.List;
 @ConfigurationProperties(prefix = "project.property")
 public class ProjectProperty {
     private static final String POM_FILE_NAME = "pom.xml";
+    private String contextPath;
     private String groupId;
     private String artifactId;
     private String version;

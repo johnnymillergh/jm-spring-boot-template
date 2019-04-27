@@ -38,6 +38,6 @@ public class ServerConfiguration implements ApplicationListener<WebServerInitial
             log.error("IP address of a host could not be determined.", e);
         }
         assert address != null;
-        return "http://" + address.getHostAddress() + ":" + this.serverPort + "/" + projectProperty.getArtifactId();
+        return "http://" + address.getHostAddress() + ":" + this.serverPort + projectProperty.getContextPath();
     }
 }

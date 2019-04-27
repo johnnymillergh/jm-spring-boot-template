@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Description: Application, entrance of the project.
@@ -39,6 +40,9 @@ public class Application {
                   projectProperty.getVersion(),
                   (endTime - startTime) / 1000,
                   (endTime - startTime));
-        log.error("Server started at {}, {}", new Date(), serverConfiguration.getUrl());
+        log.error("Server started at {} (timezone - {}), base URL: {}",
+                  new Date(),
+                  TimeZone.getDefault().getDisplayName(),
+                  serverConfiguration.getUrl());
     }
 }

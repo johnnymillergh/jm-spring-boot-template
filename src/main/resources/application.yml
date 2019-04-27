@@ -10,7 +10,7 @@ spring:
     time-zone: GMT+8
 server:
   servlet:
-    context-path: /@artifactId@
+    context-path: /@artifactId@-@env@
   tomcat:
     uri-encoding: UTF-8
 logging:
@@ -23,8 +23,20 @@ logging:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+jwt:
+  configuration:
+    ttl: 1800000
+    ttl-for-remember-me: 604800000
+jasypt:
+  encryptor:
+    password: ThisIsAPrivateKeyOfJasypt
+custom:
+  configuration:
+    druid-login-name: ENC(v81zk6uOH72fTKZTWxbOgg==)
+    druid-password: ENC(99HsmfWW2K8z3t1jUb0fZg==)
 project:
   property:
+    context-path: /@artifactId@-@env@
     group-id: @project.groupId@
     artifact-id: @project.artifactId@
     version: @project.version@
@@ -38,14 +50,3 @@ project:
     organization-url: @project.organization.url@
     issue-management-system: @project.issueManagement.system@
     issue-management-url: @project.issueManagement.url@
-jwt:
-  configuration:
-    ttl: 1800000
-    ttl-for-remember-me: 604800000
-custom:
-  configuration:
-    druid-login-name: ENC(v81zk6uOH72fTKZTWxbOgg==)
-    druid-password: ENC(99HsmfWW2K8z3t1jUb0fZg==)
-jasypt:
-  encryptor:
-    password: ThisIsAPrivateKeyOfJasypt
