@@ -4,18 +4,18 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <jmxConfigurator/>
 
-    <!--  Converter Class Configuration  -->
+    <!-- Converter Class Configuration -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wex"
                     converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
 
-    <!--  Log Render Configuration  -->
+    <!-- Log Render Configuration -->
     <property name="CONSOLE_LOG_PATTERN"
               value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){blue} %clr(%-48.48logger{48}){cyan} %clr(:){faint} %m%n%wex"/>
     <property name="FILE_LOG_PATTERN"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } --- [%t] %-48.48logger{48} : %m%n%wex"/>
 
-    <!--  Log for Multi Environment Configuration -->
+    <!-- Log for Multi Environment Configuration -->
     <springProfile name="dev">
         <property name="LOG_HOME" value="logs-dev"/>
     </springProfile>
@@ -26,7 +26,7 @@
         <property name="LOG_HOME" value="logs-prod"/>
     </springProfile>
 
-    <!--  CONSOLE Log Configuration  -->
+    <!-- CONSOLE Log Configuration -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
@@ -34,7 +34,7 @@
         </encoder>
     </appender>
 
-    <!--  DEBUG Log Configuration  -->
+    <!-- DEBUG Log Configuration -->
     <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>DEBUG</level>
@@ -47,18 +47,23 @@
             <charset>UTF-8</charset>
         </encoder>
 
+        <!-- TimeBasedRollingPolicy defines a rollover policy based on time, for example by day or by month. -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- File Name (Distinguished by Date), daily rollover -->
             <fileNamePattern>${LOG_HOME}/debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 60 days' worth of history capped at 5GB total size -->
             <maxHistory>60</maxHistory>
             <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
 
+        <!-- SizeBasedTriggeringPolicy looks at the size of the currently active file. -->
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <!-- each file should be at most 100MB -->
             <maxFileSize>100MB</maxFileSize>
         </triggeringPolicy>
     </appender>
 
-    <!--  INFO Log Configuration  -->
+    <!-- INFO Log Configuration -->
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
@@ -71,23 +76,18 @@
             <charset>UTF-8</charset>
         </encoder>
 
-        <!-- TimeBasedRollingPolicy defines a rollover policy based on time, for example by day or by month. -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- File Name (Distinguished by Date), daily rollover -->
             <fileNamePattern>${LOG_HOME}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- keep 60 days' worth of history capped at 3GB total size -->
             <maxHistory>60</maxHistory>
             <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
 
-        <!-- SizeBasedTriggeringPolicy looks at the size of the currently active file. -->
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <!-- each file should be at most 100MB -->
             <maxFileSize>100MB</maxFileSize>
         </triggeringPolicy>
     </appender>
 
-    <!--  WARN Log Configuration  -->
+    <!-- WARN Log Configuration -->
     <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>WARN</level>
@@ -111,7 +111,7 @@
         </triggeringPolicy>
     </appender>
 
-    <!--  ERROR Log Configuration  -->
+    <!-- ERROR Log Configuration -->
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
