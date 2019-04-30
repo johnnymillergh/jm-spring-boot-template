@@ -35,8 +35,9 @@ public class Application {
         SpringApplication.run(Application.class, args);
         long endTime = System.currentTimeMillis();
         log.error("🍃 Congratulations! 🎉");
-        log.error("[{}:v{}] started successfully! Deployment duration: {} seconds ({} ms).",
+        log.error("[{}:{}:v{}] started successfully! Deployment duration: {} seconds ({} ms).",
                   projectProperty.getName(),
+                  projectProperty.getCurrentEnvironment(),
                   projectProperty.getVersion(),
                   (endTime - startTime) / 1000,
                   (endTime - startTime));

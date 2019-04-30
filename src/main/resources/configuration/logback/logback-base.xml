@@ -22,6 +22,9 @@
     <springProfile name="test">
         <property name="LOG_HOME" value="logs-test"/>
     </springProfile>
+    <springProfile name="stage">
+        <property name="LOG_HOME" value="logs-stage"/>
+    </springProfile>
     <springProfile name="prod">
         <property name="LOG_HOME" value="logs-prod"/>
     </springProfile>
