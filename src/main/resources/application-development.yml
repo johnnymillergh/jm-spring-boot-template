@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   cache:
     cache-names: c1,c2
@@ -25,13 +28,7 @@ spring:
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
-server:
-  port: 8080
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
-  mapper-locations: mapper/**/*Mapper.xml
-  type-aliases-package: com.jm.springboottemplate
+
 custom:
   configuration:
     web-security-disabled: true

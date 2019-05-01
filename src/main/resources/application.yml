@@ -1,3 +1,9 @@
+server:
+  servlet:
+    context-path: /@artifactId@-@envAlias@
+  tomcat:
+    uri-encoding: UTF-8
+
 spring:
   profiles:
     active: @env@
@@ -8,11 +14,7 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-server:
-  servlet:
-    context-path: /@artifactId@-@envAlias@
-  tomcat:
-    uri-encoding: UTF-8
+
 logging:
   config: classpath:configuration/logback/logback-@env@.xml
   # Configure logging level of project as DEBUG to enable SQL logging and other logging.
@@ -20,20 +22,23 @@ logging:
     com:
       jm:
         springboottemplate: DEBUG
-mybatis:
+
+mybatis-plus:
   configuration:
+    map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  mapper-locations: mapper/**/*Mapper.xml
+  type-aliases-package: com.jm.springboottemplate
+
 jwt:
   configuration:
     ttl: 1800000
     ttl-for-remember-me: 604800000
+
 jasypt:
   encryptor:
     password: ThisIsAPrivateKeyOfJasypt
-custom:
-  configuration:
-    druid-login-name: ENC(v81zk6uOH72fTKZTWxbOgg==)
-    druid-password: ENC(99HsmfWW2K8z3t1jUb0fZg==)
+
 project:
   property:
     context-path: /@artifactId@-@envAlias@
@@ -51,3 +56,8 @@ project:
     organization-url: @project.organization.url@
     issue-management-system: @project.issueManagement.system@
     issue-management-url: @project.issueManagement.url@
+
+custom:
+  configuration:
+    druid-login-name: ENC(v81zk6uOH72fTKZTWxbOgg==)
+    druid-password: ENC(99HsmfWW2K8z3t1jUb0fZg==)
