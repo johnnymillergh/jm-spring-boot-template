@@ -37,7 +37,7 @@
         <groupId>com.jmframework.boot</groupId>
         <artifactId>jm-spring-boot-template</artifactId>
         <!-- The version below should be synchronized with project's version -->
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.0.RELEASE</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 </project>
