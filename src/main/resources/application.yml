@@ -10,7 +10,7 @@ spring:
     time-zone: GMT+8
 server:
   servlet:
-    context-path: /@artifactId@-@env@
+    context-path: /@artifactId@-@envAlias@
   tomcat:
     uri-encoding: UTF-8
 logging:
@@ -36,7 +36,7 @@ custom:
     druid-password: ENC(99HsmfWW2K8z3t1jUb0fZg==)
 project:
   property:
-    context-path: /@artifactId@-@env@
+    context-path: /@artifactId@-@envAlias@
     group-id: @project.groupId@
     artifact-id: @project.artifactId@
     version: @project.version@

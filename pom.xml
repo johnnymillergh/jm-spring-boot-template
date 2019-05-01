@@ -46,9 +46,10 @@
 
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>development</id>
             <properties>
-                <env>dev</env>
+                <env>development</env>
+                <envAlias>dev</envAlias>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -58,18 +59,21 @@
             <id>test</id>
             <properties>
                 <env>test</env>
+                <envAlias>test</envAlias>
             </properties>
         </profile>
         <profile>
             <id>stage</id>
             <properties>
                 <env>stage</env>
+                <envAlias>stage</envAlias>
             </properties>
         </profile>
         <profile>
-            <id>prod</id>
+            <id>production</id>
             <properties>
-                <env>prod</env>
+                <env>production</env>
+                <envAlias>prod</envAlias>
             </properties>
         </profile>
     </profiles>
