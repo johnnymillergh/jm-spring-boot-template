@@ -2,16 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.4.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-    <groupId>com.jm</groupId>
-    <artifactId>springboottemplate</artifactId>
-    <version>1.2.0</version>
-    <name>Spring Boot Template</name>
+
+    <!-- groupId don't change frequently compared with artifactId -->
+    <!-- also, groupId is equal to base package name -->
+    <groupId>com.jmframework.boot</groupId>
+    <!-- artifactId is the unique symbol for every project -->
+    <artifactId>jm-spring-boot-template</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>JM Spring Boot Template</name>
     <description>Demo project for Spring Boot</description>
     <url>https://github.com/johnnymillergh/SpringBootTemplate</url>
     <inceptionYear>2019</inceptionYear>
@@ -40,7 +39,20 @@
         <url>https://github.com/johnnymillergh/SpringBootTemplate/issues</url>
     </issueManagement>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.4.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <modules>
+        <module>jm-spring-boot-sample</module>
+        <module>jm-spring-boot-starter</module>
+    </modules>
+
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
 
@@ -78,17 +90,20 @@
         </profile>
     </profiles>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.jmframework.boot</groupId>
+                <artifactId>jm-spring-boot-sample</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jmframework.boot</groupId>
+                <artifactId>jm-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>

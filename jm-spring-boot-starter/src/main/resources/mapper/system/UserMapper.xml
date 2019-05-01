@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmframework.boot.jmspringbootstarter.mapper.UserMapper">
+    <select id="findByUsernameOrEmailOrPhone"
+            resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.User">
+        SELECT su.id,
+               su.username,
+               su.password,
+               su.nickname,
+               su.phone,
+               su.email,
+               su.birthday,
+               su.sex,
+               su.status,
+               su.create_time AS createTime,
+               su.modify_time AS modifyTime
+        FROM t_user su
+        <where>
+            <if test="username != null">
+                su.username = #{username}
+            </if>
+            <if test="phone != null">
+                or su.phone = #{phone}
+            </if>
+            <if test="email != null">
+                or su.email = #{email}
+            </if>
+        </where>
+        <![CDATA[
+        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:findByUsernameOrEmailOrPhone*/
+        ]]>
+    </select>
+
+    <select id="checkUsernameUniqueness" resultType="integer">
+        SELECT count(1)
+        FROM t_user tu
+        WHERE tu.username = #{username}
+    </select>
+
+    <select id="checkEmailUniqueness" resultType="integer">
+        SELECT count(1)
+        FROM t_user tu
+        WHERE tu.email = #{email}
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_user(username, password, nickname, phone, email, birthday, sex, status, create_time, modify_time)
+        VALUES (#{username}, #{password}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex}, #{status}, now(), now())
+        <![CDATA[
+        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:save*/
+        ]]>
+    </insert>
+
+    <insert id="register" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_user(username, password, email, status, create_time, modify_time)
+        VALUES (#{username}, #{password}, #{email}, 1, now(), now())
+        <![CDATA[
+        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:register*/
+        ]]>
+    </insert>
+
+    <select id="getUsernameCountByUsername" resultType="integer">
+        SELECT count(1)
+        FROM t_user tu
+        WHERE tu.username = #{username}
+    </select>
+</mapper>

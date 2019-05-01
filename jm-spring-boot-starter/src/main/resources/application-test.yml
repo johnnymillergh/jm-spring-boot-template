@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  cache:
+    cache-names: c1,c2
+    redis:
+      time-to-live: 1800s
+  datasource:
+    name: datasource-one
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: ENC(oykngxHQOtecuI91yXnyg8wDn1HtUJgKI3x4duidBtJ+mrlfS6sz1Ch37MPvgzCjBRZM4KZb7KoA8mr1pWDGxYBewxEtvF1OtDUfVlwosp2sotIUT084OjdSyLXGrw1f)
+    username: ENC(iUSkjmrs8erSiLIOvS8Fpl6E7IPLC0TJ4wBoTdfUitE=)
+    password: ENC(uyds+DW9Lw8KS0oLGbG7noXoGf0XR5Ak)
+  devtools:
+    restart:
+      enabled: false
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: ENC(lGKu2PTxVNCE8WQGPC0z2g==)
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+
+custom:
+  configuration:
+    ignores:
+      # POST Requests need to be ignored.
+      post:
+        - "/auth/register"
+        - "/auth/login"
+      get:
+        - "/auth/checkUsernameUniqueness"
+        - "/auth/checkEmailUniqueness"
+        - "/auth/validateUsername/**"
+      # Request need to be ignored that matches pattern.
+      pattern:
