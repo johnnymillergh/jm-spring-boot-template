@@ -37,7 +37,8 @@ public class ProjectProperty {
     private String name;
     private String description;
     private String jdkVersion;
-    private String currentEnvironment;
+    private String environment;
+    private String environmentAlias;
     private String url;
     private String inceptionYear;
     private String organizationName;

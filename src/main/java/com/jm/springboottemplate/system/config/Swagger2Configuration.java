@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * <p>Description: Swagger 2 Config.</p>
  * API Documentation:
- * <a href="http://localhost:8080/springboottemplate/swagger-ui.html">Click me to view<a/>
+ * <a href="http://localhost:8080/springboottemplate-dev/swagger-ui.html">Click me to view<a/>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-02-07 16:15

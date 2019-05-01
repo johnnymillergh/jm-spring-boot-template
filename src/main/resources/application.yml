@@ -43,7 +43,8 @@ project:
     name: @project.name@
     description: @project.description@
     jdk-version: @java.version@
-    current-environment: @env@
+    environment: @env@
+    environment-alias: @envAlias@
     url: @project.url@
     inception-year: @inceptionYear@
     organization-name: @project.organization.name@

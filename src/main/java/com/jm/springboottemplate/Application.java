@@ -35,10 +35,12 @@ public class Application {
         SpringApplication.run(Application.class, args);
         long endTime = System.currentTimeMillis();
         log.error("🍃 Congratulations! 🎉");
-        log.error("[{}:{}:v{}] started successfully! Deployment duration: {} seconds ({} ms).",
-                  projectProperty.getName(),
-                  projectProperty.getCurrentEnvironment(),
-                  projectProperty.getVersion(),
+        log.error("[{}] started successfully!", projectProperty.getName());
+        log.error("Version: {}", projectProperty.getVersion());
+        log.error("Current environment: {} ({})",
+                  projectProperty.getEnvironment(),
+                  projectProperty.getEnvironmentAlias());
+        log.error("Deployment duration: {} seconds ({} ms).",
                   (endTime - startTime) / 1000,
                   (endTime - startTime));
         log.error("Server started at {} (timezone - {}), base URL: {}",
