@@ -17,7 +17,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class JwtConfiguration {
 
     public JwtConfiguration(ProjectProperty projectProperty) {
-        this.signingKey = projectProperty.getArtifactId();
+        this.signingKey = projectProperty.getProjectArtifactId();
         log.error("JWT signing key: {}", this.signingKey);
     }
 
