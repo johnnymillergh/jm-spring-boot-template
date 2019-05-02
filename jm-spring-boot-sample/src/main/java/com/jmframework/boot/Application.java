@@ -13,7 +13,9 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Description: Application, entrance of the project.
+ * <p>Description: Application, entrance of the project.</p>
+ * <p><strong><em>ATTENTION</em></strong>: Application.java should only exist in the <strong>BASE PACKAGE
+ * (artifactId)</strong>, or other resources cannot be autowired.</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-02-17 17:11

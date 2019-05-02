@@ -1,5 +1,8 @@
 package com.jmframework.boot.jmspringbootstarter.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,7 +18,7 @@ import java.util.Optional;
  **/
 @Mapper
 @Component
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     /**
      * Find by username, email or Phone.
      *
@@ -67,4 +70,6 @@ public interface UserMapper {
      * @return Count of username
      */
     Integer getUsernameCountByUsername(String username);
+
+    IPage<User> getAllUser(Page page);
 }

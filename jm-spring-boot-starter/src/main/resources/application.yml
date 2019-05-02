@@ -27,8 +27,13 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
-  mapper-locations: mapper/**/*Mapper.xml
-  type-aliases-package: @parent.groupId@
+  # mapper-locations should start with `classpath*` prefix
+  # when project is based on Maven multi-module to load XML mapper in different jar
+  mapper-locations: classpath*:/mapper/**/*Mapper.xml
+  # FIXME: if enable type-aliases-package, unit tests won't start correctly with following exception:
+  # nested exception is org.apache.ibatis.type.TypeException:
+  # The alias '' is already mapped to the value 'com.jmframework.boot.jmspringbootstarter.config.JwtAuthenticationFilter$1'
+#  type-aliases-package: @parent.groupId@
 
 jwt:
   configuration:

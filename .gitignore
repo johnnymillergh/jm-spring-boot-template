@@ -1,9 +1,9 @@
 ### Custom Ignored ###
-/target/
-/logs-dev/
-/logs-test/
-/logs-stage/
-/logs-prod/
+*/target/
+*/logs-dev/
+*/logs-test/
+*/logs-stage/
+*/logs-prod/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

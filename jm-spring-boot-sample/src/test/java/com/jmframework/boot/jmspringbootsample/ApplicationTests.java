@@ -1,7 +1,11 @@
-package com.jmframework.boot;
+package com.jmframework.boot.jmspringbootsample;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,9 +22,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class ApplicationTests {
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
+    @Test
     public void test() {
-        log.info("Hi from test");
+        Page<User> page = new Page<>(1, 5);
+        IPage<User> allUser = userMapper.getAllUser(page);
+        log.error("Pagination test. {}", allUser.getRecords().size());
     }
 }

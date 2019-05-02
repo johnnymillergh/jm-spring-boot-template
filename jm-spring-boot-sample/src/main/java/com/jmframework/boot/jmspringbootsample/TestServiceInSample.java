@@ -1,6 +1,9 @@
 package com.jmframework.boot.jmspringbootsample;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +15,11 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class TestServiceInSample {
+    @Autowired
+    private UserMapper userMapper;
+
     public void sayHi() {
         log.info("Hi from sample");
+        log.info(userMapper.getAllUser(new Page(1, 2)).getRecords().toString());
     }
 }

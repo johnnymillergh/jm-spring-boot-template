@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.config;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.jmframework.boot.jmspringbootstarter.constant.ProjectProperty;
 import org.apache.maven.model.Developer;
 import org.springframework.context.annotation.Bean;
@@ -41,14 +42,21 @@ public class Swagger2Configuration {
     }
 
     private ApiInfo apiInfo() {
-        Developer developer = projectProperty.getDevelopers().get(0);
         String projectArtifactId = projectProperty.getProjectArtifactId();
         String version = projectProperty.getVersion();
+        if (CollectionUtil.isEmpty(projectProperty.getDevelopers())) {
+            return new ApiInfoBuilder()
+                    .title("API Documentation for " + projectArtifactId + "@" + version)
+                    .description(projectArtifactId + ", environment: " + projectProperty.getEnvironmentAlias())
+                    .version(version)
+                    .build();
+        }
+        Developer developer = projectProperty.getDevelopers().get(0);
         return new ApiInfoBuilder()
                 .title("API Documentation for " + projectArtifactId + "@" + version)
+                .description(projectArtifactId + ", environment: " + projectProperty.getEnvironmentAlias())
                 .contact(new Contact(developer.getName(), projectProperty.getUrl(), developer.getEmail()))
                 .version(version)
-                .description(projectArtifactId + ", environment: " + projectProperty.getEnvironmentAlias())
                 .build();
     }
 }

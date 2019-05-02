@@ -3,27 +3,27 @@
 <mapper namespace="com.jmframework.boot.jmspringbootstarter.mapper.UserMapper">
     <select id="findByUsernameOrEmailOrPhone"
             resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.User">
-        SELECT su.id,
-               su.username,
-               su.password,
-               su.nickname,
-               su.phone,
-               su.email,
-               su.birthday,
-               su.sex,
-               su.status,
-               su.create_time AS createTime,
-               su.modify_time AS modifyTime
-        FROM t_user su
+        SELECT tu.id,
+               tu.username,
+               tu.password,
+               tu.nickname,
+               tu.phone,
+               tu.email,
+               tu.birthday,
+               tu.sex,
+               tu.status,
+               tu.create_time AS createTime,
+               tu.modify_time AS modifyTime
+        FROM t_user tu
         <where>
             <if test="username != null">
-                su.username = #{username}
+                tu.username = #{username}
             </if>
             <if test="phone != null">
-                or su.phone = #{phone}
+                or tu.phone = #{phone}
             </if>
             <if test="email != null">
-                or su.email = #{email}
+                or tu.email = #{email}
             </if>
         </where>
         <![CDATA[
@@ -63,5 +63,22 @@
         SELECT count(1)
         FROM t_user tu
         WHERE tu.username = #{username}
+        <![CDATA[
+        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:getUsernameCountByUsername*/
+        ]]>
+    </select>
+    <select id="getAllUser" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.User">
+        SELECT tu.id,
+               tu.username,
+               tu.password,
+               tu.nickname,
+               tu.phone,
+               tu.email,
+               tu.birthday,
+               tu.sex,
+               tu.status,
+               tu.create_time AS createTime,
+               tu.modify_time AS modifyTime
+        FROM t_user tu
     </select>
 </mapper>
