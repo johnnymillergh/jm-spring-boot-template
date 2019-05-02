@@ -53,6 +53,5 @@ public class Application {
                   new Date(),
                   TimeZone.getDefault().getDisplayName(),
                   serverConfiguration.getUrl());
-        testServiceInSample.sayHi();
     }
 }

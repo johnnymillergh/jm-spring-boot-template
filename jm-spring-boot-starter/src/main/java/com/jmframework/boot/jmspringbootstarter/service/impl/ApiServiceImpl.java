@@ -34,19 +34,23 @@ import java.util.*;
 @Slf4j
 @Service
 public class ApiServiceImpl implements ApiService {
-    private final WebApplicationContext applicationContext;
+    private final WebApplicationContext webApplicationContext;
     private final PermissionMapper permissionMapper;
 
-    public ApiServiceImpl(WebApplicationContext applicationContext,
+    public ApiServiceImpl(WebApplicationContext webApplicationContext,
                           PermissionMapper permissionMapper) {
-        this.applicationContext = applicationContext;
+        this.webApplicationContext = webApplicationContext;
         this.permissionMapper = permissionMapper;
     }
 
     @Override
     public ApiController getAllControllerClass() {
         ApiController apiController = new ApiController();
-        RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
+        // getBean(Class) method may throw an exception due to 2 beans are the same type.
+        // Exception message: expected single matching bean but found 2: swagger2ControllerMapping,
+        // requestMappingHandlerMapping
+        RequestMappingHandlerMapping mapping =
+                (RequestMappingHandlerMapping) webApplicationContext.getBean("requestMappingHandlerMapping");
         // handlerMethodMap -> URL:HandlerMethod
         Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = mapping.getHandlerMethods();
         Map<String, Class> controllerMap = new HashMap<>(32);
