@@ -10,17 +10,17 @@ spring:
     name: datasource-one
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/spring_boot_template?useUnicode=true&characterEncoding=utf8
-    username: spring_boot_template_w
-    password: H'Tkh9@!*_/B'_j
+    url: ENC(DbTcEcQAvOr5k0PL7RZubwCMXvz2Stpbg58KhDD9R5rn4UeDBHThHS0E85B8ogBrXAGlMVa2CiQnAjLnUtZWWWd+Cph1GBFa+hK20dJ7jyIvJFDXHoRUevx66F+oNTwHIeOIxLRPMTewpZCyEG3IJEhoHEI5CiLv)
+    username: ENC(XWzANOD21T/Is1Utg/sb4R3L7mtm7+4MX6nqlo4AaGs=)
+    password: ENC(7Pc074L7zEKmuCUCFqCHip+ceI93WlwsvVZ3zD4X+Ow=)
   devtools:
     restart:
       enabled: false
   redis:
     database: 0
-    host: localhost
+    host: ENC(NCJGHasDqzQCvOhNZWKzGGnbsuSKEEok)
     port: 6379
-    password: 123456
+    password: ENC(aIqOVSt1Lsw/k1RN0RPPMQ==)
     timeout: 10000ms
     lettuce:
       pool:
