@@ -55,7 +55,7 @@ public class ServerConfiguration implements ApplicationListener<WebServerInitial
         assert address != null;
         // HTTPS is not enabled under development environment.
         if (DEVELOPMENT_ENVIRONMENT_ALIAS.equals(projectProperty.getEnvironmentAlias())) {
-            return "http://" + address.getHostAddress() + projectProperty.getContextPath();
+            return "https://" + address.getHostAddress() + ":" + serverPort + projectProperty.getContextPath();
         }
         return "https://" + address.getHostAddress() + projectProperty.getContextPath();
     }
