@@ -67,12 +67,13 @@ public class ServerConfiguration implements ApplicationListener<WebServerInitial
             return this.getInternetIp();
         }
         try {
-            URL url = new URL("http://bot.whatismyipaddress.com");
+            // An API provided by https://whatismyipaddress.com/api
+            URL url = new URL("https://ipv4bot.whatismyipaddress.com/");
             BufferedReader sc = new BufferedReader(new InputStreamReader(url.openStream()));
             // Read system IP Address
             return sc.readLine().trim();
         } catch (Exception e) {
-            log.error("Cannot execute properly to get IP address from http://bot.whatismyipaddress.com", e);
+            log.error("Cannot execute properly to get IP address from https://whatismyipaddress.com/api", e);
         }
         return this.getInternetIp();
     }
