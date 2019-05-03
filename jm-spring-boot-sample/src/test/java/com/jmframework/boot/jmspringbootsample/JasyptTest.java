@@ -37,6 +37,7 @@ public class JasyptTest {
         // Druid
         String druidLoginName = encryptor.encrypt("johnny");
         String druidPassword = encryptor.encrypt("123456");
+        String keystoreForSSL = encryptor.encrypt("keystoreforprojectname");
     }
 
     @Test

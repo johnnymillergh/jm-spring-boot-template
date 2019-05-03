@@ -52,6 +52,6 @@ public class Application {
         log.error("Server started at {} (timezone - {}), base URL: {}",
                   new Date(),
                   TimeZone.getDefault().getDisplayName(),
-                  serverConfiguration.getUrl());
+                  serverConfiguration.getBaseUrl());
     }
 }

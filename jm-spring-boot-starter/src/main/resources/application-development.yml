@@ -1,5 +1,11 @@
 server:
-  port: 8080
+  port: 8443
+  # Comment following ssl configuration to DISABLE HTTPS in development environment.
+#  ssl:
+#    key-store-type: PKCS12
+#    key-store: classpath:keystore.p12
+#    key-store-password: ENC(Llhd3pDTnL4x1BmFutqGNJ2h3M/fw5OpKCDACf3vztgW/B2mtjle0SHqDE4XETHT)
+#    key-alias: tomcat
 
 spring:
   cache:
