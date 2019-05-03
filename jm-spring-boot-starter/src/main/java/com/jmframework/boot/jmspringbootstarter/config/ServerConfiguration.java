@@ -7,8 +7,13 @@ import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.NetworkInterface;
+import java.net.URL;
+import java.util.Enumeration;
 
 /**
  * Description: ServerConfiguration, change description here.
@@ -37,7 +42,7 @@ public class ServerConfiguration implements ApplicationListener<WebServerInitial
      * <p>Get base URL of backend server.</p>
      * <p>The result will be like:</p>
      * <ol>
-     * <li>http://[serverIp]/[contextPath]</li>
+     * <li>http://[serverIp]:[serverPort]/[contextPath]</li>
      * <li>https://[serverIp]/[contextPath]</li>
      * </ol>
      *
@@ -46,17 +51,70 @@ public class ServerConfiguration implements ApplicationListener<WebServerInitial
      * @date 2019-05-03 16:05
      */
     public String getBaseUrl() {
-        InetAddress address = null;
-        try {
-            address = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            log.error("IP address of a host could not be determined.", e);
-        }
-        assert address != null;
-        // HTTPS is not enabled under development environment.
         if (DEVELOPMENT_ENVIRONMENT_ALIAS.equals(projectProperty.getEnvironmentAlias())) {
-            return "https://" + address.getHostAddress() + ":" + serverPort + projectProperty.getContextPath();
+            return "https://" + this.getPublicIp() + ":" + serverPort + projectProperty.getContextPath();
         }
-        return "https://" + address.getHostAddress() + projectProperty.getContextPath();
+        return "https://" + this.getPublicIp() + projectProperty.getContextPath();
+    }
+
+    /**
+     * Find public IP address.
+     *
+     * @return public IP
+     */
+    public String getPublicIp() {
+        if (DEVELOPMENT_ENVIRONMENT_ALIAS.equals(projectProperty.getEnvironmentAlias())) {
+            return this.getInternetIp();
+        }
+        try {
+            URL url = new URL("http://bot.whatismyipaddress.com");
+            BufferedReader sc = new BufferedReader(new InputStreamReader(url.openStream()));
+            // Read system IP Address
+            return sc.readLine().trim();
+        } catch (Exception e) {
+            log.error("Cannot execute properly to get IP address from http://bot.whatismyipaddress.com", e);
+        }
+        return this.getInternetIp();
+    }
+
+    /**
+     * Get internet IP.
+     *
+     * @return internet IP
+     */
+    private String getInternetIp() {
+        String intranetIp = this.getIntranetIp();
+        try {
+            Enumeration<NetworkInterface> networks = NetworkInterface.getNetworkInterfaces();
+            InetAddress ip;
+            Enumeration<InetAddress> addresses;
+            while (networks.hasMoreElements()) {
+                addresses = networks.nextElement().getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    ip = addresses.nextElement();
+                    if (ip instanceof Inet4Address
+                            && ip.isSiteLocalAddress()
+                            && !ip.getHostAddress().equals(intranetIp)) {
+                        return ip.getHostAddress();
+                    }
+                }
+            }
+            return intranetIp;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get intranet IP.
+     *
+     * @return intranet IP
+     */
+    private String getIntranetIp() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
