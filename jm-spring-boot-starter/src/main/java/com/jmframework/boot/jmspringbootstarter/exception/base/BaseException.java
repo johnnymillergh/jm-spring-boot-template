@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.exception.base;
 
+import com.jmframework.boot.jmspringbootstarter.constant.IUniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,15 +11,15 @@ import lombok.EqualsAndHashCode;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 16:23
  **/
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 5049763892480652887L;
 
     /**
-     * Code is REQUIRED. Default code is 500.
+     * Code is REQUIRED. Default code is 50001.
      */
-    private Integer code = UniversalStatus.ERROR.getCode();
+    private Integer code = UniversalStatus.FAILURE.getCode();
     /**
      * Message is REQUIRED. Default message is: Error. A generic status for an error in the server itself.
      */
@@ -35,6 +36,16 @@ public class BaseException extends RuntimeException {
         this.data = data;
     }
 
+    public BaseException(IUniversalStatus status) {
+        this.code = status.getCode();
+        this.message = status.getMessage();
+    }
+
+    public BaseException(IUniversalStatus status, Object data) {
+        this(status);
+        this.data = data;
+    }
+
     public BaseException(UniversalStatus universalStatus, String message) {
         this(universalStatus);
         this.message = message;
@@ -44,13 +55,28 @@ public class BaseException extends RuntimeException {
         this.message = message;
     }
 
+    public BaseException(Integer status, String message, Object data) {
+        this.code = status;
+        this.message = message;
+        this.data = data;
+    }
+
     public BaseException(String message, Throwable throwable) {
         this(message);
         super.setStackTrace(throwable.getStackTrace());
     }
 
+    public BaseException(Object data) {
+        this.data = data;
+    }
+
     public BaseException(Throwable throwable) {
         this(throwable.getMessage());
         super.setStackTrace(throwable.getStackTrace());
+    }
+
+    public BaseException(Object data, String message) {
+        this.data = data;
+        this.message = message;
     }
 }

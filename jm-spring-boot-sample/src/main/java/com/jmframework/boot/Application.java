@@ -1,6 +1,5 @@
 package com.jmframework.boot;
 
-import com.jmframework.boot.jmspringbootsample.TestServiceInSample;
 import com.jmframework.boot.jmspringbootstarter.config.ServerConfiguration;
 import com.jmframework.boot.jmspringbootstarter.constant.ProjectProperty;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
@@ -27,14 +26,11 @@ import java.util.TimeZone;
 public class Application {
     private static ProjectProperty projectProperty;
     private static ServerConfiguration serverConfiguration;
-    private static TestServiceInSample testServiceInSample;
 
     public Application(ProjectProperty projectProperty,
-                       ServerConfiguration serverConfiguration,
-                       TestServiceInSample testServiceInSample) {
+                       ServerConfiguration serverConfiguration) {
         Application.projectProperty = projectProperty;
         Application.serverConfiguration = serverConfiguration;
-        Application.testServiceInSample = testServiceInSample;
     }
 
     public static void main(String[] args) {

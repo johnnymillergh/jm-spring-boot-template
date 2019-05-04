@@ -32,14 +32,25 @@ import javax.validation.ConstraintViolationException;
 @Slf4j
 @ControllerAdvice
 public class ExceptionControllerAdvice {
+    /**
+     * <p>Exception handler.</p>
+     * <p><strong>ATTENTION</strong>: In this method, <strong><em>cannot throw any exception</em></strong>.</p>
+     *
+     * @param request   HTTP request
+     * @param exception any kinds of exception occurred in controller
+     * @return custom exception info
+     */
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
-    public ResponseBodyBean bisException(HttpServletRequest request, Exception exception) {
+    public ResponseBodyBean handleException(HttpServletRequest request,
+                                            Exception exception) {
         String errorMessage = "Exception occurred when ["
                 + RequestUtil.getRequestIpAndPort(request) + "] requested access. URL: "
                 + request.getServletPath();
         log.error(errorMessage);
 
+        // FIXME: THIS IS NOT A PROBLEM
+        //  ATTENTION: Use only ResponseBodyBean.ofStatus() in handleException() method and DON'T throw any exception
         if (exception instanceof NoHandlerFoundException) {
             log.error("[GlobalExceptionCapture] NoHandlerFoundException: Request URL = {}, HTTP method = {}",
                       ((NoHandlerFoundException) exception).getRequestURL(),
@@ -54,18 +65,18 @@ public class ExceptionControllerAdvice {
             return ResponseBodyBean.ofStatus(UniversalStatus.METHOD_NOT_ALLOWED);
         } else if (exception instanceof MethodArgumentNotValidException) {
             log.error("[GlobalExceptionCapture] MethodArgumentNotValidException", exception);
-            return ResponseBodyBean.setResponse(UniversalStatus.BAD_REQUEST.getCode(),
-                                                ((MethodArgumentNotValidException) exception).getBindingResult()
-                                                                                             .getAllErrors()
-                                                                                             .get(0)
-                                                                                             .getDefaultMessage(),
-                                                null);
+            return ResponseBodyBean.ofStatus(UniversalStatus.BAD_REQUEST.getCode(),
+                                             ((MethodArgumentNotValidException) exception).getBindingResult()
+                                                                                          .getAllErrors()
+                                                                                          .get(0)
+                                                                                          .getDefaultMessage(),
+                                             null);
         } else if (exception instanceof ConstraintViolationException) {
             log.error("[GlobalExceptionCapture] ConstraintViolationException", exception);
-            return ResponseBodyBean.setResponse(UniversalStatus.BAD_REQUEST.getCode(),
-                                                CollUtil.getFirst(((ConstraintViolationException) exception)
-                                                                          .getConstraintViolations())
-                                                        .getMessage(), null);
+            return ResponseBodyBean.ofStatus(UniversalStatus.BAD_REQUEST.getCode(),
+                                             CollUtil.getFirst(((ConstraintViolationException) exception)
+                                                                       .getConstraintViolations())
+                                                     .getMessage(), null);
         } else if (exception instanceof MethodArgumentTypeMismatchException) {
             log.error("[GlobalExceptionCapture] MethodArgumentTypeMismatchException: " +
                               "Parameter name = {}, Exception information: {}",
@@ -84,11 +95,15 @@ public class ExceptionControllerAdvice {
             return ResponseBodyBean.ofStatus(UniversalStatus.USER_DISABLED);
         } else if (exception instanceof InternalAuthenticationServiceException) {
             log.error("[GlobalExceptionCapture] InternalAuthenticationServiceException: {}", exception.getMessage());
-            return ResponseBodyBean.setResponse(UniversalStatus.ROLE_NOT_FOUND.getCode(), exception.getMessage(), null);
+            return ResponseBodyBean.ofStatus(UniversalStatus.ROLE_NOT_FOUND.getCode(), exception.getMessage(), null);
         } else if (exception instanceof BaseException) {
-            log.error("[GlobalExceptionCapture] BaseException: Status code: {}, {}",
-                      ((BaseException) exception).getCode(), exception.getMessage());
-            return ResponseBodyBean.ofException((BaseException) exception);
+            log.error("[GlobalExceptionCapture] BaseException: Status code: {}, message: {}, data: {}",
+                      ((BaseException) exception).getCode(),
+                      exception.getMessage(),
+                      ((BaseException) exception).getData());
+            return ResponseBodyBean.ofStatus(((BaseException) exception).getCode(),
+                                             exception.getMessage(),
+                                             ((BaseException) exception).getData());
         }
         log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage(), exception);
         return ResponseBodyBean.ofStatus(UniversalStatus.ERROR);

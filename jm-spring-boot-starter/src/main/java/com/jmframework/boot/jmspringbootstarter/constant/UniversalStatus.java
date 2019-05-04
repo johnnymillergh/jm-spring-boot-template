@@ -10,30 +10,21 @@ import lombok.Getter;
  **/
 @Getter
 public enum UniversalStatus implements IUniversalStatus {
+    // Successful
     /**
      * Success
      */
     SUCCESS(200, "Success"),
     /**
-     * Log out successfully
-     */
-    LOGOUT(20001, "Log out successfully"),
-    /**
-     * Error or failure
-     */
-    ERROR(500, "Error. A generic status for an error in the server itself."),
-    /**
      * Failure
      */
-    FAILURE(50001, "Failure"),
+    FAILURE(250, "Failure"),
     /**
      * Warning
      */
-    WARNING(50002, "Warning"),
-    /**
-     * Role not found
-     */
-    ROLE_NOT_FOUND(50003, "Role not found."),
+    WARNING(251, "Warning"),
+
+    // Client error
     /**
      * Unauthorized
      */
@@ -58,41 +49,51 @@ public enum UniversalStatus implements IUniversalStatus {
     /**
      * Param not matched
      */
-    PARAM_NOT_MATCH(40001, "Param not matched. " +
+    PARAM_NOT_MATCH(460, "Param not matched. " +
             "The request could not be fulfilled due to the incorrect syntax of the request."),
     /**
      * Param not null
      */
-    PARAM_NOT_NULL(40002, "Param not null."),
+    PARAM_NOT_NULL(461, "Param not null."),
     /**
      * Param invalid
      */
-    PARAM_INVALID(40003, "Param invalid."),
+    PARAM_INVALID(462, "Param invalid."),
     /**
      * User disabled
      */
-    USER_DISABLED(40301, "User disabled."),
+    USER_DISABLED(463, "User disabled."),
+
+    // Server error
+    /**
+     * Error or failure
+     */
+    ERROR(500, "Error. A generic status for an error in the server itself."),
+    /**
+     * Role not found
+     */
+    ROLE_NOT_FOUND(552, "Role not found."),
     /**
      * Username or password error
      */
-    USERNAME_OR_PASSWORD_ERROR(50004, "Username or password error."),
+    USERNAME_OR_PASSWORD_ERROR(553, "Username or password error."),
     /**
      * Token expired
      */
-    TOKEN_EXPIRED(50005, "Token expired."),
+    TOKEN_EXPIRED(554, "Token expired."),
     /**
      * Token parse error
      */
-    TOKEN_PARSE_ERROR(50006, "Token parse error."),
+    TOKEN_PARSE_ERROR(555, "Token parse error."),
     /**
      * Token out of control
      */
-    TOKEN_OUT_OF_CONTROL(50007, "Token out of control. " +
+    TOKEN_OUT_OF_CONTROL(556, "Token out of control. " +
             "Current user has logged in before. Please try to reset current password or sign in again."),
     /**
      * Kick out self 无法手动踢出自己，请尝试退出登录操作！
      */
-    KICK_OUT_SELF(50008, "Cannot kick self out. Please try to sign in again.");
+    KICK_OUT_SELF(557, "Cannot kick self out. Please try to sign in again.");
 
     /**
      * Code of status

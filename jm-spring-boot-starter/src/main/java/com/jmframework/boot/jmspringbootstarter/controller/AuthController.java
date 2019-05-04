@@ -118,6 +118,6 @@ public class AuthController {
         } catch (SecurityException e) {
             throw new SecurityException(UniversalStatus.UNAUTHORIZED);
         }
-        return ResponseBodyBean.setResponse(null, "Logout success.", UniversalStatus.LOGOUT.getCode());
+        return ResponseBodyBean.ofSuccess("Logout success.");
     }
 }
