@@ -58,8 +58,8 @@ public class WebLogAspect {
 
     @AfterThrowing(pointcut = "webLog()", throwing = "e")
     public void onEndWithThrowing(JoinPoint joinPoint, Exception e) {
-        log.info("Signature      : {}", joinPoint.getSignature().toString());
-        log.info("Exception Msg  : {}, {}", e.toString(), e.getMessage());
+        log.info("Signature      : {}", joinPoint.getSignature().toShortString());
+        log.info("Exception Info : {}, message: {}", e.toString(), e.getMessage());
         log.info("========================== WEB LOG END WITH EXCEPTION ==========================");
     }
 }

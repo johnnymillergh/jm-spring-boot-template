@@ -18,7 +18,7 @@ import java.util.Date;
  **/
 public class ResponseBodyBean implements Serializable {
     private static final long serialVersionUID = -6799356701376964494L;
-    private static final String SUCCESS_PREFIX = "2";
+    private static final Integer SUCCESS = 200;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date timestamp = new Date();
     /**
@@ -36,7 +36,8 @@ public class ResponseBodyBean implements Serializable {
      *
      * @param status IUniversalStatus
      * @return response body for ExceptionControllerAdvice
-     * @see ExceptionControllerAdvice#handleException(javax.servlet.http.HttpServletRequest, java.lang.Exception)
+     * @see ExceptionControllerAdvice#handleException(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse, java.lang.Exception)
      */
     public static ResponseBodyBean ofStatus(IUniversalStatus status) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
@@ -54,7 +55,8 @@ public class ResponseBodyBean implements Serializable {
      * @param status IUniversalStatus
      * @param data   data to be responded to client
      * @return response body for ExceptionControllerAdvice
-     * @see ExceptionControllerAdvice#handleException(javax.servlet.http.HttpServletRequest, java.lang.Exception)
+     * @see ExceptionControllerAdvice#handleException(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse, java.lang.Exception)
      */
     public static ResponseBodyBean ofStatus(IUniversalStatus status, Object data) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
@@ -74,7 +76,8 @@ public class ResponseBodyBean implements Serializable {
      * @param message message to be responded
      * @param data    data to be responded
      * @return response body for ExceptionControllerAdvice
-     * @see ExceptionControllerAdvice#handleException(javax.servlet.http.HttpServletRequest, java.lang.Exception)
+     * @see ExceptionControllerAdvice#handleException(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse, java.lang.Exception)
      */
     public static ResponseBodyBean ofStatus(Integer status, String message, Object data) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
@@ -95,8 +98,7 @@ public class ResponseBodyBean implements Serializable {
      * @return response body
      */
     public static ResponseBodyBean setResponse(Integer status, String message, Object data) {
-        String statusString = String.valueOf(status);
-        if (!SUCCESS_PREFIX.equals(statusString.substring(0, 1))) {
+        if (!SUCCESS.equals(status)) {
             throw new BaseException(status, message, data);
         }
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
@@ -190,10 +192,7 @@ public class ResponseBodyBean implements Serializable {
      */
     @SuppressWarnings("ConstantConditions")
     public static ResponseBodyBean ofFailure(String message) {
-        if (true) {
-            throw new BizException(message);
-        }
-        return new ResponseBodyBean();
+        throw new BizException(message);
     }
 
     /**
@@ -204,10 +203,7 @@ public class ResponseBodyBean implements Serializable {
      */
     @SuppressWarnings("ConstantConditions")
     public static ResponseBodyBean ofFailure(Object data) {
-        if (true) {
-            throw new BizException(data);
-        }
-        return new ResponseBodyBean();
+        throw new BizException(data);
     }
 
     /**
@@ -219,10 +215,7 @@ public class ResponseBodyBean implements Serializable {
      */
     @SuppressWarnings("ConstantConditions")
     public static ResponseBodyBean ofFailure(Object data, String message) {
-        if (true) {
-            throw new BizException(data, message);
-        }
-        return new ResponseBodyBean();
+        throw new BizException(data, message);
     }
 
     /**
