@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootsample.demo.controller;
 
+import com.jmframework.boot.jmspringbootstarter.aspect.annotation.WebLog;
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
@@ -31,6 +32,7 @@ public class DemoController {
     }
 
     @GetMapping("/getCurrentUser")
+    @WebLog()
     public ResponseBodyBean getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<>(4);
         String jwtString = jwtUtil.getJwtFromRequest(request);
@@ -42,7 +44,9 @@ public class DemoController {
     }
 
     @GetMapping("/testResponseAndException")
-    public ResponseBodyBean testResponseAndException(Integer code) {
+    @WebLog()
+    public ResponseBodyBean testResponseAndException(Integer code) throws InterruptedException {
+        Thread.sleep(2000);
         switch (code) {
             case 1:
                 return ResponseBodyBean.ofSuccess("Test success message");
