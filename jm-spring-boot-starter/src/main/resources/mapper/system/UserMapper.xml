@@ -26,9 +26,6 @@
                 or tu.email = #{email}
             </if>
         </where>
-        <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:findByUsernameOrEmailOrPhone*/
-        ]]>
     </select>
 
     <select id="checkUsernameUniqueness" resultType="integer">
@@ -46,26 +43,17 @@
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_user(username, password, nickname, phone, email, birthday, sex, status, create_time, modify_time)
         VALUES (#{username}, #{password}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex}, #{status}, now(), now())
-        <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:save*/
-        ]]>
     </insert>
 
     <insert id="register" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_user(username, password, email, status, create_time, modify_time)
         VALUES (#{username}, #{password}, #{email}, 1, now(), now())
-        <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:register*/
-        ]]>
     </insert>
 
     <select id="getUsernameCountByUsername" resultType="integer">
         SELECT count(1)
         FROM t_user tu
         WHERE tu.username = #{username}
-        <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.dao.UserMapper,sqlid:getUsernameCountByUsername*/
-        ]]>
     </select>
     <select id="getAllUser" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.User">
         SELECT tu.id,

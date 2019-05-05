@@ -9,8 +9,5 @@
         WHERE t_user.id = t_user_role.user_id
           AND t_role.id = t_user_role.role_id
           AND t_user.id = #{userId}
-        <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.mapper.RoleMapper,sqlid:selectByUserId*/
-        ]]>
     </select>
 </mapper>

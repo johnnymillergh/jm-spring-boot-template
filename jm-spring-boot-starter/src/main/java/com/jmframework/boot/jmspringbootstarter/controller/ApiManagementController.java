@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
+import com.jmframework.boot.jmspringbootstarter.aspect.annotation.WebLog;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
 import io.swagger.annotations.Api;
@@ -25,12 +26,14 @@ public class ApiManagementController {
         this.apiService = apiService;
     }
 
+    @WebLog
     @GetMapping("/getController")
     @ApiOperation(value = "Get controller list", notes = "Get controller list")
     public ResponseBodyBean getController() {
         return ResponseBodyBean.ofSuccess(apiService.getAllControllerClass());
     }
 
+    @WebLog
     @GetMapping("/getApiByControllerClass")
     @ApiOperation(value = "Get API by controller", notes = "Get API by controller")
     public ResponseBodyBean getApiByControllerClass(String controllerClass, Integer apiStatus) {
@@ -40,6 +43,7 @@ public class ApiManagementController {
         return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(controllerClass, apiStatus));
     }
 
+    @WebLog
     @GetMapping("/getApiAnalysis")
     @ApiOperation(value = "Get API analysis", notes = "Get API analysis")
     public ResponseBodyBean getApiAnalysis(String classFullName) {

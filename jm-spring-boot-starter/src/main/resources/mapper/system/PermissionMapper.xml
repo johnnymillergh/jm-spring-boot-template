@@ -10,9 +10,6 @@
                  open="(" separator="," close=")">
             #{item}
         </foreach>
-        <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.mapper.PermissionMapper,sqlid:selectByRoleIdList*/
-        ]]>
     </select>
 
     <select id="findApiByUrl" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission">
@@ -20,9 +17,6 @@
         FROM t_permission tp
         WHERE tp.url = #{urlPrefix}
           AND tp.type = 2
-        <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.mapper.PermissionMapper,sqlid:findPermissionsByUrl*/
-        ]]>
     </select>
 
     <select id="findApisByUrlPrefix"
@@ -31,8 +25,5 @@
         FROM t_permission tp
         WHERE tp.url LIKE concat(#{urlPrefix}, '%')
           AND tp.type = 2
-        <![CDATA[
-        /*project_name:SpringBootTemplate,namespace:com.jm.springboottemplate.system.mapper.PermissionMapper,sqlid:findPermissionsByUrlPrefix*/
-        ]]>
     </select>
 </mapper>
