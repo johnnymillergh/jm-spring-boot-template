@@ -6,7 +6,6 @@ import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.controller.ExceptionControllerAdvice;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
-import com.sun.istack.internal.NotNull;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -95,9 +94,7 @@ public class ResponseBodyBean implements Serializable {
      * @param data    data to be responded
      * @return response body
      */
-    public static ResponseBodyBean setResponse(@NotNull Integer status,
-                                               @NotNull String message,
-                                               Object data) {
+    public static ResponseBodyBean setResponse(Integer status, String message, Object data) {
         String statusString = String.valueOf(status);
         if (!SUCCESS_PREFIX.equals(statusString.substring(0, 1))) {
             throw new BaseException(status, message, data);
@@ -115,7 +112,7 @@ public class ResponseBodyBean implements Serializable {
      * @param data data to be responded to client.
      * @return response body
      */
-    public static ResponseBodyBean ofData(@NotNull Object data) {
+    public static ResponseBodyBean ofData(Object data) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.data = data;
         return responseBodyBean;
@@ -127,7 +124,7 @@ public class ResponseBodyBean implements Serializable {
      * @param message message to be responded
      * @return response body
      */
-    public static ResponseBodyBean ofMessage(@NotNull String message) {
+    public static ResponseBodyBean ofMessage(String message) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.message = message;
         return responseBodyBean;
@@ -140,7 +137,7 @@ public class ResponseBodyBean implements Serializable {
      * @param message message to be responded
      * @return response body
      */
-    public static ResponseBodyBean ofDataAndMessage(@NotNull Object data, @NotNull String message) {
+    public static ResponseBodyBean ofDataAndMessage(Object data, String message) {
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
         responseBodyBean.data = data;
         responseBodyBean.message = message;
