@@ -16,7 +16,7 @@
 
     <build>
         <!-- set the name of .jar file -->
-        <finalName>${artifactId}-${envAlias}-${version}</finalName>
+        <finalName>${parent.artifactId}-${envAlias}-${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
