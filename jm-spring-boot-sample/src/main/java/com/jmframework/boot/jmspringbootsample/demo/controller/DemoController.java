@@ -1,6 +1,5 @@
 package com.jmframework.boot.jmspringbootsample.demo.controller;
 
-import com.jmframework.boot.jmspringbootstarter.aspect.annotation.WebLog;
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
@@ -8,6 +7,7 @@ import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +32,6 @@ public class DemoController {
     }
 
     @GetMapping("/getCurrentUser")
-    @WebLog()
     public ResponseBodyBean getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<>(4);
         String jwtString = jwtUtil.getJwtFromRequest(request);
@@ -44,7 +43,6 @@ public class DemoController {
     }
 
     @GetMapping("/testResponseAndException")
-    @WebLog()
     public ResponseBodyBean testResponseAndException(Integer code) throws InterruptedException {
         Thread.sleep(2000);
         switch (code) {
@@ -69,5 +67,15 @@ public class DemoController {
             default:
                 throw new BizException("Throw a test exception");
         }
+    }
+
+    @PostMapping("/testPost1")
+    public void testPost1() throws InterruptedException {
+        Thread.sleep(500);
+    }
+
+    @GetMapping("/testGet1")
+    public void testGet1() throws InterruptedException {
+        Thread.sleep(500);
     }
 }

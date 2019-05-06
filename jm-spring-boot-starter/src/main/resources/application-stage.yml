@@ -36,14 +36,15 @@ spring:
 
 custom:
   configuration:
+    web-request-log-disabled: true
     ignores:
       # POST Requests need to be ignored.
       post:
-        - "/auth/register"
-        - "/auth/login"
+      - "/auth/register"
+      - "/auth/login"
       get:
-        - "/auth/checkUsernameUniqueness"
-        - "/auth/checkEmailUniqueness"
-        - "/auth/validateUsername/**"
+      - "/auth/checkUsernameUniqueness"
+      - "/auth/checkEmailUniqueness"
+      - "/auth/validateUsername/**"
       # Request need to be ignored that matches pattern.
       pattern:

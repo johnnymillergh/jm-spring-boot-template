@@ -23,4 +23,10 @@ public class CustomConfiguration {
      * true - disable web security; false - enable web security.
      */
     private Boolean webSecurityDisabled = false;
+    /**
+     * Web request log switch. Default is false.
+     * <p>
+     * true - disable web request log; false - enable web request log.
+     */
+    private Boolean webRequestLogDisabled = false;
 }
