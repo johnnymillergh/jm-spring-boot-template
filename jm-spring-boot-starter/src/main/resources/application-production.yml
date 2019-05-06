@@ -47,3 +47,4 @@ custom:
         - "/auth/validateUsername/**"
       # Request need to be ignored that matches pattern.
       pattern:
+        - "/druid/**"

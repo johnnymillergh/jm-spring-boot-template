@@ -47,3 +47,8 @@ custom:
         - "/auth/validateUsername/**"
       # Request need to be ignored that matches pattern.
       pattern:
+        - "/druid/**"
+        - "/swagger-resources/**"
+        - "/v2/api-docs/**"
+        - "/webjars/**"
+        - "/swagger-ui.html"

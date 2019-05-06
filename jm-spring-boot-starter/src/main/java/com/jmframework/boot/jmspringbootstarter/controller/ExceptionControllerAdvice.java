@@ -46,10 +46,9 @@ public class ExceptionControllerAdvice {
     public ResponseBodyBean handleException(HttpServletRequest request,
                                             HttpServletResponse response,
                                             Exception exception) {
-        String errorMessage = "Exception occurred when ["
-                + RequestUtil.getRequestIpAndPort(request) + "] requested access. URL: "
-                + request.getServletPath();
-        log.error(errorMessage);
+        log.error("Exception occurred when [{}] requested access. URL: {}",
+                  RequestUtil.getRequestIpAndPort(request),
+                  request.getServletPath());
 
         // FIXME: THIS IS NOT A PROBLEM
         //  ATTENTION: Use only ResponseBodyBean.ofStatus() in handleException() method and DON'T throw any exception
