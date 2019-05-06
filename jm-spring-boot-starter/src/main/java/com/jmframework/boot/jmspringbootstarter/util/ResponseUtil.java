@@ -35,7 +35,7 @@ public class ResponseUtil {
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Methods", "*");
             response.setContentType("application/json;charset=UTF-8");
-            response.setStatus(200);
+            response.setStatus(status.getCode());
             response.getWriter().write(MAPPER.writeValueAsString(responseBodyBean));
         } catch (IOException e) {
             log.error("Error occurred when responding a data JSON.", e);
@@ -53,7 +53,7 @@ public class ResponseUtil {
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Methods", "*");
             response.setContentType("application/json;charset=UTF-8");
-            response.setStatus(200);
+            response.setStatus(exception.getCode());
             ResponseBodyBean responseBodyBean = new ResponseBodyBean();
             responseBodyBean.setStatus(exception.getCode());
             responseBodyBean.setMessage(exception.getMessage());
