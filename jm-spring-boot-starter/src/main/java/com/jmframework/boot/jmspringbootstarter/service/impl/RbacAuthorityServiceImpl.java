@@ -3,6 +3,7 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.jmframework.boot.jmspringbootstarter.configuration.CustomConfiguration;
 import com.jmframework.boot.jmspringbootstarter.constant.PermissionType;
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;
@@ -12,6 +13,7 @@ import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
 import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RbacAuthorityService;
+import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,19 +42,31 @@ public class RbacAuthorityServiceImpl implements RbacAuthorityService {
     private final RoleMapper roleMapper;
     private final PermissionMapper permissionMapper;
     private final RequestMappingHandlerMapping mapping;
+    private final CustomConfiguration customConfiguration;
+    private final JwtUtil jwtUtil;
 
     @Autowired
     public RbacAuthorityServiceImpl(RoleMapper roleMapper,
                                     PermissionMapper permissionMapper,
-                                    RequestMappingHandlerMapping mapping) {
+                                    RequestMappingHandlerMapping mapping,
+                                    CustomConfiguration customConfiguration,
+                                    JwtUtil jwtUtil) {
         this.roleMapper = roleMapper;
         this.permissionMapper = permissionMapper;
         this.mapping = mapping;
+        this.customConfiguration = customConfiguration;
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
-        checkRequest(request);
+        String username = jwtUtil.getUsernameFromRequest(request);
+        // Super user has no restriction on any requests.
+        if (customConfiguration.getSuperUser().equals(username)) {
+            return true;
+        }
+
+        this.checkRequest(request);
 
         Object userInfo = authentication.getPrincipal();
         boolean hasPermission = false;
@@ -133,17 +147,17 @@ public class RbacAuthorityServiceImpl implements RbacAuthorityService {
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = mapping.getHandlerMethods();
 
-        handlerMethods.forEach((k, v) -> {
+        handlerMethods.forEach((key, value) -> {
             // 获取当前 key 下的获取所有URL
-            Set<String> url = k.getPatternsCondition()
-                               .getPatterns();
-            RequestMethodsRequestCondition method = k.getMethodsCondition();
+            Set<String> url = key.getPatternsCondition()
+                                 .getPatterns();
+            RequestMethodsRequestCondition method = key.getMethodsCondition();
 
             // 为每个URL添加所有的请求方法
-            url.forEach(s -> urlMapping.putAll(s, method.getMethods()
-                                                        .stream()
-                                                        .map(Enum::toString)
-                                                        .collect(Collectors.toList())));
+            url.forEach(item -> urlMapping.putAll(item, method.getMethods()
+                                                              .stream()
+                                                              .map(Enum::toString)
+                                                              .collect(Collectors.toList())));
         });
 
         return urlMapping;

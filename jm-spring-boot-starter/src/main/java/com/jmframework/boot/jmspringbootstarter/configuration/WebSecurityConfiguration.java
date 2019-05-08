@@ -71,29 +71,28 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         }
 
         http.cors()
-            // 关闭 CSRF
+            // Disable CSRF (Cross-site request forgery)
             .and().csrf().disable()
-            // 登录行为由自己实现，参考 AuthController#login
+            // Disable form login to use custom login
             .formLogin().disable()
             .httpBasic().disable()
 
             // 认证请求
             .authorizeRequests()
-            // 所有请求都需要登录访问
+            // Any requests need to be authenticated
             .anyRequest()
             .authenticated()
-            // RBAC 动态 url 认证
+            // RBAC URL authorization
             .anyRequest()
             .access("@rbacAuthorityServiceImpl.hasPermission(request,authentication)")
 
-            // 登出行为由自己实现，参考 AuthController#logout
+            // Disable logout to use custom logout
             .and().logout().disable()
-            // Session 管理
             .sessionManagement()
-            // 因为使用了JWT，所以这里不管理 Session
+            // Disable session management
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-            // 异常处理
+            // Exception handling
             .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
         // 添加自定义 JWT 过滤器
@@ -117,7 +116,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // 忽略 DELETE
         customConfiguration.getIgnores().getDelete().forEach(url -> and.ignoring().antMatchers(HttpMethod.DELETE,
-        url));
+                                                                                               url));
 
         // 忽略 PUT
         customConfiguration.getIgnores().getPut().forEach(url -> and.ignoring().antMatchers(HttpMethod.PUT, url));

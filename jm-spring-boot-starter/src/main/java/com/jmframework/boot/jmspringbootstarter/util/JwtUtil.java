@@ -164,6 +164,17 @@ public class JwtUtil {
     }
 
     /**
+     * Get username from HTTP request.
+     *
+     * @param request HTTP request
+     * @return username
+     */
+    public String getUsernameFromRequest(HttpServletRequest request) {
+        String jwt = this.getJwtFromRequest(request);
+        return this.getUsernameFromJWT(jwt);
+    }
+
+    /**
      * Get JWT from request's header.
      *
      * @param request request

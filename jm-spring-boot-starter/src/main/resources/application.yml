@@ -64,5 +64,6 @@ project:
 
 custom:
   configuration:
+    super-user: ENC(r9QJeNlK2nTb3uFQCi4P+w==)
     druid-login-name: ENC(v81zk6uOH72fTKZTWxbOgg==)
     druid-password: ENC(99HsmfWW2K8z3t1jUb0fZg==)

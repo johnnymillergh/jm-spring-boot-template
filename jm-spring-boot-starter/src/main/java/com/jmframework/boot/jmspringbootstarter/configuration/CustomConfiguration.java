@@ -13,6 +13,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "custom.configuration")
 public class CustomConfiguration {
     /**
+     * <p>The username of super user who has no restriction to access any system&#39;s resources.</p>
+     * <p><strong>ATTENTION</strong>: The value of username of super user must be equal to the value that is
+     * persistent in database.</p>
+     */
+    private String superUser;
+    /**
      * Ignore URLs
      */
     private IgnoreConfiguration ignores;

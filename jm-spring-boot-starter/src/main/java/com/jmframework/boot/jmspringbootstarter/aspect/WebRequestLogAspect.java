@@ -3,6 +3,8 @@ package com.jmframework.boot.jmspringbootstarter.aspect;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.json.JSONUtil;
 import com.jmframework.boot.jmspringbootstarter.configuration.CustomConfiguration;
+import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
+import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarter.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -30,10 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Component
 public class WebRequestLogAspect {
+    private static final String LINE_SEPARATOR = System.lineSeparator();
     private final CustomConfiguration customConfiguration;
+    private final JwtUtil jwtUtil;
 
-    public WebRequestLogAspect(CustomConfiguration customConfiguration) {
+    public WebRequestLogAspect(CustomConfiguration customConfiguration, JwtUtil jwtUtil) {
         this.customConfiguration = customConfiguration;
+        this.jwtUtil = jwtUtil;
     }
 
     /**
@@ -66,6 +71,14 @@ public class WebRequestLogAspect {
         log.info("================================ WEB REQUEST LOG START ================================");
         log.info("URL            : {}", request.getRequestURL().toString());
         log.info("HTTP Method    : {}", request.getMethod());
+        String username;
+        try {
+            username = jwtUtil.getUsernameFromRequest(request);
+        } catch (BaseException e) {
+            log.info("Parsing Expt   : {}", e.getMessage());
+            username = "NOT_AVAILABLE";
+        }
+        log.info("Username       : {}", username);
         log.info("Client IP:Port : {}", RequestUtil.getRequestIpAndPort(request));
         log.info("Class Method   : {}.{}",
                  joinPoint.getSignature().getDeclaringTypeName(),
@@ -89,7 +102,7 @@ public class WebRequestLogAspect {
         long startTime = System.currentTimeMillis();
         Object result = proceedingJoinPoint.proceed();
         long elapsedTime = System.currentTimeMillis() - startTime;
-        log.info("Response       : {}", JSONUtil.toJsonStr(result));
+        log.info("Response       :{}{}", LINE_SEPARATOR, JSONUtil.toJsonPrettyStr(result));
         log.info("Elapsed time   : {} s ({} ms)",
                  NumberUtil.decimalFormat("0.00", elapsedTime / 1000D),
                  elapsedTime);
