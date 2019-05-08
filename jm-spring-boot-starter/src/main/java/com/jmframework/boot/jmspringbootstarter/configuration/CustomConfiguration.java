@@ -1,4 +1,4 @@
-package com.jmframework.boot.jmspringbootstarter.config;
+package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

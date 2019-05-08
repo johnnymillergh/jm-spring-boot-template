@@ -1,4 +1,4 @@
-package com.jmframework.boot.jmspringbootstarter.config;
+package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import com.jmframework.boot.jmspringbootstarter.filter.JwtAuthenticationFilter;
 import com.jmframework.boot.jmspringbootstarter.service.impl.CustomUserDetailsServiceImpl;

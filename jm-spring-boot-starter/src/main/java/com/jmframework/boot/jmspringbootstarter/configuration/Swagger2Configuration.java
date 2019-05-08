@@ -1,4 +1,4 @@
-package com.jmframework.boot.jmspringbootstarter.config;
+package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.jmframework.boot.jmspringbootstarter.constant.ProjectProperty;

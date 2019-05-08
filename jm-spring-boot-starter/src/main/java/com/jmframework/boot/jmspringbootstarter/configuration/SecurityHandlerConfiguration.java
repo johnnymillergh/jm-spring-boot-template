@@ -1,4 +1,4 @@
-package com.jmframework.boot.jmspringbootstarter.config;
+package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.util.ResponseUtil;

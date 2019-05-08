@@ -1,6 +1,6 @@
 package com.jmframework.boot;
 
-import com.jmframework.boot.jmspringbootstarter.config.ServerConfiguration;
+import com.jmframework.boot.jmspringbootstarter.configuration.ServerConfiguration;
 import com.jmframework.boot.jmspringbootstarter.constant.ProjectProperty;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;

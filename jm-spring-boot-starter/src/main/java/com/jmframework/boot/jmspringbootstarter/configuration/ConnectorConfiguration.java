@@ -1,4 +1,4 @@
-package com.jmframework.boot.jmspringbootstarter.config;
+package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;

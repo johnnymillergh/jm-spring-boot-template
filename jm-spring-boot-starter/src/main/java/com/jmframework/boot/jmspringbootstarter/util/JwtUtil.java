@@ -2,7 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.util;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.jmframework.boot.jmspringbootstarter.config.JwtConfiguration;
+import com.jmframework.boot.jmspringbootstarter.configuration.JwtConfiguration;
 import com.jmframework.boot.jmspringbootstarter.constant.Constants;
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;

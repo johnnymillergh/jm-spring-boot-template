@@ -2,7 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.aspect;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.json.JSONUtil;
-import com.jmframework.boot.jmspringbootstarter.config.CustomConfiguration;
+import com.jmframework.boot.jmspringbootstarter.configuration.CustomConfiguration;
 import com.jmframework.boot.jmspringbootstarter.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
