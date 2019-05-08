@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.config;
 
+import com.jmframework.boot.jmspringbootstarter.filter.JwtAuthenticationFilter;
 import com.jmframework.boot.jmspringbootstarter.service.impl.CustomUserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
