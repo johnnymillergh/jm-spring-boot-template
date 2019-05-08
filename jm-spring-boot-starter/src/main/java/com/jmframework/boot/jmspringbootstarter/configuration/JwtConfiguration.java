@@ -26,11 +26,11 @@ public class JwtConfiguration {
      */
     private String signingKey;
     /**
-     * Time to live of JWT. Default: 3 * 600000 milliseconds {@code 30 min}.
+     * Time to live of JWT. Default: 3 * 600000 milliseconds (30 min).
      */
     private Long ttl = 3 * 600000L;
     /**
-     * Time to live of JWT for remember me, Default: 7 * 86400000 {@code 7 天}
+     * Time to live of JWT for remember me, Default: 7 * 86400000 (7 day)
      */
     private Long ttlForRememberMe = 7 * 86400000L;
 }
