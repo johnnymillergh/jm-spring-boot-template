@@ -2,6 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.aspect;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmframework.boot.jmspringbootstarter.configuration.CustomConfiguration;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
@@ -35,6 +36,7 @@ public class WebRequestLogAspect {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private final CustomConfiguration customConfiguration;
     private final JwtUtil jwtUtil;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public WebRequestLogAspect(CustomConfiguration customConfiguration, JwtUtil jwtUtil) {
         this.customConfiguration = customConfiguration;
@@ -102,7 +104,7 @@ public class WebRequestLogAspect {
         long startTime = System.currentTimeMillis();
         Object result = proceedingJoinPoint.proceed();
         long elapsedTime = System.currentTimeMillis() - startTime;
-        log.info("Response       :{}{}", LINE_SEPARATOR, JSONUtil.toJsonPrettyStr(result));
+        log.info("Response       :{}{}", LINE_SEPARATOR, JSONUtil.formatJsonStr(mapper.writeValueAsString(result)));
         log.info("Elapsed time   : {} s ({} ms)",
                  NumberUtil.decimalFormat("0.00", elapsedTime / 1000D),
                  elapsedTime);
