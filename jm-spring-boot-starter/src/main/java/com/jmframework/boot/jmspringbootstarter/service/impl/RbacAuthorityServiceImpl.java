@@ -10,8 +10,8 @@ import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.Role;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
-import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
+import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
 import com.jmframework.boot.jmspringbootstarter.service.RbacAuthorityService;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,19 +40,19 @@ import java.util.stream.Collectors;
 @Component
 public class RbacAuthorityServiceImpl implements RbacAuthorityService {
     private final RoleMapper roleMapper;
-    private final PermissionMapper permissionMapper;
+    private final PermissionService permissionService;
     private final RequestMappingHandlerMapping mapping;
     private final CustomConfiguration customConfiguration;
     private final JwtUtil jwtUtil;
 
     @Autowired
     public RbacAuthorityServiceImpl(RoleMapper roleMapper,
-                                    PermissionMapper permissionMapper,
+                                    PermissionService permissionService,
                                     RequestMappingHandlerMapping mapping,
                                     CustomConfiguration customConfiguration,
                                     JwtUtil jwtUtil) {
         this.roleMapper = roleMapper;
-        this.permissionMapper = permissionMapper;
+        this.permissionService = permissionService;
         this.mapping = mapping;
         this.customConfiguration = customConfiguration;
         this.jwtUtil = jwtUtil;
@@ -79,7 +79,7 @@ public class RbacAuthorityServiceImpl implements RbacAuthorityService {
             List<Long> roleIds = roles.stream()
                                       .map(Role::getId)
                                       .collect(Collectors.toList());
-            List<Permission> permissions = permissionMapper.selectByRoleIdList(roleIds);
+            List<Permission> permissions = permissionService.selectByRoleIdList(roleIds);
 
             // Filter button permission for frond-end
             List<Permission> btnPerms =

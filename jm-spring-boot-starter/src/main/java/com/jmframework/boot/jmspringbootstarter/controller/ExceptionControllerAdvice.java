@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -114,6 +115,10 @@ public class ExceptionControllerAdvice {
             return ResponseBodyBean.ofStatus(((BaseException) exception).getCode(),
                                              exception.getMessage(),
                                              ((BaseException) exception).getData());
+        } else if (exception instanceof BindException) {
+            log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage());
+            response.setStatus(UniversalStatus.PARAM_INVALID.getCode());
+            return ResponseBodyBean.ofStatus(UniversalStatus.PARAM_INVALID);
         }
         log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage(), exception);
         response.setStatus(UniversalStatus.ERROR.getCode());

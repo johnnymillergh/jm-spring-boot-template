@@ -1,28 +1,24 @@
-package com.jmframework.boot.jmspringbootstarter.mapper;
+package com.jmframework.boot.jmspringbootstarter.service;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
- * Description: PermissionMapper, change description here.
+ * Description: PermissionService, change description here.
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
- * @date 2019-03-02 17:52
+ * @date 2019-05-10 20:45
  **/
-@Mapper
-@Component
-public interface PermissionMapper extends BaseMapper<Permission> {
+public interface PermissionService extends IService<Permission> {
     /**
-     * Save a permission
+     * Save permission
      *
      * @param permission permission
-     * @return permission's ID
+     * @return true - successful operation; false - failed operation
      */
-    Long save(Permission permission);
+    boolean savePermission(Permission permission);
 
     /**
      * Select permission list by role id

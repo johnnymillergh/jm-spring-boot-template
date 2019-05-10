@@ -1,17 +1,23 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.jmframework.boot.jmspringbootstarter.constant.ApiStatus;
+import com.jmframework.boot.jmspringbootstarter.constant.PermissionType;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUse;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUse;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission;
 import com.jmframework.boot.jmspringbootstarter.domain.response.Api;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysis;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiController;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
-import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
+import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,12 +41,12 @@ import java.util.*;
 @Service
 public class ApiServiceImpl implements ApiService {
     private final WebApplicationContext webApplicationContext;
-    private final PermissionMapper permissionMapper;
+    private final PermissionService permissionService;
 
     public ApiServiceImpl(WebApplicationContext webApplicationContext,
-                          PermissionMapper permissionMapper) {
+                          PermissionService permissionService) {
         this.webApplicationContext = webApplicationContext;
-        this.permissionMapper = permissionMapper;
+        this.permissionService = permissionService;
     }
 
     @Override
@@ -102,6 +108,34 @@ public class ApiServiceImpl implements ApiService {
         return apiAnalysis;
     }
 
+    @Override
+    public boolean setApiInUse(SetApiInUse setApiInUse) {
+        Permission permission = new Permission();
+        BeanUtil.copyProperties(setApiInUse, permission);
+        permission.setType(PermissionType.BUTTON.getType());
+        return permissionService.savePermission(permission);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public boolean setAllApiInUse(SetAllApiInUse setAllApiInUse) {
+        Api idledApi = this.getApiByClassFullName(setAllApiInUse.getClassFullName(),
+                                                  ApiStatus.IDLED.getStatus());
+        if (CollectionUtils.isEmpty(idledApi.getApiList())) {
+            throw new BizException("All api have been set in used");
+        }
+        idledApi.getApiList().forEach(item -> {
+            Permission permission = new Permission();
+            BeanUtil.copyProperties(item, permission);
+            permission.setType(PermissionType.BUTTON.getType());
+            boolean status = permissionService.savePermission(permission);
+            if (!status) {
+                throw new BizException("Unable to save");
+            }
+        });
+        return true;
+    }
+
     /**
      * <p>Get permissions by class.</p>
      * <p>Permission model contains URL(API) information.</p>
@@ -127,7 +161,7 @@ public class ApiServiceImpl implements ApiService {
         }
         if (apiStatus == ApiStatus.IN_USED) {
             Api api = new Api();
-            List<Permission> permissions = permissionMapper.findApisByUrlPrefix(urlPrefix);
+            List<Permission> permissions = permissionService.selectApisByUrlPrefix(urlPrefix);
             int allMethodCount = clazz.getDeclaredMethods().length;
             int inUseApiCount = permissions.size();
             int idledApiCount = allMethodCount - inUseApiCount;
@@ -179,7 +213,7 @@ public class ApiServiceImpl implements ApiService {
         Iterator<Api.Uri> iterator = result.iterator();
         while (iterator.hasNext()) {
             Api.Uri uri = iterator.next();
-            Permission permissions = permissionMapper.findApiByUrl(uri.getUrl());
+            Permission permissions = permissionService.selectApiByUrl(uri.getUrl());
             if (permissions == null) {
                 continue;
             }

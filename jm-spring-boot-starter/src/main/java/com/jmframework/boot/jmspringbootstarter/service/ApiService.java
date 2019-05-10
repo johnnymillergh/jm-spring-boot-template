@@ -1,5 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUse;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUse;
 import com.jmframework.boot.jmspringbootstarter.domain.response.Api;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysis;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiController;
@@ -34,4 +36,20 @@ public interface ApiService {
      * @return API analysis.
      */
     ApiAnalysis getApiAnalysis(String classFullName);
+
+    /**
+     * Set API in use
+     *
+     * @param setApiInUse form data for setting api in use
+     * @return true - successful operation; false - failed operation
+     */
+    boolean setApiInUse(SetApiInUse setApiInUse);
+
+    /**
+     * Set a controller's all api in use
+     *
+     * @param setAllApiInUse form data
+     * @return true - successful operation; false - failed operation
+     */
+    boolean setAllApiInUse(SetAllApiInUse setAllApiInUse);
 }

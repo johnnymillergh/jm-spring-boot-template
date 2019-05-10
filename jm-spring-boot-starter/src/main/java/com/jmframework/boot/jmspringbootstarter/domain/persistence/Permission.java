@@ -2,6 +2,8 @@ package com.jmframework.boot.jmspringbootstarter.domain.persistence;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * Description: Permission, change description here.
  *
@@ -31,9 +33,9 @@ public class Permission {
     /**
      * Permission expression.
      */
-    private String permission;
+    private String permissionExpression;
     /**
-     * Request method of API.
+     * HTTP method of API.
      */
     private String method;
     /**
@@ -44,4 +46,12 @@ public class Permission {
      * Primary key of parent.
      */
     private Long parentId;
+    /**
+     * Created time
+     */
+    private Date gmtCreated;
+    /**
+     * Modified time
+     */
+    private Date gmtModified;
 }
