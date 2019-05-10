@@ -33,6 +33,9 @@ mybatis-plus:
   # FIXME: if enable type-aliases-package, unit tests won't start correctly with following exception:
   # nested exception is org.apache.ibatis.type.TypeException:
   # The alias '' is already mapped to the value 'com.jmframework.boot.jmspringbootstarter.config.JwtAuthenticationFilter$1'
+  global-config:
+    db-config:
+      table-prefix: t_
 #  type-aliases-package: @parent.groupId@
 
 jwt:
