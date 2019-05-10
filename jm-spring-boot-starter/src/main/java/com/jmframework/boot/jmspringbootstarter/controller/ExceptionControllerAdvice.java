@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
-
 /**
  * Description: ExceptionControllerAdvice
  *
@@ -118,6 +117,6 @@ public class ExceptionControllerAdvice {
         }
         log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage(), exception);
         response.setStatus(UniversalStatus.ERROR.getCode());
-        return ResponseBodyBean.ofStatus(UniversalStatus.ERROR);
+        return ResponseBodyBean.ofStatus(UniversalStatus.ERROR.getCode(), exception.getMessage(), null);
     }
 }

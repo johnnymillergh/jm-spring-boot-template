@@ -1,14 +1,13 @@
 ${AnsiColor.BRIGHT_GREEN}
-   _____            _                ____              __     _____ __             __
-  / ___/____  _____(_)___  ____ _   / __ )____  ____  / /_   / ___// /_____ ______/ /____  _____
-  \__ \/ __ \/ ___/ / __ \/ __ `/  / __  / __ \/ __ \/ __/   \__ \/ __/ __ `/ ___/ __/ _ \/ ___/
- ___/ / /_/ / /  / / / / / /_/ /  / /_/ / /_/ / /_/ / /_    ___/ / /_/ /_/ / /  / /_/  __/ /
-/____/ .___/_/  /_/_/ /_/\__, /  /_____/\____/\____/\__/   /____/\__/\__,_/_/   \__/\___/_/
-    /_/                 /____/
-${AnsiColor.CYAN}
-Author: Johnny Miller (锺俊), email: johnnysviva@outlook.com
-${AnsiColor.MAGENTA}
-http://patorjk.com/software/taag/#p=display&f=Slant&t=Spring%20Boot%20Starter
+       ____  ___   _____            _                ____              __     _____ __             __
+      / /  |/  /  / ___/____  _____(_)___  ____ _   / __ )____  ____  / /_   / ___// /_____ ______/ /____  _____
+ __  / / /|_/ /   \__ \/ __ \/ ___/ / __ \/ __ `/  / __  / __ \/ __ \/ __/   \__ \/ __/ __ `/ ___/ __/ _ \/ ___/
+/ /_/ / /  / /   ___/ / /_/ / /  / / / / / /_/ /  / /_/ / /_/ / /_/ / /_    ___/ / /_/ /_/ / /  / /_/  __/ /
+\____/_/  /_/   /____/ .___/_/  /_/_/ /_/\__, /  /_____/\____/\____/\__/   /____/\__/\__,_/_/   \__/\___/_/
+                    /_/                 /____/
+:: Powered by Spring Boot :: ${spring-boot.formatted-version}
+${AnsiColor.CYAN}Author: Johnny Miller (锺俊), email: johnnysviva@outlook.com
+${AnsiColor.MAGENTA}http://patorjk.com/software/taag/#p=display&f=Slant&t=Spring%20Boot%20Starter
 ${AnsiColor.BRIGHT_BLACK}
 -------------------------------------------Font Info-------------------------------------------
 Slant by Glenn Chappell 3/93 -- based on Standard
