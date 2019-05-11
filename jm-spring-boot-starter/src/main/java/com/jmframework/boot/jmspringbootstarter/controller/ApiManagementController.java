@@ -79,6 +79,6 @@ public class ApiManagementController {
     @PostMapping("/getApiList")
     @ApiOperation(value = "Get API list", notes = "Get API list")
     public ResponseBodyBean getApiList(@Valid @RequestBody GetApiListPLO getApiListPLO) {
-        return null;
+        return ResponseBodyBean.ofSuccess(apiService.getApiList(getApiListPLO));
     }
 }

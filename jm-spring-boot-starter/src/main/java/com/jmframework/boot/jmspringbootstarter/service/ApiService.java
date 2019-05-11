@@ -1,10 +1,14 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
+import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysisRO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiControllerRO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiRO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO;
+
+import java.util.List;
 
 /**
  * Description: ApiService, change description here.
@@ -52,4 +56,6 @@ public interface ApiService {
      * @return true - successful operation; false - failed operation
      */
     boolean setAllApiInUse(SetAllApiInUsePLO setAllApiInUsePLO);
+
+    List<GetApiListRO> getApiList(GetApiListPLO getApiListPLO);
 }

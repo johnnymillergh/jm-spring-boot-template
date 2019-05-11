@@ -3,6 +3,8 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO;
 import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
@@ -52,8 +54,9 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<GetApiListRO> queryApiList() {
-        return permissionMapper.queryApiList().getRecords();
+    public List<GetApiListRO> queryApiList(GetApiListPLO getApiListPLO) {
+        return permissionMapper.queryApiList(new Page(getApiListPLO.getCurrentPage(), getApiListPLO.getPageSize()),
+                                             getApiListPLO).getRecords();
     }
 
     @Override

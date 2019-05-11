@@ -3,12 +3,14 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.jmframework.boot.jmspringbootstarter.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarter.constant.PermissionType;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysisRO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiControllerRO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiRO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
@@ -120,7 +122,7 @@ public class ApiServiceImpl implements ApiService {
     @Transactional(rollbackFor = Throwable.class)
     public boolean setAllApiInUse(SetAllApiInUsePLO setAllApiInUsePLO) {
         ApiRO idledApi = this.getApiByClassFullName(setAllApiInUsePLO.getClassFullName(),
-                                                      ApiStatus.IDLED.getStatus());
+                                                    ApiStatus.IDLED.getStatus());
         if (CollectionUtils.isEmpty(idledApi.getApiList())) {
             throw new BizException("All api have been set in used");
         }
@@ -134,6 +136,11 @@ public class ApiServiceImpl implements ApiService {
             }
         });
         return true;
+    }
+
+    @Override
+    public List<GetApiListRO> getApiList(GetApiListPLO getApiListPLO) {
+        return permissionService.queryApiList(getApiListPLO);
     }
 
     /**

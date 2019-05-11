@@ -19,8 +19,9 @@ import javax.validation.constraints.Min;
  **/
 @Data
 public class Pagination {
+    private static final long serialVersionUID = -8674163654434252540L;
     @Min(value = 1)
-    private Long currentPage;
+    private Long currentPage = 1L;
     @Range(min = 10, max = 100)
-    private Long pageSize;
+    private Long pageSize = 10L;
 }
