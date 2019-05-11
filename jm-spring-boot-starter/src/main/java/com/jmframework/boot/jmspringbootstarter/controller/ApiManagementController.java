@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
+import com.jmframework.boot.jmspringbootstarter.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUse;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUse;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
@@ -38,6 +39,10 @@ public class ApiManagementController {
     @GetMapping("/getApiByControllerClass")
     @ApiOperation(value = "Get API by controller", notes = "Get API by controller")
     public ResponseBodyBean getApiByControllerClass(String controllerClass, Integer apiStatus) {
+        ApiStatus status = ApiStatus.getByStatus(apiStatus);
+        if (status == null) {
+            return ResponseBodyBean.ofError();
+        }
         if (StringUtils.isBlank(controllerClass)) {
             return ResponseBodyBean.ofFailure("controllerClass is not empty");
         }

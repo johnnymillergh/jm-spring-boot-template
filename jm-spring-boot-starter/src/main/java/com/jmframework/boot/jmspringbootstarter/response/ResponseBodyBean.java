@@ -18,7 +18,6 @@ import java.util.Date;
  **/
 public class ResponseBodyBean implements Serializable {
     private static final long serialVersionUID = -6799356701376964494L;
-    private static final Integer SUCCESS = 200;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date timestamp = new Date();
     /**
@@ -98,7 +97,7 @@ public class ResponseBodyBean implements Serializable {
      * @return response body
      */
     public static ResponseBodyBean setResponse(Integer status, String message, Object data) {
-        if (!SUCCESS.equals(status)) {
+        if (!UniversalStatus.SUCCESS.getCode().equals(status)) {
             throw new BaseException(status, message, data);
         }
         ResponseBodyBean responseBodyBean = new ResponseBodyBean();
@@ -185,7 +184,7 @@ public class ResponseBodyBean implements Serializable {
     }
 
     /**
-     * Respond a message and status is FAILURE(500).
+     * Respond a message and status is FAILURE(250).
      *
      * @param message message to be responded.
      * @return response body
@@ -196,7 +195,7 @@ public class ResponseBodyBean implements Serializable {
     }
 
     /**
-     * Respond a message and status is FAILURE(500).
+     * Respond a message and status is FAILURE(250).
      *
      * @param data data to be responded
      * @return response body
@@ -207,7 +206,7 @@ public class ResponseBodyBean implements Serializable {
     }
 
     /**
-     * Respond data and message, and status if FAILURE(500).
+     * Respond data and message, and status if FAILURE(250).
      *
      * @param data    data to be responded
      * @param message message to be responded
@@ -216,6 +215,25 @@ public class ResponseBodyBean implements Serializable {
     @SuppressWarnings("ConstantConditions")
     public static ResponseBodyBean ofFailure(Object data, String message) {
         throw new BizException(data, message);
+    }
+
+    /**
+     * Respond an ERROR(500).
+     *
+     * @return response body
+     */
+    public static ResponseBodyBean ofError() {
+        return setResponse(UniversalStatus.ERROR.getCode(), UniversalStatus.ERROR.getMessage(), null);
+    }
+
+    /**
+     * Respond a custom error.
+     *
+     * @param status Error status, not SUCCESS(200)
+     * @return response body
+     */
+    public static ResponseBodyBean ofError(IUniversalStatus status) {
+        return setResponse(status.getCode(), status.getMessage(), null);
     }
 
     /**

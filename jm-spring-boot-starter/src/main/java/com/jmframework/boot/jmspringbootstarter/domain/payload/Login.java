@@ -2,7 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.domain.payload;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Description: Login, change description here.
@@ -15,12 +15,12 @@ public class Login {
     /**
      * Username/Email/Phone
      */
-    @NotBlank(message = "Login token is required")
+    @NotEmpty(message = "Login token is required")
     private String usernameOrEmailOrPhone;
     /**
      * Password
      */
-    @NotBlank(message = "Password is required")
+    @NotEmpty(message = "Password is required")
     private String password;
     /**
      * Remember me

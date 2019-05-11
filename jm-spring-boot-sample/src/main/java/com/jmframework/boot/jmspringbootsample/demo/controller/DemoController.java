@@ -5,6 +5,7 @@ import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import io.jsonwebtoken.Claims;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class DemoController {
     }
 
     @GetMapping("/getCurrentUser")
+    @ApiOperation(value = "Get current user", notes = "Get current user from JWT")
     public ResponseBodyBean getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<>(4);
         String jwtString = jwtUtil.getJwtFromRequest(request);
@@ -43,6 +45,7 @@ public class DemoController {
     }
 
     @GetMapping("/testResponseAndException")
+    @ApiOperation(value = "Test response and exception", notes = "Test response and exception")
     public ResponseBodyBean testResponseAndException(Integer code) throws InterruptedException {
         Thread.sleep(2000);
         switch (code) {
