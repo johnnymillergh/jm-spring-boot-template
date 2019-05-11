@@ -1,6 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.Validator;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -14,12 +15,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Configuration
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     private static final long MAX_AGE_SECS = 3600;
+    private final CustomMessageSourceConfiguration customMessageSourceConfiguration;
+
+    public WebMvcConfiguration(CustomMessageSourceConfiguration customMessageSourceConfiguration) {
+        this.customMessageSourceConfiguration = customMessageSourceConfiguration;
+    }
 
     /**
      * 1. Config static path pattern
      * 2. Config static resource location
      *
-     * @param registry
+     * @param registry static resources register
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -32,6 +38,19 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         super.addResourceHandlers(registry);
+    }
+
+    /**
+     * <p>Override parent's validator by local validator to enable custom message.</p>
+     * <p>We had already extended the <em>WebMvcConfigurationSupport</em>, to avoid having the custom validator ignored,
+     * we’d have to set the validator by overriding the <em>getValidator()</em> method from the parent class.</p>
+     * <a href="https://www.baeldung.com/spring-custom-validation-message-source">Reference</a>
+     *
+     * @return local validator
+     */
+    @Override
+    protected Validator getValidator() {
+        return customMessageSourceConfiguration.getValidator();
     }
 
     @Override

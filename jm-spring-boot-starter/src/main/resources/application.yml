@@ -5,6 +5,11 @@ server:
     uri-encoding: @project.build.sourceEncoding@
 
 spring:
+  application:
+    name: @parent.name@
+  messages:
+    basename: i18n/messages
+    encoding: @project.build.sourceEncoding@
   profiles:
     active: @env@
   mvc:
