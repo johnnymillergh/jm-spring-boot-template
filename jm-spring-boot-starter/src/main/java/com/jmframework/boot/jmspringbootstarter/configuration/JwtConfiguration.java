@@ -30,7 +30,7 @@ public class JwtConfiguration {
      */
     private Long ttl = 3 * 600000L;
     /**
-     * Time to live of JWT for remember me, Default: 7 * 86400000 (7 day)
+     * Time to live of JWT for remember me, Default: 7 * 86400000 milliseconds (7 day)
      */
     private Long ttlForRememberMe = 7 * 86400000L;
 }
