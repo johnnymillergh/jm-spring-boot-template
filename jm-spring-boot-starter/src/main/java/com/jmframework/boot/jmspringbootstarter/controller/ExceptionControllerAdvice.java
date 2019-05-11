@@ -67,7 +67,7 @@ public class ExceptionControllerAdvice {
             response.setStatus(UniversalStatus.METHOD_NOT_ALLOWED.getCode());
             return ResponseBodyBean.ofStatus(UniversalStatus.METHOD_NOT_ALLOWED);
         } else if (exception instanceof MethodArgumentNotValidException) {
-            log.error("[GlobalExceptionCapture] MethodArgumentNotValidException", exception);
+            log.error("[GlobalExceptionCapture] MethodArgumentNotValidException: {}", exception.getMessage());
             response.setStatus(UniversalStatus.BAD_REQUEST.getCode());
             return ResponseBodyBean.ofStatus(UniversalStatus.BAD_REQUEST.getCode(),
                                              ((MethodArgumentNotValidException) exception).getBindingResult()
@@ -76,7 +76,7 @@ public class ExceptionControllerAdvice {
                                                                                           .getDefaultMessage(),
                                              null);
         } else if (exception instanceof ConstraintViolationException) {
-            log.error("[GlobalExceptionCapture] ConstraintViolationException", exception);
+            log.error("[GlobalExceptionCapture] ConstraintViolationException: {}", exception.getMessage());
             response.setStatus(UniversalStatus.BAD_REQUEST.getCode());
             return ResponseBodyBean.ofStatus(UniversalStatus.BAD_REQUEST.getCode(),
                                              CollUtil.getFirst(((ConstraintViolationException) exception)

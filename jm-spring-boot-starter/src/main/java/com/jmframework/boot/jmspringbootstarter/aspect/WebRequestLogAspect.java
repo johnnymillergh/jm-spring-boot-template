@@ -2,6 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.aspect;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmframework.boot.jmspringbootstarter.configuration.CustomConfiguration;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
@@ -63,7 +64,7 @@ public class WebRequestLogAspect {
      * @param joinPoint a point of execution of the program
      */
     @Before("requestLogPointcut()")
-    public void beforeHandleRequest(JoinPoint joinPoint) {
+    public void beforeHandleRequest(JoinPoint joinPoint) throws JsonProcessingException {
         if (customConfiguration.getWebRequestLogDisabled()) {
             return;
         }
@@ -85,7 +86,9 @@ public class WebRequestLogAspect {
         log.info("Class Method   : {}.{}",
                  joinPoint.getSignature().getDeclaringTypeName(),
                  joinPoint.getSignature().getName());
-        log.info("Request Params : {}", JSONUtil.toJsonStr(joinPoint.getArgs()));
+        log.info("Request Params :{}{}",
+                 LINE_SEPARATOR,
+                 JSONUtil.formatJsonStr(mapper.writeValueAsString(joinPoint.getArgs())));
     }
 
     /**
