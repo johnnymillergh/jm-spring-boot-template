@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.AuthService;
 import org.apache.commons.lang3.StringUtils;
@@ -37,9 +37,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public User register(User user) {
-        userMapper.register(user);
-        return user;
+    public UserPO register(UserPO userPO) {
+        userMapper.register(userPO);
+        return userPO;
     }
 
     @Override

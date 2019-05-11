@@ -3,7 +3,7 @@ package com.jmframework.boot.jmspringbootstarter.domain;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jmframework.boot.jmspringbootstarter.constant.Constants;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import lombok.Data;
 
 /**
@@ -43,13 +43,13 @@ public class OnlineUser {
      */
     private Integer sex;
 
-    public static OnlineUser create(User user) {
+    public static OnlineUser create(UserPO userPO) {
         OnlineUser onlineUser = new OnlineUser();
-        BeanUtil.copyProperties(user, onlineUser);
+        BeanUtil.copyProperties(userPO, onlineUser);
         // 脱敏
-        onlineUser.setPhone(StrUtil.hide(user.getPhone(), 3, 7));
-        onlineUser.setEmail(StrUtil.hide(user.getEmail(), 1, StrUtil.indexOfIgnoreCase(user.getEmail(),
-                                                                                       Constants.AT_SIGN)));
+        onlineUser.setPhone(StrUtil.hide(userPO.getPhone(), 3, 7));
+        onlineUser.setEmail(StrUtil.hide(userPO.getEmail(), 1, StrUtil.indexOfIgnoreCase(userPO.getEmail(),
+                                                                                         Constants.AT_SIGN)));
         return onlineUser;
     }
 }

@@ -3,19 +3,20 @@ package com.jmframework.boot.jmspringbootstarter.domain.persistence;
 import lombok.Data;
 
 /**
- * Description: Role-Permission relation.
+ * Description: User-Role relation.
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
- * @date 2019-03-23 19:50
+ * @date 2019-03-23 19:52
  **/
 @Data
-public class RolePermission {
+public class UserRolePO {
     /**
-     * Role's ID.
+     * User ID.
+     */
+    private Long userId;
+
+    /**
+     * Role ID.
      */
     private Long roleId;
-    /**
-     * Permission's ID.
-     */
-    private Long permissionId;
 }

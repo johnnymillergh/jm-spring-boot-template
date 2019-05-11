@@ -11,7 +11,7 @@ import java.util.Date;
  * @date 2019-03-23 19:51
  **/
 @Data
-public class User {
+public class UserPO {
     /**
      * Primary key
      */

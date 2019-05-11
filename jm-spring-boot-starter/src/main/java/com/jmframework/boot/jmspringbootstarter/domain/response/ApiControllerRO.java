@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Description: ApiController, response of API `/apiManagement/getController`.
+ * Description: ApiControllerRO, response of API `/apiManagement/getController`.
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-04-12 09:36
  * @see ApiManagementController#getController()
  **/
 @Data
-public class ApiController {
+public class ApiControllerRO {
     private List<ApiControllerSubclass> controllerList = new ArrayList<>();
 
     @Data

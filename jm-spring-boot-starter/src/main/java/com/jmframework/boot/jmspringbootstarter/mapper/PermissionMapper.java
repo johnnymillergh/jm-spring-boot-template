@@ -1,7 +1,9 @@
 package com.jmframework.boot.jmspringbootstarter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +17,14 @@ import java.util.List;
  **/
 @Mapper
 @Component
-public interface PermissionMapper extends BaseMapper<Permission> {
+public interface PermissionMapper extends BaseMapper<PermissionPO> {
     /**
      * Save a permission
      *
-     * @param permission permission
+     * @param permissionPO permissionPO
      * @return permission's ID
      */
-    Long save(Permission permission);
+    Long save(PermissionPO permissionPO);
 
     /**
      * Select permission list by role id
@@ -30,7 +32,7 @@ public interface PermissionMapper extends BaseMapper<Permission> {
      * @param ids Role's id list
      * @return Permission list
      */
-    List<Permission> selectByRoleIdList(List<Long> ids);
+    List<PermissionPO> selectByRoleIdList(List<Long> ids);
 
     /**
      * Find permission by URL.
@@ -38,7 +40,7 @@ public interface PermissionMapper extends BaseMapper<Permission> {
      * @param url URL
      * @return permission
      */
-    Permission selectApiByUrl(String url);
+    PermissionPO selectApiByUrl(String url);
 
     /**
      * Find APIs by URL prefix.
@@ -46,5 +48,12 @@ public interface PermissionMapper extends BaseMapper<Permission> {
      * @param urlPrefix URL prefix
      * @return permissions
      */
-    List<Permission> selectApisByUrlPrefix(String urlPrefix);
+    List<PermissionPO> selectApisByUrlPrefix(String urlPrefix);
+
+    /**
+     * Query API list
+     *
+     * @return API list
+     */
+    IPage<GetApiListRO> queryApiList();
 }

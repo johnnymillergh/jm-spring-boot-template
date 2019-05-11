@@ -6,7 +6,7 @@
         VALUES (#{url}, #{description}, #{type}, #{method}, now(), now())
     </insert>
 
-    <select id="selectByRoleIdList" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission">
+    <select id="selectByRoleIdList" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO">
         SELECT DISTINCT tp.id,
                         tp.url,
                         tp.description,
@@ -27,7 +27,7 @@
         </foreach>
     </select>
 
-    <select id="selectApiByUrl" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission">
+    <select id="selectApiByUrl" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO">
         SELECT *
         FROM t_permission tp
         WHERE tp.url = #{urlPrefix}
@@ -35,10 +35,26 @@
     </select>
 
     <select id="selectApisByUrlPrefix"
-            resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission">
+            resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO">
         SELECT *
         FROM t_permission tp
         WHERE tp.url LIKE concat(#{urlPrefix}, '%')
           AND tp.type = 2
+    </select>
+
+    <select id="queryApiList"
+            resultType="com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO">
+        SELECT tp.id,
+               tp.url,
+               tp.description,
+               tp.permission_expression AS permissionExpression,
+               tp.method,
+               tp.sort,
+               tp.gmt_created           AS gmtCreated,
+               tp.gmt_modified          AS gmtModified
+        FROM t_permission tp
+        WHERE tp.type = 2
+          AND tp.deleted != 1
+        ORDER BY tp.id DESC
     </select>
 </mapper>

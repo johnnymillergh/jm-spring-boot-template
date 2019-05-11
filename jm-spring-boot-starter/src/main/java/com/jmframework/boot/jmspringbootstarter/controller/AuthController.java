@@ -1,10 +1,10 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.Login;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.Register;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
-import com.jmframework.boot.jmspringbootstarter.domain.response.JwtResponse;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.LoginPLO;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.RegisterPLO;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.JwtRO;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.AuthService;
@@ -81,13 +81,13 @@ public class AuthController {
 
     @PostMapping("/register")
     @ApiOperation(value = "Register", notes = "Register (create an account)")
-    public ResponseBodyBean register(@Valid @RequestBody Register register) {
-        User user = new User();
-        user.setUsername(register.getUsername());
-        user.setEmail(register.getEmail());
-        user.setPassword(encoder.encode(register.getPassword()));
-        authService.register(user);
-        if (user.getId() > 0) {
+    public ResponseBodyBean register(@Valid @RequestBody RegisterPLO registerPLO) {
+        UserPO userPO = new UserPO();
+        userPO.setUsername(registerPLO.getUsername());
+        userPO.setEmail(registerPLO.getEmail());
+        userPO.setPassword(encoder.encode(registerPLO.getPassword()));
+        authService.register(userPO);
+        if (userPO.getId() > 0) {
             return ResponseBodyBean.ofSuccess("Registered successfully.");
         }
         return ResponseBodyBean.ofFailure("Registered failure.");
@@ -104,14 +104,14 @@ public class AuthController {
 
     @PostMapping("/login")
     @ApiOperation(value = "Login", notes = "Login (Sign in)")
-    public ResponseBodyBean login(@Valid @RequestBody Login login) {
+    public ResponseBodyBean login(@Valid @RequestBody LoginPLO loginPLO) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(login.getUsernameOrEmailOrPhone(), login.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginPLO.getUsernameOrEmailOrPhone(), loginPLO.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = jwtUtil.createJWT(authentication, login.getRememberMe());
-        return ResponseBodyBean.ofSuccess(new JwtResponse(jwt));
+        String jwt = jwtUtil.createJWT(authentication, loginPLO.getRememberMe());
+        return ResponseBodyBean.ofSuccess(new JwtRO(jwt));
     }
 
     @PostMapping("/logout")

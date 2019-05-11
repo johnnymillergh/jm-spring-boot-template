@@ -1,8 +1,9 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
 import com.jmframework.boot.jmspringbootstarter.constant.ApiStatus;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUse;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUse;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUsePLO;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
 import io.swagger.annotations.Api;
@@ -57,8 +58,8 @@ public class ApiManagementController {
 
     @PostMapping("/setApiInUse")
     @ApiOperation(value = "Set API in use", notes = "Set API in use")
-    public ResponseBodyBean setApiInUse(@Valid @RequestBody SetApiInUse setApiInUse) {
-        boolean operationStatus = apiService.setApiInUse(setApiInUse);
+    public ResponseBodyBean setApiInUse(@Valid @RequestBody SetApiInUsePLO setApiInUsePLO) {
+        boolean operationStatus = apiService.setApiInUse(setApiInUsePLO);
         if (operationStatus) {
             return ResponseBodyBean.ofSuccess("Operation done");
         }
@@ -67,11 +68,17 @@ public class ApiManagementController {
 
     @PostMapping("/setAllApiInUse")
     @ApiOperation(value = "Set all api in use", notes = "Set all api in use")
-    public ResponseBodyBean setAllApiInUse(@Valid @RequestBody SetAllApiInUse setAllApiInUse) {
-        boolean operationStatus = apiService.setAllApiInUse(setAllApiInUse);
+    public ResponseBodyBean setAllApiInUse(@Valid @RequestBody SetAllApiInUsePLO setAllApiInUsePLO) {
+        boolean operationStatus = apiService.setAllApiInUse(setAllApiInUsePLO);
         if (operationStatus) {
             return ResponseBodyBean.ofSuccess("Operation done");
         }
         return ResponseBodyBean.ofFailure("Failed operation");
+    }
+
+    @PostMapping("/getApiList")
+    @ApiOperation(value = "Get API list", notes = "Get API list")
+    public ResponseBodyBean getApiList(@Valid @RequestBody GetApiListPLO getApiListPLO) {
+        return null;
     }
 }

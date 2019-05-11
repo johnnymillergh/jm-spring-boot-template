@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.mapper;
 
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Role;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -21,5 +21,5 @@ public interface RoleMapper {
      * @param userId User ID
      * @return Roles
      */
-    List<Role> selectByUserId(Long userId);
+    List<RolePO> selectByUserId(Long userId);
 }

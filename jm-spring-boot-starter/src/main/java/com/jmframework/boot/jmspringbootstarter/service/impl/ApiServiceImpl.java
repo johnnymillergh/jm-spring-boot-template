@@ -3,12 +3,12 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.jmframework.boot.jmspringbootstarter.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarter.constant.PermissionType;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUse;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUse;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission;
-import com.jmframework.boot.jmspringbootstarter.domain.response.Api;
-import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysis;
-import com.jmframework.boot.jmspringbootstarter.domain.response.ApiController;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUsePLO;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysisRO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.ApiControllerRO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.ApiRO;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
@@ -50,8 +50,8 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public ApiController getAllControllerClass() {
-        ApiController apiController = new ApiController();
+    public ApiControllerRO getAllControllerClass() {
+        ApiControllerRO apiControllerRO = new ApiControllerRO();
         // getBean(Class) method may throw an exception due to 2 beans are the same type.
         // Exception message: expected single matching bean but found 2: swagger2ControllerMapping,
         // requestMappingHandlerMapping
@@ -64,16 +64,16 @@ public class ApiServiceImpl implements ApiService {
             controllerMap.put(String.valueOf(entry.getValue().getBean()), entry.getValue().getBeanType());
         }
         for (Map.Entry<String, Class> entry : controllerMap.entrySet()) {
-            ApiController.ApiControllerSubclass apiControllerSubclass = new ApiController.ApiControllerSubclass();
+            ApiControllerRO.ApiControllerSubclass apiControllerSubclass = new ApiControllerRO.ApiControllerSubclass();
             apiControllerSubclass.setClassName(entry.getValue().getSimpleName());
             apiControllerSubclass.setPackageName(entry.getValue().getPackage().getName());
-            apiController.getControllerList().add(apiControllerSubclass);
+            apiControllerRO.getControllerList().add(apiControllerSubclass);
         }
-        return apiController;
+        return apiControllerRO;
     }
 
     @Override
-    public Api getApiByClassFullName(String classFullName, Integer apiStatus) {
+    public ApiRO getApiByClassFullName(String classFullName, Integer apiStatus) {
         Class<?> clazz;
         try {
             clazz = Class.forName(classFullName);
@@ -86,49 +86,49 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public ApiAnalysis getApiAnalysis(String classFullName) {
-        ApiAnalysis apiAnalysis = new ApiAnalysis();
+    public ApiAnalysisRO getApiAnalysis(String classFullName) {
+        ApiAnalysisRO apiAnalysisRO = new ApiAnalysisRO();
         if (StringUtils.isBlank(classFullName)) {
             // Query API statistics of global scope.
-            ApiController apiController = this.getAllControllerClass();
-            for (ApiController.ApiControllerSubclass acs : apiController.getControllerList()) {
+            ApiControllerRO apiControllerRO = this.getAllControllerClass();
+            for (ApiControllerRO.ApiControllerSubclass acs : apiControllerRO.getControllerList()) {
                 String clazzFullName = acs.getPackageName() + "." + acs.getClassName();
-                Api api = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USED.getStatus());
-                apiAnalysis.appendIdledApiCount(api.getIdledApiCount());
-                apiAnalysis.appendInUseApiCount(api.getInUseApiCount());
+                ApiRO apiRO = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USED.getStatus());
+                apiAnalysisRO.appendIdledApiCount(apiRO.getIdledApiCount());
+                apiAnalysisRO.appendInUseApiCount(apiRO.getInUseApiCount());
             }
-            apiAnalysis.calculateSum();
-            return apiAnalysis;
+            apiAnalysisRO.calculateSum();
+            return apiAnalysisRO;
         }
         // Query API statistics of specific class scope.
-        Api api = this.getApiByClassFullName(classFullName, ApiStatus.IN_USED.getStatus());
-        apiAnalysis.appendIdledApiCount(api.getIdledApiCount());
-        apiAnalysis.appendInUseApiCount(api.getInUseApiCount());
-        apiAnalysis.calculateSum();
-        return apiAnalysis;
+        ApiRO apiRO = this.getApiByClassFullName(classFullName, ApiStatus.IN_USED.getStatus());
+        apiAnalysisRO.appendIdledApiCount(apiRO.getIdledApiCount());
+        apiAnalysisRO.appendInUseApiCount(apiRO.getInUseApiCount());
+        apiAnalysisRO.calculateSum();
+        return apiAnalysisRO;
     }
 
     @Override
-    public boolean setApiInUse(SetApiInUse setApiInUse) {
-        Permission permission = new Permission();
-        BeanUtil.copyProperties(setApiInUse, permission);
-        permission.setType(PermissionType.BUTTON.getType());
-        return permissionService.savePermission(permission);
+    public boolean setApiInUse(SetApiInUsePLO setApiInUsePLO) {
+        PermissionPO permissionPO = new PermissionPO();
+        BeanUtil.copyProperties(setApiInUsePLO, permissionPO);
+        permissionPO.setType(PermissionType.BUTTON.getType());
+        return permissionService.savePermission(permissionPO);
     }
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public boolean setAllApiInUse(SetAllApiInUse setAllApiInUse) {
-        Api idledApi = this.getApiByClassFullName(setAllApiInUse.getClassFullName(),
-                                                  ApiStatus.IDLED.getStatus());
+    public boolean setAllApiInUse(SetAllApiInUsePLO setAllApiInUsePLO) {
+        ApiRO idledApi = this.getApiByClassFullName(setAllApiInUsePLO.getClassFullName(),
+                                                      ApiStatus.IDLED.getStatus());
         if (CollectionUtils.isEmpty(idledApi.getApiList())) {
             throw new BizException("All api have been set in used");
         }
         idledApi.getApiList().forEach(item -> {
-            Permission permission = new Permission();
-            BeanUtil.copyProperties(item, permission);
-            permission.setType(PermissionType.BUTTON.getType());
-            boolean status = permissionService.savePermission(permission);
+            PermissionPO permissionPO = new PermissionPO();
+            BeanUtil.copyProperties(item, permissionPO);
+            permissionPO.setType(PermissionType.BUTTON.getType());
+            boolean status = permissionService.savePermission(permissionPO);
             if (!status) {
                 throw new BizException("Unable to save");
             }
@@ -145,43 +145,43 @@ public class ApiServiceImpl implements ApiService {
      * @param apiStatus API status
      * @return permission list (API list), inUseApiCount, idledApiCount
      */
-    private Api getPermissionsByClass(Class<?> clazz, ApiStatus apiStatus) {
+    private ApiRO getPermissionsByClass(Class<?> clazz, ApiStatus apiStatus) {
         boolean restControllerExisted = clazz.isAnnotationPresent(RestController.class);
         if (!restControllerExisted) {
-            return new Api();
+            return new ApiRO();
         }
-        List<Api.Uri> result = new ArrayList<>();
+        List<ApiRO.Uri> result = new ArrayList<>();
         RequestMapping restControllersRequestMappingAnnotation = clazz.getAnnotation(RequestMapping.class);
         String urlPrefix = "";
         if (restControllersRequestMappingAnnotation != null) {
             urlPrefix = restControllersRequestMappingAnnotation.value()[0];
         }
         if (StringUtils.isBlank(urlPrefix)) {
-            return new Api();
+            return new ApiRO();
         }
         if (apiStatus == ApiStatus.IN_USED) {
-            Api api = new Api();
-            List<Permission> permissions = permissionService.selectApisByUrlPrefix(urlPrefix);
+            ApiRO apiRO = new ApiRO();
+            List<PermissionPO> permissionPOS = permissionService.selectApisByUrlPrefix(urlPrefix);
             int allMethodCount = clazz.getDeclaredMethods().length;
-            int inUseApiCount = permissions.size();
+            int inUseApiCount = permissionPOS.size();
             int idledApiCount = allMethodCount - inUseApiCount;
-            for (Permission permission : permissions) {
-                Api.Uri uri = new Api.Uri();
-                uri.setUrl(permission.getUrl());
-                uri.setMethod(permission.getMethod());
-                uri.setDescription(permission.getDescription());
+            for (PermissionPO permissionPO : permissionPOS) {
+                ApiRO.Uri uri = new ApiRO.Uri();
+                uri.setUrl(permissionPO.getUrl());
+                uri.setMethod(permissionPO.getMethod());
+                uri.setDescription(permissionPO.getDescription());
                 result.add(uri);
             }
-            api.setApiList(result);
-            api.setIdledApiCount(idledApiCount);
-            api.setInUseApiCount(inUseApiCount);
-            return api;
+            apiRO.setApiList(result);
+            apiRO.setIdledApiCount(idledApiCount);
+            apiRO.setInUseApiCount(inUseApiCount);
+            return apiRO;
         }
         // Get all methods declared in class.
         Method[] methods = clazz.getDeclaredMethods();
         int allMethodCount = clazz.getDeclaredMethods().length;
         if (methods.length == 0) {
-            return new Api();
+            return new ApiRO();
         }
         Map<String, Object> resultMap = new HashMap<>(4);
         for (Method method : methods) {
@@ -197,7 +197,7 @@ public class ApiServiceImpl implements ApiService {
             GetMapping getMapping = method.getAnnotation(GetMapping.class);
             PostMapping postMapping = method.getAnnotation(PostMapping.class);
             ApiOperation apiOperation = method.getAnnotation(ApiOperation.class);
-            Api.Uri uri = new Api.Uri();
+            ApiRO.Uri uri = new ApiRO.Uri();
             if (getMapping != null) {
                 uri.setUrl(urlPrefix + getMapping.value()[0]);
                 uri.setMethod("GET");
@@ -210,10 +210,10 @@ public class ApiServiceImpl implements ApiService {
             }
             result.add(uri);
         }
-        Iterator<Api.Uri> iterator = result.iterator();
+        Iterator<ApiRO.Uri> iterator = result.iterator();
         while (iterator.hasNext()) {
-            Api.Uri uri = iterator.next();
-            Permission permissions = permissionService.selectApiByUrl(uri.getUrl());
+            ApiRO.Uri uri = iterator.next();
+            PermissionPO permissions = permissionService.selectApiByUrl(uri.getUrl());
             if (permissions == null) {
                 continue;
             }
@@ -221,10 +221,10 @@ public class ApiServiceImpl implements ApiService {
         }
         int idledApiCount = result.size();
         int inUseApiCount = allMethodCount - idledApiCount;
-        Api api = new Api();
-        api.setApiList(result);
-        api.setIdledApiCount(idledApiCount);
-        api.setInUseApiCount(inUseApiCount);
-        return api;
+        ApiRO apiRO = new ApiRO();
+        apiRO.setApiList(result);
+        apiRO.setIdledApiCount(idledApiCount);
+        apiRO.setInUseApiCount(inUseApiCount);
+        return apiRO;
     }
 }

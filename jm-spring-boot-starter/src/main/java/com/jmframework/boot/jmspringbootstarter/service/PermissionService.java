@@ -1,7 +1,8 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO;
 
 import java.util.List;
 
@@ -11,22 +12,22 @@ import java.util.List;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-05-10 20:45
  **/
-public interface PermissionService extends IService<Permission> {
+public interface PermissionService extends IService<PermissionPO> {
     /**
-     * Save permission
+     * Save permissionPO
      *
-     * @param permission permission
+     * @param permissionPO permissionPO
      * @return true - successful operation; false - failed operation
      */
-    boolean savePermission(Permission permission);
+    boolean savePermission(PermissionPO permissionPO);
 
     /**
      * Select permission list by role id
      *
      * @param ids Role's id list
-     * @return Permission list
+     * @return PermissionPO list
      */
-    List<Permission> selectByRoleIdList(List<Long> ids);
+    List<PermissionPO> selectByRoleIdList(List<Long> ids);
 
     /**
      * Find permission by URL.
@@ -34,7 +35,7 @@ public interface PermissionService extends IService<Permission> {
      * @param url URL
      * @return permission
      */
-    Permission selectApiByUrl(String url);
+    PermissionPO selectApiByUrl(String url);
 
     /**
      * Find APIs by URL prefix.
@@ -42,5 +43,7 @@ public interface PermissionService extends IService<Permission> {
      * @param urlPrefix URL prefix
      * @return permissions
      */
-    List<Permission> selectApisByUrlPrefix(String urlPrefix);
+    List<PermissionPO> selectApisByUrlPrefix(String urlPrefix);
+
+    List<GetApiListRO> queryApiList();
 }

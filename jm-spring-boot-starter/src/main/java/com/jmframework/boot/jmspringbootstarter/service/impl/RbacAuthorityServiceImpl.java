@@ -7,8 +7,8 @@ import com.jmframework.boot.jmspringbootstarter.configuration.CustomConfiguratio
 import com.jmframework.boot.jmspringbootstarter.constant.PermissionType;
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Role;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
@@ -75,25 +75,25 @@ public class RbacAuthorityServiceImpl implements RbacAuthorityService {
             UserPrincipal principal = (UserPrincipal) userInfo;
             Long userId = principal.getId();
 
-            List<Role> roles = roleMapper.selectByUserId(userId);
-            List<Long> roleIds = roles.stream()
-                                      .map(Role::getId)
-                                      .collect(Collectors.toList());
-            List<Permission> permissions = permissionService.selectByRoleIdList(roleIds);
+            List<RolePO> rolePOList = roleMapper.selectByUserId(userId);
+            List<Long> roleIds = rolePOList.stream()
+                                           .map(RolePO::getId)
+                                           .collect(Collectors.toList());
+            List<PermissionPO> permissionPOList = permissionService.selectByRoleIdList(roleIds);
 
             // Filter button permission for frond-end
-            List<Permission> btnPerms =
-                    permissions.stream()
-                               // Sieve out page permissions
-                               .filter(permission -> Objects.equals(permission.getType(),
+            List<PermissionPO> btnPerms =
+                    permissionPOList.stream()
+                                 // Sieve out page permissions
+                                 .filter(permission -> Objects.equals(permission.getType(),
                                                                     PermissionType.BUTTON.getType()))
-                               // Sieve out permission that has no URL
-                               .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
-                               // Sieve out permission that has no method
-                               .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
-                               .collect(Collectors.toList());
+                                 // Sieve out permission that has no URL
+                                 .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
+                                 // Sieve out permission that has no method
+                                 .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
+                                 .collect(Collectors.toList());
 
-            for (Permission btnPerm : btnPerms) {
+            for (PermissionPO btnPerm : btnPerms) {
                 AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(btnPerm.getUrl(), btnPerm.getMethod());
                 if (antPathMatcher.matches(request)) {
                     hasPermission = true;

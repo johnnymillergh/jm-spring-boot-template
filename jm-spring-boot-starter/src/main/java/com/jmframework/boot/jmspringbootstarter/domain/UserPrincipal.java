@@ -3,9 +3,9 @@ package com.jmframework.boot.jmspringbootstarter.domain;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jmframework.boot.jmspringbootstarter.constant.UserStatus;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Role;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -85,18 +85,18 @@ public class UserPrincipal implements UserDetails {
      */
     private Collection<? extends GrantedAuthority> authorities;
 
-    public static UserPrincipal create(User user, List<Role> roles, List<Permission> permissions) {
-        List<String> roleNames = roles.stream().map(Role::getName).collect(Collectors.toList());
+    public static UserPrincipal create(UserPO userPO, List<RolePO> rolePOList, List<PermissionPO> permissionPOS) {
+        List<String> roleNames = rolePOList.stream().map(RolePO::getName).collect(Collectors.toList());
 
         List<GrantedAuthority> authorities =
-                permissions.stream()
-                           .filter(permission -> StrUtil.isNotBlank(permission.getPermissionExpression()))
-                           .map(permission -> new SimpleGrantedAuthority(permission.getPermissionExpression()))
-                           .collect(Collectors.toList());
+                permissionPOS.stream()
+                             .filter(permission -> StrUtil.isNotBlank(permission.getPermissionExpression()))
+                             .map(permission -> new SimpleGrantedAuthority(permission.getPermissionExpression()))
+                             .collect(Collectors.toList());
 
-        return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getNickname(),
-                                 user.getPhone(), user.getEmail(), user.getBirthday(), user.getSex(), user.getStatus(),
-                                 user.getCreateTime(), user.getModifyTime(), roleNames, authorities);
+        return new UserPrincipal(userPO.getId(), userPO.getUsername(), userPO.getPassword(), userPO.getNickname(),
+                                 userPO.getPhone(), userPO.getEmail(), userPO.getBirthday(), userPO.getSex(), userPO.getStatus(),
+                                 userPO.getCreateTime(), userPO.getModifyTime(), roleNames, authorities);
     }
 
     @Override

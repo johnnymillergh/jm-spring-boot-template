@@ -1,7 +1,7 @@
 package com.jmframework.boot.jmspringbootsample;
 
 import cn.hutool.core.date.DateTime;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -33,18 +33,18 @@ public class DataInitTest {
     public void createUser() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HHmmss");
         String time = simpleDateFormat.format(new Date());
-        User user = new User();
-        user.setUsername("user" + time);
-        user.setNickname("Common User");
-        user.setPassword(encoder.encode("123456"));
-        user.setBirthday(DateTime.of("1996-11-22", "yyyy-MM-dd")
+        UserPO userPO = new UserPO();
+        userPO.setUsername("user" + time);
+        userPO.setNickname("Common User");
+        userPO.setPassword(encoder.encode("123456"));
+        userPO.setBirthday(DateTime.of("1996-11-22", "yyyy-MM-dd")
                 .getTime());
-        user.setEmail("user" + time + "@gamil.com");
-        user.setPhone("19100" + time);
-        user.setSex(1);
-        user.setStatus(1);
-        Long id = userMapper.save(user);
-        log.error("Save user, ID = {}", user.getId());
+        userPO.setEmail("user" + time + "@gamil.com");
+        userPO.setPhone("19100" + time);
+        userPO.setSex(1);
+        userPO.setStatus(1);
+        Long id = userMapper.save(userPO);
+        log.error("Save user, ID = {}", userPO.getId());
     }
 
     @Test

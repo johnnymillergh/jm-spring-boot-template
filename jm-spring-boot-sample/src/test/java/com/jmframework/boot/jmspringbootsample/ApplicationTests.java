@@ -2,7 +2,7 @@ package com.jmframework.boot.jmspringbootsample;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -26,8 +26,8 @@ public class ApplicationTests {
 
     @Test
     public void test() {
-        Page<User> page = new Page<>(1, 5);
-        IPage<User> allUser = userMapper.getAllUser(page);
+        Page<UserPO> page = new Page<>(1, 5);
+        IPage<UserPO> allUser = userMapper.getAllUser(page);
         log.error("Pagination test. {}", allUser.getRecords().size());
     }
 }

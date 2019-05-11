@@ -3,7 +3,7 @@ package com.jmframework.boot.jmspringbootstarter.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import java.util.Optional;
  **/
 @Mapper
 @Component
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends BaseMapper<UserPO> {
     /**
      * Find by username, email or Phone.
      *
@@ -27,9 +27,9 @@ public interface UserMapper extends BaseMapper<User> {
      * @param phone    phone
      * @return User information.
      */
-    Optional<User> findByUsernameOrEmailOrPhone(@Param("username") String username,
-                                                @Param("email") String email,
-                                                @Param("phone") String phone);
+    Optional<UserPO> findByUsernameOrEmailOrPhone(@Param("username") String username,
+                                                  @Param("email") String email,
+                                                  @Param("phone") String phone);
 
     /**
      * Check uniqueness of username.
@@ -50,18 +50,18 @@ public interface UserMapper extends BaseMapper<User> {
     /**
      * Save user
      *
-     * @param user A new user.
+     * @param userPO A new user.
      * @return Last inserted ID.
      */
-    Long save(User user);
+    Long save(UserPO userPO);
 
     /**
      * Register
      *
-     * @param user User info
+     * @param userPO User info
      * @return Registered user ID
      */
-    Long register(User user);
+    Long register(UserPO userPO);
 
     /**
      * Get count of username by username.
@@ -71,5 +71,5 @@ public interface UserMapper extends BaseMapper<User> {
      */
     Integer getUsernameCountByUsername(String username);
 
-    IPage<User> getAllUser(Page page);
+    IPage<UserPO> getAllUser(Page page);
 }

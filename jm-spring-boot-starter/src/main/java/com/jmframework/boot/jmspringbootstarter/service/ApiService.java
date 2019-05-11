@@ -1,10 +1,10 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUse;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUse;
-import com.jmframework.boot.jmspringbootstarter.domain.response.Api;
-import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysis;
-import com.jmframework.boot.jmspringbootstarter.domain.response.ApiController;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUsePLO;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysisRO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.ApiControllerRO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.ApiRO;
 
 /**
  * Description: ApiService, change description here.
@@ -18,7 +18,7 @@ public interface ApiService {
      *
      * @return controller list.
      */
-    ApiController getAllControllerClass();
+    ApiControllerRO getAllControllerClass();
 
     /**
      * Get permissions by class's full name.
@@ -27,7 +27,7 @@ public interface ApiService {
      * @param apiStatus     api status.
      * @return permission list.
      */
-    Api getApiByClassFullName(String classFullName, Integer apiStatus);
+    ApiRO getApiByClassFullName(String classFullName, Integer apiStatus);
 
     /**
      * Get API analysis.
@@ -35,21 +35,21 @@ public interface ApiService {
      * @param classFullName Full name of class.
      * @return API analysis.
      */
-    ApiAnalysis getApiAnalysis(String classFullName);
+    ApiAnalysisRO getApiAnalysis(String classFullName);
 
     /**
      * Set API in use
      *
-     * @param setApiInUse form data for setting api in use
+     * @param setApiInUsePLO form data for setting api in use
      * @return true - successful operation; false - failed operation
      */
-    boolean setApiInUse(SetApiInUse setApiInUse);
+    boolean setApiInUse(SetApiInUsePLO setApiInUsePLO);
 
     /**
      * Set a controller's all api in use
      *
-     * @param setAllApiInUse form data
+     * @param setAllApiInUsePLO form data
      * @return true - successful operation; false - failed operation
      */
-    boolean setAllApiInUse(SetAllApiInUse setAllApiInUse);
+    boolean setAllApiInUse(SetAllApiInUsePLO setAllApiInUsePLO);
 }

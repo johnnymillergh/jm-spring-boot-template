@@ -2,9 +2,9 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Permission;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.Role;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
 import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
@@ -42,17 +42,17 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmailOrPhone) throws UsernameNotFoundException {
-        User user = userMapper.findByUsernameOrEmailOrPhone(usernameOrEmailOrPhone, usernameOrEmailOrPhone,
-                                                            usernameOrEmailOrPhone)
-                              .orElseThrow(() -> new UsernameNotFoundException("User not found: " + usernameOrEmailOrPhone));
-        List<Role> roles = roleMapper.selectByUserId(user.getId());
-        if (CollectionUtils.isEmpty(roles)) {
+        UserPO userPO = userMapper.findByUsernameOrEmailOrPhone(usernameOrEmailOrPhone, usernameOrEmailOrPhone,
+                                                                usernameOrEmailOrPhone)
+                                  .orElseThrow(() -> new UsernameNotFoundException("User not found: " + usernameOrEmailOrPhone));
+        List<RolePO> rolePOList = roleMapper.selectByUserId(userPO.getId());
+        if (CollectionUtils.isEmpty(rolePOList)) {
             throw new SecurityException(UniversalStatus.ROLE_NOT_FOUND);
         }
-        List<Long> roleIds = roles.stream()
-                                  .map(Role::getId)
-                                  .collect(Collectors.toList());
-        List<Permission> permissions = permissionMapper.selectByRoleIdList(roleIds);
-        return UserPrincipal.create(user, roles, permissions);
+        List<Long> roleIds = rolePOList.stream()
+                                       .map(RolePO::getId)
+                                       .collect(Collectors.toList());
+        List<PermissionPO> permissionPOS = permissionMapper.selectByRoleIdList(roleIds);
+        return UserPrincipal.create(userPO, rolePOList, permissionPOS);
     }
 }

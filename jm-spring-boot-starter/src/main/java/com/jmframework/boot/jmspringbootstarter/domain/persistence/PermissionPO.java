@@ -5,13 +5,13 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * Description: Permission, change description here.
+ * Description: PermissionPO, change description here.
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 19:48
  **/
 @Data
-public class Permission {
+public class PermissionPO {
     /**
      * Primary key
      */
@@ -23,15 +23,15 @@ public class Permission {
      */
     private String url;
     /**
-     * Permission description
+     * PermissionPO description
      */
     private String description;
     /**
-     * Permission type. Page-1, Button-2
+     * PermissionPO type. Page-1, Button-2
      */
     private Integer type;
     /**
-     * Permission expression.
+     * PermissionPO expression.
      */
     private String permissionExpression;
     /**

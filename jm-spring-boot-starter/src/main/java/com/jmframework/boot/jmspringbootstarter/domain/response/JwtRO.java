@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JwtResponse {
+public class JwtRO {
     /**
      * Token
      */
@@ -23,7 +23,7 @@ public class JwtResponse {
      */
     private String tokenType = "Bearer";
 
-    public JwtResponse(String token) {
+    public JwtRO(String token) {
         this.token = token;
     }
 }

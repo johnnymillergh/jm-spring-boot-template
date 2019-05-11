@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.User;
+import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 
 /**
  * Description: AuthService, change description here.
@@ -28,10 +28,10 @@ public interface AuthService {
     /**
      * Register a new user.
      *
-     * @param user new user.
+     * @param userPO new user.
      * @return the new user stored in db with ID (primary key).
      */
-    User register(User user);
+    UserPO register(UserPO userPO);
 
     /**
      * Validate username.
