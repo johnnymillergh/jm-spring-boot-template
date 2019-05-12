@@ -4,7 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import com.jmframework.boot.jmspringbootstarter.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarter.constant.PermissionType;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysisRO;
@@ -120,9 +119,8 @@ public class ApiServiceImpl implements ApiService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public boolean setAllApiInUse(SetAllApiInUsePLO setAllApiInUsePLO) {
-        ApiRO idledApi = this.getApiByClassFullName(setAllApiInUsePLO.getClassFullName(),
-                                                    ApiStatus.IDLED.getStatus());
+    public boolean setAllApiInUse(String controllerClass) {
+        ApiRO idledApi = this.getApiByClassFullName(controllerClass, ApiStatus.IDLED.getStatus());
         if (CollectionUtils.isEmpty(idledApi.getApiList())) {
             throw new BizException("All api have been set in used");
         }

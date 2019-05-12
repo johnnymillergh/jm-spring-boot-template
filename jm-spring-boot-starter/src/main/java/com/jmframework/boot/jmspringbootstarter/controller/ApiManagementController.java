@@ -2,7 +2,6 @@ package com.jmframework.boot.jmspringbootstarter.controller;
 
 import com.jmframework.boot.jmspringbootstarter.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
@@ -68,8 +67,8 @@ public class ApiManagementController {
 
     @PostMapping("/setAllApiInUse")
     @ApiOperation(value = "Set all api in use", notes = "Set all api in use")
-    public ResponseBodyBean setAllApiInUse(@Valid @RequestBody SetAllApiInUsePLO setAllApiInUsePLO) {
-        boolean operationStatus = apiService.setAllApiInUse(setAllApiInUsePLO);
+    public ResponseBodyBean setAllApiInUse(String controllerClass) {
+        boolean operationStatus = apiService.setAllApiInUse(controllerClass);
         if (operationStatus) {
             return ResponseBodyBean.ofSuccess("Operation done");
         }

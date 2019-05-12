@@ -1,7 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
 import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetAllApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysisRO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.ApiControllerRO;
@@ -52,10 +51,10 @@ public interface ApiService {
     /**
      * Set a controller's all api in use
      *
-     * @param setAllApiInUsePLO form data
+     * @param controllerClass controller's full class name
      * @return true - successful operation; false - failed operation
      */
-    boolean setAllApiInUse(SetAllApiInUsePLO setAllApiInUsePLO);
+    boolean setAllApiInUse(String controllerClass);
 
     List<GetApiListRO> getApiList(GetApiListPLO getApiListPLO);
 }
