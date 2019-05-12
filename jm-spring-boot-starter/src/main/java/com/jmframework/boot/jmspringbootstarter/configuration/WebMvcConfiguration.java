@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Description: WebMvcConfiguration, Spring MVC Configurations.
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  * @date 2019-03-02 12:34
  **/
 @Configuration
-public class WebMvcConfiguration extends WebMvcConfigurationSupport {
+public class WebMvcConfiguration implements WebMvcConfigurer {
     private static final long MAX_AGE_SECS = 3600;
     private final CustomMessageSourceConfiguration customMessageSourceConfiguration;
 
@@ -37,19 +37,18 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        super.addResourceHandlers(registry);
     }
 
     /**
      * <p>Override parent's validator by local validator to enable custom message.</p>
-     * <p>We had already extended the <em>WebMvcConfigurationSupport</em>, to avoid having the custom validator ignored,
+     * <p>We had already implemented the <em>WebMvcConfigurer</em>, to avoid having the custom validator ignored,
      * we’d have to set the validator by overriding the <em>getValidator()</em> method from the parent class.</p>
      * <a href="https://www.baeldung.com/spring-custom-validation-message-source">Reference</a>
      *
      * @return local validator
      */
     @Override
-    protected Validator getValidator() {
+    public Validator getValidator() {
         return customMessageSourceConfiguration.getValidator();
     }
 
