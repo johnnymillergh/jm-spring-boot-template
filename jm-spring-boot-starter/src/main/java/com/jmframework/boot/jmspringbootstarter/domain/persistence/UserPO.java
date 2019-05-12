@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * Description: User
+ * Description: User (Persistence Object)
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 19:51
@@ -21,39 +21,39 @@ public class UserPO {
      */
     private String username;
     /**
+     * Email
+     */
+    private String email;
+    /**
+     * Cellphone number
+     */
+    private String cellphone;
+    /**
      * Password
      */
     private String password;
     /**
      * Nickname
      */
-    private String nickname;
+    private String fullName;
     /**
-     * Phone
+     * Birthday (yyyy-MM-dd)
      */
-    private String phone;
+    private Date birthday;
     /**
-     * Email
+     * 58 gender options
      */
-    private String email;
-    /**
-     * Birthday
-     */
-    private Long birthday;
-    /**
-     * Gender
-     */
-    private Integer sex;
-    /**
-     * Status
-     */
-    private Integer status;
+    private String gender;
     /**
      * Create time
      */
-    private Date createTime;
+    private Date gmtCreated;
     /**
      * Modify time
      */
-    private Date modifyTime;
+    private Date gmtModified;
+    /**
+     * Status. Enabled-1，Disenabled-0
+     */
+    private Integer status;
 }

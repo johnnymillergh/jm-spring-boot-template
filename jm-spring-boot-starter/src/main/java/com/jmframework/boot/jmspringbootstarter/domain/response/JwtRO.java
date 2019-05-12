@@ -22,6 +22,7 @@ public class JwtRO {
      * Token type
      */
     private String tokenType = "Bearer";
+    private String nickname;
 
     public JwtRO(String token) {
         this.token = token;

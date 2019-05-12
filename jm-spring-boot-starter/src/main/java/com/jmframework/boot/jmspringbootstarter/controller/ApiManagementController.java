@@ -22,7 +22,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("/apiManagement")
-@Api(value = "Api Management Controller", tags = {"api"})
+@Api(value = "API Management Controller", tags = {"api"})
 public class ApiManagementController {
     private final ApiService apiService;
 

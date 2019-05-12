@@ -40,6 +40,14 @@ public class UserPrincipal implements UserDetails {
      */
     private String username;
     /**
+     * Email
+     */
+    private String email;
+    /**
+     * Phone
+     */
+    private String cellphone;
+    /**
      * Password
      */
     @JsonIgnore
@@ -47,23 +55,15 @@ public class UserPrincipal implements UserDetails {
     /**
      * Nickname
      */
-    private String nickname;
-    /**
-     * Phone
-     */
-    private String phone;
-    /**
-     * Email
-     */
-    private String email;
+    private String fullName;
     /**
      * Birthday
      */
-    private Long birthday;
+    private Date birthday;
     /**
      * Gender
      */
-    private Integer sex;
+    private String gender;
     /**
      * Status
      */
@@ -71,11 +71,11 @@ public class UserPrincipal implements UserDetails {
     /**
      * Create time
      */
-    private Date createTime;
+    private Date gmtCreated;
     /**
      * Modify time
      */
-    private Date modifyTime;
+    private Date gmtModified;
     /**
      * Roles that user has
      */
@@ -85,18 +85,28 @@ public class UserPrincipal implements UserDetails {
      */
     private Collection<? extends GrantedAuthority> authorities;
 
-    public static UserPrincipal create(UserPO userPO, List<RolePO> rolePOList, List<PermissionPO> permissionPOS) {
+    public static UserPrincipal create(UserPO userPO, List<RolePO> rolePOList, List<PermissionPO> permissionPOList) {
         List<String> roleNames = rolePOList.stream().map(RolePO::getName).collect(Collectors.toList());
 
         List<GrantedAuthority> authorities =
-                permissionPOS.stream()
-                             .filter(permission -> StrUtil.isNotBlank(permission.getPermissionExpression()))
-                             .map(permission -> new SimpleGrantedAuthority(permission.getPermissionExpression()))
-                             .collect(Collectors.toList());
+                permissionPOList.stream()
+                                .filter(permission -> StrUtil.isNotBlank(permission.getPermissionExpression()))
+                                .map(permission -> new SimpleGrantedAuthority(permission.getPermissionExpression()))
+                                .collect(Collectors.toList());
 
-        return new UserPrincipal(userPO.getId(), userPO.getUsername(), userPO.getPassword(), userPO.getNickname(),
-                                 userPO.getPhone(), userPO.getEmail(), userPO.getBirthday(), userPO.getSex(), userPO.getStatus(),
-                                 userPO.getCreateTime(), userPO.getModifyTime(), roleNames, authorities);
+        return new UserPrincipal(userPO.getId(),
+                                 userPO.getUsername(),
+                                 userPO.getEmail(),
+                                 userPO.getCellphone(),
+                                 userPO.getPassword(),
+                                 userPO.getFullName(),
+                                 userPO.getBirthday(),
+                                 userPO.getGender(),
+                                 userPO.getStatus(),
+                                 userPO.getGmtCreated(),
+                                 userPO.getGmtModified(),
+                                 roleNames,
+                                 authorities);
     }
 
     @Override

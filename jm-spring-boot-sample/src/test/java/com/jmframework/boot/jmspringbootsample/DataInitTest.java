@@ -1,6 +1,5 @@
 package com.jmframework.boot.jmspringbootsample;
 
-import cn.hutool.core.date.DateTime;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +34,12 @@ public class DataInitTest {
         String time = simpleDateFormat.format(new Date());
         UserPO userPO = new UserPO();
         userPO.setUsername("user" + time);
-        userPO.setNickname("Common User");
+        userPO.setFullName("Common User");
         userPO.setPassword(encoder.encode("123456"));
-        userPO.setBirthday(DateTime.of("1996-11-22", "yyyy-MM-dd")
-                .getTime());
+        userPO.setBirthday(new Date());
         userPO.setEmail("user" + time + "@gamil.com");
-        userPO.setPhone("19100" + time);
-        userPO.setSex(1);
+        userPO.setCellphone("19100" + time);
+        userPO.setGender("Cis Male");
         userPO.setStatus(1);
         Long id = userMapper.save(userPO);
         log.error("Save user, ID = {}", userPO.getId());

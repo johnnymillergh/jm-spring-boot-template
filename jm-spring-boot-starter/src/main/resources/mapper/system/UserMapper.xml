@@ -5,25 +5,25 @@
             resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO">
         SELECT tu.id,
                tu.username,
-               tu.password,
-               tu.nickname,
-               tu.phone,
                tu.email,
+               tu.cellphone    AS cellphone,
+               tu.password,
+               tu.full_name    AS fullName,
                tu.birthday,
-               tu.sex,
-               tu.status,
-               tu.create_time AS createTime,
-               tu.modify_time AS modifyTime
+               tu.gender,
+               tu.gmt_created  AS gmtCreated,
+               tu.gmt_modified AS gmtModified,
+               tu.status
         FROM t_user tu
         <where>
             <if test="username != null">
                 tu.username = #{username}
             </if>
-            <if test="phone != null">
-                or tu.phone = #{phone}
-            </if>
             <if test="email != null">
                 or tu.email = #{email}
+            </if>
+            <if test="phone != null">
+                or tu.cellphone = #{phone}
             </if>
         </where>
     </select>
@@ -41,13 +41,31 @@
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_user(username, password, nickname, phone, email, birthday, sex, status, create_time, modify_time)
-        VALUES (#{username}, #{password}, #{nickname}, #{phone}, #{email}, #{birthday}, #{sex}, #{status}, now(), now())
+        INSERT INTO t_user(username,
+                           email,
+                           cellphone,
+                           password,
+                           full_name,
+                           birthday,
+                           gender,
+                           gmt_modified,
+                           gmt_created,
+                           status)
+        VALUES (#{username},
+                #{password},
+                #{cellphone},
+                #{password},
+                #{fullName},
+                #{birthday},
+                #{gender},
+                now(),
+                now(),
+                #{status})
     </insert>
 
     <insert id="register" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_user(username, password, email, status, create_time, modify_time)
-        VALUES (#{username}, #{password}, #{email}, 1, now(), now())
+        INSERT INTO t_user(username, password, email, gmt_created, gmt_modified, status)
+        VALUES (#{username}, #{password}, #{email}, now(), now(), 1)
     </insert>
 
     <select id="getUsernameCountByUsername" resultType="integer">
@@ -55,18 +73,19 @@
         FROM t_user tu
         WHERE tu.username = #{username}
     </select>
+
     <select id="getAllUser" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO">
         SELECT tu.id,
                tu.username,
-               tu.password,
-               tu.nickname,
-               tu.phone,
                tu.email,
+               tu.cellphone    AS cellphone,
+               tu.password,
+               tu.full_name    AS fullName,
                tu.birthday,
-               tu.sex,
-               tu.status,
-               tu.create_time AS createTime,
-               tu.modify_time AS modifyTime
+               tu.gender,
+               tu.gmt_created  AS gmtCreated,
+               tu.gmt_modified AS gmtModified,
+               tu.status
         FROM t_user tu
     </select>
 </mapper>

@@ -47,7 +47,7 @@ public class OnlineUser {
         OnlineUser onlineUser = new OnlineUser();
         BeanUtil.copyProperties(userPO, onlineUser);
         // 脱敏
-        onlineUser.setPhone(StrUtil.hide(userPO.getPhone(), 3, 7));
+        onlineUser.setPhone(StrUtil.hide(userPO.getCellphone(), 3, 7));
         onlineUser.setEmail(StrUtil.hide(userPO.getEmail(), 1, StrUtil.indexOfIgnoreCase(userPO.getEmail(),
                                                                                          Constants.AT_SIGN)));
         return onlineUser;
