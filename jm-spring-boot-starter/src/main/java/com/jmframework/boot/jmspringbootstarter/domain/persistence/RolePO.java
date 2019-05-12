@@ -27,9 +27,9 @@ public class RolePO {
     /**
      * Create time
      */
-    private Date createTime;
+    private Date gmtCreated;
     /**
      * Modify time
      */
-    private Date modifyTime;
+    private Date gmtModified;
 }

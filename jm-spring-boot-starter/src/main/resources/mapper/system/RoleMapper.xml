@@ -2,12 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper">
     <select id="selectByUserId" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO">
-        SELECT t_role.*
-        FROM t_role,
-             t_user,
-             t_user_role
-        WHERE t_user.id = t_user_role.user_id
-          AND t_role.id = t_user_role.role_id
-          AND t_user.id = #{userId}
+        SELECT tr.id,
+               tr.name,
+               tr.description,
+               tr.gmt_created  AS gmtCreated,
+               tr.gmt_modified AS gmtModified
+        FROM t_role tr
+                 LEFT JOIN t_user_role tur ON tr.id = tur.role_id
+                 LEFT JOIN t_user tu ON tur.user_id = tu.id
+        WHERE tu.id = 1 = #{userId}
     </select>
 </mapper>
