@@ -95,7 +95,7 @@ public class ApiServiceImpl implements ApiService {
             ApiControllerRO apiControllerRO = this.getAllControllerClass();
             for (ApiControllerRO.ApiControllerSubclass acs : apiControllerRO.getControllerList()) {
                 String clazzFullName = acs.getPackageName() + "." + acs.getClassName();
-                ApiRO apiRO = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USED.getStatus());
+                ApiRO apiRO = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USE.getStatus());
                 apiAnalysisRO.appendIdledApiCount(apiRO.getIdledApiCount());
                 apiAnalysisRO.appendInUseApiCount(apiRO.getInUseApiCount());
             }
@@ -103,7 +103,7 @@ public class ApiServiceImpl implements ApiService {
             return apiAnalysisRO;
         }
         // Query API statistics of specific class scope.
-        ApiRO apiRO = this.getApiByClassFullName(classFullName, ApiStatus.IN_USED.getStatus());
+        ApiRO apiRO = this.getApiByClassFullName(classFullName, ApiStatus.IN_USE.getStatus());
         apiAnalysisRO.appendIdledApiCount(apiRO.getIdledApiCount());
         apiAnalysisRO.appendInUseApiCount(apiRO.getInUseApiCount());
         apiAnalysisRO.calculateSum();
@@ -166,7 +166,7 @@ public class ApiServiceImpl implements ApiService {
         if (StringUtils.isBlank(urlPrefix)) {
             return new ApiRO();
         }
-        if (apiStatus == ApiStatus.IN_USED) {
+        if (apiStatus == ApiStatus.IN_USE) {
             ApiRO apiRO = new ApiRO();
             List<PermissionPO> permissionPOS = permissionService.selectApisByUrlPrefix(urlPrefix);
             int allMethodCount = clazz.getDeclaredMethods().length;

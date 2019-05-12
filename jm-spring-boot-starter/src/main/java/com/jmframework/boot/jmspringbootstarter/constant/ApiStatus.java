@@ -17,7 +17,7 @@ public enum ApiStatus {
     /**
      * API in used (stored in db).
      */
-    IN_USED(1);
+    IN_USE(1);
 
     private Integer status;
 
