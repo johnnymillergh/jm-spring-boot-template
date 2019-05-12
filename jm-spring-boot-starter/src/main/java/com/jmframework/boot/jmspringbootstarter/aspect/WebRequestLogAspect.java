@@ -88,7 +88,7 @@ public class WebRequestLogAspect {
                  joinPoint.getSignature().getName());
         log.info("Request Params :{}{}",
                  LINE_SEPARATOR,
-                 JSONUtil.formatJsonStr(mapper.writeValueAsString(joinPoint.getArgs())));
+                 JSONUtil.toJsonPrettyStr(joinPoint.getArgs()));
     }
 
     /**

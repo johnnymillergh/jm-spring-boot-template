@@ -122,6 +122,6 @@ public class ExceptionControllerAdvice {
         }
         log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage(), exception);
         response.setStatus(UniversalStatus.ERROR.getCode());
-        return ResponseBodyBean.ofStatus(UniversalStatus.ERROR.getCode(), exception.getMessage(), null);
+        return ResponseBodyBean.ofStatus(UniversalStatus.ERROR.getCode(), UniversalStatus.ERROR.getMessage(), null);
     }
 }
