@@ -15,7 +15,7 @@ spring:
     name: datasource-one
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: ENC(YDztJDe/yC1bSMpzile1NZnZvNjUHCqK75mNSyFPGh5iOKeHYjYm8+CKbqqiYPK8OBi7QF541WDCtsjD20NoXD+GL4991Ng/l+fJ2L9mmOkuYslkG3SeAiPdtmxCu57KNAnhwHST3WibRgdxbbs/vItYyaUKTEAEwpCE2YxCoKc=)
+    url: ENC(OUl07S4rDzruzf9pf6xuSPSC8vrqgAXSo6hCv3JR48DXxDDQ6q3YbVqUYHPf7zB6Wimlwc/6BD9c5UUusFYOz5HhoSpQ0LYpYcAJ47z9wUAU8i697d4WywZibSzo2OotVmiKZ9mDAXObFe5q6xL6dLzYaVHTkxLzVmGfkPtGcI3IsXsRxCJJlbmOh2tD+BONv+Y6o5Xh/H7vNQjAEQqWCaTJRp1+d4H8j8g+cYPHxa2wuJPqZqejtSkQ+9oRXFKJoNIsrTdo749GO+PH579PkVApEMSbUM3s6qRG3UGXFX0=)
     username: ENC(XIDh8RzZoA/R8/1DUCMYhDyV6N7jqlCSCHDgg2CjbGPz7dA3yWHCLQ==)
     password: ENC(m5mZkr93kta3P3230Rcr2qyxYlx3zRIjufbzHLY5m2s=)
   devtools:
@@ -48,3 +48,4 @@ custom:
       # Request need to be ignored that matches pattern.
       pattern:
         - "/druid/**"
+    web-security-disabled: true
