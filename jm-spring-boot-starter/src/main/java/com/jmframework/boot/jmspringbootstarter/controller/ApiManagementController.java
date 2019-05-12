@@ -44,7 +44,7 @@ public class ApiManagementController {
             return ResponseBodyBean.ofError();
         }
         if (StringUtils.isBlank(controllerClass)) {
-            return ResponseBodyBean.ofFailure("controllerClass is not empty");
+            return ResponseBodyBean.ofFailure("controllerClass is empty");
         }
         return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(controllerClass, apiStatus));
     }
@@ -68,6 +68,9 @@ public class ApiManagementController {
     @PostMapping("/setAllApiInUse")
     @ApiOperation(value = "Set all api in use", notes = "Set all api in use")
     public ResponseBodyBean setAllApiInUse(String controllerClass) {
+        if (StringUtils.isBlank(controllerClass)) {
+            return ResponseBodyBean.ofFailure("controllerClass is not provided");
+        }
         boolean operationStatus = apiService.setAllApiInUse(controllerClass);
         if (operationStatus) {
             return ResponseBodyBean.ofSuccess("Operation done");
