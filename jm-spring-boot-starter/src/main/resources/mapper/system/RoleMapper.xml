@@ -10,6 +10,6 @@
         FROM t_role tr
                  LEFT JOIN t_user_role tur ON tr.id = tur.role_id
                  LEFT JOIN t_user tu ON tur.user_id = tu.id
-        WHERE tu.id = 1 = #{userId}
+        WHERE tu.id = #{userId}
     </select>
 </mapper>
