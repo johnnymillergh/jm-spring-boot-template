@@ -122,7 +122,7 @@ public class ApiServiceImpl implements ApiService {
     public boolean setAllApiInUse(String controllerClass) {
         ApiRO idledApi = this.getApiByClassFullName(controllerClass, ApiStatus.IDLED.getStatus());
         if (CollectionUtils.isEmpty(idledApi.getApiList())) {
-            throw new BizException("All api have been set in used");
+            throw new BizException("All APIs have been set in use");
         }
         idledApi.getApiList().forEach(item -> {
             PermissionPO permissionPO = new PermissionPO();
