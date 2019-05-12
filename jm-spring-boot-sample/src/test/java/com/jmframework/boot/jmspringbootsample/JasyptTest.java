@@ -28,8 +28,8 @@ public class JasyptTest {
     private class EncryptedInformation {
         // MySQL
         String urlOfDataSource = encryptor.encrypt(
-                "jdbc:mysql://127.0.0.1:3306/spring_boot_template?useUnicode=true&characterEncoding=utf8");
-        String usernameForMySQL = encryptor.encrypt("spring_boot_template_w");
+                "jdbc:mysql://127.0.0.1:3306/jm_spring_boot_template?useUnicode=true&characterEncoding=utf8");
+        String usernameForMySQL = encryptor.encrypt("jm_spring_boot_template_w");
         String passwordForMySQL = encryptor.encrypt("H'Tkh9@!*_/B'_j");
         // Redis
         String hostOfRedis = encryptor.encrypt("192.168.158.136");
