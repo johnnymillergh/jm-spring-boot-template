@@ -1,6 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.LoginPLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.RegisterPLO;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
@@ -111,7 +112,10 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtUtil.createJWT(authentication, loginPLO.getRememberMe());
-        return ResponseBodyBean.ofSuccess(new JwtRO(jwt));
+        JwtRO jwtRO = new JwtRO(jwt);
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        jwtRO.setFullName(userPrincipal.getFullName());
+        return ResponseBodyBean.ofSuccess(jwtRO);
     }
 
     @PostMapping("/logout")
