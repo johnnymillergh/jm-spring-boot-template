@@ -164,10 +164,21 @@ public class ApiServiceImpl implements ApiService {
         if (StringUtils.isBlank(urlPrefix)) {
             return new ApiRO();
         }
+        // Get all methods declared in class.
+        List<Method> unfilteredMethods = Arrays.asList(clazz.getDeclaredMethods());
+        // methods is a list of method that annotated by `@GetMapping` and `@PostMapping`
+        List<Method> methods = new ArrayList<>();
+        unfilteredMethods.forEach(item -> {
+            GetMapping getMapping = item.getAnnotation(GetMapping.class);
+            PostMapping postMapping = item.getAnnotation(PostMapping.class);
+            if (getMapping != null || postMapping != null) {
+                methods.add(item);
+            }
+        });
         if (apiStatus == ApiStatus.IN_USE) {
             ApiRO apiRO = new ApiRO();
             List<PermissionPO> permissionPOS = permissionService.selectApisByUrlPrefix(urlPrefix);
-            int allMethodCount = clazz.getDeclaredMethods().length;
+            int allMethodCount = methods.size();
             int inUseApiCount = permissionPOS.size();
             int idledApiCount = allMethodCount - inUseApiCount;
             for (PermissionPO permissionPO : permissionPOS) {
@@ -182,10 +193,8 @@ public class ApiServiceImpl implements ApiService {
             apiRO.setInUseApiCount(inUseApiCount);
             return apiRO;
         }
-        // Get all methods declared in class.
-        Method[] methods = clazz.getDeclaredMethods();
-        int allMethodCount = clazz.getDeclaredMethods().length;
-        if (methods.length == 0) {
+        int allMethodCount = methods.size();
+        if (methods.size() == 0) {
             return new ApiRO();
         }
         Map<String, Object> resultMap = new HashMap<>(4);
