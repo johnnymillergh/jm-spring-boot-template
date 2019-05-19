@@ -21,4 +21,15 @@
                tr.gmt_modified AS gmtModified
         FROM t_role tr
     </select>
+
+    <select id="checkRoleName" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM t_role tr
+        WHERE tr.name = #{roleName}
+    </select>
+
+    <insert id="insertRole" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_role(name, description, gmt_created, gmt_modified)
+        VALUES (#{name}, #{description}, now(), now())
+    </insert>
 </mapper>

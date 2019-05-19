@@ -17,7 +17,6 @@ import java.util.List;
  * @date 2019-05-18 12:03
  **/
 @Service
-@SuppressWarnings("unchecked")
 public class RoleServiceImpl implements RoleService {
     private final RoleMapper roleMapper;
 
@@ -31,7 +30,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void insertRole(RolePO rolePO) {
-        int affectedRow = roleMapper.insert(rolePO);
+    public boolean checkRoleName(String roleName) {
+        return roleMapper.checkRoleName(roleName) == 0;
+    }
+
+    @Override
+    public boolean insertRole(RolePO rolePO) {
+        return roleMapper.insertRole(rolePO) > 0;
     }
 }

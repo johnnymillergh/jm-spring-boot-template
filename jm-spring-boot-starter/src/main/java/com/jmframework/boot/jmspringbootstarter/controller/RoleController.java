@@ -1,6 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.CreateRolePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.GetRoleListPLO;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.GetRoleListRO;
@@ -9,10 +10,8 @@ import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -47,5 +46,33 @@ public class RoleController {
             roList.add(ro);
         });
         return ResponseBodyBean.ofSuccess(roList);
+    }
+
+    @GetMapping("/check-role-name")
+    @ApiOperation(value = "Check role name", notes = "To ensure the uniqueness of name of role")
+    public ResponseBodyBean checkRoleName(String roleName) {
+        if (StringUtils.isBlank(roleName)) {
+            return ResponseBodyBean.ofFailure("name of role is not blank");
+        }
+        roleName = StringUtils.trim(roleName).toLowerCase();
+        roleName = roleName.replaceAll("\\s", "_");
+        if (roleService.checkRoleName(roleName)) {
+            return ResponseBodyBean.ofSuccess("Tne name of role is available");
+        }
+        return ResponseBodyBean.ofFailure("Tne name of role is not available");
+    }
+
+    @PostMapping("/create-role")
+    @ApiOperation(value = "Create a role", notes = "Create a role")
+    public ResponseBodyBean createRole(@Valid @RequestBody CreateRolePLO plo) {
+        String name = StringUtils.trim(plo.getName()).toLowerCase();
+        name = name.replaceAll("\\s", "_");
+        plo.setName(name);
+        RolePO po = new RolePO();
+        BeanUtil.copyProperties(plo, po);
+        if (roleService.insertRole(po)) {
+            return ResponseBodyBean.ofSuccess("Role created successfully");
+        }
+        return ResponseBodyBean.ofFailure("Role cannot be created");
     }
 }

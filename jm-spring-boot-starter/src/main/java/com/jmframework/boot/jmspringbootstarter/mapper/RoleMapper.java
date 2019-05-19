@@ -34,4 +34,20 @@ public interface RoleMapper extends BaseMapper<RolePO> {
      * @return role page list
      */
     List<RolePO> selectPageList(Page page, GetRoleListPLO getRoleListPLO);
+
+    /**
+     * Check role name's uniqueness
+     *
+     * @param roleName name of role
+     * @return the occurrence of the name of role
+     */
+    Integer checkRoleName(String roleName);
+
+    /**
+     * Insert role
+     *
+     * @param po persistence object
+     * @return primary key
+     */
+    Long insertRole(RolePO po);
 }
