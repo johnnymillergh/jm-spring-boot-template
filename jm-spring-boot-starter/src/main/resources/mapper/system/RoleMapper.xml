@@ -12,4 +12,13 @@
                  LEFT JOIN t_user tu ON tur.user_id = tu.id
         WHERE tu.id = #{userId}
     </select>
+
+    <select id="selectPageList" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO">
+        SELECT tr.id,
+               tr.name,
+               tr.description,
+               tr.gmt_created  AS gmtCreated,
+               tr.gmt_modified AS gmtModified
+        FROM t_role tr
+    </select>
 </mapper>

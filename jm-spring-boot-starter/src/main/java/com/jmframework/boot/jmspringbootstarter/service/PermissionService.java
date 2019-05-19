@@ -46,5 +46,11 @@ public interface PermissionService extends IService<PermissionPO> {
      */
     List<PermissionPO> selectApisByUrlPrefix(String urlPrefix);
 
+    /**
+     * Query API list
+     *
+     * @param getApiListPLO payload object
+     * @return API list
+     */
     List<GetApiListRO> queryApiList(GetApiListPLO getApiListPLO);
 }
