@@ -93,6 +93,7 @@ public class RoleController {
     }
 
     @PostMapping("/edit-role")
+    @ApiOperation(value = "Edit role", notes = "Edit role")
     public ResponseBodyBean editRole(@Valid @RequestBody EditRolePLO plo) {
         RolePO po = new RolePO();
         BeanUtil.copyProperties(plo, po);
