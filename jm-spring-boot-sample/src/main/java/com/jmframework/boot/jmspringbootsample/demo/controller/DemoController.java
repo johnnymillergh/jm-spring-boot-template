@@ -32,7 +32,7 @@ public class DemoController {
         this.jwtUtil = jwtUtil;
     }
 
-    @GetMapping("/getCurrentUser")
+    @GetMapping("/get-current-user")
     @ApiOperation(value = "Get current user", notes = "Get current user from JWT")
     public ResponseBodyBean getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<>(4);
@@ -44,7 +44,7 @@ public class DemoController {
         return ResponseBodyBean.ofFailure(resultMap);
     }
 
-    @GetMapping("/testResponseAndException")
+    @GetMapping("/test-response-and-exception")
     @ApiOperation(value = "Test response and exception", notes = "Test response and exception")
     public ResponseBodyBean testResponseAndException(Integer code) throws InterruptedException {
         Thread.sleep(2000);
@@ -72,12 +72,12 @@ public class DemoController {
         }
     }
 
-    @PostMapping("/testPost1")
+    @PostMapping("/test-post-1")
     public void testPost1() throws InterruptedException {
         Thread.sleep(500);
     }
 
-    @GetMapping("/testGet1")
+    @GetMapping("/test-get-1")
     public void testGet1() throws InterruptedException {
         Thread.sleep(500);
     }

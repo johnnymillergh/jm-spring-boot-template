@@ -21,8 +21,8 @@ import javax.validation.Valid;
  **/
 @Slf4j
 @RestController
-@RequestMapping("/apiManagement")
-@Api(value = "API Management Controller", tags = {"api"})
+@RequestMapping("/api-management")
+@Api(tags = {"/api-management"})
 public class ApiManagementController {
     private final ApiService apiService;
 
@@ -30,13 +30,13 @@ public class ApiManagementController {
         this.apiService = apiService;
     }
 
-    @GetMapping("/getController")
+    @GetMapping("/get-controller")
     @ApiOperation(value = "Get controller list", notes = "Get controller list")
     public ResponseBodyBean getController() {
         return ResponseBodyBean.ofSuccess(apiService.getAllControllerClass());
     }
 
-    @GetMapping("/getApiByControllerClass")
+    @GetMapping("/get-api-by-controller-class")
     @ApiOperation(value = "Get API by controller", notes = "Get API by controller")
     public ResponseBodyBean getApiByControllerClass(String controllerClass, Integer apiStatus) {
         ApiStatus status = ApiStatus.getByStatus(apiStatus);
@@ -49,13 +49,13 @@ public class ApiManagementController {
         return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(controllerClass, apiStatus));
     }
 
-    @GetMapping("/getApiAnalysis")
+    @GetMapping("/get-api-analysis")
     @ApiOperation(value = "Get API analysis", notes = "Get API analysis")
     public ResponseBodyBean getApiAnalysis(String classFullName) {
         return ResponseBodyBean.ofSuccess(apiService.getApiAnalysis(classFullName));
     }
 
-    @PostMapping("/setApiInUse")
+    @PostMapping("/set-api-in-use")
     @ApiOperation(value = "Set API in use", notes = "Set API in use")
     public ResponseBodyBean setApiInUse(@Valid @RequestBody SetApiInUsePLO setApiInUsePLO) {
         boolean operationStatus = apiService.setApiInUse(setApiInUsePLO);
@@ -65,7 +65,7 @@ public class ApiManagementController {
         return ResponseBodyBean.ofFailure("Failed operation");
     }
 
-    @PostMapping("/setAllApiInUse")
+    @PostMapping("/set-all-api-in-use")
     @ApiOperation(value = "Set all api in use", notes = "Set all api in use")
     public ResponseBodyBean setAllApiInUse(String controllerClass) {
         if (StringUtils.isBlank(controllerClass)) {
@@ -78,7 +78,7 @@ public class ApiManagementController {
         return ResponseBodyBean.ofFailure("Failed operation");
     }
 
-    @PostMapping("/getApiList")
+    @PostMapping("/get-api-list")
     @ApiOperation(value = "Get API list", notes = "Get API list")
     public ResponseBodyBean getApiList(@Valid @RequestBody GetApiListPLO getApiListPLO) {
         return ResponseBodyBean.ofSuccess(apiService.getApiList(getApiListPLO));

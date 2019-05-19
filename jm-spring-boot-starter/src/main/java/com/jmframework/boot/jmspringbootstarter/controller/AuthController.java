@@ -34,7 +34,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("/auth")
-@Api(value = "Auth Controller", tags = {"auth"})
+@Api(tags = {"/auth"})
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
@@ -52,7 +52,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @GetMapping("/checkUsernameUniqueness")
+    @GetMapping("/check-username-uniqueness")
     @ApiOperation(value = "Check username uniqueness", notes = "Check username uniqueness")
     public ResponseBodyBean checkUsernameUniqueness(String username) {
         if (StringUtils.isBlank(username)) {
@@ -66,7 +66,7 @@ public class AuthController {
         return ResponseBodyBean.ofFailure("username not available");
     }
 
-    @GetMapping("/checkEmailUniqueness")
+    @GetMapping("/check-email-uniqueness")
     @ApiOperation(value = "Check email uniqueness", notes = "Check email uniqueness")
     public ResponseBodyBean checkEmailUniqueness(String email) {
         if (StringUtils.isBlank(email)) {
@@ -94,7 +94,7 @@ public class AuthController {
         return ResponseBodyBean.ofFailure("Registered failure.");
     }
 
-    @GetMapping("/validateUsername/{username}")
+    @GetMapping("/validate-username/{username}")
     @ApiOperation(value = "Validate username", notes = "Validate username for user login. " +
             "If the username do not exist, response failure")
     public ResponseBodyBean validateUsername(@PathVariable String username) {
