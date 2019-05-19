@@ -36,4 +36,20 @@ public interface RoleService {
      * @return true - insert successfully; false - insert failure
      */
     boolean insertRole(RolePO rolePO);
+
+    /**
+     * Handle the name of role
+     *
+     * @param roleName the name of role
+     * @return processed role name
+     */
+    String handleRoleName(String roleName);
+
+    /**
+     * Search role by name
+     *
+     * @param roleName role name
+     * @return role
+     */
+    RolePO searchRole(String roleName);
 }

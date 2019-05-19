@@ -1,10 +1,12 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.CreateRolePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.GetRoleListPLO;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.GetRoleListRO;
+import com.jmframework.boot.jmspringbootstarter.domain.response.SearchRoleRO;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import io.swagger.annotations.Api;
@@ -54,8 +56,7 @@ public class RoleController {
         if (StringUtils.isBlank(roleName)) {
             return ResponseBodyBean.ofFailure("name of role is not blank");
         }
-        roleName = StringUtils.trim(roleName).toLowerCase();
-        roleName = roleName.replaceAll("\\s", "_");
+        roleName = roleService.handleRoleName(roleName);
         if (roleService.checkRoleName(roleName)) {
             return ResponseBodyBean.ofSuccess("Tne name of role is available");
         }
@@ -65,14 +66,28 @@ public class RoleController {
     @PostMapping("/create-role")
     @ApiOperation(value = "Create a role", notes = "Create a role")
     public ResponseBodyBean createRole(@Valid @RequestBody CreateRolePLO plo) {
-        String name = StringUtils.trim(plo.getName()).toLowerCase();
-        name = name.replaceAll("\\s", "_");
-        plo.setName(name);
+        plo.setName(roleService.handleRoleName(plo.getName()));
         RolePO po = new RolePO();
         BeanUtil.copyProperties(plo, po);
         if (roleService.insertRole(po)) {
             return ResponseBodyBean.ofSuccess("Role created successfully");
         }
         return ResponseBodyBean.ofFailure("Role cannot be created");
+    }
+
+    @GetMapping("/search-role")
+    @ApiOperation(value = "Search role", notes = "Search role by name")
+    public ResponseBodyBean searchRole(String roleName) {
+        if (StringUtils.isBlank(roleName)) {
+            return ResponseBodyBean.ofFailure("The name of role is not blank");
+        }
+        roleName = roleService.handleRoleName(roleName);
+        RolePO po = roleService.searchRole(roleName);
+        if (po == null) {
+            return ResponseBodyBean.setResponse(UniversalStatus.WARNING.getCode(), "No result", null);
+        }
+        SearchRoleRO ro = new SearchRoleRO();
+        BeanUtil.copyProperties(po, ro);
+        return ResponseBodyBean.ofSuccess(ro);
     }
 }

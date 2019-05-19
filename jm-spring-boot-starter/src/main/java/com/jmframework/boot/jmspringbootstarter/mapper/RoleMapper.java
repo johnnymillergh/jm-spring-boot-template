@@ -50,4 +50,12 @@ public interface RoleMapper extends BaseMapper<RolePO> {
      * @return primary key
      */
     Long insertRole(RolePO po);
+
+    /**
+     * Select role by name
+     *
+     * @param name role name
+     * @return role
+     */
+    RolePO selectRoleByName(String name);
 }

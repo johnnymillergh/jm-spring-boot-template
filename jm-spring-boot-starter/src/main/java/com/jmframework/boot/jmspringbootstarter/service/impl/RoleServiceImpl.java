@@ -5,6 +5,7 @@ import com.jmframework.boot.jmspringbootstarter.domain.payload.GetRoleListPLO;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,5 +38,16 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean insertRole(RolePO rolePO) {
         return roleMapper.insertRole(rolePO) > 0;
+    }
+
+    @Override
+    public String handleRoleName(String roleName) {
+        String processedRoleName = StringUtils.trim(roleName).toLowerCase();
+        return processedRoleName.replaceAll("\\s", "_");
+    }
+
+    @Override
+    public RolePO searchRole(String roleName) {
+        return roleMapper.selectRoleByName(roleName);
     }
 }

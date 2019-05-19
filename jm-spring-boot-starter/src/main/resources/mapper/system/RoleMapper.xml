@@ -32,4 +32,15 @@
         INSERT INTO t_role(name, description, gmt_created, gmt_modified)
         VALUES (#{name}, #{description}, now(), now())
     </insert>
+
+    <select id="selectRoleByName"
+            resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO">
+        SELECT tr.id,
+               tr.name,
+               tr.description,
+               tr.gmt_created  AS gmtCreated,
+               tr.gmt_modified AS gmtModified
+        FROM t_role tr
+        WHERE tr.name = #{name}
+    </select>
 </mapper>
