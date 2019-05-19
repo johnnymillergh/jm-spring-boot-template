@@ -52,7 +52,7 @@ A standard controller should be simple, good to read and maintain. It's  just a 
  **/
 @RestController
 @RequestMapping("/standard")
-@Api(value = "Standard Controller", tags = {"tag-for-controller"})
+@Api(tags = {"/standard"})
 public class StandardController {
     private final DemoService demoService;
 

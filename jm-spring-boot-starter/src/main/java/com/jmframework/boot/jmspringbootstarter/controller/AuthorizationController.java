@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"/authorization"})
 public class AuthorizationController {
     @GetMapping("/get-permission-list")
-    @ApiOperation(value = "Get permission list", notes = "Get permission list (group by controller)")
+    @ApiOperation(value = "/get-permission-list", notes = "Get permission list (group by controller)")
     public ResponseBodyBean getPermissionList() {
         return null;
     }

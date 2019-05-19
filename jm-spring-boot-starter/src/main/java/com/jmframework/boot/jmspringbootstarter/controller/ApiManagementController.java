@@ -31,13 +31,13 @@ public class ApiManagementController {
     }
 
     @GetMapping("/get-controller")
-    @ApiOperation(value = "Get controller list", notes = "Get controller list")
+    @ApiOperation(value = "/get-controller", notes = "Get controller list")
     public ResponseBodyBean getController() {
         return ResponseBodyBean.ofSuccess(apiService.getAllControllerClass());
     }
 
     @GetMapping("/get-api-by-controller-class")
-    @ApiOperation(value = "Get API by controller", notes = "Get API by controller")
+    @ApiOperation(value = "/get-api-by-controller-class", notes = "Get API by controller")
     public ResponseBodyBean getApiByControllerClass(String controllerClass, Integer apiStatus) {
         ApiStatus status = ApiStatus.getByStatus(apiStatus);
         if (status == null) {
@@ -50,13 +50,13 @@ public class ApiManagementController {
     }
 
     @GetMapping("/get-api-analysis")
-    @ApiOperation(value = "Get API analysis", notes = "Get API analysis")
+    @ApiOperation(value = "/get-api-analysis", notes = "Get API analysis")
     public ResponseBodyBean getApiAnalysis(String classFullName) {
         return ResponseBodyBean.ofSuccess(apiService.getApiAnalysis(classFullName));
     }
 
     @PostMapping("/set-api-in-use")
-    @ApiOperation(value = "Set API in use", notes = "Set API in use")
+    @ApiOperation(value = "/set-api-in-use", notes = "Set API in use")
     public ResponseBodyBean setApiInUse(@Valid @RequestBody SetApiInUsePLO setApiInUsePLO) {
         boolean operationStatus = apiService.setApiInUse(setApiInUsePLO);
         if (operationStatus) {
@@ -66,7 +66,7 @@ public class ApiManagementController {
     }
 
     @PostMapping("/set-all-api-in-use")
-    @ApiOperation(value = "Set all api in use", notes = "Set all api in use")
+    @ApiOperation(value = "/set-all-api-in-use", notes = "Set all api in use")
     public ResponseBodyBean setAllApiInUse(String controllerClass) {
         if (StringUtils.isBlank(controllerClass)) {
             return ResponseBodyBean.ofFailure("controllerClass is not provided");
@@ -79,7 +79,7 @@ public class ApiManagementController {
     }
 
     @PostMapping("/get-api-list")
-    @ApiOperation(value = "Get API list", notes = "Get API list")
+    @ApiOperation(value = "/get-api-list", notes = "Get API list")
     public ResponseBodyBean getApiList(@Valid @RequestBody GetApiListPLO getApiListPLO) {
         return ResponseBodyBean.ofSuccess(apiService.getApiList(getApiListPLO));
     }

@@ -53,7 +53,7 @@ public class AuthController {
     }
 
     @GetMapping("/check-username-uniqueness")
-    @ApiOperation(value = "Check username uniqueness", notes = "Check username uniqueness")
+    @ApiOperation(value = "/check-username-uniqueness", notes = "Check username uniqueness")
     public ResponseBodyBean checkUsernameUniqueness(String username) {
         if (StringUtils.isBlank(username)) {
             return ResponseBodyBean.setResponse(UniversalStatus.PARAM_INVALID.getCode(),
@@ -67,7 +67,7 @@ public class AuthController {
     }
 
     @GetMapping("/check-email-uniqueness")
-    @ApiOperation(value = "Check email uniqueness", notes = "Check email uniqueness")
+    @ApiOperation(value = "/check-email-uniqueness", notes = "Check email uniqueness")
     public ResponseBodyBean checkEmailUniqueness(String email) {
         if (StringUtils.isBlank(email)) {
             return ResponseBodyBean.setResponse(UniversalStatus.PARAM_INVALID.getCode(),
@@ -81,7 +81,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    @ApiOperation(value = "Register", notes = "Register (create an account)")
+    @ApiOperation(value = "/register", notes = "Register (create an account)")
     public ResponseBodyBean register(@Valid @RequestBody RegisterPLO registerPLO) {
         UserPO userPO = new UserPO();
         userPO.setUsername(registerPLO.getUsername());
@@ -95,7 +95,7 @@ public class AuthController {
     }
 
     @GetMapping("/validate-username/{username}")
-    @ApiOperation(value = "Validate username", notes = "Validate username for user login. " +
+    @ApiOperation(value = "/validate-username/:username", notes = "Validate username for user login. " +
             "If the username do not exist, response failure")
     public ResponseBodyBean validateUsername(@PathVariable String username) {
         boolean validateResult = authService.validateUsername(username);
@@ -104,7 +104,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    @ApiOperation(value = "Login", notes = "Login (Sign in)")
+    @ApiOperation(value = "/login", notes = "Login (Sign in)")
     public ResponseBodyBean login(@Valid @RequestBody LoginPLO loginPLO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginPLO.getUsernameOrEmailOrPhone(), loginPLO.getPassword()));
@@ -119,7 +119,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    @ApiOperation(value = "Logout", notes = "Logout (Sign out)")
+    @ApiOperation(value = "/logout", notes = "Logout (Sign out)")
     public ResponseBodyBean logout(HttpServletRequest request) {
         try {
             jwtUtil.invalidateJWT(request);

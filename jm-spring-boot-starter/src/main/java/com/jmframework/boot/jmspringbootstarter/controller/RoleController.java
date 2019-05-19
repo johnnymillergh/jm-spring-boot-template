@@ -31,7 +31,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/role")
-@Api(value = "Role Controller", tags = {"role"})
+@Api(tags = {"/role"})
 public class RoleController {
     private final RoleService roleService;
 
@@ -40,7 +40,7 @@ public class RoleController {
     }
 
     @PostMapping("/get-list")
-    @ApiOperation(value = "Get role list", notes = "Get role page list")
+    @ApiOperation(value = "/get-list", notes = "Get role page list")
     public ResponseBodyBean getList(@Valid @RequestBody GetRoleListPLO plo) {
         List<RolePO> poList = roleService.getList(plo);
         List<GetRoleListRO> roList = new ArrayList<>();
@@ -53,7 +53,7 @@ public class RoleController {
     }
 
     @PostMapping("/check-role-name")
-    @ApiOperation(value = "Check role name", notes = "To ensure the uniqueness of name of role")
+    @ApiOperation(value = "/check-role-name", notes = "To ensure the uniqueness of name of role")
     public ResponseBodyBean checkRoleName(@Valid @RequestBody CheckRoleNamePLO plo) {
         plo.setName(roleService.handleRoleName(plo.getName()));
         RolePO po = new RolePO();
@@ -65,7 +65,7 @@ public class RoleController {
     }
 
     @PostMapping("/create-role")
-    @ApiOperation(value = "Create a role", notes = "Create a role")
+    @ApiOperation(value = "/create-role", notes = "Create a role")
     public ResponseBodyBean createRole(@Valid @RequestBody CreateRolePLO plo) {
         plo.setName(roleService.handleRoleName(plo.getName()));
         RolePO po = new RolePO();
@@ -77,7 +77,7 @@ public class RoleController {
     }
 
     @GetMapping("/search-role")
-    @ApiOperation(value = "Search role", notes = "Search role by name")
+    @ApiOperation(value = "/search-role", notes = "Search role by name")
     public ResponseBodyBean searchRole(String roleName) {
         if (StringUtils.isBlank(roleName)) {
             return ResponseBodyBean.ofFailure("The name of role is not blank");
@@ -93,7 +93,7 @@ public class RoleController {
     }
 
     @PostMapping("/edit-role")
-    @ApiOperation(value = "Edit role", notes = "Edit role")
+    @ApiOperation(value = "/edit-role", notes = "Edit role")
     public ResponseBodyBean editRole(@Valid @RequestBody EditRolePLO plo) {
         RolePO po = new RolePO();
         BeanUtil.copyProperties(plo, po);
