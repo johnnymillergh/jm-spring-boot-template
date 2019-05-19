@@ -24,10 +24,10 @@ public interface RoleService {
     /**
      * Check the uniqueness of name of role
      *
-     * @param roleName name of role
+     * @param po persistence object
      * @return true - available; false - not available
      */
-    boolean checkRoleName(String roleName);
+    boolean checkRoleName(RolePO po);
 
     /**
      * Insert a role
@@ -52,4 +52,12 @@ public interface RoleService {
      * @return role
      */
     RolePO searchRole(String roleName);
+
+    /**
+     * Update role
+     *
+     * @param po persistence object
+     * @return true - update successfully; false - update failure
+     */
+    boolean updateRole(RolePO po);
 }

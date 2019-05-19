@@ -38,10 +38,10 @@ public interface RoleMapper extends BaseMapper<RolePO> {
     /**
      * Check role name's uniqueness
      *
-     * @param roleName name of role
+     * @param po persistence object
      * @return the occurrence of the name of role
      */
-    Integer checkRoleName(String roleName);
+    Integer checkRoleName(RolePO po);
 
     /**
      * Insert role
@@ -58,4 +58,12 @@ public interface RoleMapper extends BaseMapper<RolePO> {
      * @return role
      */
     RolePO selectRoleByName(String name);
+
+    /**
+     * Update role by ID
+     *
+     * @param po persistence object
+     * @return affected row
+     */
+    int updateRoleById(RolePO po);
 }

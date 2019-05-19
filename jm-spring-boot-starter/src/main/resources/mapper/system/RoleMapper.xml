@@ -25,7 +25,14 @@
     <select id="checkRoleName" resultType="java.lang.Integer">
         SELECT count(1)
         FROM t_role tr
-        WHERE tr.name = #{roleName}
+        <where>
+            <if test="id != null">
+                tr.id != #{id} AND tr.name = #{name}
+            </if>
+            <if test="id == null">
+                AND tr.name = #{name}
+            </if>
+        </where>
     </select>
 
     <insert id="insertRole" useGeneratedKeys="true" keyProperty="id">
@@ -43,4 +50,12 @@
         FROM t_role tr
         WHERE tr.name = #{name}
     </select>
+
+    <update id="updateRoleById">
+        UPDATE t_role tr
+        SET tr.name         = #{name},
+            tr.description  = #{description},
+            tr.gmt_modified = now()
+        WHERE tr.id = #{id}
+    </update>
 </mapper>

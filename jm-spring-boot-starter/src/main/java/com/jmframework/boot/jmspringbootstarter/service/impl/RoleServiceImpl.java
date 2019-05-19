@@ -31,8 +31,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public boolean checkRoleName(String roleName) {
-        return roleMapper.checkRoleName(roleName) == 0;
+    public boolean checkRoleName(RolePO po) {
+        return roleMapper.checkRoleName(po) == 0;
     }
 
     @Override
@@ -49,5 +49,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RolePO searchRole(String roleName) {
         return roleMapper.selectRoleByName(roleName);
+    }
+
+    @Override
+    public boolean updateRole(RolePO po) {
+        return roleMapper.updateRoleById(po) == 1;
     }
 }

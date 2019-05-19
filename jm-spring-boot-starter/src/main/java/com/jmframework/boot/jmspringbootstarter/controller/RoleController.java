@@ -2,7 +2,9 @@ package com.jmframework.boot.jmspringbootstarter.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.CheckRoleNamePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.CreateRolePLO;
+import com.jmframework.boot.jmspringbootstarter.domain.payload.EditRolePLO;
 import com.jmframework.boot.jmspringbootstarter.domain.payload.GetRoleListPLO;
 import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarter.domain.response.GetRoleListRO;
@@ -50,14 +52,13 @@ public class RoleController {
         return ResponseBodyBean.ofSuccess(roList);
     }
 
-    @GetMapping("/check-role-name")
+    @PostMapping("/check-role-name")
     @ApiOperation(value = "Check role name", notes = "To ensure the uniqueness of name of role")
-    public ResponseBodyBean checkRoleName(String roleName) {
-        if (StringUtils.isBlank(roleName)) {
-            return ResponseBodyBean.ofFailure("name of role is not blank");
-        }
-        roleName = roleService.handleRoleName(roleName);
-        if (roleService.checkRoleName(roleName)) {
+    public ResponseBodyBean checkRoleName(@Valid @RequestBody CheckRoleNamePLO plo) {
+        plo.setName(roleService.handleRoleName(plo.getName()));
+        RolePO po = new RolePO();
+        BeanUtil.copyProperties(plo, po);
+        if (roleService.checkRoleName(po)) {
             return ResponseBodyBean.ofSuccess("Tne name of role is available");
         }
         return ResponseBodyBean.ofFailure("Tne name of role is not available");
@@ -89,5 +90,16 @@ public class RoleController {
         SearchRoleRO ro = new SearchRoleRO();
         BeanUtil.copyProperties(po, ro);
         return ResponseBodyBean.ofSuccess(ro);
+    }
+
+    @PostMapping("/edit-role")
+    public ResponseBodyBean editRole(@Valid @RequestBody EditRolePLO plo) {
+        RolePO po = new RolePO();
+        BeanUtil.copyProperties(plo, po);
+        boolean status = roleService.updateRole(po);
+        if (status) {
+            return ResponseBodyBean.ofSuccess(String.format("Role updated (%s)", plo.getName()));
+        }
+        return ResponseBodyBean.ofFailure(String.format("Update failure (%s)", plo.getName()));
     }
 }
