@@ -1,10 +1,10 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.GetRoleListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
+import com.jmframework.boot.jmspringbootstarterdomain.role.payload.GetRoleListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 

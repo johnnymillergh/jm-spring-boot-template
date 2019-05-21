@@ -49,6 +49,7 @@
     <modules>
         <module>jm-spring-boot-sample</module>
         <module>jm-spring-boot-starter</module>
+        <module>jm-spring-boot-starter-domain</module>
     </modules>
 
     <properties>
@@ -100,6 +101,11 @@
             <dependency>
                 <groupId>com.jmframework.boot</groupId>
                 <artifactId>jm-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jmframework.boot</groupId>
+                <artifactId>jm-spring-boot-starter-domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

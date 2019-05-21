@@ -1,10 +1,10 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
-import com.jmframework.boot.jmspringbootstarter.constant.ApiStatus;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.ApiStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.SetApiInUsePLO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

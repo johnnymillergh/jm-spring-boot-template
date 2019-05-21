@@ -1,14 +1,14 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
-import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
-import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
 import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
+import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

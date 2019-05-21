@@ -1,15 +1,15 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
-import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
-import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.LoginPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.RegisterPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
-import com.jmframework.boot.jmspringbootstarter.domain.response.JwtRO;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.AuthService;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
+import com.jmframework.boot.jmspringbootstarterdomain.auth.payload.LoginPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.auth.payload.RegisterPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.response.JwtRO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

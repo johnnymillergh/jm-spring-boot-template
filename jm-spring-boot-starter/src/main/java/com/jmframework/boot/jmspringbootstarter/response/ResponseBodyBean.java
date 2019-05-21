@@ -1,11 +1,11 @@
 package com.jmframework.boot.jmspringbootstarter.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jmframework.boot.jmspringbootstarter.constant.IUniversalStatus;
-import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.controller.ExceptionControllerAdvice;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.IUniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
 
 import java.io.Serializable;
 import java.util.Date;

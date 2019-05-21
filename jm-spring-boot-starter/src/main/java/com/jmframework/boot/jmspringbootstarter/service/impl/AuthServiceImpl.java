@@ -1,8 +1,8 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.AuthService;
+import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

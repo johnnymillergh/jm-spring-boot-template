@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.configuration;
 
-import com.jmframework.boot.jmspringbootstarter.constant.ProjectProperty;
+import com.jmframework.boot.jmspringbootstarter.common.constant.ProjectProperty;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.context.WebServerInitializedEvent;

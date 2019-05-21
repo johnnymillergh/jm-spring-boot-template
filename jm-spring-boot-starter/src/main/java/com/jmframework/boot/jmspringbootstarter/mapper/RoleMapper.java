@@ -2,8 +2,8 @@ package com.jmframework.boot.jmspringbootstarter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.GetRoleListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.payload.GetRoleListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

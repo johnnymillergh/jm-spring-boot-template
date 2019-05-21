@@ -1,7 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.exception;
 
-import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

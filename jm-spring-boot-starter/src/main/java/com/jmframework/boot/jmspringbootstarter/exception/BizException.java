@@ -1,8 +1,8 @@
 package com.jmframework.boot.jmspringbootstarter.exception;
 
-import com.jmframework.boot.jmspringbootstarter.constant.IUniversalStatus;
-import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.IUniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
 
 /**
  * Description: BizException, change description here.

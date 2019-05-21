@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 
 /**
  * Description: AuthService, change description here.

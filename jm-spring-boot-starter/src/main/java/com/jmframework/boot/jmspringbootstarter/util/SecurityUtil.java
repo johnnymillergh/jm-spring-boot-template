@@ -1,8 +1,8 @@
 package com.jmframework.boot.jmspringbootstarter.util;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.jmframework.boot.jmspringbootstarter.constant.Constants;
-import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;
+import com.jmframework.boot.jmspringbootstarter.common.constant.Constants;
+import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 

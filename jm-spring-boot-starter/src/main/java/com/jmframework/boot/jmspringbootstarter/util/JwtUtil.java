@@ -2,11 +2,11 @@ package com.jmframework.boot.jmspringbootstarter.util;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.jmframework.boot.jmspringbootstarter.common.constant.Constants;
 import com.jmframework.boot.jmspringbootstarter.configuration.JwtConfiguration;
-import com.jmframework.boot.jmspringbootstarter.constant.Constants;
-import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
-import com.jmframework.boot.jmspringbootstarter.domain.UserPrincipal;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
+import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

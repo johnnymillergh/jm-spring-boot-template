@@ -1,9 +1,9 @@
 package com.jmframework.boot.jmspringbootsample.demo.controller;
 
-import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;

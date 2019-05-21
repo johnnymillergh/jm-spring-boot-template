@@ -1,7 +1,7 @@
 package com.jmframework.boot.jmspringbootsample;
 
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
+import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

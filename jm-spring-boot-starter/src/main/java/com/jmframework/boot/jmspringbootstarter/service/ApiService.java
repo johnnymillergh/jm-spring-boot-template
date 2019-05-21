@@ -1,11 +1,11 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
-import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.SetApiInUsePLO;
-import com.jmframework.boot.jmspringbootstarter.domain.response.ApiAnalysisRO;
-import com.jmframework.boot.jmspringbootstarter.domain.response.ApiControllerRO;
-import com.jmframework.boot.jmspringbootstarter.domain.response.ApiRO;
-import com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.SetApiInUsePLO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiAnalysisRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiControllerRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 
 import java.util.List;
 

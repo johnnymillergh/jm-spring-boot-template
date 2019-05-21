@@ -1,9 +1,9 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
-import com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 
 import java.util.List;
 

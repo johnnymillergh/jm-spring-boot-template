@@ -5,7 +5,8 @@
 
     <artifactId>jm-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
-    <description>Demo project for Spring Boot</description>
+    <name>JM Spring Boot Starter</name>
+    <description>JM Spring Boot Starter</description>
     <url>https://github.com/johnnymillergh/SpringBootTemplate</url>
     <inceptionYear>2019</inceptionYear>
     <organization>
@@ -40,4 +41,16 @@
         <version>2.0.2.SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
+
+    <build>
+        <!-- set the name of .jar file -->
+        <finalName>${parent.artifactId}-${envAlias}-${version}</finalName>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.jmframework.boot</groupId>
+            <artifactId>jm-spring-boot-starter-domain</artifactId>
+        </dependency>
+    </dependencies>
 </project>

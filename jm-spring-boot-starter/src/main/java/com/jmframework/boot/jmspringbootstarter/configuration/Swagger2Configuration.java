@@ -1,7 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.jmframework.boot.jmspringbootstarter.constant.ProjectProperty;
+import com.jmframework.boot.jmspringbootstarter.common.constant.ProjectProperty;
 import org.apache.maven.model.Developer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

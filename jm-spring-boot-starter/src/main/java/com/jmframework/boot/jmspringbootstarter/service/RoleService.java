@@ -1,7 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
-import com.jmframework.boot.jmspringbootstarter.domain.payload.GetRoleListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.payload.GetRoleListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 
 import java.util.List;
 

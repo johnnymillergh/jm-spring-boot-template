@@ -1,16 +1,16 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.jmframework.boot.jmspringbootstarter.constant.UniversalStatus;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.CheckRoleNamePLO;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.CreateRolePLO;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.EditRolePLO;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.GetRoleListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.RolePO;
-import com.jmframework.boot.jmspringbootstarter.domain.response.GetRoleListRO;
-import com.jmframework.boot.jmspringbootstarter.domain.response.SearchRoleRO;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.role.payload.CheckRoleNamePLO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.payload.CreateRolePLO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.payload.EditRolePLO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.payload.GetRoleListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.response.GetRoleListRO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.response.SearchRoleRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

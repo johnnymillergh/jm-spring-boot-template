@@ -6,7 +6,7 @@
         VALUES (#{url}, #{description}, #{type}, #{method}, now(), now())
     </insert>
 
-    <select id="selectByRoleIdList" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO">
+    <select id="selectByRoleIdList" resultType="com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO">
         SELECT DISTINCT tp.id,
                         tp.url,
                         tp.description,
@@ -27,7 +27,7 @@
         </foreach>
     </select>
 
-    <select id="selectApiByUrl" resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO">
+    <select id="selectApiByUrl" resultType="com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO">
         SELECT *
         FROM t_permission tp
         WHERE tp.url = #{urlPrefix}
@@ -35,7 +35,7 @@
     </select>
 
     <select id="selectApisByUrlPrefix"
-            resultType="com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO">
+            resultType="com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO">
         SELECT *
         FROM t_permission tp
         WHERE tp.url LIKE concat(#{urlPrefix}, '%')
@@ -43,7 +43,7 @@
     </select>
 
     <select id="queryApiList"
-            resultType="com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO">
+            resultType="com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO">
         SELECT tp.id,
                tp.url,
                tp.description,

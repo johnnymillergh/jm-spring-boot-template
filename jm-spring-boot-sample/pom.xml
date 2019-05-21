@@ -5,6 +5,8 @@
 
     <artifactId>jm-spring-boot-sample</artifactId>
     <packaging>jar</packaging>
+    <name>JM Spring Boot Sample</name>
+    <description>JM Spring Boot Sample</description>
 
     <parent>
         <groupId>com.jmframework.boot</groupId>

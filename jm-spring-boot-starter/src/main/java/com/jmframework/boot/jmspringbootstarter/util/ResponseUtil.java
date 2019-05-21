@@ -1,9 +1,9 @@
 package com.jmframework.boot.jmspringbootstarter.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmframework.boot.jmspringbootstarter.constant.IUniversalStatus;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.IUniversalStatus;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;

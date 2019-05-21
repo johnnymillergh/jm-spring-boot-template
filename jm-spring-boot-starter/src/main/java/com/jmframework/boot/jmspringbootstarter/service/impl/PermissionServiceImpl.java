@@ -4,11 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jmframework.boot.jmspringbootstarter.domain.payload.GetApiListPLO;
-import com.jmframework.boot.jmspringbootstarter.domain.persistence.PermissionPO;
-import com.jmframework.boot.jmspringbootstarter.domain.response.GetApiListRO;
 import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
