@@ -44,6 +44,11 @@ public class ConnectorConfiguration {
         connector.setPort(80);
         connector.setSecure(false);
         connector.setRedirectPort(serverConfiguration.getServerPort());
+        // FIXME: Following setProperty() method may solve the problem:
+        //  error parsing HTTP request header. Note: further occurrences of HTTP request parsing errors will be
+        //  logged at DEBUG level.
+        //  Invalid character found in the request target. The valid characters are defined in RFC 7230 and RFC 3986
+        connector.setProperty("relaxedQueryChars", "|{}[]");
         return connector;
     }
 
