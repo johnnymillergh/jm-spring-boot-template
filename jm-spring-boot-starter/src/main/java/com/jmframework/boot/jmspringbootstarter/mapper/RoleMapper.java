@@ -2,7 +2,6 @@ package com.jmframework.boot.jmspringbootstarter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jmframework.boot.jmspringbootstarterdomain.role.payload.GetRoleListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -29,11 +28,10 @@ public interface RoleMapper extends BaseMapper<RolePO> {
     /**
      * Select page list
      *
-     * @param page           page
-     * @param getRoleListPLO persistence object
+     * @param page page object
      * @return role page list
      */
-    List<RolePO> selectPageList(Page page, GetRoleListPLO getRoleListPLO);
+    List<RolePO> selectPageList(Page page);
 
     /**
      * Check role name's uniqueness

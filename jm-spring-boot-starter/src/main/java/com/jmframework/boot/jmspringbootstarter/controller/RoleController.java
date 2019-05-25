@@ -1,6 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
@@ -42,7 +43,8 @@ public class RoleController {
     @PostMapping("/get-list")
     @ApiOperation(value = "/get-list", notes = "Get role page list")
     public ResponseBodyBean getList(@Valid @RequestBody GetRoleListPLO plo) {
-        List<RolePO> poList = roleService.getList(plo);
+        Page<RolePO> page = new Page<>(plo.getCurrentPage(), plo.getPageSize());
+        List<RolePO> poList = roleService.getList(page);
         List<GetRoleListRO> roList = new ArrayList<>();
         poList.forEach(item -> {
             GetRoleListRO ro = new GetRoleListRO();
