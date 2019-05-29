@@ -1,15 +1,22 @@
 package com.jmframework.boot.jmspringbootstarterdomain.permission.constant;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * Description: PermissionType, change description here.
+ * <h1>PermissionType</h1>
+ * <p>Change description here</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
- * @date 2019-03-23 18:59
+ * @date 2019-05-25 10:24
  **/
+@Slf4j
 @Getter
 public enum PermissionType {
+    /**
+     * Controller
+     */
+    CONTROLLER(0, "Controller"),
     /**
      * Page
      */
@@ -17,7 +24,7 @@ public enum PermissionType {
     /**
      * Button
      */
-    BUTTON(2, "Button");
+    BUTTON(2, "Button (API)");
 
     private Integer type;
     private String description;
@@ -25,5 +32,31 @@ public enum PermissionType {
     PermissionType(Integer type, String description) {
         this.type = type;
         this.description = description;
+    }
+
+    public static PermissionType getByType(Integer type) {
+        PermissionType permissionType = null;
+        PermissionType[] values = PermissionType.values();
+        for (PermissionType pt : values) {
+            if (pt.getType().equals(type)) {
+                permissionType = pt;
+            }
+        }
+        return permissionType;
+    }
+
+    /**
+     * Get enum by name
+     *
+     * @param name enum name
+     * @return enum
+     */
+    public static PermissionType getByName(String name) {
+        try {
+            return PermissionType.valueOf(name);
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid enum name: {}", name, e);
+            return null;
+        }
     }
 }

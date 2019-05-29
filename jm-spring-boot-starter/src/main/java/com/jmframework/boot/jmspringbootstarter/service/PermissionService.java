@@ -1,6 +1,5 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
@@ -13,7 +12,7 @@ import java.util.List;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-05-10 20:45
  **/
-public interface PermissionService extends IService<PermissionPO> {
+public interface PermissionService {
     /**
      * Save permissionPO
      *

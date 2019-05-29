@@ -65,10 +65,10 @@ public class ApiServiceImpl implements ApiService {
             controllerMap.put(String.valueOf(entry.getValue().getBean()), entry.getValue().getBeanType());
         }
         for (Map.Entry<String, Class> entry : controllerMap.entrySet()) {
-            ApiControllerRO.ApiControllerSubclass apiControllerSubclass = new ApiControllerRO.ApiControllerSubclass();
-            apiControllerSubclass.setClassName(entry.getValue().getSimpleName());
-            apiControllerSubclass.setPackageName(entry.getValue().getPackage().getName());
-            apiControllerRO.getControllerList().add(apiControllerSubclass);
+            ApiControllerRO.Controller controller = new ApiControllerRO.Controller();
+            controller.setClassName(entry.getValue().getSimpleName());
+            controller.setPackageName(entry.getValue().getPackage().getName());
+            apiControllerRO.getControllerList().add(controller);
         }
         return apiControllerRO;
     }
@@ -92,7 +92,7 @@ public class ApiServiceImpl implements ApiService {
         if (StringUtils.isBlank(classFullName)) {
             // Query API statistics of global scope.
             ApiControllerRO apiControllerRO = this.getAllControllerClass();
-            for (ApiControllerRO.ApiControllerSubclass acs : apiControllerRO.getControllerList()) {
+            for (ApiControllerRO.Controller acs : apiControllerRO.getControllerList()) {
                 String clazzFullName = acs.getPackageName() + "." + acs.getClassName();
                 ApiRO apiRO = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USE.getStatus());
                 apiAnalysisRO.appendIdledApiCount(apiRO.getIdledApiCount());
