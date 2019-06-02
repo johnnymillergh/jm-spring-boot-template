@@ -7,7 +7,7 @@ import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.auth.payload.LoginPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.auth.payload.RegisterPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.common.response.JwtRO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import io.swagger.annotations.Api;
@@ -56,8 +56,8 @@ public class AuthController {
     @ApiOperation(value = "/check-username-uniqueness", notes = "Check username uniqueness")
     public ResponseBodyBean checkUsernameUniqueness(String username) {
         if (StringUtils.isBlank(username)) {
-            return ResponseBodyBean.setResponse(UniversalStatus.PARAM_INVALID.getCode(),
-                                                UniversalStatus.PARAM_INVALID.getMessage(),
+            return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
+                                                HttpStatus.PARAM_INVALID.getMessage(),
                                                 null);
         }
         if (authService.checkUsernameUniqueness(username)) {
@@ -70,8 +70,8 @@ public class AuthController {
     @ApiOperation(value = "/check-email-uniqueness", notes = "Check email uniqueness")
     public ResponseBodyBean checkEmailUniqueness(String email) {
         if (StringUtils.isBlank(email)) {
-            return ResponseBodyBean.setResponse(UniversalStatus.PARAM_INVALID.getCode(),
-                                                UniversalStatus.PARAM_INVALID.getMessage(),
+            return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
+                                                HttpStatus.PARAM_INVALID.getMessage(),
                                                 null);
         }
         if (authService.checkEmailUniqueness(email)) {
@@ -124,7 +124,7 @@ public class AuthController {
         try {
             jwtUtil.invalidateJWT(request);
         } catch (SecurityException e) {
-            throw new SecurityException(UniversalStatus.UNAUTHORIZED);
+            throw new SecurityException(HttpStatus.UNAUTHORIZED);
         }
         return ResponseBodyBean.ofSuccess("Logout success.");
     }

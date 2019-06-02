@@ -1,7 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.exception.base;
 
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.IUniversalStatus;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,20 +19,20 @@ public class BaseException extends RuntimeException {
     /**
      * Code is REQUIRED. Default code is 464.
      */
-    private Integer code = UniversalStatus.FAILURE.getCode();
+    private Integer code = HttpStatus.FAILURE.getCode();
     /**
      * Message is REQUIRED. Default message is: Error. A generic status for an error in the server itself.
      */
     private String message;
     private Object data;
 
-    public BaseException(UniversalStatus universalStatus) {
-        this.code = universalStatus.getCode();
-        this.message = universalStatus.getMessage();
+    public BaseException(HttpStatus httpStatus) {
+        this.code = httpStatus.getCode();
+        this.message = httpStatus.getMessage();
     }
 
-    public BaseException(UniversalStatus universalStatus, Object data) {
-        this(universalStatus);
+    public BaseException(HttpStatus httpStatus, Object data) {
+        this(httpStatus);
         this.data = data;
     }
 
@@ -46,8 +46,8 @@ public class BaseException extends RuntimeException {
         this.data = data;
     }
 
-    public BaseException(UniversalStatus universalStatus, String message) {
-        this(universalStatus);
+    public BaseException(HttpStatus httpStatus, String message) {
+        this(httpStatus);
         this.message = message;
     }
 

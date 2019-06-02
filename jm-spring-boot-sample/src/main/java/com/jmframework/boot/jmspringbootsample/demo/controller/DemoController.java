@@ -3,10 +3,9 @@ package com.jmframework.boot.jmspringbootsample.demo.controller;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +39,7 @@ public class DemoController {
         Claims claims = jwtUtil.parseJWT(jwtString);
         resultMap.put("jwtString", jwtString);
         resultMap.put("claims", claims);
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setStatus(org.springframework.http.HttpStatus.BAD_REQUEST.value());
         return ResponseBodyBean.ofFailure(resultMap);
     }
 
@@ -54,12 +53,12 @@ public class DemoController {
             case 2:
                 return ResponseBodyBean.ofFailure("Test error message");
             case 3:
-                return ResponseBodyBean.setResponse(UniversalStatus.FAILURE.getCode(),
-                                                    UniversalStatus.FAILURE.getMessage(),
+                return ResponseBodyBean.setResponse(HttpStatus.FAILURE.getCode(),
+                                                    HttpStatus.FAILURE.getMessage(),
                                                     null);
             case 4:
-                return ResponseBodyBean.setResponse(UniversalStatus.WARNING.getCode(),
-                                                    UniversalStatus.WARNING.getMessage(),
+                return ResponseBodyBean.setResponse(HttpStatus.WARNING.getCode(),
+                                                    HttpStatus.WARNING.getMessage(),
                                                     null);
             case 5:
                 return ResponseBodyBean.ofException(new BizException("Respond a exception"));

@@ -10,7 +10,7 @@ import com.jmframework.boot.jmspringbootstarter.service.impl.CustomUserDetailsSe
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarter.util.RequestUtil;
 import com.jmframework.boot.jmspringbootstarter.util.ResponseUtil;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -89,7 +89,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 ResponseUtil.renderJson(response, e);
             }
         } else {
-            ResponseUtil.renderJson(response, UniversalStatus.UNAUTHORIZED, null);
+            ResponseUtil.renderJson(response, HttpStatus.UNAUTHORIZED, null);
         }
 
     }

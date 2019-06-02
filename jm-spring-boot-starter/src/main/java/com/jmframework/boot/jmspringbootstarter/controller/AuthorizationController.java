@@ -9,7 +9,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.GetP
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.GetRolesPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.GetPermissionsRO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.GetRolesRO;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.PermissionType;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import io.swagger.annotations.Api;
@@ -64,8 +64,8 @@ public class AuthorizationController {
         if (PermissionType.BUTTON.getType().equals(plo.getPermissionType())) {
             return ResponseBodyBean.ofSuccess(authorizationService.getPermissions(plo.getControllerFullClassName()));
         }
-        return ResponseBodyBean.setResponse(UniversalStatus.PARAM_INVALID.getCode(),
-                                            UniversalStatus.PARAM_INVALID.getMessage(),
+        return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
+                                            HttpStatus.PARAM_INVALID.getMessage(),
                                             null);
     }
 

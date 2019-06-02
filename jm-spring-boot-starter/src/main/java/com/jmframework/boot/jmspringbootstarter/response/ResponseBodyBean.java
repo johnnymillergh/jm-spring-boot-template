@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jmframework.boot.jmspringbootstarter.controller.ExceptionControllerAdvice;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.IUniversalStatus;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -72,7 +72,7 @@ public class ResponseBodyBean<T> implements Serializable {
     }
 
     /**
-     * <p>Highly customizable response. Status might be any UniversalStatus&#39; code value.</p>
+     * <p>Highly customizable response. Status might be any HttpStatus&#39; code value.</p>
      * <p><strong>ATTENTION:</strong></p>
      * <p>This method CANNOT be used by controller or service or other class, only provided for Exception controller
      * .</p>
@@ -89,7 +89,7 @@ public class ResponseBodyBean<T> implements Serializable {
     }
 
     /**
-     * <p>Highly customizable response. Status might be any UniversalStatus&#39; code value. </p>
+     * <p>Highly customizable response. Status might be any HttpStatus&#39; code value. </p>
      * <p><strong>ATTENTION:</strong></p>
      * <p>This method CANNOT be used in ExceptionControllerAdvice.</p>
      *
@@ -99,7 +99,7 @@ public class ResponseBodyBean<T> implements Serializable {
      * @return response body
      */
     public static <T> ResponseBodyBean<T> setResponse(Integer status, String message, T data) {
-        if (!UniversalStatus.OK.getCode().equals(status)) {
+        if (!HttpStatus.OK.getCode().equals(status)) {
             throw new BaseException(status, message, data);
         }
         return ResponseBodyBean.<T>builder().timestamp(new Date()).status(status).message(message).data(data).build();
@@ -113,7 +113,7 @@ public class ResponseBodyBean<T> implements Serializable {
      */
     public static <T> ResponseBodyBean<T> ofData(T data) {
         return ResponseBodyBean.<T>builder().timestamp(new Date())
-                                            .status(UniversalStatus.OK.getCode())
+                                            .status(HttpStatus.OK.getCode())
                                             .data(data)
                                             .build();
     }
@@ -126,7 +126,7 @@ public class ResponseBodyBean<T> implements Serializable {
      */
     public static <T> ResponseBodyBean<T> ofMessage(String message) {
         return ResponseBodyBean.<T>builder().timestamp(new Date())
-                                            .status(UniversalStatus.OK.getCode())
+                                            .status(HttpStatus.OK.getCode())
                                             .message(message)
                                             .build();
     }
@@ -140,7 +140,7 @@ public class ResponseBodyBean<T> implements Serializable {
      */
     public static <T> ResponseBodyBean<T> ofDataAndMessage(T data, String message) {
         return ResponseBodyBean.<T>builder().timestamp(new Date())
-                                            .status(UniversalStatus.OK.getCode())
+                                            .status(HttpStatus.OK.getCode())
                                             .data(data)
                                             .message(message)
                                             .build();
@@ -154,7 +154,7 @@ public class ResponseBodyBean<T> implements Serializable {
      */
     public static <T> ResponseBodyBean<T> ofSuccess(T data) {
         return ResponseBodyBean.<T>builder().timestamp(new Date())
-                                            .status(UniversalStatus.OK.getCode())
+                                            .status(HttpStatus.OK.getCode())
                                             .data(data)
                                             .build();
     }
@@ -167,7 +167,7 @@ public class ResponseBodyBean<T> implements Serializable {
      */
     public static <T> ResponseBodyBean<T> ofSuccess(String message) {
         return ResponseBodyBean.<T>builder().timestamp(new Date())
-                                            .status(UniversalStatus.OK.getCode())
+                                            .status(HttpStatus.OK.getCode())
                                             .message(message)
                                             .build();
     }
@@ -181,7 +181,7 @@ public class ResponseBodyBean<T> implements Serializable {
      */
     public static <T> ResponseBodyBean<T> ofSuccess(T data, String message) {
         return ResponseBodyBean.<T>builder().timestamp(new Date())
-                                            .status(UniversalStatus.OK.getCode())
+                                            .status(HttpStatus.OK.getCode())
                                             .data(data)
                                             .message(message)
                                             .build();
@@ -224,7 +224,7 @@ public class ResponseBodyBean<T> implements Serializable {
      * @return response body
      */
     public static <T> ResponseBodyBean<T> ofError() {
-        return setResponse(UniversalStatus.ERROR.getCode(), UniversalStatus.ERROR.getMessage(), null);
+        return setResponse(HttpStatus.ERROR.getCode(), HttpStatus.ERROR.getMessage(), null);
     }
 
     /**

@@ -52,7 +52,7 @@ public class ApiServiceImpl implements ApiService {
 
     @Override
     public ApiControllerRO getAllControllerClass() {
-        ApiControllerRO apiControllerRO = new ApiControllerRO();
+        ApiControllerRO ro = new ApiControllerRO();
         // getBean(Class) method may throw an exception due to 2 beans are the same type.
         // Exception message: expected single matching bean but found 2: swagger2ControllerMapping,
         // requestMappingHandlerMapping
@@ -68,9 +68,9 @@ public class ApiServiceImpl implements ApiService {
             ApiControllerRO.Controller controller = new ApiControllerRO.Controller();
             controller.setClassName(entry.getValue().getSimpleName());
             controller.setPackageName(entry.getValue().getPackage().getName());
-            apiControllerRO.getControllerList().add(controller);
+            ro.getControllerList().add(controller);
         }
-        return apiControllerRO;
+        return ro;
     }
 
     @Override

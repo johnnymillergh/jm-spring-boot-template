@@ -10,7 +10,7 @@ import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
 import com.jmframework.boot.jmspringbootstarter.service.RbacAuthorityService;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.PermissionType;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
@@ -126,14 +126,14 @@ public class RbacAuthorityServiceImpl implements RbacAuthorityService {
             if (antPathMatcher.matches(request)) {
                 if (!urlMapping.get(uri)
                                .contains(currentMethod)) {
-                    throw new SecurityException(UniversalStatus.METHOD_NOT_ALLOWED);
+                    throw new SecurityException(HttpStatus.METHOD_NOT_ALLOWED);
                 } else {
                     return;
                 }
             }
         }
 
-        throw new SecurityException(UniversalStatus.NOT_FOUND);
+        throw new SecurityException(HttpStatus.NOT_FOUND);
     }
 
     /**

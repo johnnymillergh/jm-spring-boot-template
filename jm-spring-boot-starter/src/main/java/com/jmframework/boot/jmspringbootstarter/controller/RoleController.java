@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.role.payload.CheckRoleNamePLO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.payload.CreateRolePLO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.payload.EditRolePLO;
@@ -86,7 +86,7 @@ public class RoleController {
         roleName = roleService.handleRoleName(roleName);
         RolePO po = roleService.searchRole(roleName);
         if (po == null) {
-            return ResponseBodyBean.setResponse(UniversalStatus.WARNING.getCode(), "No result", null);
+            return ResponseBodyBean.setResponse(HttpStatus.WARNING.getCode(), "No result", null);
         }
         SearchRoleRO ro = new SearchRoleRO();
         BeanUtil.copyProperties(po, ro);

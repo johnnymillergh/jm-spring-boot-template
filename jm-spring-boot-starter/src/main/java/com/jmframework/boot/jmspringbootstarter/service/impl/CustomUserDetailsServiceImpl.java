@@ -5,7 +5,7 @@ import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
@@ -47,7 +47,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
                                   .orElseThrow(() -> new UsernameNotFoundException("User not found: " + usernameOrEmailOrPhone));
         List<RolePO> rolePOList = roleMapper.selectByUserId(userPO.getId());
         if (CollectionUtils.isEmpty(rolePOList)) {
-            throw new SecurityException(UniversalStatus.ROLE_NOT_FOUND);
+            throw new SecurityException(HttpStatus.ROLE_NOT_FOUND);
         }
         List<Long> roleIds = rolePOList.stream()
                                        .map(RolePO::getId)

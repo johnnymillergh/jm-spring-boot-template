@@ -1,7 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.exception;
 
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,11 +16,11 @@ import lombok.EqualsAndHashCode;
 public class SecurityException extends BaseException {
     private static final long serialVersionUID = -767157443094687237L;
 
-    public SecurityException(UniversalStatus universalStatus) {
-        super(universalStatus);
+    public SecurityException(HttpStatus httpStatus) {
+        super(httpStatus);
     }
 
-    public SecurityException(UniversalStatus universalStatus, Object data) {
-        super(universalStatus, data);
+    public SecurityException(HttpStatus httpStatus, Object data) {
+        super(httpStatus, data);
     }
 }
