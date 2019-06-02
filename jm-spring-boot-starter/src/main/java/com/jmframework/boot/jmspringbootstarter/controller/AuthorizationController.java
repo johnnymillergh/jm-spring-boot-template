@@ -7,6 +7,7 @@ import com.jmframework.boot.jmspringbootstarter.service.AuthorizationService;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.GetPermissionsPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.GetRolesPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.SubmitAuthorizationPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.GetPermissionsRO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.GetRolesRO;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
@@ -67,6 +68,15 @@ public class AuthorizationController {
         return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
                                             HttpStatus.PARAM_INVALID.getMessage(),
                                             null);
+    }
+
+    @PostMapping("/submit-authorization")
+    @ApiOperation(value = "/submit-authorization", notes = "Submit to authorize permissions to roles")
+    public ResponseBodyBean submitAuthorization(@Valid @RequestBody SubmitAuthorizationPLO plo) {
+        if (authorizationService.authorizePermission(plo)) {
+            return ResponseBodyBean.ofSuccess("Authorization done.");
+        }
+        return ResponseBodyBean.ofFailure("Authorization failed.");
     }
 
     // TODO: need API to query permissions that has been authorized to role

@@ -2,15 +2,20 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
+import com.jmframework.boot.jmspringbootstarter.mapper.RolePermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.service.AuthorizationService;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
+import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.SubmitAuthorizationPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.GetPermissionsRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePermissionPO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,9 +29,11 @@ import java.util.List;
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
     private final PermissionService permissionService;
+    private final RolePermissionMapper rolePermissionMapper;
 
-    public AuthorizationServiceImpl(PermissionService permissionService) {
+    public AuthorizationServiceImpl(PermissionService permissionService, RolePermissionMapper rolePermissionMapper) {
         this.permissionService = permissionService;
+        this.rolePermissionMapper = rolePermissionMapper;
     }
 
     @Override
@@ -51,6 +58,27 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             ro.getControllerList().add(controller);
         }
         return ro;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public boolean authorizePermission(SubmitAuthorizationPLO plo) {
+        RolePermissionPO po = new RolePermissionPO();
+        for (Long roleId : plo.getRoleIdList()) {
+            po.setRoleId(roleId);
+            rolePermissionMapper.deleteByRoleId(po);
+        }
+        List<RolePermissionPO> poList = new ArrayList<>();
+        for (Long roleId : plo.getRoleIdList()) {
+            for (Long permissionId : plo.getPermissionIdList()) {
+                po = new RolePermissionPO();
+                po.setRoleId(roleId);
+                po.setPermissionId(permissionId);
+                poList.add(po);
+            }
+        }
+        Integer affectedRows = rolePermissionMapper.insertBatch(poList);
+        return affectedRows > 0;
     }
 
     private List<PermissionPO> getPermissionsByControllerFullClassName(String controllerFullClassName) {
