@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
-import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -57,5 +56,5 @@ public interface PermissionMapper extends BaseMapper<PermissionPO> {
      *
      * @return API list
      */
-    IPage<GetApiListRO> queryApiList(Page page, GetApiListPLO getApiListPLO);
+    IPage<PermissionPO> queryApiList(Page page, GetApiListPLO getApiListPLO);
 }

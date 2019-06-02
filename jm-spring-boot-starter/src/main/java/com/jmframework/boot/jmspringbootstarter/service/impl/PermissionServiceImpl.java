@@ -5,7 +5,6 @@ import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
-import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +46,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<GetApiListRO> queryApiList(GetApiListPLO getApiListPLO) {
+    public List<PermissionPO> queryApiList(GetApiListPLO getApiListPLO) {
         return permissionMapper.queryApiList(new Page(getApiListPLO.getCurrentPage(), getApiListPLO.getPageSize()),
                                              getApiListPLO).getRecords();
     }

@@ -2,7 +2,9 @@ package com.jmframework.boot.jmspringbootstarterdomain.authorization.response;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <h1>GetRolesRO</h1>
@@ -13,24 +15,29 @@ import java.util.Date;
  **/
 @Data
 public class GetRolesRO {
-    /**
-     * Primary key
-     */
-    private Long id;
-    /**
-     * Role name
-     */
-    private String name;
-    /**
-     * Role description
-     */
-    private String description;
-    /**
-     * Create time
-     */
-    private Date gmtCreated;
-    /**
-     * Modify time
-     */
-    private Date gmtModified;
+    private List<RoleROBean> roleList = new ArrayList<>();
+
+    @Data
+    public static final class RoleROBean {
+        /**
+         * Primary key
+         */
+        private Long id;
+        /**
+         * Role name
+         */
+        private String name;
+        /**
+         * Role description
+         */
+        private String description;
+        /**
+         * Create time
+         */
+        private Date gmtCreated;
+        /**
+         * Modify time
+         */
+        private Date gmtModified;
+    }
 }

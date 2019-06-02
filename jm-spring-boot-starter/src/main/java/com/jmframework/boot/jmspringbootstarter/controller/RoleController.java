@@ -19,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,16 +41,16 @@ public class RoleController {
 
     @PostMapping("/get-list")
     @ApiOperation(value = "/get-list", notes = "Get role page list")
-    public ResponseBodyBean getList(@Valid @RequestBody GetRoleListPLO plo) {
+    public ResponseBodyBean<GetRoleListRO> getList(@Valid @RequestBody GetRoleListPLO plo) {
         Page<RolePO> page = new Page<>(plo.getCurrentPage(), plo.getPageSize());
         List<RolePO> poList = roleService.getList(page);
-        List<GetRoleListRO> roList = new ArrayList<>();
+        GetRoleListRO ro = new GetRoleListRO();
         poList.forEach(item -> {
-            GetRoleListRO ro = new GetRoleListRO();
-            BeanUtil.copyProperties(item, ro);
-            roList.add(ro);
+            GetRoleListRO.Role role = new GetRoleListRO.Role();
+            BeanUtil.copyProperties(item, role);
+            ro.getRoleList().add(role);
         });
-        return ResponseBodyBean.ofSuccess(roList);
+        return ResponseBodyBean.ofSuccess(ro);
     }
 
     @PostMapping("/check-role-name")

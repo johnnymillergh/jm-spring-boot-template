@@ -5,6 +5,10 @@ import com.jmframework.boot.jmspringbootstarter.service.ApiService;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.SetApiInUsePLO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiAnalysisRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiControllerRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +36,13 @@ public class ApiManagementController {
 
     @GetMapping("/get-controller")
     @ApiOperation(value = "/get-controller", notes = "Get controller list")
-    public ResponseBodyBean getController() {
+    public ResponseBodyBean<ApiControllerRO> getController() {
         return ResponseBodyBean.ofSuccess(apiService.getAllControllerClass());
     }
 
     @GetMapping("/get-api-by-controller-class")
     @ApiOperation(value = "/get-api-by-controller-class", notes = "Get API by controller")
-    public ResponseBodyBean getApiByControllerClass(String controllerClass, Integer apiStatus) {
+    public ResponseBodyBean<ApiRO> getApiByControllerClass(String controllerClass, Integer apiStatus) {
         ApiStatus status = ApiStatus.getByStatus(apiStatus);
         if (status == null) {
             return ResponseBodyBean.ofError();
@@ -51,7 +55,7 @@ public class ApiManagementController {
 
     @GetMapping("/get-api-analysis")
     @ApiOperation(value = "/get-api-analysis", notes = "Get API analysis")
-    public ResponseBodyBean getApiAnalysis(String classFullName) {
+    public ResponseBodyBean<ApiAnalysisRO> getApiAnalysis(String classFullName) {
         return ResponseBodyBean.ofSuccess(apiService.getApiAnalysis(classFullName));
     }
 
@@ -80,7 +84,7 @@ public class ApiManagementController {
 
     @PostMapping("/get-api-list")
     @ApiOperation(value = "/get-api-list", notes = "Get API list")
-    public ResponseBodyBean getApiList(@Valid @RequestBody GetApiListPLO getApiListPLO) {
+    public ResponseBodyBean<GetApiListRO> getApiList(@Valid @RequestBody GetApiListPLO getApiListPLO) {
         return ResponseBodyBean.ofSuccess(apiService.getApiList(getApiListPLO));
     }
 }

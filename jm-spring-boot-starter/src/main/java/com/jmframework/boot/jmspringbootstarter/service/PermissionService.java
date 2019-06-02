@@ -2,7 +2,6 @@ package com.jmframework.boot.jmspringbootstarter.service;
 
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
-import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 
 import java.util.List;
 
@@ -51,5 +50,5 @@ public interface PermissionService {
      * @param getApiListPLO payload object
      * @return API list
      */
-    List<GetApiListRO> queryApiList(GetApiListPLO getApiListPLO);
+    List<PermissionPO> queryApiList(GetApiListPLO getApiListPLO);
 }

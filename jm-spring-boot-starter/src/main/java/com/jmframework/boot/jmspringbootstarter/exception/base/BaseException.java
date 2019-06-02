@@ -17,7 +17,7 @@ public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 5049763892480652887L;
 
     /**
-     * Code is REQUIRED. Default code is 250.
+     * Code is REQUIRED. Default code is 464.
      */
     private Integer code = UniversalStatus.FAILURE.getCode();
     /**

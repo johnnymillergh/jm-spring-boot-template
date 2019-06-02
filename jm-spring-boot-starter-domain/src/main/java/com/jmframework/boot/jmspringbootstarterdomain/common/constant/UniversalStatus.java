@@ -1,6 +1,7 @@
 package com.jmframework.boot.jmspringbootstarterdomain.common.constant;
 
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Description: UniversalStatus, change description here.
@@ -9,20 +10,13 @@ import lombok.Getter;
  * @date 2019-03-23 16:48
  **/
 @Getter
+@ToString
 public enum UniversalStatus implements IUniversalStatus {
     // Successful
     /**
      * Success
      */
-    SUCCESS(200, "Success"),
-    /**
-     * Failure
-     */
-    FAILURE(250, "Failure"),
-    /**
-     * Warning
-     */
-    WARNING(251, "Warning"),
+    OK(200, "Success. The standard response for successful HTTP requests."),
 
     // Client error
     /**
@@ -63,6 +57,14 @@ public enum UniversalStatus implements IUniversalStatus {
      * User disabled
      */
     USER_DISABLED(463, "User disabled."),
+    /**
+     * Failure
+     */
+    FAILURE(464, "Failure. Business failure or operation failure."),
+    /**
+     * Warning
+     */
+    WARNING(465, "Warning. Operation may by possible danger or trouble."),
 
     // Server error
     /**
@@ -116,14 +118,6 @@ public enum UniversalStatus implements IUniversalStatus {
                 return universalStatus;
             }
         }
-        return SUCCESS;
-    }
-
-    @Override
-    public String toString() {
-        return "UniversalStatus{" +
-                "code=" + code +
-                ", message='" + message + '\'' +
-                '}';
+        return OK;
     }
 }

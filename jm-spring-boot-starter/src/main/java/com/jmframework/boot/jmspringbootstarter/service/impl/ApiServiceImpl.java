@@ -137,8 +137,15 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public List<GetApiListRO> getApiList(GetApiListPLO getApiListPLO) {
-        return permissionService.queryApiList(getApiListPLO);
+    public GetApiListRO getApiList(GetApiListPLO getApiListPLO) {
+        GetApiListRO re = new GetApiListRO();
+        List<PermissionPO> poList = permissionService.queryApiList(getApiListPLO);
+        poList.forEach(item -> {
+            GetApiListRO.Api api = new GetApiListRO.Api();
+            BeanUtil.copyProperties(item, api);
+            re.getApiList().add(api);
+        });
+        return re;
     }
 
     /**

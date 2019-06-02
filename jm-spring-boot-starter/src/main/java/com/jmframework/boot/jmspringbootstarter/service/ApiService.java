@@ -7,8 +7,6 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiCon
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 
-import java.util.List;
-
 /**
  * Description: ApiService, change description here.
  *
@@ -56,5 +54,5 @@ public interface ApiService {
      */
     boolean setAllApiInUse(String controllerClass);
 
-    List<GetApiListRO> getApiList(GetApiListPLO getApiListPLO);
+    GetApiListRO getApiList(GetApiListPLO getApiListPLO);
 }

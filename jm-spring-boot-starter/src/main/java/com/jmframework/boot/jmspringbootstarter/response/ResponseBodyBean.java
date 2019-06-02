@@ -6,6 +6,8 @@ import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.IUniversalStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,22 +15,26 @@ import java.util.Date;
 /**
  * Description: ResponseBodyBean, change description here.
  *
+ * @param <T> the body type
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-02 17:52
  **/
-public class ResponseBodyBean implements Serializable {
+@SuppressWarnings("unused")
+@Getter
+@Builder
+public class ResponseBodyBean<T> implements Serializable {
     private static final long serialVersionUID = -6799356701376964494L;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date timestamp = new Date();
+    private Date timestamp;
     /**
-     * Default status is SUCCESS[200]
+     * Default status is OK[200]
      */
-    private Integer status = UniversalStatus.SUCCESS.getCode();
+    private Integer status;
     private String message;
-    private Object data;
+    private T data;
 
     /**
-     * <p>Respond to client with IUniversalStatus (status may be SUCCESS or other).</p>
+     * <p>Respond to client with IUniversalStatus (status may be OK or other).</p>
      * <p><strong>ATTENTION:</strong></p>
      * <p>This method CANNOT be used by controller or service or other class, only provided for Exception controller
      * .</p>
@@ -38,11 +44,11 @@ public class ResponseBodyBean implements Serializable {
      * @see ExceptionControllerAdvice#handleException(javax.servlet.http.HttpServletRequest,
      * javax.servlet.http.HttpServletResponse, java.lang.Exception)
      */
-    public static ResponseBodyBean ofStatus(IUniversalStatus status) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.status = status.getCode();
-        responseBodyBean.message = status.getMessage();
-        return responseBodyBean;
+    public static <T> ResponseBodyBean<T> ofStatus(IUniversalStatus status) {
+        return ResponseBodyBean.<T>builder().timestamp(new Date())
+                                            .status(status.getCode())
+                                            .message(status.getMessage())
+                                            .build();
     }
 
     /**
@@ -57,12 +63,12 @@ public class ResponseBodyBean implements Serializable {
      * @see ExceptionControllerAdvice#handleException(javax.servlet.http.HttpServletRequest,
      * javax.servlet.http.HttpServletResponse, java.lang.Exception)
      */
-    public static ResponseBodyBean ofStatus(IUniversalStatus status, Object data) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.status = status.getCode();
-        responseBodyBean.message = status.getMessage();
-        responseBodyBean.data = data;
-        return responseBodyBean;
+    public static <T> ResponseBodyBean<T> ofStatus(IUniversalStatus status, T data) {
+        return ResponseBodyBean.<T>builder().timestamp(new Date())
+                                            .status(status.getCode())
+                                            .message(status.getMessage())
+                                            .data(data)
+                                            .build();
     }
 
     /**
@@ -78,12 +84,8 @@ public class ResponseBodyBean implements Serializable {
      * @see ExceptionControllerAdvice#handleException(javax.servlet.http.HttpServletRequest,
      * javax.servlet.http.HttpServletResponse, java.lang.Exception)
      */
-    public static ResponseBodyBean ofStatus(Integer status, String message, Object data) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.status = status;
-        responseBodyBean.message = message;
-        responseBodyBean.data = data;
-        return responseBodyBean;
+    public static <T> ResponseBodyBean<T> ofStatus(Integer status, String message, T data) {
+        return ResponseBodyBean.<T>builder().timestamp(new Date()).status(status).message(message).data(data).build();
     }
 
     /**
@@ -96,124 +98,123 @@ public class ResponseBodyBean implements Serializable {
      * @param data    data to be responded
      * @return response body
      */
-    public static ResponseBodyBean setResponse(Integer status, String message, Object data) {
-        if (!UniversalStatus.SUCCESS.getCode().equals(status)) {
+    public static <T> ResponseBodyBean<T> setResponse(Integer status, String message, T data) {
+        if (!UniversalStatus.OK.getCode().equals(status)) {
             throw new BaseException(status, message, data);
         }
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.status = status;
-        responseBodyBean.message = message;
-        responseBodyBean.data = data;
-        return responseBodyBean;
+        return ResponseBodyBean.<T>builder().timestamp(new Date()).status(status).message(message).data(data).build();
     }
 
     /**
-     * Respond data and status is SUCCESS.
+     * Respond data and status is OK.
      *
      * @param data data to be responded to client.
      * @return response body
      */
-    public static ResponseBodyBean ofData(Object data) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.data = data;
-        return responseBodyBean;
+    public static <T> ResponseBodyBean<T> ofData(T data) {
+        return ResponseBodyBean.<T>builder().timestamp(new Date())
+                                            .status(UniversalStatus.OK.getCode())
+                                            .data(data)
+                                            .build();
     }
 
     /**
-     * Respond a message and status id SUCCESS.
+     * Respond a message and status id OK.
      *
      * @param message message to be responded
      * @return response body
      */
-    public static ResponseBodyBean ofMessage(String message) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.message = message;
-        return responseBodyBean;
+    public static <T> ResponseBodyBean<T> ofMessage(String message) {
+        return ResponseBodyBean.<T>builder().timestamp(new Date())
+                                            .status(UniversalStatus.OK.getCode())
+                                            .message(message)
+                                            .build();
     }
 
     /**
-     * Respond data, message and status is SUCCESS.
+     * Respond data, message and status is OK.
      *
      * @param data    data to be responded
      * @param message message to be responded
      * @return response body
      */
-    public static ResponseBodyBean ofDataAndMessage(Object data, String message) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.data = data;
-        responseBodyBean.message = message;
-        return responseBodyBean;
+    public static <T> ResponseBodyBean<T> ofDataAndMessage(T data, String message) {
+        return ResponseBodyBean.<T>builder().timestamp(new Date())
+                                            .status(UniversalStatus.OK.getCode())
+                                            .data(data)
+                                            .message(message)
+                                            .build();
     }
 
     /**
-     * Respond data, and status is SUCCESS.
+     * Respond data, and status is OK.
      *
      * @param data data to be responded
      * @return response body
      */
-    public static ResponseBodyBean ofSuccess(Object data) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.data = data;
-        return responseBodyBean;
+    public static <T> ResponseBodyBean<T> ofSuccess(T data) {
+        return ResponseBodyBean.<T>builder().timestamp(new Date())
+                                            .status(UniversalStatus.OK.getCode())
+                                            .data(data)
+                                            .build();
     }
 
     /**
-     * Respond a message and status is SUCCESS.
+     * Respond a message and status is OK.
      *
      * @param message message to be responded
      * @return response body
      */
-    public static ResponseBodyBean ofSuccess(String message) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.message = message;
-        return responseBodyBean;
+    public static <T> ResponseBodyBean<T> ofSuccess(String message) {
+        return ResponseBodyBean.<T>builder().timestamp(new Date())
+                                            .status(UniversalStatus.OK.getCode())
+                                            .message(message)
+                                            .build();
     }
 
     /**
-     * Respond data, message and status is SUCCESS.
+     * Respond data, message and status is OK.
      *
      * @param data    data to be responded
      * @param message message to be responded
      * @return response body
      */
-    public static ResponseBodyBean ofSuccess(Object data, String message) {
-        ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-        responseBodyBean.data = data;
-        responseBodyBean.message = message;
-        return responseBodyBean;
+    public static <T> ResponseBodyBean<T> ofSuccess(T data, String message) {
+        return ResponseBodyBean.<T>builder().timestamp(new Date())
+                                            .status(UniversalStatus.OK.getCode())
+                                            .data(data)
+                                            .message(message)
+                                            .build();
     }
 
     /**
-     * Respond a message and status is FAILURE(250).
+     * Respond a message and status is FAILURE(464).
      *
      * @param message message to be responded.
      * @return response body
      */
-    @SuppressWarnings("ConstantConditions")
-    public static ResponseBodyBean ofFailure(String message) {
+    public static <T> ResponseBodyBean<T> ofFailure(String message) {
         throw new BizException(message);
     }
 
     /**
-     * Respond a message and status is FAILURE(250).
+     * Respond a message and status is FAILURE(464).
      *
      * @param data data to be responded
      * @return response body
      */
-    @SuppressWarnings("ConstantConditions")
-    public static ResponseBodyBean ofFailure(Object data) {
+    public static <T> ResponseBodyBean<T> ofFailure(Object data) {
         throw new BizException(data);
     }
 
     /**
-     * Respond data and message, and status if FAILURE(250).
+     * Respond data and message, and status if FAILURE(464).
      *
      * @param data    data to be responded
      * @param message message to be responded
      * @return response body
      */
-    @SuppressWarnings("ConstantConditions")
-    public static ResponseBodyBean ofFailure(Object data, String message) {
+    public static <T> ResponseBodyBean<T> ofFailure(T data, String message) {
         throw new BizException(data, message);
     }
 
@@ -222,17 +223,17 @@ public class ResponseBodyBean implements Serializable {
      *
      * @return response body
      */
-    public static ResponseBodyBean ofError() {
+    public static <T> ResponseBodyBean<T> ofError() {
         return setResponse(UniversalStatus.ERROR.getCode(), UniversalStatus.ERROR.getMessage(), null);
     }
 
     /**
      * Respond a custom error.
      *
-     * @param status Error status, not SUCCESS(200)
+     * @param status Error status, not OK(200)
      * @return response body
      */
-    public static ResponseBodyBean ofError(IUniversalStatus status) {
+    public static <T> ResponseBodyBean<T> ofError(IUniversalStatus status) {
         return setResponse(status.getCode(), status.getMessage(), null);
     }
 
@@ -245,33 +246,5 @@ public class ResponseBodyBean implements Serializable {
      */
     public static <T extends BaseException> ResponseBodyBean ofException(T t) {
         throw new BaseException(t.getCode(), t.getMessage(), t.getData());
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
     }
 }

@@ -105,7 +105,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ApiOperation(value = "/login", notes = "Login (Sign in)")
-    public ResponseBodyBean login(@Valid @RequestBody LoginPLO loginPLO) {
+    public ResponseBodyBean<JwtRO> login(@Valid @RequestBody LoginPLO loginPLO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginPLO.getUsernameOrEmailOrPhone(), loginPLO.getPassword()));
 

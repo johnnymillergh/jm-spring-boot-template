@@ -43,7 +43,7 @@
     </select>
 
     <select id="queryApiList"
-            resultType="com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO">
+            resultType="com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO">
         SELECT tp.id,
                tp.url,
                tp.description,

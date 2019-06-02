@@ -16,5 +16,8 @@ import java.util.List;
 public class GetPermissionsPLO {
     @NotNull
     private Integer permissionType;
+    /**
+     * TODO: List<String> -> Set<String>
+     */
     private List<String> controllerFullClassName;
 }
