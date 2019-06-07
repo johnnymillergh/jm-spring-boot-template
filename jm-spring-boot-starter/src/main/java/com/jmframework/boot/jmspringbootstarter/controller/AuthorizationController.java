@@ -80,4 +80,5 @@ public class AuthorizationController {
     }
 
     // TODO: need API to query permissions that has been authorized to role
+    // TODO: need API to submit authorization for single role
 }
