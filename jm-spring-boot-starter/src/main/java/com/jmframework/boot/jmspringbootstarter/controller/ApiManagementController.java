@@ -3,6 +3,7 @@ package com.jmframework.boot.jmspringbootstarter.controller;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.ApiStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiByControllerClassPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiAnalysisRO;
@@ -42,15 +43,13 @@ public class ApiManagementController {
 
     @GetMapping("/get-api-by-controller-class")
     @ApiOperation(value = "/get-api-by-controller-class", notes = "Get API by controller")
-    public ResponseBodyBean<ApiRO> getApiByControllerClass(String controllerClass, Integer apiStatus) {
-        ApiStatus status = ApiStatus.getByStatus(apiStatus);
+    public ResponseBodyBean<ApiRO> getApiByControllerClass(@Valid GetApiByControllerClassPLO plo) {
+        ApiStatus status = ApiStatus.getByStatus(plo.getApiStatus());
         if (status == null) {
-            return ResponseBodyBean.ofError();
+            return ResponseBodyBean.ofFailure("Invalid params");
         }
-        if (StringUtils.isBlank(controllerClass)) {
-            return ResponseBodyBean.ofFailure("controllerClass is empty");
-        }
-        return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(controllerClass, apiStatus));
+        return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(plo.getControllerClass(),
+                                                                           plo.getApiStatus()));
     }
 
     @GetMapping("/get-api-analysis")
