@@ -2,6 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.controller;
 
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiByControllerClassPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
@@ -46,7 +47,9 @@ public class ApiManagementController {
     public ResponseBodyBean<ApiRO> getApiByControllerClass(@Valid GetApiByControllerClassPLO plo) {
         ApiStatus status = ApiStatus.getByStatus(plo.getApiStatus());
         if (status == null) {
-            return ResponseBodyBean.ofFailure("Invalid params");
+            return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
+                                                HttpStatus.PARAM_INVALID.getMessage(),
+                                                null);
         }
         return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(plo.getControllerClass(),
                                                                            plo.getApiStatus()));
