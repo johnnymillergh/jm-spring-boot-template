@@ -4,7 +4,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiL
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiAnalysisRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiControllerRO;
-import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiByControllerClassRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 
 /**
@@ -28,7 +28,7 @@ public interface ApiService {
      * @param apiStatus     api status.
      * @return permission list.
      */
-    ApiRO getApiByClassFullName(String classFullName, Integer apiStatus);
+    GetApiByControllerClassRO getApiByClassFullName(String classFullName, Integer apiStatus);
 
     /**
      * Get API analysis.

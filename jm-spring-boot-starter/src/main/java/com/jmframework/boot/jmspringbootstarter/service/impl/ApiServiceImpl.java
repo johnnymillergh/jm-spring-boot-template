@@ -11,7 +11,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.SetApiI
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiAnalysisRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiControllerRO;
-import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiByControllerClassRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -74,7 +74,7 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public ApiRO getApiByClassFullName(String classFullName, Integer apiStatus) {
+    public GetApiByControllerClassRO getApiByClassFullName(String classFullName, Integer apiStatus) {
         Class<?> clazz;
         try {
             clazz = Class.forName(classFullName);
@@ -94,17 +94,17 @@ public class ApiServiceImpl implements ApiService {
             ApiControllerRO apiControllerRO = this.getAllControllerClass();
             for (ApiControllerRO.Controller acs : apiControllerRO.getControllerList()) {
                 String clazzFullName = acs.getPackageName() + "." + acs.getClassName();
-                ApiRO apiRO = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USE.getStatus());
-                apiAnalysisRO.appendIdledApiCount(apiRO.getIdledApiCount());
-                apiAnalysisRO.appendInUseApiCount(apiRO.getInUseApiCount());
+                GetApiByControllerClassRO getApiByControllerClassRO = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USE.getStatus());
+                apiAnalysisRO.appendIdledApiCount(getApiByControllerClassRO.getIdledApiCount());
+                apiAnalysisRO.appendInUseApiCount(getApiByControllerClassRO.getInUseApiCount());
             }
             apiAnalysisRO.calculateSum();
             return apiAnalysisRO;
         }
         // Query API statistics of specific class scope.
-        ApiRO apiRO = this.getApiByClassFullName(classFullName, ApiStatus.IN_USE.getStatus());
-        apiAnalysisRO.appendIdledApiCount(apiRO.getIdledApiCount());
-        apiAnalysisRO.appendInUseApiCount(apiRO.getInUseApiCount());
+        GetApiByControllerClassRO getApiByControllerClassRO = this.getApiByClassFullName(classFullName, ApiStatus.IN_USE.getStatus());
+        apiAnalysisRO.appendIdledApiCount(getApiByControllerClassRO.getIdledApiCount());
+        apiAnalysisRO.appendInUseApiCount(getApiByControllerClassRO.getInUseApiCount());
         apiAnalysisRO.calculateSum();
         return apiAnalysisRO;
     }
@@ -120,7 +120,7 @@ public class ApiServiceImpl implements ApiService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public boolean setAllApiInUse(String controllerClass) {
-        ApiRO idledApi = this.getApiByClassFullName(controllerClass, ApiStatus.IDLED.getStatus());
+        GetApiByControllerClassRO idledApi = this.getApiByClassFullName(controllerClass, ApiStatus.IDLED.getStatus());
         if (CollectionUtils.isEmpty(idledApi.getApiList())) {
             throw new BizException("All APIs have been set in use");
         }
@@ -157,19 +157,19 @@ public class ApiServiceImpl implements ApiService {
      * @param apiStatus API status
      * @return permission list (API list), inUseApiCount, idledApiCount
      */
-    private ApiRO getPermissionsByClass(Class<?> clazz, ApiStatus apiStatus) {
+    private GetApiByControllerClassRO getPermissionsByClass(Class<?> clazz, ApiStatus apiStatus) {
         boolean restControllerExisted = clazz.isAnnotationPresent(RestController.class);
         if (!restControllerExisted) {
-            return new ApiRO();
+            return new GetApiByControllerClassRO();
         }
-        List<ApiRO.Uri> result = new ArrayList<>();
+        List<GetApiByControllerClassRO.Uri> result = new ArrayList<>();
         RequestMapping restControllersRequestMappingAnnotation = clazz.getAnnotation(RequestMapping.class);
         String urlPrefix = "";
         if (restControllersRequestMappingAnnotation != null) {
             urlPrefix = restControllersRequestMappingAnnotation.value()[0];
         }
         if (StringUtils.isBlank(urlPrefix)) {
-            return new ApiRO();
+            return new GetApiByControllerClassRO();
         }
         // Get all methods declared in class.
         List<Method> unfilteredMethods = Arrays.asList(clazz.getDeclaredMethods());
@@ -183,26 +183,26 @@ public class ApiServiceImpl implements ApiService {
             }
         });
         if (apiStatus == ApiStatus.IN_USE) {
-            ApiRO apiRO = new ApiRO();
+            GetApiByControllerClassRO getApiByControllerClassRO = new GetApiByControllerClassRO();
             List<PermissionPO> permissionPOS = permissionService.selectApisByUrlPrefix(urlPrefix);
             int allMethodCount = methods.size();
             int inUseApiCount = permissionPOS.size();
             int idledApiCount = allMethodCount - inUseApiCount;
             for (PermissionPO permissionPO : permissionPOS) {
-                ApiRO.Uri uri = new ApiRO.Uri();
+                GetApiByControllerClassRO.Uri uri = new GetApiByControllerClassRO.Uri();
                 uri.setUrl(permissionPO.getUrl());
                 uri.setMethod(permissionPO.getMethod());
                 uri.setDescription(permissionPO.getDescription());
                 result.add(uri);
             }
-            apiRO.setApiList(result);
-            apiRO.setIdledApiCount(idledApiCount);
-            apiRO.setInUseApiCount(inUseApiCount);
-            return apiRO;
+            getApiByControllerClassRO.setApiList(result);
+            getApiByControllerClassRO.setIdledApiCount(idledApiCount);
+            getApiByControllerClassRO.setInUseApiCount(inUseApiCount);
+            return getApiByControllerClassRO;
         }
         int allMethodCount = methods.size();
         if (methods.size() == 0) {
-            return new ApiRO();
+            return new GetApiByControllerClassRO();
         }
         Map<String, Object> resultMap = new HashMap<>(4);
         for (Method method : methods) {
@@ -218,7 +218,7 @@ public class ApiServiceImpl implements ApiService {
             GetMapping getMapping = method.getAnnotation(GetMapping.class);
             PostMapping postMapping = method.getAnnotation(PostMapping.class);
             ApiOperation apiOperation = method.getAnnotation(ApiOperation.class);
-            ApiRO.Uri uri = new ApiRO.Uri();
+            GetApiByControllerClassRO.Uri uri = new GetApiByControllerClassRO.Uri();
             if (getMapping != null) {
                 uri.setUrl(urlPrefix + getMapping.value()[0]);
                 uri.setMethod("GET");
@@ -231,9 +231,9 @@ public class ApiServiceImpl implements ApiService {
             }
             result.add(uri);
         }
-        Iterator<ApiRO.Uri> iterator = result.iterator();
+        Iterator<GetApiByControllerClassRO.Uri> iterator = result.iterator();
         while (iterator.hasNext()) {
-            ApiRO.Uri uri = iterator.next();
+            GetApiByControllerClassRO.Uri uri = iterator.next();
             PermissionPO permissions = permissionService.selectApiByUrl(uri.getUrl());
             if (permissions == null) {
                 continue;
@@ -242,10 +242,10 @@ public class ApiServiceImpl implements ApiService {
         }
         int idledApiCount = result.size();
         int inUseApiCount = allMethodCount - idledApiCount;
-        ApiRO apiRO = new ApiRO();
-        apiRO.setApiList(result);
-        apiRO.setIdledApiCount(idledApiCount);
-        apiRO.setInUseApiCount(inUseApiCount);
-        return apiRO;
+        GetApiByControllerClassRO getApiByControllerClassRO = new GetApiByControllerClassRO();
+        getApiByControllerClassRO.setApiList(result);
+        getApiByControllerClassRO.setIdledApiCount(idledApiCount);
+        getApiByControllerClassRO.setInUseApiCount(inUseApiCount);
+        return getApiByControllerClassRO;
     }
 }

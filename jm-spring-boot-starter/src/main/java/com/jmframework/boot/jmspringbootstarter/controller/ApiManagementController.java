@@ -9,7 +9,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiL
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiAnalysisRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiControllerRO;
-import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiByControllerClassRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,7 +44,7 @@ public class ApiManagementController {
 
     @GetMapping("/get-api-by-controller-class")
     @ApiOperation(value = "/get-api-by-controller-class", notes = "Get API by controller")
-    public ResponseBodyBean<ApiRO> getApiByControllerClass(@Valid GetApiByControllerClassPLO plo) {
+    public ResponseBodyBean<GetApiByControllerClassRO> getApiByControllerClass(@Valid GetApiByControllerClassPLO plo) {
         ApiStatus status = ApiStatus.getByStatus(plo.getApiStatus());
         if (status == null) {
             return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
