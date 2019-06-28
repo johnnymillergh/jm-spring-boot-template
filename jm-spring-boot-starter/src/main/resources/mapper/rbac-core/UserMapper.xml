@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jmframework.boot.jmspringbootstarter.mapper.UserMapper">
-    <select id="findByUsernameOrEmailOrPhone"
-            resultType="com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO">
+    <sql id="Base_Column_List">
+            id,
+            username,
+            email,
+            cellphone,
+            `password`,
+            full_name,
+            birthday,
+            gender,
+            gmt_created,
+            gmt_modified,
+            `status`
+    </sql>
+
+    <resultMap id="BaseResultMap" type="com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO">
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="email" property="email"/>
+        <result column="cellphone" property="cellphone"/>
+        <result column="password" property="password"/>
+        <result column="full_name" property="fullName"/>
+        <result column="birthday" property="birthday"/>
+        <result column="gender" property="gender"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <select id="findByUsernameOrEmailOrPhone" resultMap="BaseResultMap">
         SELECT tu.id,
                tu.username,
                tu.email,
-               tu.cellphone    AS cellphone,
+               tu.cellphone,
                tu.password,
-               tu.full_name    AS fullName,
+               tu.full_name,
                tu.birthday,
                tu.gender,
-               tu.gmt_created  AS gmtCreated,
-               tu.gmt_modified AS gmtModified,
+               tu.gmt_created,
+               tu.gmt_modified,
                tu.status
         FROM t_user tu
         <where>
@@ -74,18 +101,41 @@
         WHERE tu.username = #{username}
     </select>
 
-    <select id="getAllUser" resultType="com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO">
+    <select id="selectUserList" resultMap="BaseResultMap">
         SELECT tu.id,
                tu.username,
                tu.email,
-               tu.cellphone    AS cellphone,
+               tu.cellphone,
                tu.password,
-               tu.full_name    AS fullName,
+               tu.full_name,
                tu.birthday,
                tu.gender,
-               tu.gmt_created  AS gmtCreated,
-               tu.gmt_modified AS gmtModified,
+               tu.gmt_created,
+               tu.gmt_modified,
                tu.status
         FROM t_user tu
     </select>
+
+    <update id="updateById">
+        UPDATE t_user
+        <set>
+            <if test="updated.password != null">
+                password = #{updated.password},
+            </if>
+            <if test="updated.fullName != null">
+                full_name = #{updated.fullName},
+            </if>
+            <if test="updated.birthday != null">
+                birthday = #{updated.birthday},
+            </if>
+            <if test="updated.gender != null">
+                gender = #{updated.gender},
+            </if>
+            <if test="updated.status != null">
+                status = #{updated.status},
+            </if>
+            gmt_modified = now()
+        </set>
+        WHERE id = #{updated.id}
+    </update>
 </mapper>

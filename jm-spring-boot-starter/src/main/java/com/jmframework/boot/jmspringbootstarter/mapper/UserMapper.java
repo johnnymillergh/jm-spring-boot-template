@@ -50,18 +50,18 @@ public interface UserMapper extends BaseMapper<UserPO> {
     /**
      * Save user
      *
-     * @param userPO A new user.
+     * @param po A new user.
      * @return Last inserted ID.
      */
-    Long save(UserPO userPO);
+    Long save(UserPO po);
 
     /**
      * Register
      *
-     * @param userPO User info
+     * @param po User info
      * @return Registered user ID
      */
-    Long register(UserPO userPO);
+    Long register(UserPO po);
 
     /**
      * Get count of username by username.
@@ -71,5 +71,20 @@ public interface UserMapper extends BaseMapper<UserPO> {
      */
     Integer getUsernameCountByUsername(String username);
 
-    IPage<UserPO> getAllUser(Page page);
+    /**
+     * Select user list
+     *
+     * @param page pagination object
+     * @return user page list
+     */
+    IPage<UserPO> selectUserList(Page page);
+
+    /**
+     * Update user by ID
+     *
+     * @param updated updated user
+     * @return affected rows
+     */
+    @Override
+    int updateById(@Param("updated") UserPO updated);
 }
