@@ -37,7 +37,7 @@ spring:
 
 custom:
   configuration:
-    web-security-disabled: true
+    web-security-disabled: false
     ignores:
       # POST Requests need to be ignored.
       post:

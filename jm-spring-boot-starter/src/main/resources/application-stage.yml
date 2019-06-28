@@ -36,7 +36,7 @@ spring:
 
 custom:
   configuration:
-    web-request-log-disabled: true
+    web-request-log-disabled: false
     ignores:
       # POST Requests need to be ignored.
       post:

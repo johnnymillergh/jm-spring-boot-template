@@ -48,4 +48,4 @@ custom:
       # Request need to be ignored that matches pattern.
       pattern:
         - "/druid/**"
-    web-security-disabled: true
+    web-security-disabled: false
