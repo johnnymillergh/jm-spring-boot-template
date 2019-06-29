@@ -42,9 +42,9 @@ custom:
         - "/auth/register"
         - "/auth/login"
       get:
-        - "/auth/checkUsernameUniqueness"
-        - "/auth/checkEmailUniqueness"
-        - "/auth/validateUsername/**"
+        - "/auth/check-username-uniqueness"
+        - "/auth/check-email-uniqueness"
+        - "/auth/validate-username/**"
       # Request need to be ignored that matches pattern.
       pattern:
         - "/druid/**"
