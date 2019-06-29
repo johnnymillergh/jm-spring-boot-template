@@ -23,8 +23,8 @@ public class Pagination {
     private static final long serialVersionUID = -8674163654434252540L;
     @NotNull(message = "Invalid parameter")
     @Min(value = 1)
-    private Long currentPage = 1L;
+    private Long currentPage;
     @NotNull(message = "Invalid parameter")
     @Range(min = 10, max = 100)
-    private Long pageSize = 10L;
+    private Long pageSize;
 }
