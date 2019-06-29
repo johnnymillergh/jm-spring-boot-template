@@ -34,6 +34,13 @@ spring:
         max-wait: -1ms
         min-idle: 0
 
+# Uncomment following codes to customize JWT configuration.
+#jwt:
+#  configuration:
+#    ttl: 1800000
+#    ttl-for-remember-me: 604800000
+
+# ATTENTION: Production environment is not permitted to disable web security!
 custom:
   configuration:
     ignores:

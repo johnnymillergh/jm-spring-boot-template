@@ -34,8 +34,17 @@ spring:
         max-wait: -1ms
         min-idle: 0
 
+# Uncomment following codes to customize JWT configuration.
+#jwt:
+#  configuration:
+#    ttl: 1800000
+#    ttl-for-remember-me: 604800000
+
 custom:
   configuration:
+    # Make `web-security-disabled` equal to true to disable web security. We suggest you do not turn off web security
+    # feature unless development environment.
+    web-request-log-disabled: false
     ignores:
       # POST Requests need to be ignored.
       post:
