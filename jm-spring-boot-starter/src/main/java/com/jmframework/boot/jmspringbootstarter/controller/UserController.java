@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping("/edit-user-basic-info")
-    @ApiOperation(value = "/get-user-page-list", notes = "Get user page list")
+    @ApiOperation(value = "/edit-user-basic-info", notes = "Edit user's basic information")
     public ResponseBodyBean editUserBasicInfo(@Valid @RequestBody EditUserPLO plo) {
         UserPO po = new UserPO();
         BeanUtil.copyProperties(plo, po);
