@@ -27,4 +27,9 @@ public class UserServiceImpl implements UserService {
     public List<UserPO> getUserPageList(Page page) {
         return userMapper.selectUserPageList(page).getRecords();
     }
+
+    @Override
+    public boolean editUserBasicInfo(UserPO po) {
+        return userMapper.updateUserBasicInfoById(po) == 1;
+    }
 }

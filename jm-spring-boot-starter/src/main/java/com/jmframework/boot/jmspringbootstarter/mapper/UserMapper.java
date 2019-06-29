@@ -80,11 +80,10 @@ public interface UserMapper extends BaseMapper<UserPO> {
     IPage<UserPO> selectUserPageList(Page page);
 
     /**
-     * Update user by ID
+     * Update user's basic information by ID
      *
      * @param updated updated user
      * @return affected rows
      */
-    @Override
-    int updateById(@Param("updated") UserPO updated);
+    int updateUserBasicInfoById(@Param("updated") UserPO updated);
 }

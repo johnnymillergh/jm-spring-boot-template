@@ -20,4 +20,12 @@ public interface UserService {
      * @return user page list
      */
     List<UserPO> getUserPageList(Page page);
+
+    /**
+     * Edit user
+     *
+     * @param po persistence object
+     * @return true - edited; false - not edited
+     */
+    boolean editUserBasicInfo(UserPO po);
 }

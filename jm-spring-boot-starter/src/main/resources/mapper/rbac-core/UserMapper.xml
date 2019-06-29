@@ -112,11 +112,11 @@
         FROM t_user tu
     </select>
 
-    <update id="updateById">
+    <update id="updateUserBasicInfoById">
         UPDATE t_user
         <set>
-            <if test="updated.password != null">
-                password = #{updated.password},
+            <if test="updated.cellphone != null ">
+                cellphone = #{updated.cellphone},
             </if>
             <if test="updated.fullName != null">
                 full_name = #{updated.fullName},

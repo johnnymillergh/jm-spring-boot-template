@@ -4,14 +4,13 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
+import com.jmframework.boot.jmspringbootstarterdomain.user.payload.EditUserPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.payload.GetUserPageListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserPageListRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -35,9 +34,9 @@ public class UserController {
 
 //    TODO: ROADMAP
 //     1. Get user page list. (done)
-//     2. Configure role for user.
+//     2. Configure role for user. (done)
 //      2.1 Retrieve the roles that the user has; (done)
-//      2.2 Configure role for user.
+//      2.2 Configure role for user. (done)
 //     3. API for statistic of user aspect:
 //      3.1 Statistic of Valid and Invalid user;
 //      3.2 Statistic of ...
@@ -54,5 +53,16 @@ public class UserController {
             ro.getUserList().add(user);
         });
         return ResponseBodyBean.ofSuccess(ro);
+    }
+
+    @PostMapping("/edit-user-basic-info")
+    @ApiOperation(value = "/get-user-page-list", notes = "Get user page list")
+    public ResponseBodyBean editUserBasicInfo(@Valid @RequestBody EditUserPLO plo) {
+        UserPO po = new UserPO();
+        BeanUtil.copyProperties(plo, po);
+        if (userService.editUserBasicInfo(po)) {
+            return ResponseBodyBean.ofSuccess("user updated");
+        }
+        return ResponseBodyBean.ofFailure("failed to update user");
     }
 }
