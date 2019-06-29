@@ -15,7 +15,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApi
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.codehaus.plexus.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
