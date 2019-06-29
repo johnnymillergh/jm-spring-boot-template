@@ -94,7 +94,8 @@ public class ApiServiceImpl implements ApiService {
             ApiControllerRO apiControllerRO = this.getAllControllerClass();
             for (ApiControllerRO.Controller acs : apiControllerRO.getControllerList()) {
                 String clazzFullName = acs.getPackageName() + "." + acs.getClassName();
-                GetApiByControllerClassRO getApiByControllerClassRO = this.getApiByClassFullName(clazzFullName, ApiStatus.IN_USE.getStatus());
+                GetApiByControllerClassRO getApiByControllerClassRO = this.getApiByClassFullName(clazzFullName,
+                                                                                                 ApiStatus.IN_USE.getStatus());
                 apiAnalysisRO.appendIdledApiCount(getApiByControllerClassRO.getIdledApiCount());
                 apiAnalysisRO.appendInUseApiCount(getApiByControllerClassRO.getInUseApiCount());
             }
@@ -102,7 +103,8 @@ public class ApiServiceImpl implements ApiService {
             return apiAnalysisRO;
         }
         // Query API statistics of specific class scope.
-        GetApiByControllerClassRO getApiByControllerClassRO = this.getApiByClassFullName(classFullName, ApiStatus.IN_USE.getStatus());
+        GetApiByControllerClassRO getApiByControllerClassRO = this.getApiByClassFullName(classFullName,
+                                                                                         ApiStatus.IN_USE.getStatus());
         apiAnalysisRO.appendIdledApiCount(getApiByControllerClassRO.getIdledApiCount());
         apiAnalysisRO.appendInUseApiCount(getApiByControllerClassRO.getInUseApiCount());
         apiAnalysisRO.calculateSum();
@@ -204,7 +206,6 @@ public class ApiServiceImpl implements ApiService {
         if (methods.size() == 0) {
             return new GetApiByControllerClassRO();
         }
-        Map<String, Object> resultMap = new HashMap<>(4);
         for (Method method : methods) {
             if (method.getModifiers() != Modifier.PUBLIC) {
                 continue;
@@ -234,8 +235,8 @@ public class ApiServiceImpl implements ApiService {
         Iterator<GetApiByControllerClassRO.Uri> iterator = result.iterator();
         while (iterator.hasNext()) {
             GetApiByControllerClassRO.Uri uri = iterator.next();
-            PermissionPO permissions = permissionService.selectApiByUrl(uri.getUrl());
-            if (permissions == null) {
+            ApiStatus checkResult = permissionService.checkApiIsInUse(uri.getUrl());
+            if (ApiStatus.IDLED.getStatus().equals(checkResult.getStatus())) {
                 continue;
             }
             iterator.remove();

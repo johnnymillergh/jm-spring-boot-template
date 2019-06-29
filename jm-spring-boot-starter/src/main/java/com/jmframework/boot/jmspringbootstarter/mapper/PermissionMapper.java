@@ -3,9 +3,9 @@ package com.jmframework.boot.jmspringbootstarter.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,10 +22,10 @@ public interface PermissionMapper extends BaseMapper<PermissionPO> {
     /**
      * Save a permission
      *
-     * @param permissionPO permissionPO
+     * @param po persistence object
      * @return permission's ID
      */
-    Long save(PermissionPO permissionPO);
+    Long save(PermissionPO po);
 
     /**
      * Select permission list by role id
@@ -41,7 +41,7 @@ public interface PermissionMapper extends BaseMapper<PermissionPO> {
      * @param url URL
      * @return permission
      */
-    PermissionPO selectApiByUrl(String url);
+    Long countInUseApiByUrl(@Param("url") String url);
 
     /**
      * Find APIs by URL prefix.
@@ -52,9 +52,10 @@ public interface PermissionMapper extends BaseMapper<PermissionPO> {
     List<PermissionPO> selectApisByUrlPrefix(String urlPrefix);
 
     /**
-     * Query API list
+     * Select API page list
      *
+     * @param page pagination object
      * @return API list
      */
-    IPage<PermissionPO> queryApiList(Page page, GetApiListPLO getApiListPLO);
+    IPage<PermissionPO> selectApiPageList(Page page);
 }

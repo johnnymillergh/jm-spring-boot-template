@@ -3,6 +3,7 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +37,8 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public PermissionPO selectApiByUrl(String url) {
-        return permissionMapper.selectApiByUrl(url);
+    public ApiStatus checkApiIsInUse(String url) {
+        return permissionMapper.countInUseApiByUrl(url) == 1 ? ApiStatus.IN_USE : ApiStatus.IDLED;
     }
 
     @Override
@@ -46,8 +47,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<PermissionPO> queryApiList(GetApiListPLO getApiListPLO) {
-        return permissionMapper.queryApiList(new Page(getApiListPLO.getCurrentPage(), getApiListPLO.getPageSize()),
-                                             getApiListPLO).getRecords();
+    public List<PermissionPO> queryApiList(GetApiListPLO plo) {
+        return permissionMapper.selectApiPageList(new Page(plo.getCurrentPage(), plo.getPageSize())).getRecords();
     }
 }

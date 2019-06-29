@@ -17,9 +17,8 @@ public class PermissionPO {
      */
     private Long id;
     /**
-     * URL.
-     * If type is equal to 1 (page), it stands for route.
-     * If type is equal to 2 (button), it stands for API's url.
+     * URL. If type is equal to 1 (page), it stands for route. If type is equal to 2 (button), it stands for URL of
+     * API.
      */
     private String url;
     /**
@@ -54,4 +53,8 @@ public class PermissionPO {
      * Modified time
      */
     private Date gmtModified;
+    /**
+     * Deleted flag
+     */
+    private Byte deleted;
 }

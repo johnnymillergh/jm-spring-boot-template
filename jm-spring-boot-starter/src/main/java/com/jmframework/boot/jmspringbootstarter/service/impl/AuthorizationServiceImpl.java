@@ -89,6 +89,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             log.error("Error occurred when find class by classFullName: {}", e.getMessage(), e);
             throw new BizException("Error occurred when find class by classFullName: " + e.getMessage());
         }
+
         RequestMapping restControllersRequestMappingAnnotation = clazz.getAnnotation(RequestMapping.class);
         String urlPrefix = "";
         if (restControllersRequestMappingAnnotation != null) {
