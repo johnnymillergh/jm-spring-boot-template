@@ -72,12 +72,12 @@ public interface UserMapper extends BaseMapper<UserPO> {
     Integer getUsernameCountByUsername(String username);
 
     /**
-     * Select user list
+     * Select user page list
      *
      * @param page pagination object
      * @return user page list
      */
-    IPage<UserPO> selectUserList(Page page);
+    IPage<UserPO> selectUserPageList(Page page);
 
     /**
      * Update user by ID

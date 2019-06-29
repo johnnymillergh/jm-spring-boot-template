@@ -101,14 +101,10 @@
         WHERE tu.username = #{username}
     </select>
 
-    <select id="selectUserList" resultMap="BaseResultMap">
+    <select id="selectUserPageList" resultMap="BaseResultMap">
         SELECT tu.id,
                tu.username,
                tu.email,
-               tu.cellphone,
-               tu.password,
-               tu.full_name,
-               tu.birthday,
                tu.gender,
                tu.gmt_created,
                tu.gmt_modified,

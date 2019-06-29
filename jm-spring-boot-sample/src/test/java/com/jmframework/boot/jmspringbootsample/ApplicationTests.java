@@ -27,7 +27,7 @@ public class ApplicationTests {
     @Test
     public void test() {
         Page<UserPO> page = new Page<>(1, 5);
-        IPage<UserPO> allUser = userMapper.selectUserList(page);
+        IPage<UserPO> allUser = userMapper.selectUserPageList(page);
         log.error("Pagination test. {}", allUser.getRecords().size());
     }
 }

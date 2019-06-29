@@ -22,6 +22,6 @@ public class TestServiceInSample {
 
     public void sayHi() {
         log.info("Hi from sample");
-        log.info(userMapper.selectUserList(new Page(1, 2)).getRecords().toString());
+        log.info(userMapper.selectUserPageList(new Page(1, 2)).getRecords().toString());
     }
 }
