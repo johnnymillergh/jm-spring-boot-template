@@ -2,8 +2,8 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
 import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
-import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
+import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
@@ -28,15 +28,15 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
     private final UserMapper userMapper;
-    private final RoleMapper roleMapper;
+    private final RoleService roleService;
     private final PermissionMapper permissionMapper;
 
     @Autowired
     public CustomUserDetailsServiceImpl(UserMapper userMapper,
-                                        RoleMapper roleMapper,
+                                        RoleService roleService,
                                         PermissionMapper permissionMapper) {
         this.userMapper = userMapper;
-        this.roleMapper = roleMapper;
+        this.roleService = roleService;
         this.permissionMapper = permissionMapper;
     }
 
@@ -45,7 +45,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
         UserPO userPO = userMapper.findByUsernameOrEmailOrPhone(usernameOrEmailOrPhone, usernameOrEmailOrPhone,
                                                                 usernameOrEmailOrPhone)
                                   .orElseThrow(() -> new UsernameNotFoundException("User not found: " + usernameOrEmailOrPhone));
-        List<RolePO> rolePOList = roleMapper.selectByUserId(userPO.getId());
+        List<RolePO> rolePOList = roleService.getRolesByUserId(userPO.getId());
         if (CollectionUtils.isEmpty(rolePOList)) {
             throw new SecurityException(HttpStatus.ROLE_NOT_FOUND);
         }

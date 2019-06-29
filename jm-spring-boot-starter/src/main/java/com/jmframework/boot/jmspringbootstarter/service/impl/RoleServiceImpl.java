@@ -35,8 +35,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public boolean insertRole(RolePO rolePO) {
-        return roleMapper.insertRole(rolePO) > 0;
+    public boolean insertRole(RolePO po) {
+        return roleMapper.insertRole(po) > 0;
     }
 
     @Override
@@ -53,5 +53,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean updateRole(RolePO po) {
         return roleMapper.updateRoleById(po) == 1;
+    }
+
+    @Override
+    public List<RolePO> getRolesByUserId(Long userId) {
+        return roleMapper.selectByUserId(userId);
     }
 }

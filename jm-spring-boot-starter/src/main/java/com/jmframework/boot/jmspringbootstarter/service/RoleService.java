@@ -32,10 +32,10 @@ public interface RoleService {
     /**
      * Insert a role
      *
-     * @param rolePO persistence object
+     * @param po persistence object
      * @return true - insert successfully; false - insert failure
      */
-    boolean insertRole(RolePO rolePO);
+    boolean insertRole(RolePO po);
 
     /**
      * Handle the name of role
@@ -60,4 +60,12 @@ public interface RoleService {
      * @return true - update successfully; false - update failure
      */
     boolean updateRole(RolePO po);
+
+    /**
+     * Get roles by user ID
+     *
+     * @param userId user ID
+     * @return role list
+     */
+    List<RolePO> getRolesByUserId(Long userId);
 }

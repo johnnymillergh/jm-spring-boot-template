@@ -47,10 +47,10 @@
                 tu.username = #{username}
             </if>
             <if test="email != null">
-                or tu.email = #{email}
+                OR tu.email = #{email}
             </if>
             <if test="phone != null">
-                or tu.cellphone = #{phone}
+                OR tu.cellphone = #{phone}
             </if>
         </where>
     </select>

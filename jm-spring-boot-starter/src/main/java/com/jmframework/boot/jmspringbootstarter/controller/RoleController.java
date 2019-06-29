@@ -5,12 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
-import com.jmframework.boot.jmspringbootstarterdomain.role.payload.CheckRoleNamePLO;
-import com.jmframework.boot.jmspringbootstarterdomain.role.payload.CreateRolePLO;
-import com.jmframework.boot.jmspringbootstarterdomain.role.payload.EditRolePLO;
-import com.jmframework.boot.jmspringbootstarterdomain.role.payload.GetRoleListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.payload.*;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.response.GetRoleListRO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.response.GetRolesByUserIdRO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.response.SearchRoleRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -79,7 +77,7 @@ public class RoleController {
 
     @GetMapping("/search-role")
     @ApiOperation(value = "/search-role", notes = "Search role by name")
-    public ResponseBodyBean searchRole(String roleName) {
+    public ResponseBodyBean<SearchRoleRO> searchRole(String roleName) {
         if (StringUtils.isBlank(roleName)) {
             return ResponseBodyBean.ofFailure("The name of role is not blank");
         }
@@ -103,5 +101,18 @@ public class RoleController {
             return ResponseBodyBean.ofSuccess(String.format("Role updated (%s)", plo.getName()));
         }
         return ResponseBodyBean.ofFailure(String.format("Update failure (%s)", plo.getName()));
+    }
+
+    @GetMapping("/get-roles-by-user-id")
+    @ApiOperation(value = "/get-roles-by-user-id", notes = "Get roles that user has")
+    public ResponseBodyBean<GetRolesByUserIdRO> getRolesByUserId(@Valid GetRolesByUserIdPLO plo) {
+        List<RolePO> rolesByUserId = roleService.getRolesByUserId(plo.getUserId());
+        GetRolesByUserIdRO ro = new GetRolesByUserIdRO();
+        rolesByUserId.forEach(item -> {
+            GetRolesByUserIdRO.Role role = new GetRolesByUserIdRO.Role();
+            BeanUtil.copyProperties(item, role);
+            ro.getRoleList().add(role);
+        });
+        return ResponseBodyBean.ofSuccess(ro);
     }
 }
