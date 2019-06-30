@@ -134,4 +134,18 @@
         </set>
         WHERE id = #{updated.id}
     </update>
+
+    <select id="selectByIdAndStatus" resultMap="BaseResultMap">
+        SELECT id,
+               username,
+               email,
+               cellphone,
+               full_name,
+               birthday,
+               gender,
+               status
+        FROM t_user
+        WHERE id = #{params.id}
+          AND `status` = #{params.status}
+    </select>
 </mapper>

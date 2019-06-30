@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
 import com.jmframework.boot.jmspringbootstarterdomain.user.payload.EditUserPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.payload.GetUserInfoPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.payload.GetUserPageListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserPageListRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,6 +54,18 @@ public class UserController {
             BeanUtil.copyProperties(item, user);
             ro.getUserList().add(user);
         });
+        return ResponseBodyBean.ofSuccess(ro);
+    }
+
+    @GetMapping("/get-user-info")
+    @ApiOperation(value = "/get-user-info", notes = "Get user info")
+    public ResponseBodyBean<GetUserInfoRO> getUserInfo(@Valid GetUserInfoPLO plo) {
+        UserPO po = new UserPO();
+        po.setId(plo.getUserId());
+        po.setStatus(plo.getStatus());
+        UserPO userByIdAndStatus = userService.getUserByIdAndStatus(po);
+        GetUserInfoRO ro = new GetUserInfoRO();
+        BeanUtil.copyProperties(userByIdAndStatus, ro);
         return ResponseBodyBean.ofSuccess(ro);
     }
 

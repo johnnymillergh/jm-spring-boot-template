@@ -9,9 +9,8 @@ import java.util.stream.Collectors;
 
 /**
  * <h1>Gender</h1>
- * <p>Gender enum</p>
+ * <p>Gender enum (26 options)</p>
  * <p>
- * TODO: synchronize with the enumeration defined in MySQL database
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-06-07 23:17

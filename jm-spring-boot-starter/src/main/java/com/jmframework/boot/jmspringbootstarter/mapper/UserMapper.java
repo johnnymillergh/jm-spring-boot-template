@@ -80,6 +80,14 @@ public interface UserMapper extends BaseMapper<UserPO> {
     IPage<UserPO> selectUserPageList(Page page);
 
     /**
+     * Select user by ID and status
+     *
+     * @param params query params
+     * @return user persistence object
+     */
+    UserPO selectByIdAndStatus(@Param("params") UserPO params);
+
+    /**
      * Update user's basic information by ID
      *
      * @param updated updated user

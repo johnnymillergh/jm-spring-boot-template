@@ -21,6 +21,8 @@ public interface UserService {
      */
     List<UserPO> getUserPageList(Page page);
 
+    UserPO getUserByIdAndStatus(UserPO po);
+
     /**
      * Edit user
      *

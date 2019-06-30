@@ -46,7 +46,9 @@ custom:
   configuration:
     # Make `web-security-disabled` equal to true to disable web security. We suggest you do not turn off web security
     # feature unless development environment.
-    web-security-disabled: false
+    web-security-disabled: true
+    # Disable web request information log
+    web-request-log-disabled: true
     ignores:
       # POST Requests need to be ignored.
       post:

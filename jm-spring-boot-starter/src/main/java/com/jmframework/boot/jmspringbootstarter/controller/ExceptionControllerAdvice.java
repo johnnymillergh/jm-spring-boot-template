@@ -117,8 +117,8 @@ public class ExceptionControllerAdvice {
                                              ((BaseException) exception).getData());
         } else if (exception instanceof BindException) {
             log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage());
-            response.setStatus(HttpStatus.PARAM_INVALID.getCode());
-            return ResponseBodyBean.ofStatus(HttpStatus.PARAM_INVALID);
+            response.setStatus(HttpStatus.INVALID_PARAM.getCode());
+            return ResponseBodyBean.ofStatus(HttpStatus.INVALID_PARAM);
         }
         log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage(), exception);
         response.setStatus(HttpStatus.ERROR.getCode());

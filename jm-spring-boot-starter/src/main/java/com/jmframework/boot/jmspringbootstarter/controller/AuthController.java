@@ -56,8 +56,8 @@ public class AuthController {
     @ApiOperation(value = "/check-username-uniqueness", notes = "Check username uniqueness")
     public ResponseBodyBean checkUsernameUniqueness(String username) {
         if (StringUtils.isBlank(username)) {
-            return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
-                                                HttpStatus.PARAM_INVALID.getMessage(),
+            return ResponseBodyBean.setResponse(HttpStatus.INVALID_PARAM.getCode(),
+                                                HttpStatus.INVALID_PARAM.getMessage(),
                                                 null);
         }
         if (authService.checkUsernameUniqueness(username)) {
@@ -70,8 +70,8 @@ public class AuthController {
     @ApiOperation(value = "/check-email-uniqueness", notes = "Check email uniqueness")
     public ResponseBodyBean checkEmailUniqueness(String email) {
         if (StringUtils.isBlank(email)) {
-            return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
-                                                HttpStatus.PARAM_INVALID.getMessage(),
+            return ResponseBodyBean.setResponse(HttpStatus.INVALID_PARAM.getCode(),
+                                                HttpStatus.INVALID_PARAM.getMessage(),
                                                 null);
         }
         if (authService.checkEmailUniqueness(email)) {

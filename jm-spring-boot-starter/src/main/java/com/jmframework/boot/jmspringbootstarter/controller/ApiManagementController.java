@@ -47,8 +47,8 @@ public class ApiManagementController {
     public ResponseBodyBean<GetApiByControllerClassRO> getApiByControllerClass(@Valid GetApiByControllerClassPLO plo) {
         ApiStatus status = ApiStatus.getByStatus(plo.getApiStatus());
         if (status == null) {
-            return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
-                                                HttpStatus.PARAM_INVALID.getMessage(),
+            return ResponseBodyBean.setResponse(HttpStatus.INVALID_PARAM.getCode(),
+                                                HttpStatus.INVALID_PARAM.getMessage(),
                                                 null);
         }
         return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(plo.getControllerClass(),

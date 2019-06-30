@@ -65,8 +65,8 @@ public class AuthorizationController {
         if (PermissionType.BUTTON.getType().equals(plo.getPermissionType())) {
             return ResponseBodyBean.ofSuccess(authorizationService.getPermissions(plo.getControllerFullClassName()));
         }
-        return ResponseBodyBean.setResponse(HttpStatus.PARAM_INVALID.getCode(),
-                                            HttpStatus.PARAM_INVALID.getMessage(),
+        return ResponseBodyBean.setResponse(HttpStatus.INVALID_PARAM.getCode(),
+                                            HttpStatus.INVALID_PARAM.getMessage(),
                                             null);
     }
 

@@ -29,6 +29,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserPO getUserByIdAndStatus(UserPO po) {
+        return userMapper.selectByIdAndStatus(po);
+    }
+
+    @Override
     public boolean editUserBasicInfo(UserPO po) {
         return userMapper.updateUserBasicInfoById(po) == 1;
     }
