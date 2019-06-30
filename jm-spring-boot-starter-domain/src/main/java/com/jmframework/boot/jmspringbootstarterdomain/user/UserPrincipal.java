@@ -1,10 +1,10 @@
-package com.jmframework.boot.jmspringbootstarterdomain.common;
+package com.jmframework.boot.jmspringbootstarterdomain.user;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.jmframework.boot.jmspringbootstarterdomain.common.constant;
+package com.jmframework.boot.jmspringbootstarterdomain.user.constant;
 
 import lombok.Getter;
 
