@@ -32,20 +32,20 @@ public interface UserMapper extends BaseMapper<UserPO> {
                                                   @Param("phone") String phone);
 
     /**
-     * Check uniqueness of username.
+     * Count by username.
      *
-     * @param username Username string
+     * @param username username string
      * @return the count of username occurrence
      */
-    Integer checkUsernameUniqueness(String username);
+    Integer countByUsername(String username);
 
     /**
-     * Check uniqueness of email.
+     * Count by email.
      *
-     * @param email Email string
+     * @param email email string
      * @return the count of email occurrence
      */
-    Integer checkEmailUniqueness(String email);
+    Integer countByEmail(String email);
 
     /**
      * Save user
@@ -62,14 +62,6 @@ public interface UserMapper extends BaseMapper<UserPO> {
      * @return Registered user ID
      */
     Long register(UserPO po);
-
-    /**
-     * Get count of username by username.
-     *
-     * @param username Username string
-     * @return Count of username
-     */
-    Integer getUsernameCountByUsername(String username);
 
     /**
      * Select user page list
@@ -94,4 +86,12 @@ public interface UserMapper extends BaseMapper<UserPO> {
      * @return affected rows
      */
     int updateUserBasicInfoById(@Param("updated") UserPO updated);
+
+    /**
+     * Select user by username
+     *
+     * @param username username
+     * @return user po
+     */
+    UserPO selectByUsername(@Param("username") String username);
 }

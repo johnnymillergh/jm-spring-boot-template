@@ -25,13 +25,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean checkUsernameUniqueness(String username) {
-        Integer count = userMapper.checkUsernameUniqueness(username);
+        Integer count = userMapper.countByUsername(username);
         return count == 0;
     }
 
     @Override
     public boolean checkEmailUniqueness(String email) {
-        Integer count = userMapper.checkEmailUniqueness(email);
+        Integer count = userMapper.countByEmail(email);
         return count == 0;
     }
 
@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
         if (StringUtils.isBlank(username)) {
             return false;
         }
-        Integer countOfUsername = userMapper.getUsernameCountByUsername(username);
-        return countOfUsername != 0;
+        Integer countByUsername = userMapper.countByUsername(username);
+        return countByUsername != 0;
     }
 }

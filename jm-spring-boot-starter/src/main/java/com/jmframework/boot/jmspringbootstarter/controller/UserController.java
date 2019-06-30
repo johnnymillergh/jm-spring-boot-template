@@ -3,14 +3,16 @@ package com.jmframework.boot.jmspringbootstarter.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
-import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.payload.EditUserPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.payload.GetUserInfoPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.payload.GetUserPageListPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.payload.SearchUserPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserPageListRO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.response.SearchUserRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +32,9 @@ import java.util.List;
 @Api(tags = {"/user"})
 public class UserController {
     private final UserService userService;
-    private final RoleService roleService;
 
-    public UserController(UserService userService, RoleService roleService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
 //    TODO: ROADMAP
@@ -78,5 +78,17 @@ public class UserController {
             return ResponseBodyBean.ofSuccess("user updated");
         }
         return ResponseBodyBean.ofFailure("failed to update user");
+    }
+
+    @GetMapping("/search-user")
+    @ApiOperation(value = "/search-user", notes = "Search user by username")
+    public ResponseBodyBean<SearchUserRO> searchUser(@Valid SearchUserPLO plo) {
+        UserPO po = userService.searchUserByUsername(plo.getUsername());
+        if (po == null) {
+            return ResponseBodyBean.setResponse(HttpStatus.WARNING.getCode(), "No result", null);
+        }
+        SearchUserRO ro = new SearchUserRO();
+        BeanUtil.copyProperties(po, ro);
+        return ResponseBodyBean.ofSuccess(ro);
     }
 }

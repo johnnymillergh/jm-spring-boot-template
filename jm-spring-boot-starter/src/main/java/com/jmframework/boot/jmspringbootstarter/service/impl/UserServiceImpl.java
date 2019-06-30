@@ -65,4 +65,9 @@ public class UserServiceImpl implements UserService {
     public boolean editUserBasicInfo(UserPO po) {
         return userMapper.updateUserBasicInfoById(po) == 1;
     }
+
+    @Override
+    public UserPO searchUserByUsername(String username) {
+        return userMapper.selectByUsername(username);
+    }
 }

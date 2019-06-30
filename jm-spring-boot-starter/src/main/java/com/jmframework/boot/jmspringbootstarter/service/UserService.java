@@ -45,4 +45,12 @@ public interface UserService {
      * @return true - edited; false - not edited
      */
     boolean editUserBasicInfo(UserPO po);
+
+    /**
+     * Search user by username
+     *
+     * @param username username
+     * @return user
+     */
+    UserPO searchUserByUsername(String username);
 }

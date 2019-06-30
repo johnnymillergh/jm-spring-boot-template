@@ -30,41 +30,41 @@
     </resultMap>
 
     <select id="findByUsernameOrEmailOrPhone" resultMap="BaseResultMap">
-        SELECT tu.id,
-               tu.username,
-               tu.email,
-               tu.cellphone,
-               tu.password,
-               tu.full_name,
-               tu.birthday,
-               tu.gender,
-               tu.gmt_created,
-               tu.gmt_modified,
-               tu.status
-        FROM t_user tu
+        SELECT id,
+               username,
+               email,
+               cellphone,
+               password,
+               full_name,
+               birthday,
+               gender,
+               gmt_created,
+               gmt_modified,
+               status
+        FROM t_user
         <where>
             <if test="username != null">
-                tu.username = #{username}
+                username = #{username}
             </if>
             <if test="email != null">
-                OR tu.email = #{email}
+                OR email = #{email}
             </if>
             <if test="phone != null">
-                OR tu.cellphone = #{phone}
+                OR cellphone = #{phone}
             </if>
         </where>
     </select>
 
-    <select id="checkUsernameUniqueness" resultType="integer">
+    <select id="countByUsername" resultType="integer">
         SELECT count(1)
-        FROM t_user tu
-        WHERE tu.username = #{username}
+        FROM t_user
+        WHERE username = #{username}
     </select>
 
-    <select id="checkEmailUniqueness" resultType="integer">
+    <select id="countByEmail" resultType="integer">
         SELECT count(1)
-        FROM t_user tu
-        WHERE tu.email = #{email}
+        FROM t_user
+        WHERE email = #{email}
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
@@ -95,21 +95,15 @@
         VALUES (#{username}, #{password}, #{email}, now(), now(), 1)
     </insert>
 
-    <select id="getUsernameCountByUsername" resultType="integer">
-        SELECT count(1)
-        FROM t_user tu
-        WHERE tu.username = #{username}
-    </select>
-
     <select id="selectUserPageList" resultMap="BaseResultMap">
-        SELECT tu.id,
-               tu.username,
-               tu.email,
-               tu.gender,
-               tu.gmt_created,
-               tu.gmt_modified,
-               tu.status
-        FROM t_user tu
+        SELECT id,
+               username,
+               email,
+               gender,
+               gmt_created,
+               gmt_modified,
+               status
+        FROM t_user
     </select>
 
     <update id="updateUserBasicInfoById">
@@ -145,5 +139,17 @@
         FROM t_user
         WHERE id = #{params.id}
           AND `status` = #{params.status}
+    </select>
+
+    <select id="selectByUsername" resultMap="BaseResultMap">
+        SELECT id,
+               username,
+               email,
+               gender,
+               gmt_created,
+               gmt_modified,
+               status
+        FROM t_user
+        WHERE username = #{username}
     </select>
 </mapper>
