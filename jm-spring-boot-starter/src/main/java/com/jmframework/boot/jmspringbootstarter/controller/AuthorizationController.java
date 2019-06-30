@@ -4,7 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.AuthorizationService;
-import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.GetPermissionsPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.GetRolesPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.SubmitAuthorizationPLO;
@@ -34,11 +33,9 @@ import java.util.List;
 @RequestMapping("/authorization")
 @Api(tags = {"/authorization"})
 public class AuthorizationController {
-    private final RoleService roleService;
     private final AuthorizationService authorizationService;
 
-    public AuthorizationController(RoleService roleService, AuthorizationService authorizationService) {
-        this.roleService = roleService;
+    public AuthorizationController(AuthorizationService authorizationService) {
         this.authorizationService = authorizationService;
     }
 
@@ -46,7 +43,7 @@ public class AuthorizationController {
     @ApiOperation(value = "/get-roles", notes = "Get roles (support lazy loading)")
     public ResponseBodyBean<GetRolesRO> getRoles(@Valid @RequestBody GetRolesPLO plo) {
         Page<RolePO> page = new Page<>(plo.getCurrentPage(), plo.getPageSize());
-        List<RolePO> poList = roleService.getList(page);
+        List<RolePO> poList = authorizationService.getRoleListForSelection(page);
         GetRolesRO ro = new GetRolesRO();
         poList.forEach(item -> {
             GetRolesRO.RoleROBean role = new GetRolesRO.RoleROBean();

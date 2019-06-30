@@ -1,13 +1,16 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.mapper.RolePermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.service.AuthorizationService;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
+import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.SubmitAuthorizationPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.GetPermissionsRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePermissionPO;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.plexus.util.StringUtils;
@@ -28,12 +31,21 @@ import java.util.List;
 @Slf4j
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
+    private final RoleService roleService;
     private final PermissionService permissionService;
     private final RolePermissionMapper rolePermissionMapper;
 
-    public AuthorizationServiceImpl(PermissionService permissionService, RolePermissionMapper rolePermissionMapper) {
+    public AuthorizationServiceImpl(RoleService roleService,
+                                    PermissionService permissionService,
+                                    RolePermissionMapper rolePermissionMapper) {
+        this.roleService = roleService;
         this.permissionService = permissionService;
         this.rolePermissionMapper = rolePermissionMapper;
+    }
+
+    @Override
+    public List<RolePO> getRoleListForSelection(Page page) {
+        return roleService.getListForSelection(page);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.jmframework.boot.jmspringbootstarterdomain.authorization.response;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,13 +30,5 @@ public class GetRolesRO {
          * Role description
          */
         private String description;
-        /**
-         * Create time
-         */
-        private Date gmtCreated;
-        /**
-         * Modify time
-         */
-        private Date gmtModified;
     }
 }

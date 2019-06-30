@@ -1,6 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import org.apache.ibatis.annotations.Mapper;
@@ -64,4 +65,12 @@ public interface RoleMapper extends BaseMapper<RolePO> {
      * @return affected row
      */
     int updateRoleById(RolePO po);
+
+    /**
+     * Selection role list for selection
+     *
+     * @param page pagination object
+     * @return role page list
+     */
+    IPage<RolePO> selectRoleListForSelection(Page page);
 }

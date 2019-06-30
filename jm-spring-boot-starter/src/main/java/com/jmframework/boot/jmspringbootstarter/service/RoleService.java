@@ -68,4 +68,12 @@ public interface RoleService {
      * @return role list
      */
     List<RolePO> getRolesByUserId(Long userId);
+
+    /**
+     * Get role list for selection
+     *
+     * @param page page object
+     * @return role list
+     */
+    List<RolePO> getListForSelection(Page page);
 }

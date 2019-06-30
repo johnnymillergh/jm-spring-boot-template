@@ -59,4 +59,9 @@ public class RoleServiceImpl implements RoleService {
     public List<RolePO> getRolesByUserId(Long userId) {
         return roleMapper.selectByUserId(userId);
     }
+
+    @Override
+    public List<RolePO> getListForSelection(Page page) {
+        return roleMapper.selectRoleListForSelection(page).getRecords();
+    }
 }

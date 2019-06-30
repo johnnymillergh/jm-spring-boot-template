@@ -1,7 +1,9 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.SubmitAuthorizationPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.GetPermissionsRO;
+import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 
 import java.util.List;
 
@@ -13,6 +15,14 @@ import java.util.List;
  * @date 2019-05-19 15:01
  **/
 public interface AuthorizationService {
+    /**
+     * Get role list for selection
+     *
+     * @param page pagination object
+     * @return role list
+     */
+    List<RolePO> getRoleListForSelection(Page page);
+
     /**
      * Get permissions
      *
