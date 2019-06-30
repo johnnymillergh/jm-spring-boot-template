@@ -152,4 +152,10 @@
         FROM t_user
         WHERE username = #{username}
     </select>
+
+    <select id="selectUserListForSelection" resultMap="BaseResultMap">
+        SELECT id, username
+        FROM t_user
+        WHERE status = 1
+    </select>
 </mapper>

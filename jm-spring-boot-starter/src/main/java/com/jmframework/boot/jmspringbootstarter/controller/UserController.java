@@ -5,12 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
-import com.jmframework.boot.jmspringbootstarterdomain.user.payload.EditUserPLO;
-import com.jmframework.boot.jmspringbootstarterdomain.user.payload.GetUserInfoPLO;
-import com.jmframework.boot.jmspringbootstarterdomain.user.payload.GetUserPageListPLO;
-import com.jmframework.boot.jmspringbootstarterdomain.user.payload.SearchUserPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.payload.*;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserListForSelectionRO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserPageListRO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.SearchUserRO;
 import io.swagger.annotations.Api;
@@ -89,6 +87,20 @@ public class UserController {
         }
         SearchUserRO ro = new SearchUserRO();
         BeanUtil.copyProperties(po, ro);
+        return ResponseBodyBean.ofSuccess(ro);
+    }
+
+    @GetMapping("/get-user-list-for-selection")
+    @ApiOperation(value = "/get-user-list-for-selection", notes = "Get user list for selection (support lazy loading)")
+    public ResponseBodyBean<GetUserListForSelectionRO> getUserListForSelection(@Valid GetUserListForSelectionPLO plo) {
+        Page page = new Page().setCurrent(plo.getCurrentPage()).setSize(plo.getPageSize());
+        List<UserPO> userListForSelection = userService.getUserListForSelection(page);
+        GetUserListForSelectionRO ro = new GetUserListForSelectionRO();
+        userListForSelection.forEach(user -> {
+            GetUserListForSelectionRO.User userItem = new GetUserListForSelectionRO.User();
+            BeanUtil.copyProperties(user, userItem);
+            ro.getUserList().add(userItem);
+        });
         return ResponseBodyBean.ofSuccess(ro);
     }
 }

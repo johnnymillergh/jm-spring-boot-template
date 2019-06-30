@@ -94,4 +94,12 @@ public interface UserMapper extends BaseMapper<UserPO> {
      * @return user po
      */
     UserPO selectByUsername(@Param("username") String username);
+
+    /**
+     * Select user list for lazy selection
+     *
+     * @param page pagination object
+     * @return user page list
+     */
+    IPage<UserPO> selectUserListForSelection(Page page);
 }

@@ -70,4 +70,9 @@ public class UserServiceImpl implements UserService {
     public UserPO searchUserByUsername(String username) {
         return userMapper.selectByUsername(username);
     }
+
+    @Override
+    public List<UserPO> getUserListForSelection(Page page) {
+        return userMapper.selectUserListForSelection(page).getRecords();
+    }
 }

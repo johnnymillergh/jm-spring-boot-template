@@ -53,4 +53,12 @@ public interface UserService {
      * @return user
      */
     UserPO searchUserByUsername(String username);
+
+    /**
+     * Get user list for selection
+     *
+     * @param page pagination object/
+     * @return user list
+     */
+    List<UserPO> getUserListForSelection(Page page);
 }
