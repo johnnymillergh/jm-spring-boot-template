@@ -124,9 +124,7 @@
             <if test="updated.birthday != null">
                 birthday = #{updated.birthday},
             </if>
-            <if test="updated.gender != null">
-                gender = #{updated.gender},
-            </if>
+            gender = #{updated.gender},
             <if test="updated.status != null">
                 status = #{updated.status},
             </if>

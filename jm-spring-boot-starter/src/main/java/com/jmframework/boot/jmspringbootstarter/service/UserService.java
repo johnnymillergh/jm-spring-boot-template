@@ -2,6 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
 
 import java.util.List;
 
@@ -21,7 +22,21 @@ public interface UserService {
      */
     List<UserPO> getUserPageList(Page page);
 
+    /**
+     * Get user by ID and status
+     *
+     * @param po persistence object
+     * @return user po
+     */
     UserPO getUserByIdAndStatus(UserPO po);
+
+    /**
+     * Get user info (contained role info)
+     *
+     * @param po persistence object
+     * @return user info
+     */
+    GetUserInfoRO getUserInfo(UserPO po);
 
     /**
      * Edit user

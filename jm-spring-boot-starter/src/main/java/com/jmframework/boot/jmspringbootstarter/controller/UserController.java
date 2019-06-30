@@ -3,6 +3,7 @@ package com.jmframework.boot.jmspringbootstarter.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
+import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
 import com.jmframework.boot.jmspringbootstarterdomain.user.payload.EditUserPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.payload.GetUserInfoPLO;
@@ -29,9 +30,11 @@ import java.util.List;
 @Api(tags = {"/user"})
 public class UserController {
     private final UserService userService;
+    private final RoleService roleService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
 //    TODO: ROADMAP
@@ -63,10 +66,7 @@ public class UserController {
         UserPO po = new UserPO();
         po.setId(plo.getUserId());
         po.setStatus(plo.getStatus());
-        UserPO userByIdAndStatus = userService.getUserByIdAndStatus(po);
-        GetUserInfoRO ro = new GetUserInfoRO();
-        BeanUtil.copyProperties(userByIdAndStatus, ro);
-        return ResponseBodyBean.ofSuccess(ro);
+        return ResponseBodyBean.ofSuccess(userService.getUserInfo(po));
     }
 
     @PostMapping("/edit-user-basic-info")

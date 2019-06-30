@@ -2,7 +2,9 @@ package com.jmframework.boot.jmspringbootstarterdomain.user.response;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <h1>GetUserInfoRO</h1>
@@ -21,4 +23,12 @@ public class GetUserInfoRO {
     private Date birthday;
     private String gender;
     private Integer status;
+    private List<UsersRole> usersRoles = new ArrayList<>();
+
+    @Data
+    public static class UsersRole {
+        private Long roleId;
+        private String roleName;
+        private String roleDescription;
+    }
 }
