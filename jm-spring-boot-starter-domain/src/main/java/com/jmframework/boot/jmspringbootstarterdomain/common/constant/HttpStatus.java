@@ -54,9 +54,9 @@ public enum HttpStatus implements IUniversalStatus {
      */
     PARAM_NOT_NULL(461, "Param not null."),
     /**
-     * Param invalid
+     * Invalid param
      */
-    PARAM_INVALID(462, "Param invalid."),
+    INVALID_PARAM(462, "Invalid param."),
     /**
      * User disabled
      */
