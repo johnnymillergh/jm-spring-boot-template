@@ -5,7 +5,8 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * Description: PermissionPO, change description here.
+ * <h1>PermissionPO</h1>
+ * <p>Persistence class for table `t_permission`</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 19:48
@@ -17,8 +18,7 @@ public class PermissionPO {
      */
     private Long id;
     /**
-     * URL. If type is equal to 1 (page), it stands for route. If type is equal to 2 (button), it stands for URL of
-     * API.
+     * URL. If type of record is page (1), URL stands for route; if type of record is button (2), URL stands for API
      */
     private String url;
     /**
@@ -46,6 +46,10 @@ public class PermissionPO {
      */
     private Long parentId;
     /**
+     * Deleted flag
+     */
+    private Byte deleted;
+    /**
      * Created time
      */
     private Date gmtCreated;
@@ -53,8 +57,4 @@ public class PermissionPO {
      * Modified time
      */
     private Date gmtModified;
-    /**
-     * Deleted flag
-     */
-    private Byte deleted;
 }
