@@ -18,9 +18,9 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 /**
- * Description: Custom user detail service.
+ * <h1>CustomUserDetailsServiceImpl</h1>
+ * <p>Custom user detail service.</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-03 13:40
@@ -42,17 +42,17 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmailOrPhone) throws UsernameNotFoundException {
-        UserPO userPO = userMapper.findByUsernameOrEmailOrPhone(usernameOrEmailOrPhone, usernameOrEmailOrPhone,
-                                                                usernameOrEmailOrPhone)
-                                  .orElseThrow(() -> new UsernameNotFoundException("User not found: " + usernameOrEmailOrPhone));
-        List<RolePO> rolePOList = roleService.getRolesByUserId(userPO.getId());
-        if (CollectionUtils.isEmpty(rolePOList)) {
+        UserPO user = userMapper.findByUsernameOrEmailOrPhone(usernameOrEmailOrPhone, usernameOrEmailOrPhone,
+                                                              usernameOrEmailOrPhone)
+                                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + usernameOrEmailOrPhone));
+        List<RolePO> rolesByUserId = roleService.getRolesByUserId(user.getId());
+        if (CollectionUtils.isEmpty(rolesByUserId)) {
             throw new SecurityException(HttpStatus.ROLE_NOT_FOUND);
         }
-        List<Long> roleIds = rolePOList.stream()
-                                       .map(RolePO::getId)
-                                       .collect(Collectors.toList());
-        List<PermissionPO> permissionPOS = permissionMapper.selectByRoleIdList(roleIds);
-        return UserPrincipal.create(userPO, rolePOList, permissionPOS);
+        List<Long> roleIds = rolesByUserId.stream()
+                                          .map(RolePO::getId)
+                                          .collect(Collectors.toList());
+        List<PermissionPO> permissionList = permissionMapper.selectByRoleIdList(roleIds);
+        return UserPrincipal.create(user, rolesByUserId, permissionList);
     }
 }

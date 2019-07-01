@@ -30,7 +30,8 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * Description: Jwt Authentication Filter.
+ * <h1>JwtAuthenticationFilter</h1>
+ * <p>Jwt Authentication Filter.</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 14:24
@@ -91,7 +92,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } else {
             ResponseUtil.renderJson(response, HttpStatus.UNAUTHORIZED, null);
         }
-
     }
 
     /**
