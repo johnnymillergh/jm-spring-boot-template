@@ -1,6 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
 
@@ -61,4 +62,21 @@ public interface UserService {
      * @return user list
      */
     List<UserPO> getUserListForSelection(Page page);
+
+    /**
+     * Check whether the user account is enabled
+     *
+     * @param userId   user ID
+     * @param username username
+     * @return user status
+     */
+    UserStatus checkUserIsEnabled(Long userId, String username);
+
+    /**
+     * Assign role(s) to user
+     *
+     * @param userId     user ID
+     * @param roleIdList role ID list
+     */
+    void assignRoleToUser(Long userId, List<Long> roleIdList);
 }

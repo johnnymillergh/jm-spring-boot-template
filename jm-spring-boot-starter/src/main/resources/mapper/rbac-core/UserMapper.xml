@@ -153,4 +153,19 @@
         FROM t_user
         WHERE status = 1
     </select>
+
+    <select id="selectStatusByIdAndUsername" resultType="integer">
+        SELECT tu.status
+        FROM t_user tu
+        WHERE tu.id = #{id}
+          AND tu.username = #{username}
+    </select>
+
+    <insert id="insertUserIdAndRoleIdList">
+        INSERT INTO t_user_role(user_id, role_id)
+        VALUES
+        <foreach collection="roleIdList" item="item" index="index" separator=",">
+            (#{userId}, #{item})
+        </foreach>
+    </insert>
 </mapper>

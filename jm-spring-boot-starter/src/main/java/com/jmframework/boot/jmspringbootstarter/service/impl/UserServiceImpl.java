@@ -7,8 +7,10 @@ import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-06-07 11:42
  **/
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
@@ -74,5 +77,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserPO> getUserListForSelection(Page page) {
         return userMapper.selectUserListForSelection(page).getRecords();
+    }
+
+    @Override
+    public UserStatus checkUserIsEnabled(Long userId, String username) {
+        Integer userStatus = userMapper.selectStatusByIdAndUsername(userId, username);
+        return UserStatus.getByStatus(userStatus);
+    }
+
+    @Override
+    public void assignRoleToUser(Long userId, List<Long> roleIdList) {
+        int affectedRows = userMapper.insertUserIdAndRoleIdList(userId, roleIdList);
+        log.error("Assign role(s) to user. Insert user-role relation record, affected rows: {}", affectedRows);
     }
 }

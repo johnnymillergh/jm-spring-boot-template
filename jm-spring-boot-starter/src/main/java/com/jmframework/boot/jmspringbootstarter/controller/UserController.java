@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.payload.*;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
@@ -13,6 +14,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserPageL
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.SearchUserRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +27,7 @@ import java.util.List;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-06-07 11:39
  **/
+@Slf4j
 @RestController
 @RequestMapping("/user")
 @Api(tags = {"/user"})
@@ -43,6 +46,7 @@ public class UserController {
 //     3. API for statistic of user aspect:
 //      3.1 Statistic of Valid and Invalid user;
 //      3.2 Statistic of ...
+//     4. Assign role to user
 
     @GetMapping("/get-user-page-list")
     @ApiOperation(value = "/get-user-page-list", notes = "Get user page list")
@@ -102,5 +106,19 @@ public class UserController {
             ro.getUserList().add(userItem);
         });
         return ResponseBodyBean.ofSuccess(ro);
+    }
+
+    @PostMapping("/assign-role-to-user")
+    @ApiOperation(value = "/assign-role-to-user", notes = "Assign role(s) to user")
+    public ResponseBodyBean assignRoleToUser(@Valid @RequestBody AssignRoleToUserPLO plo) {
+        UserStatus userStatus = userService.checkUserIsEnabled(plo.getUserId(), plo.getUsername());
+        if (userStatus == UserStatus.DISABLED) {
+            String failureMessage = "Account [" + plo.getUsername() + "] has been disabled. " +
+                    "Cannot assign role(s) to it";
+            log.error(failureMessage);
+            return ResponseBodyBean.ofFailure(failureMessage);
+        }
+        userService.assignRoleToUser(plo.getUserId(), plo.getRoleIdList());
+        return ResponseBodyBean.ofSuccess("Assigned role(s) to user");
     }
 }

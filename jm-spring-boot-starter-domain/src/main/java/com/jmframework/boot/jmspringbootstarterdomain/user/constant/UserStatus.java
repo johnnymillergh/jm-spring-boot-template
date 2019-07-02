@@ -26,4 +26,21 @@ public enum UserStatus {
         this.status = status;
         this.description = description;
     }
+
+    /**
+     * Get user status enum by status value
+     *
+     * @param status status value
+     * @return user status enum
+     */
+    public static UserStatus getByStatus(Integer status) {
+        UserStatus result = UserStatus.DISABLED;
+        UserStatus[] userStatuses = UserStatus.values();
+        for (UserStatus userStatus : userStatuses) {
+            if (userStatus.status.equals(status)) {
+                result = userStatus;
+            }
+        }
+        return result;
+    }
 }

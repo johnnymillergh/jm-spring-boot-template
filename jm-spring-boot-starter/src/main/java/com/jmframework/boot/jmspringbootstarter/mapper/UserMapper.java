@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -103,4 +104,22 @@ public interface UserMapper extends BaseMapper<UserPO> {
      * @return user page list
      */
     IPage<UserPO> selectUserListForSelection(Page page);
+
+    /**
+     * Select user status by ID and username
+     *
+     * @param id       user ID
+     * @param username username
+     * @return user status
+     */
+    Integer selectStatusByIdAndUsername(@Param("id") Long id, @Param("username") String username);
+
+    /**
+     * Insert user-role relation
+     *
+     * @param userId     user ID
+     * @param roleIdList role ID list
+     * @return affected rows
+     */
+    int insertUserIdAndRoleIdList(@Param("userId") Long userId, @Param("roleIdList") List<Long> roleIdList);
 }
