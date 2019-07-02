@@ -7,6 +7,7 @@ import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.util.RequestUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
+import java.util.Objects;
 
 /**
  * Description: ExceptionControllerAdvice
@@ -70,10 +72,7 @@ public class ExceptionControllerAdvice {
             log.error("[GlobalExceptionCapture] MethodArgumentNotValidException: {}", exception.getMessage());
             response.setStatus(HttpStatus.BAD_REQUEST.getCode());
             return ResponseBodyBean.ofStatus(HttpStatus.BAD_REQUEST.getCode(),
-                                             ((MethodArgumentNotValidException) exception).getBindingResult()
-                                                                                          .getAllErrors()
-                                                                                          .get(0)
-                                                                                          .getDefaultMessage(),
+                                             getFieldErrorMessageFromException((MethodArgumentNotValidException) exception),
                                              null);
         } else if (exception instanceof ConstraintViolationException) {
             log.error("[GlobalExceptionCapture] ConstraintViolationException: {}", exception.getMessage());
@@ -123,5 +122,30 @@ public class ExceptionControllerAdvice {
         log.error("[GlobalExceptionCapture]: Exception information: {} ", exception.getMessage(), exception);
         response.setStatus(HttpStatus.ERROR.getCode());
         return ResponseBodyBean.ofStatus(HttpStatus.ERROR.getCode(), HttpStatus.ERROR.getMessage(), null);
+    }
+
+    /**
+     * Get field error message from exception. If two or more fields do not pass Spring Validation check, then will
+     * return the 1st error message of the error field.
+     *
+     * @param exception MethodArgumentNotValidException
+     * @return field error message
+     */
+    private String getFieldErrorMessageFromException(MethodArgumentNotValidException exception) {
+        try {
+            DefaultMessageSourceResolvable firstErrorField =
+                    (DefaultMessageSourceResolvable) Objects.requireNonNull(exception.getBindingResult()
+                                                                                     .getAllErrors()
+                                                                                     .get(0)
+                                                                                     .getArguments())[0];
+            String firstErrorFieldName = firstErrorField.getDefaultMessage();
+            String firstErrorFieldMessage = exception.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+            return firstErrorFieldName + " " + firstErrorFieldMessage;
+        } catch (Exception e) {
+            log.error("Exception occurred when get field error message from exception. Exception message: {}",
+                      e.getMessage(),
+                      e);
+            return HttpStatus.INVALID_PARAM.getMessage();
+        }
     }
 }
