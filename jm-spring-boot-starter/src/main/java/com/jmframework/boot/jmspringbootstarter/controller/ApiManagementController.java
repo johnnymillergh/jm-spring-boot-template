@@ -2,13 +2,19 @@ package com.jmframework.boot.jmspringbootstarter.controller;
 
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.ApiService;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.ApiStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiByControllerClassPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.SetApiInUsePLO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiAnalysisRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiControllerRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiByControllerClassRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.codehaus.plexus.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,26 +38,26 @@ public class ApiManagementController {
 
     @GetMapping("/get-controller")
     @ApiOperation(value = "/get-controller", notes = "Get controller list")
-    public ResponseBodyBean getController() {
+    public ResponseBodyBean<ApiControllerRO> getController() {
         return ResponseBodyBean.ofSuccess(apiService.getAllControllerClass());
     }
 
     @GetMapping("/get-api-by-controller-class")
     @ApiOperation(value = "/get-api-by-controller-class", notes = "Get API by controller")
-    public ResponseBodyBean getApiByControllerClass(String controllerClass, Integer apiStatus) {
-        ApiStatus status = ApiStatus.getByStatus(apiStatus);
+    public ResponseBodyBean<GetApiByControllerClassRO> getApiByControllerClass(@Valid GetApiByControllerClassPLO plo) {
+        ApiStatus status = ApiStatus.getByStatus(plo.getApiStatus());
         if (status == null) {
-            return ResponseBodyBean.ofError();
+            return ResponseBodyBean.setResponse(HttpStatus.INVALID_PARAM.getCode(),
+                                                HttpStatus.INVALID_PARAM.getMessage(),
+                                                null);
         }
-        if (StringUtils.isBlank(controllerClass)) {
-            return ResponseBodyBean.ofFailure("controllerClass is empty");
-        }
-        return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(controllerClass, apiStatus));
+        return ResponseBodyBean.ofSuccess(apiService.getApiByClassFullName(plo.getControllerClass(),
+                                                                           plo.getApiStatus()));
     }
 
     @GetMapping("/get-api-analysis")
     @ApiOperation(value = "/get-api-analysis", notes = "Get API analysis")
-    public ResponseBodyBean getApiAnalysis(String classFullName) {
+    public ResponseBodyBean<ApiAnalysisRO> getApiAnalysis(String classFullName) {
         return ResponseBodyBean.ofSuccess(apiService.getApiAnalysis(classFullName));
     }
 
@@ -80,7 +86,7 @@ public class ApiManagementController {
 
     @PostMapping("/get-api-list")
     @ApiOperation(value = "/get-api-list", notes = "Get API list")
-    public ResponseBodyBean getApiList(@Valid @RequestBody GetApiListPLO getApiListPLO) {
+    public ResponseBodyBean<GetApiListRO> getApiList(@Valid @RequestBody GetApiListPLO getApiListPLO) {
         return ResponseBodyBean.ofSuccess(apiService.getApiList(getApiListPLO));
     }
 }

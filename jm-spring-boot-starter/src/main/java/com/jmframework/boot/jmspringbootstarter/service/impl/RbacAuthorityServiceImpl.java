@@ -5,15 +5,15 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.jmframework.boot.jmspringbootstarter.configuration.CustomConfiguration;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
-import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
 import com.jmframework.boot.jmspringbootstarter.service.RbacAuthorityService;
+import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
-import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.PermissionType;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,26 +32,27 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Description: Route Authority service
+ * <h1>RbacAuthorityServiceImpl</h1>
+ * <p>Route Authority service implementation</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 14:25
  **/
 @Component
 public class RbacAuthorityServiceImpl implements RbacAuthorityService {
-    private final RoleMapper roleMapper;
+    private final RoleService roleService;
     private final PermissionService permissionService;
     private final RequestMappingHandlerMapping mapping;
     private final CustomConfiguration customConfiguration;
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public RbacAuthorityServiceImpl(RoleMapper roleMapper,
+    public RbacAuthorityServiceImpl(RoleService roleService,
                                     PermissionService permissionService,
                                     RequestMappingHandlerMapping mapping,
                                     CustomConfiguration customConfiguration,
                                     JwtUtil jwtUtil) {
-        this.roleMapper = roleMapper;
+        this.roleService = roleService;
         this.permissionService = permissionService;
         this.mapping = mapping;
         this.customConfiguration = customConfiguration;
@@ -75,23 +76,23 @@ public class RbacAuthorityServiceImpl implements RbacAuthorityService {
             UserPrincipal principal = (UserPrincipal) userInfo;
             Long userId = principal.getId();
 
-            List<RolePO> rolePOList = roleMapper.selectByUserId(userId);
-            List<Long> roleIds = rolePOList.stream()
-                                           .map(RolePO::getId)
-                                           .collect(Collectors.toList());
-            List<PermissionPO> permissionPOList = permissionService.selectByRoleIdList(roleIds);
+            List<RolePO> rolesByUserId = roleService.getRolesByUserId(userId);
+            List<Long> roleIds = rolesByUserId.stream()
+                                              .map(RolePO::getId)
+                                              .collect(Collectors.toList());
+            List<PermissionPO> permissionsByRoleId = permissionService.selectByRoleIdList(roleIds);
 
             // Filter button permission for frond-end
             List<PermissionPO> btnPerms =
-                    permissionPOList.stream()
-                                 // Sieve out page permissions
-                                 .filter(permission -> Objects.equals(permission.getType(),
-                                                                    PermissionType.BUTTON.getType()))
-                                 // Sieve out permission that has no URL
-                                 .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
-                                 // Sieve out permission that has no method
-                                 .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
-                                 .collect(Collectors.toList());
+                    permissionsByRoleId.stream()
+                                       // Sieve out page permissions
+                                       .filter(permission -> Objects.equals(permission.getType(),
+                                                                            PermissionType.BUTTON.getType()))
+                                       // Sieve out permission that has no URL
+                                       .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
+                                       // Sieve out permission that has no method
+                                       .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
+                                       .collect(Collectors.toList());
 
             for (PermissionPO btnPerm : btnPerms) {
                 AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(btnPerm.getUrl(), btnPerm.getMethod());
@@ -126,14 +127,14 @@ public class RbacAuthorityServiceImpl implements RbacAuthorityService {
             if (antPathMatcher.matches(request)) {
                 if (!urlMapping.get(uri)
                                .contains(currentMethod)) {
-                    throw new SecurityException(UniversalStatus.METHOD_NOT_ALLOWED);
+                    throw new SecurityException(HttpStatus.METHOD_NOT_ALLOWED);
                 } else {
                     return;
                 }
             }
         }
 
-        throw new SecurityException(UniversalStatus.NOT_FOUND);
+        throw new SecurityException(HttpStatus.NOT_FOUND);
     }
 
     /**

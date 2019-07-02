@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
-import com.jmframework.boot.jmspringbootstarterdomain.role.payload.GetRoleListPLO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 
 import java.util.List;
@@ -16,13 +16,15 @@ public interface RoleService {
     /**
      * Get role list
      *
-     * @param getRoleListPLO payload object
+     * @param page page object
      * @return role list
      */
-    List<RolePO> getList(GetRoleListPLO getRoleListPLO);
+    List<RolePO> getList(Page page);
 
     /**
      * Check the uniqueness of name of role
+     * <p>
+     * If id is null, then check for creating role's name; otherwise, check for created role's name
      *
      * @param po persistence object
      * @return true - available; false - not available
@@ -32,10 +34,10 @@ public interface RoleService {
     /**
      * Insert a role
      *
-     * @param rolePO persistence object
+     * @param po persistence object
      * @return true - insert successfully; false - insert failure
      */
-    boolean insertRole(RolePO rolePO);
+    boolean insertRole(RolePO po);
 
     /**
      * Handle the name of role
@@ -60,4 +62,20 @@ public interface RoleService {
      * @return true - update successfully; false - update failure
      */
     boolean updateRole(RolePO po);
+
+    /**
+     * Get roles by user ID
+     *
+     * @param userId user ID
+     * @return role list
+     */
+    List<RolePO> getRolesByUserId(Long userId);
+
+    /**
+     * Get role list for selection
+     *
+     * @param page page object
+     * @return role list
+     */
+    List<RolePO> getListForSelection(Page page);
 }

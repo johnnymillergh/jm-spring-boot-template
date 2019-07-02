@@ -28,10 +28,7 @@ public class ResponseUtil {
      */
     public static void renderJson(HttpServletResponse response, IUniversalStatus status, Object data) {
         try {
-            ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-            responseBodyBean.setStatus(status.getCode());
-            responseBodyBean.setMessage(status.getMessage());
-            responseBodyBean.setData(data);
+            ResponseBodyBean responseBodyBean = ResponseBodyBean.ofStatus(status.getCode(), status.getMessage(), data);
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Methods", "*");
             response.setContentType("application/json;charset=UTF-8");
@@ -54,10 +51,9 @@ public class ResponseUtil {
             response.setHeader("Access-Control-Allow-Methods", "*");
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(exception.getCode());
-            ResponseBodyBean responseBodyBean = new ResponseBodyBean();
-            responseBodyBean.setStatus(exception.getCode());
-            responseBodyBean.setMessage(exception.getMessage());
-            responseBodyBean.setData(exception.getData());
+            ResponseBodyBean responseBodyBean = ResponseBodyBean.ofStatus(exception.getCode(),
+                                                                          exception.getMessage(),
+                                                                          exception.getData());
             response.getWriter().write(MAPPER.writeValueAsString(responseBodyBean));
         } catch (IOException e) {
             log.error("Error occurred when responding an exception JSON.", e);

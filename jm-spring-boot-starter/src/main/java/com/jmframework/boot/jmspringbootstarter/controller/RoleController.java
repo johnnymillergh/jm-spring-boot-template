@@ -1,9 +1,10 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.role.payload.CheckRoleNamePLO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.payload.CreateRolePLO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.payload.EditRolePLO;
@@ -14,11 +15,10 @@ import com.jmframework.boot.jmspringbootstarterdomain.role.response.SearchRoleRO
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.codehaus.plexus.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,15 +41,16 @@ public class RoleController {
 
     @PostMapping("/get-list")
     @ApiOperation(value = "/get-list", notes = "Get role page list")
-    public ResponseBodyBean getList(@Valid @RequestBody GetRoleListPLO plo) {
-        List<RolePO> poList = roleService.getList(plo);
-        List<GetRoleListRO> roList = new ArrayList<>();
+    public ResponseBodyBean<GetRoleListRO> getList(@Valid @RequestBody GetRoleListPLO plo) {
+        Page<RolePO> page = new Page<>(plo.getCurrentPage(), plo.getPageSize());
+        List<RolePO> poList = roleService.getList(page);
+        GetRoleListRO ro = new GetRoleListRO();
         poList.forEach(item -> {
-            GetRoleListRO ro = new GetRoleListRO();
-            BeanUtil.copyProperties(item, ro);
-            roList.add(ro);
+            GetRoleListRO.Role role = new GetRoleListRO.Role();
+            BeanUtil.copyProperties(item, role);
+            ro.getRoleList().add(role);
         });
-        return ResponseBodyBean.ofSuccess(roList);
+        return ResponseBodyBean.ofSuccess(ro);
     }
 
     @PostMapping("/check-role-name")
@@ -78,14 +79,14 @@ public class RoleController {
 
     @GetMapping("/search-role")
     @ApiOperation(value = "/search-role", notes = "Search role by name")
-    public ResponseBodyBean searchRole(String roleName) {
+    public ResponseBodyBean<SearchRoleRO> searchRole(String roleName) {
         if (StringUtils.isBlank(roleName)) {
             return ResponseBodyBean.ofFailure("The name of role is not blank");
         }
         roleName = roleService.handleRoleName(roleName);
         RolePO po = roleService.searchRole(roleName);
         if (po == null) {
-            return ResponseBodyBean.setResponse(UniversalStatus.WARNING.getCode(), "No result", null);
+            return ResponseBodyBean.setResponse(HttpStatus.WARNING.getCode(), "No result", null);
         }
         SearchRoleRO ro = new SearchRoleRO();
         BeanUtil.copyProperties(po, ro);

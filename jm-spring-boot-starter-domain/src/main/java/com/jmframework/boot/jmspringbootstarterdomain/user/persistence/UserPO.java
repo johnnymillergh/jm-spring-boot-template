@@ -5,7 +5,8 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * Description: User (Persistence Object)
+ * <h1>UserPO</h1>
+ * <p>Persistence class for table `t_user`</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 19:51
@@ -45,6 +46,10 @@ public class UserPO {
      */
     private String gender;
     /**
+     * Status. 1 - enabled, 2 - disabled
+     */
+    private Integer status;
+    /**
      * Create time
      */
     private Date gmtCreated;
@@ -52,8 +57,4 @@ public class UserPO {
      * Modify time
      */
     private Date gmtModified;
-    /**
-     * Status. Enabled-1，Disabled-0
-     */
-    private Integer status;
 }

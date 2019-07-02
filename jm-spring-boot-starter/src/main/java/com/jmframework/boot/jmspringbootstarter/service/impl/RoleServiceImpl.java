@@ -3,9 +3,8 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
-import com.jmframework.boot.jmspringbootstarterdomain.role.payload.GetRoleListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
-import org.apache.commons.lang3.StringUtils;
+import org.codehaus.plexus.util.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +25,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<RolePO> getList(GetRoleListPLO getRoleListPLO) {
-        return roleMapper.selectPageList(new Page(getRoleListPLO.getCurrentPage(), getRoleListPLO.getPageSize()), null);
+    public List<RolePO> getList(Page page) {
+        return roleMapper.selectPageList(page);
     }
 
     @Override
@@ -36,8 +35,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public boolean insertRole(RolePO rolePO) {
-        return roleMapper.insertRole(rolePO) > 0;
+    public boolean insertRole(RolePO po) {
+        return roleMapper.insertRole(po) > 0;
     }
 
     @Override
@@ -54,5 +53,15 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean updateRole(RolePO po) {
         return roleMapper.updateRoleById(po) == 1;
+    }
+
+    @Override
+    public List<RolePO> getRolesByUserId(Long userId) {
+        return roleMapper.selectByUserId(userId);
+    }
+
+    @Override
+    public List<RolePO> getListForSelection(Page page) {
+        return roleMapper.selectRoleListForSelection(page).getRecords();
     }
 }

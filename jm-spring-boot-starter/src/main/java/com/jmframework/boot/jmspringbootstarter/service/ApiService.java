@@ -4,10 +4,8 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiL
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.SetApiInUsePLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiAnalysisRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiControllerRO;
-import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiRO;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiByControllerClassRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
-
-import java.util.List;
 
 /**
  * Description: ApiService, change description here.
@@ -30,7 +28,7 @@ public interface ApiService {
      * @param apiStatus     api status.
      * @return permission list.
      */
-    ApiRO getApiByClassFullName(String classFullName, Integer apiStatus);
+    GetApiByControllerClassRO getApiByClassFullName(String classFullName, Integer apiStatus);
 
     /**
      * Get API analysis.
@@ -43,10 +41,10 @@ public interface ApiService {
     /**
      * Set API in use
      *
-     * @param setApiInUsePLO form data for setting api in use
+     * @param plo form data for setting api in use
      * @return true - successful operation; false - failed operation
      */
-    boolean setApiInUse(SetApiInUsePLO setApiInUsePLO);
+    boolean setApiInUse(SetApiInUsePLO plo);
 
     /**
      * Set a controller's all api in use
@@ -56,5 +54,11 @@ public interface ApiService {
      */
     boolean setAllApiInUse(String controllerClass);
 
-    List<GetApiListRO> getApiList(GetApiListPLO getApiListPLO);
+    /**
+     * Get API list
+     *
+     * @param plo payload object
+     * @return API list (response object)
+     */
+    GetApiListRO getApiList(GetApiListPLO plo);
 }

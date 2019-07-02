@@ -13,10 +13,10 @@ import java.util.List;
  **/
 @Data
 public class ApiControllerRO {
-    private List<ApiControllerSubclass> controllerList = new ArrayList<>();
+    private List<Controller> controllerList = new ArrayList<>();
 
     @Data
-    public static class ApiControllerSubclass {
+    public static class Controller {
         private String className;
         private String packageName;
     }

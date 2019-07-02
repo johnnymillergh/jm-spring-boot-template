@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper">
+    <sql id="Base_Column_List">
+            id,
+            url,
+            description,
+            `type`,
+            permission_expression,
+            `method`,
+            sort,
+            parent_id,
+            gmt_created,
+            gmt_modified,
+            deleted
+    </sql>
+
+    <resultMap id="BaseResultMap"
+               type="com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO">
+        <result column="id" property="id"/>
+        <result column="url" property="url"/>
+        <result column="description" property="description"/>
+        <result column="type" property="type"/>
+        <result column="permission_expression" property="permissionExpression"/>
+        <result column="method" property="method"/>
+        <result column="sort" property="sort"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_permission(url, description, type, method, gmt_created, gmt_modified)
+        VALUES (#{url}, #{description}, #{type}, #{method}, now(), now())
+    </insert>
+
+    <select id="selectByRoleIdList" resultMap="BaseResultMap">
+        SELECT DISTINCT tp.id,
+                        tp.url,
+                        tp.description,
+                        tp.type,
+                        tp.permission_expression,
+                        tp.method,
+                        tp.sort,
+                        tp.parent_id,
+                        tp.gmt_created,
+                        tp.gmt_modified,
+                        tp.deleted
+        FROM t_permission tp
+                 LEFT JOIN t_role_permission trp ON tp.id = trp.permission_id
+                 LEFT JOIN t_role tr ON tr.id = trp.role_id
+        WHERE tr.id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="countInUseApiByUrl" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM t_permission
+        WHERE url = #{url}
+          AND type = 2
+    </select>
+
+    <select id="selectApisByUrlPrefix" resultMap="BaseResultMap">
+        SELECT id,
+               url,
+               description,
+               method
+        FROM t_permission tp
+        WHERE url LIKE concat(#{urlPrefix}, '%')
+          AND type = 2
+    </select>
+
+    <select id="selectApiPageList" resultMap="BaseResultMap">
+        SELECT tp.id,
+               tp.url,
+               tp.description,
+               tp.permission_expression,
+               tp.method,
+               tp.sort,
+               tp.gmt_created,
+               tp.gmt_modified
+        FROM t_permission tp
+        WHERE tp.type = 2
+          AND tp.deleted != 1
+        ORDER BY tp.id DESC
+    </select>
+</mapper>

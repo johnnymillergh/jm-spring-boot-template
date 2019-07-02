@@ -5,7 +5,8 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * Description: RolePO, change description here.
+ * <h1>RolePO</h1>
+ * <p>Persistence class for table `t_role`</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 19:50

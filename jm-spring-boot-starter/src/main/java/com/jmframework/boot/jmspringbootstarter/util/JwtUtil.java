@@ -5,8 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import com.jmframework.boot.jmspringbootstarter.common.constant.Constants;
 import com.jmframework.boot.jmspringbootstarter.configuration.JwtConfiguration;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
-import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,7 +110,7 @@ public class JwtUtil {
             // Check if JWT exists
             Long expire = stringRedisTemplate.getExpire(redisKey, TimeUnit.MILLISECONDS);
             if (Objects.isNull(expire) || expire <= 0) {
-                throw new SecurityException(UniversalStatus.TOKEN_EXPIRED);
+                throw new SecurityException(HttpStatus.TOKEN_EXPIRED);
             }
 
             // Check if current JWT is equal to the one in Redis.
@@ -118,24 +118,24 @@ public class JwtUtil {
             // Both situations reveal the JWT expired.
             String redisToken = stringRedisTemplate.opsForValue().get(redisKey);
             if (!StrUtil.equals(jwt, redisToken)) {
-                throw new SecurityException(UniversalStatus.TOKEN_OUT_OF_CONTROL);
+                throw new SecurityException(HttpStatus.TOKEN_OUT_OF_CONTROL);
             }
             return claims;
         } catch (ExpiredJwtException e) {
             log.error("Token expired.");
-            throw new SecurityException(UniversalStatus.TOKEN_EXPIRED);
+            throw new SecurityException(HttpStatus.TOKEN_EXPIRED);
         } catch (UnsupportedJwtException e) {
             log.error("Token not supported.");
-            throw new SecurityException(UniversalStatus.TOKEN_PARSE_ERROR);
+            throw new SecurityException(HttpStatus.TOKEN_PARSE_ERROR);
         } catch (MalformedJwtException e) {
             log.error("Invalid token.");
-            throw new SecurityException(UniversalStatus.TOKEN_PARSE_ERROR);
+            throw new SecurityException(HttpStatus.TOKEN_PARSE_ERROR);
         } catch (SignatureException e) {
             log.error("Invalid signature of token.");
-            throw new SecurityException(UniversalStatus.TOKEN_PARSE_ERROR);
+            throw new SecurityException(HttpStatus.TOKEN_PARSE_ERROR);
         } catch (IllegalArgumentException e) {
             log.error("Token parameter not exists.");
-            throw new SecurityException(UniversalStatus.TOKEN_PARSE_ERROR);
+            throw new SecurityException(HttpStatus.TOKEN_PARSE_ERROR);
         }
     }
 

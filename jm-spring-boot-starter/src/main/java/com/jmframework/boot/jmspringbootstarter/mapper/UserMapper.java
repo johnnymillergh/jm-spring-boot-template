@@ -8,10 +8,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
- * Description: UserMapper, change description here.
+ * <h1>UserMapper</h1>
+ * <p>CRUD operations for table `t_user`</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-02 17:32
@@ -20,56 +22,104 @@ import java.util.Optional;
 @Component
 public interface UserMapper extends BaseMapper<UserPO> {
     /**
-     * Find by username, email or Phone.
+     * Find by username, email or cellphone.
      *
-     * @param username Username
-     * @param email    Email
-     * @param phone    phone
+     * @param username  Username
+     * @param email     Email
+     * @param cellphone cellphone number
      * @return User information.
      */
-    Optional<UserPO> findByUsernameOrEmailOrPhone(@Param("username") String username,
-                                                  @Param("email") String email,
-                                                  @Param("phone") String phone);
+    Optional<UserPO> selectByUsernameOrEmailOrCellphone(@Param("username") String username,
+                                                        @Param("email") String email,
+                                                        @Param("cellphone") String cellphone);
 
     /**
-     * Check uniqueness of username.
+     * Count by username.
      *
-     * @param username Username string
+     * @param username username string
      * @return the count of username occurrence
      */
-    Integer checkUsernameUniqueness(String username);
+    Integer countByUsername(String username);
 
     /**
-     * Check uniqueness of email.
+     * Count by email.
      *
-     * @param email Email string
+     * @param email email string
      * @return the count of email occurrence
      */
-    Integer checkEmailUniqueness(String email);
+    Integer countByEmail(String email);
 
     /**
      * Save user
      *
-     * @param userPO A new user.
+     * @param po A new user.
      * @return Last inserted ID.
      */
-    Long save(UserPO userPO);
+    Long save(UserPO po);
 
     /**
      * Register
      *
-     * @param userPO User info
+     * @param po User info
      * @return Registered user ID
      */
-    Long register(UserPO userPO);
+    Long register(UserPO po);
 
     /**
-     * Get count of username by username.
+     * Select user page list
      *
-     * @param username Username string
-     * @return Count of username
+     * @param page pagination object
+     * @return user page list
      */
-    Integer getUsernameCountByUsername(String username);
+    IPage<UserPO> selectUserPageList(Page page);
 
-    IPage<UserPO> getAllUser(Page page);
+    /**
+     * Select user by ID and status
+     *
+     * @param params query params
+     * @return user persistence object
+     */
+    UserPO selectByIdAndStatus(@Param("params") UserPO params);
+
+    /**
+     * Update user's basic information by ID
+     *
+     * @param updated updated user
+     * @return affected rows
+     */
+    int updateUserBasicInfoById(@Param("updated") UserPO updated);
+
+    /**
+     * Select user by username
+     *
+     * @param username username
+     * @return user po
+     */
+    UserPO selectByUsername(@Param("username") String username);
+
+    /**
+     * Select user list for lazy selection
+     *
+     * @param page pagination object
+     * @return user page list
+     */
+    IPage<UserPO> selectUserListForSelection(Page page);
+
+    /**
+     * Select user status by ID and username
+     *
+     * @param id       user ID
+     * @param username username
+     * @return user status
+     */
+    Integer selectStatusByIdAndUsername(@Param("id") Long id, @Param("username") String username);
+
+    /**
+     * Insert user-role relation
+     *
+     * @param userId     user ID
+     * @param roleIdList role ID list
+     * @return affected rows
+     */
+    int insertUserIdAndRoleIdList(@Param("userId") Long userId, @Param("roleIdList") List<Long> roleIdList);
 }
