@@ -6,14 +6,14 @@ import com.jmframework.boot.jmspringbootstarter.service.AuthService;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.auth.payload.LoginPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.auth.payload.RegisterPLO;
-import com.jmframework.boot.jmspringbootstarterdomain.common.UserPrincipal;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.common.response.JwtRO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.codehaus.plexus.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -56,8 +56,8 @@ public class AuthController {
     @ApiOperation(value = "/check-username-uniqueness", notes = "Check username uniqueness")
     public ResponseBodyBean checkUsernameUniqueness(String username) {
         if (StringUtils.isBlank(username)) {
-            return ResponseBodyBean.setResponse(UniversalStatus.PARAM_INVALID.getCode(),
-                                                UniversalStatus.PARAM_INVALID.getMessage(),
+            return ResponseBodyBean.setResponse(HttpStatus.INVALID_PARAM.getCode(),
+                                                HttpStatus.INVALID_PARAM.getMessage(),
                                                 null);
         }
         if (authService.checkUsernameUniqueness(username)) {
@@ -70,8 +70,8 @@ public class AuthController {
     @ApiOperation(value = "/check-email-uniqueness", notes = "Check email uniqueness")
     public ResponseBodyBean checkEmailUniqueness(String email) {
         if (StringUtils.isBlank(email)) {
-            return ResponseBodyBean.setResponse(UniversalStatus.PARAM_INVALID.getCode(),
-                                                UniversalStatus.PARAM_INVALID.getMessage(),
+            return ResponseBodyBean.setResponse(HttpStatus.INVALID_PARAM.getCode(),
+                                                HttpStatus.INVALID_PARAM.getMessage(),
                                                 null);
         }
         if (authService.checkEmailUniqueness(email)) {
@@ -82,13 +82,13 @@ public class AuthController {
 
     @PostMapping("/register")
     @ApiOperation(value = "/register", notes = "Register (create an account)")
-    public ResponseBodyBean register(@Valid @RequestBody RegisterPLO registerPLO) {
-        UserPO userPO = new UserPO();
-        userPO.setUsername(registerPLO.getUsername());
-        userPO.setEmail(registerPLO.getEmail());
-        userPO.setPassword(encoder.encode(registerPLO.getPassword()));
-        authService.register(userPO);
-        if (userPO.getId() > 0) {
+    public ResponseBodyBean register(@Valid @RequestBody RegisterPLO plo) {
+        UserPO po = new UserPO();
+        po.setUsername(plo.getUsername());
+        po.setEmail(plo.getEmail());
+        po.setPassword(encoder.encode(plo.getPassword()));
+        authService.register(po);
+        if (po.getId() > 0) {
             return ResponseBodyBean.ofSuccess("Registered successfully.");
         }
         return ResponseBodyBean.ofFailure("Registered failure.");
@@ -105,17 +105,17 @@ public class AuthController {
 
     @PostMapping("/login")
     @ApiOperation(value = "/login", notes = "Login (Sign in)")
-    public ResponseBodyBean login(@Valid @RequestBody LoginPLO loginPLO) {
+    public ResponseBodyBean<JwtRO> login(@Valid @RequestBody LoginPLO plo) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginPLO.getUsernameOrEmailOrPhone(), loginPLO.getPassword()));
+                new UsernamePasswordAuthenticationToken(plo.getUsernameOrEmailOrPhone(), plo.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = jwtUtil.createJWT(authentication, loginPLO.getRememberMe());
-        JwtRO jwtRO = new JwtRO(jwt);
+        String jwt = jwtUtil.createJWT(authentication, plo.getRememberMe());
+        JwtRO ro = new JwtRO(jwt);
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        jwtRO.setFullName(userPrincipal.getFullName());
-        return ResponseBodyBean.ofSuccess(jwtRO);
+        ro.setFullName(userPrincipal.getFullName());
+        return ResponseBodyBean.ofSuccess(ro);
     }
 
     @PostMapping("/logout")
@@ -124,7 +124,7 @@ public class AuthController {
         try {
             jwtUtil.invalidateJWT(request);
         } catch (SecurityException e) {
-            throw new SecurityException(UniversalStatus.UNAUTHORIZED);
+            throw new SecurityException(HttpStatus.UNAUTHORIZED);
         }
         return ResponseBodyBean.ofSuccess("Logout success.");
     }

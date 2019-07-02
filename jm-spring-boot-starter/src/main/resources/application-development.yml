@@ -35,18 +35,29 @@ spring:
         max-wait: -1ms
         min-idle: 0
 
+# Customize JWT configuration for development environment.
+jwt:
+  configuration:
+    # an hour
+    ttl: 3600000
+    ttl-for-remember-me: 604800000
+
 custom:
   configuration:
-    web-security-disabled: true
+    # Make `web-security-disabled` equal to true to disable web security. We suggest you do not turn off web security
+    # feature unless development environment.
+    web-security-disabled: false
+    # Disable web request information log
+    web-request-log-disabled: false
     ignores:
       # POST Requests need to be ignored.
       post:
         - "/auth/register"
         - "/auth/login"
       get:
-        - "/auth/checkUsernameUniqueness"
-        - "/auth/checkEmailUniqueness"
-        - "/auth/validateUsername/**"
+        - "/auth/check-username-uniqueness"
+        - "/auth/check-email-uniqueness"
+        - "/auth/validate-username/**"
       # Request need to be ignored that matches pattern.
       pattern:
         - "/druid/**"

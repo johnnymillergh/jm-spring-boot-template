@@ -1,15 +1,25 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
-import com.jmframework.boot.jmspringbootstarter.service.RoleService;
+import com.jmframework.boot.jmspringbootstarter.service.AuthorizationService;
+import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.GetPermissionsPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.GetRolesPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.authorization.payload.SubmitAuthorizationPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.GetPermissionsRO;
+import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.GetRolesRO;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.PermissionType;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -23,27 +33,49 @@ import java.util.List;
 @RequestMapping("/authorization")
 @Api(tags = {"/authorization"})
 public class AuthorizationController {
-    private final RoleService roleService;
+    private final AuthorizationService authorizationService;
 
-    public AuthorizationController(RoleService roleService) {
-        this.roleService = roleService;
+    public AuthorizationController(AuthorizationService authorizationService) {
+        this.authorizationService = authorizationService;
     }
 
     @PostMapping("/get-roles")
     @ApiOperation(value = "/get-roles", notes = "Get roles (support lazy loading)")
-    public ResponseBodyBean getRoles() {
-        List<RolePO> poList = roleService.getList(null);
-//        poList.forEach(item -> {
-//            GetRoleListRO ro = new GetRoleListRO();
-//            BeanUtil.copyProperties(item, ro);
-//            roList.add(ro);
-//        });
-        return null;
+    public ResponseBodyBean<GetRolesRO> getRoles(@Valid @RequestBody GetRolesPLO plo) {
+        Page<RolePO> page = new Page<>(plo.getCurrentPage(), plo.getPageSize());
+        List<RolePO> poList = authorizationService.getRoleListForSelection(page);
+        GetRolesRO ro = new GetRolesRO();
+        poList.forEach(item -> {
+            GetRolesRO.RoleROBean role = new GetRolesRO.RoleROBean();
+            BeanUtil.copyProperties(item, role);
+            ro.getRoleList().add(role);
+        });
+        return ResponseBodyBean.ofSuccess(ro);
     }
 
-    @GetMapping("/get-permissions")
+    @PostMapping("/get-permissions")
     @ApiOperation(value = "/get-permissions", notes = "Get permissions (group by controller)")
-    public ResponseBodyBean getPermissionList() {
-        return null;
+    public ResponseBodyBean<GetPermissionsRO> getPermissionList(@Valid @RequestBody GetPermissionsPLO plo) {
+        if (PermissionType.PAGE.getType().equals(plo.getPermissionType())) {
+            return null;
+        }
+        if (PermissionType.BUTTON.getType().equals(plo.getPermissionType())) {
+            return ResponseBodyBean.ofSuccess(authorizationService.getPermissions(plo.getControllerFullClassName()));
+        }
+        return ResponseBodyBean.setResponse(HttpStatus.INVALID_PARAM.getCode(),
+                                            HttpStatus.INVALID_PARAM.getMessage(),
+                                            null);
     }
+
+    @PostMapping("/submit-authorization")
+    @ApiOperation(value = "/submit-authorization", notes = "Submit to authorize permissions to roles")
+    public ResponseBodyBean submitAuthorization(@Valid @RequestBody SubmitAuthorizationPLO plo) {
+        if (authorizationService.authorizePermission(plo)) {
+            return ResponseBodyBean.ofSuccess("Authorization done.");
+        }
+        return ResponseBodyBean.ofFailure("Authorization failed.");
+    }
+
+    // TODO: need API to query permissions that has been authorized to role
+    // TODO: need API to submit authorization for single role
 }

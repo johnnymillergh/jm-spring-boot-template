@@ -23,6 +23,6 @@ public class PermissionServiceTest {
 
     @Test
     public void getByIdTest() {
-        log.error("Get by ID: {}", permissionService.getById(1));
+//        log.error("Get by ID: {}", permissionService.getById(1));
     }
 }

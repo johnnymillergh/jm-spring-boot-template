@@ -28,10 +28,10 @@ public interface AuthService {
     /**
      * Register a new user.
      *
-     * @param userPO new user.
+     * @param po new user.
      * @return the new user stored in db with ID (primary key).
      */
-    UserPO register(UserPO userPO);
+    UserPO register(UserPO po);
 
     /**
      * Validate username.

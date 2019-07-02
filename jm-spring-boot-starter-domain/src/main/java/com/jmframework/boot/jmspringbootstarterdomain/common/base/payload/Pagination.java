@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * <h1>Pagination</h1>
@@ -20,8 +21,10 @@ import javax.validation.constraints.Min;
 @Data
 public class Pagination {
     private static final long serialVersionUID = -8674163654434252540L;
+    @NotNull(message = "Invalid parameter")
     @Min(value = 1)
-    private Long currentPage = 1L;
+    private Long currentPage;
+    @NotNull(message = "Invalid parameter")
     @Range(min = 10, max = 100)
-    private Long pageSize = 10L;
+    private Long pageSize;
 }

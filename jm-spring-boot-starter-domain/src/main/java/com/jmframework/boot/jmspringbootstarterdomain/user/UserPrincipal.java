@@ -1,10 +1,10 @@
-package com.jmframework.boot.jmspringbootstarterdomain.common;
+package com.jmframework.boot.jmspringbootstarterdomain.user;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
+import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +20,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Description: Custom user details
+ * <h1>UserPrincipal</h1>
+ * <p>Custom user details.</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 20:52
@@ -85,26 +86,34 @@ public class UserPrincipal implements UserDetails {
      */
     private Collection<? extends GrantedAuthority> authorities;
 
-    public static UserPrincipal create(UserPO userPO, List<RolePO> rolePOList, List<PermissionPO> permissionPOList) {
-        List<String> roleNames = rolePOList.stream().map(RolePO::getName).collect(Collectors.toList());
+    /**
+     * Create user principal
+     *
+     * @param user           user po
+     * @param roleList       role po list
+     * @param permissionList permission po list
+     * @return user principal
+     */
+    public static UserPrincipal create(UserPO user, List<RolePO> roleList, List<PermissionPO> permissionList) {
+        List<String> roleNames = roleList.stream().map(RolePO::getName).collect(Collectors.toList());
 
         List<GrantedAuthority> authorities =
-                permissionPOList.stream()
-                                .filter(permission -> StrUtil.isNotBlank(permission.getPermissionExpression()))
-                                .map(permission -> new SimpleGrantedAuthority(permission.getPermissionExpression()))
-                                .collect(Collectors.toList());
+                permissionList.stream()
+                              .filter(permission -> StrUtil.isNotBlank(permission.getPermissionExpression()))
+                              .map(permission -> new SimpleGrantedAuthority(permission.getPermissionExpression()))
+                              .collect(Collectors.toList());
 
-        return new UserPrincipal(userPO.getId(),
-                                 userPO.getUsername(),
-                                 userPO.getEmail(),
-                                 userPO.getCellphone(),
-                                 userPO.getPassword(),
-                                 userPO.getFullName(),
-                                 userPO.getBirthday(),
-                                 userPO.getGender(),
-                                 userPO.getStatus(),
-                                 userPO.getGmtCreated(),
-                                 userPO.getGmtModified(),
+        return new UserPrincipal(user.getId(),
+                                 user.getUsername(),
+                                 user.getEmail(),
+                                 user.getCellphone(),
+                                 user.getPassword(),
+                                 user.getFullName(),
+                                 user.getBirthday(),
+                                 user.getGender(),
+                                 user.getStatus(),
+                                 user.getGmtCreated(),
+                                 user.getGmtModified(),
                                  roleNames,
                                  authorities);
     }

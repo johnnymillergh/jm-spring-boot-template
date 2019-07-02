@@ -1,8 +1,8 @@
 package com.jmframework.boot.jmspringbootstarter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jmframework.boot.jmspringbootstarterdomain.role.payload.GetRoleListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Description: RoleMapper, change description here.
+ * <h1>RoleMapper</h1>
+ * <p>CRUD operations for table `t_role`</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-02 17:52
@@ -29,14 +30,15 @@ public interface RoleMapper extends BaseMapper<RolePO> {
     /**
      * Select page list
      *
-     * @param page           page
-     * @param getRoleListPLO persistence object
+     * @param page page object
      * @return role page list
      */
-    List<RolePO> selectPageList(Page page, GetRoleListPLO getRoleListPLO);
+    List<RolePO> selectPageList(Page page);
 
     /**
      * Check role name's uniqueness
+     * <p>
+     * If id is null, then check for creating role's name; otherwise, check for created role's name
      *
      * @param po persistence object
      * @return the occurrence of the name of role
@@ -66,4 +68,12 @@ public interface RoleMapper extends BaseMapper<RolePO> {
      * @return affected row
      */
     int updateRoleById(RolePO po);
+
+    /**
+     * Selection role list for selection
+     *
+     * @param page pagination object
+     * @return role page list
+     */
+    IPage<RolePO> selectRoleListForSelection(Page page);
 }

@@ -1,25 +1,19 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.mapper.PermissionMapper;
 import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
+import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
-import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 /**
- * Description: PermissionServiceImpl, change description here.
+ * <h1>PermissionServiceImpl</h1>
+ * <p>Change description here</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-05-10 20:46
@@ -34,8 +28,8 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public boolean savePermission(PermissionPO permissionPO) {
-        return permissionMapper.save(permissionPO) > 0;
+    public boolean savePermission(PermissionPO po) {
+        return permissionMapper.save(po) > 0;
     }
 
     @Override
@@ -44,8 +38,8 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public PermissionPO selectApiByUrl(String url) {
-        return permissionMapper.selectApiByUrl(url);
+    public ApiStatus checkApiIsInUse(String url) {
+        return permissionMapper.countInUseApiByUrl(url) == 1 ? ApiStatus.IN_USE : ApiStatus.IDLED;
     }
 
     @Override
@@ -54,128 +48,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<GetApiListRO> queryApiList(GetApiListPLO getApiListPLO) {
-        return permissionMapper.queryApiList(new Page(getApiListPLO.getCurrentPage(), getApiListPLO.getPageSize()),
-                                             getApiListPLO).getRecords();
-    }
-
-    @Override
-    public boolean save(PermissionPO entity) {
-        return false;
-    }
-
-    @Override
-    public boolean saveBatch(Collection<PermissionPO> entityList, int batchSize) {
-        return false;
-    }
-
-    @Override
-    public boolean saveOrUpdateBatch(Collection<PermissionPO> entityList, int batchSize) {
-        return false;
-    }
-
-    @Override
-    public boolean removeById(Serializable id) {
-        return false;
-    }
-
-    @Override
-    public boolean removeByMap(Map<String, Object> columnMap) {
-        return false;
-    }
-
-    @Override
-    public boolean remove(Wrapper<PermissionPO> queryWrapper) {
-        return false;
-    }
-
-    @Override
-    public boolean removeByIds(Collection<? extends Serializable> idList) {
-        return false;
-    }
-
-    @Override
-    public boolean updateById(PermissionPO entity) {
-        return false;
-    }
-
-    @Override
-    public boolean update(PermissionPO entity, Wrapper<PermissionPO> updateWrapper) {
-        return false;
-    }
-
-    @Override
-    public boolean updateBatchById(Collection<PermissionPO> entityList, int batchSize) {
-        return false;
-    }
-
-    @Override
-    public boolean saveOrUpdate(PermissionPO entity) {
-        return false;
-    }
-
-    @Override
-    public PermissionPO getById(Serializable id) {
-        return null;
-    }
-
-    @Override
-    public Collection<PermissionPO> listByIds(Collection<? extends Serializable> idList) {
-        return null;
-    }
-
-    @Override
-    public Collection<PermissionPO> listByMap(Map<String, Object> columnMap) {
-        return null;
-    }
-
-    @Override
-    public PermissionPO getOne(Wrapper<PermissionPO> queryWrapper, boolean throwEx) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> getMap(Wrapper<PermissionPO> queryWrapper) {
-        return null;
-    }
-
-    @Override
-    public <V> V getObj(Wrapper<PermissionPO> queryWrapper, Function<? super Object, V> mapper) {
-        return null;
-    }
-
-    @Override
-    public int count(Wrapper<PermissionPO> queryWrapper) {
-        return 0;
-    }
-
-    @Override
-    public List<PermissionPO> list(Wrapper<PermissionPO> queryWrapper) {
-        return null;
-    }
-
-    @Override
-    public IPage<PermissionPO> page(IPage<PermissionPO> page, Wrapper<PermissionPO> queryWrapper) {
-        return null;
-    }
-
-    @Override
-    public List<Map<String, Object>> listMaps(Wrapper<PermissionPO> queryWrapper) {
-        return null;
-    }
-
-    @Override
-    public <V> List<V> listObjs(Wrapper<PermissionPO> queryWrapper, Function<? super Object, V> mapper) {
-        return null;
-    }
-
-    @Override
-    public IPage<Map<String, Object>> pageMaps(IPage<PermissionPO> page, Wrapper<PermissionPO> queryWrapper) {
-        return null;
-    }
-
-    @Override
-    public BaseMapper<PermissionPO> getBaseMapper() {
-        return null;
+    public List<PermissionPO> queryApiList(GetApiListPLO plo) {
+        return permissionMapper.selectApiPageList(new Page(plo.getCurrentPage(), plo.getPageSize())).getRecords();
     }
 }

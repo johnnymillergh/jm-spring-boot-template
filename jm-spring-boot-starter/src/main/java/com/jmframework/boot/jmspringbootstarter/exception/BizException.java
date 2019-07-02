@@ -1,8 +1,8 @@
 package com.jmframework.boot.jmspringbootstarter.exception;
 
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.IUniversalStatus;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalStatus;
 
 /**
  * Description: BizException, change description here.
@@ -13,16 +13,16 @@ import com.jmframework.boot.jmspringbootstarterdomain.common.constant.UniversalS
 public class BizException extends BaseException {
     private static final long serialVersionUID = 6403325238832002908L;
 
-    public BizException(UniversalStatus universalStatus) {
-        super(universalStatus);
+    public BizException(HttpStatus httpStatus) {
+        super(httpStatus);
     }
 
-    public BizException(UniversalStatus universalStatus, Object data) {
-        super(universalStatus, data);
+    public BizException(HttpStatus httpStatus, Object data) {
+        super(httpStatus, data);
     }
 
-    public BizException(UniversalStatus universalStatus, String message) {
-        super(universalStatus, message);
+    public BizException(HttpStatus httpStatus, String message) {
+        super(httpStatus, message);
     }
 
     public BizException(IUniversalStatus status) {

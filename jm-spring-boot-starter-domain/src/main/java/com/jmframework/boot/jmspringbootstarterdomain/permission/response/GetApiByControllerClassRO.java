@@ -5,13 +5,13 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Description: ApiRO, response of API `/apiManagement/getApiByControllerClass`.
+ * Description: GetApiByControllerClassRO, response of API `/apiManagement/getApiByControllerClass`.
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-04-12 09:35
  **/
 @Data
-public class ApiRO {
+public class GetApiByControllerClassRO {
     private List<Uri> apiList;
     private Integer idledApiCount;
     private Integer inUseApiCount;

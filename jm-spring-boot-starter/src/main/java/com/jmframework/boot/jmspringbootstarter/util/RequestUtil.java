@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.util;
 
-import org.apache.commons.lang3.StringUtils;
+import org.codehaus.plexus.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
