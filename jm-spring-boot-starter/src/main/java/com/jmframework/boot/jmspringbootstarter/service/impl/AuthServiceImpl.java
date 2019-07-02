@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Description: AuthServiceImpl, change description here.
+ * <h1>AuthServiceImpl</h1>
+ * <p>Change description here</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-28 20:25

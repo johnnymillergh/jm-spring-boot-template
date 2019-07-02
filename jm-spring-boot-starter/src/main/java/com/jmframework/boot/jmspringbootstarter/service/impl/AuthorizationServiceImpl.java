@@ -51,14 +51,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public GetPermissionsRO getPermissions(List<String> controllerFullClassNameList) {
         GetPermissionsRO ro = new GetPermissionsRO();
-        for (String cfcn : controllerFullClassNameList) {
-            List<PermissionPO> permissions = getPermissionsByControllerFullClassName(cfcn);
+        for (String fullClassName : controllerFullClassNameList) {
+            List<PermissionPO> permissions = getPermissionsByControllerFullClassName(fullClassName);
             if (CollectionUtil.isEmpty(permissions)) {
                 continue;
             }
             GetPermissionsRO.Controller controller = new GetPermissionsRO.Controller();
-            controller.setControllerFullClassName(cfcn);
-            String[] splits = cfcn.split("\\.");
+            controller.setControllerFullClassName(fullClassName);
+            String[] splits = fullClassName.split("\\.");
             controller.setControllerName(splits[splits.length - 1]);
             for (PermissionPO po : permissions) {
                 GetPermissionsRO.Api api = new GetPermissionsRO.Api();

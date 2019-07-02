@@ -16,10 +16,10 @@ public interface PermissionService {
     /**
      * Save permissionPO
      *
-     * @param permissionPO permissionPO
+     * @param po permissionPO
      * @return true - successful operation; false - failed operation
      */
-    boolean savePermission(PermissionPO permissionPO);
+    boolean savePermission(PermissionPO po);
 
     /**
      * Select permission list by role id

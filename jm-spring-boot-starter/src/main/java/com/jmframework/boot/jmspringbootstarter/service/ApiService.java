@@ -41,10 +41,10 @@ public interface ApiService {
     /**
      * Set API in use
      *
-     * @param setApiInUsePLO form data for setting api in use
+     * @param plo form data for setting api in use
      * @return true - successful operation; false - failed operation
      */
-    boolean setApiInUse(SetApiInUsePLO setApiInUsePLO);
+    boolean setApiInUse(SetApiInUsePLO plo);
 
     /**
      * Set a controller's all api in use
@@ -54,5 +54,11 @@ public interface ApiService {
      */
     boolean setAllApiInUse(String controllerClass);
 
-    GetApiListRO getApiList(GetApiListPLO getApiListPLO);
+    /**
+     * Get API list
+     *
+     * @param plo payload object
+     * @return API list (response object)
+     */
+    GetApiListRO getApiList(GetApiListPLO plo);
 }

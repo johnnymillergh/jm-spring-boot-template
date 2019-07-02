@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Description: RolePermissionMapper, change description here.
+ * <h1>RolePermissionMapper</h1>
+ * <p>CRUD operations for table `t_role_permission`</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-02 17:55

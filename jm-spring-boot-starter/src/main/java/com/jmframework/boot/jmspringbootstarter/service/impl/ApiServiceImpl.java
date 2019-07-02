@@ -33,7 +33,8 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
- * Description: ApiServiceImpl, change description here.
+ * <h1>ApiServiceImpl</h1>
+ * <p>Change description here</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-04-07 13:33
@@ -112,9 +113,9 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public boolean setApiInUse(SetApiInUsePLO setApiInUsePLO) {
+    public boolean setApiInUse(SetApiInUsePLO plo) {
         PermissionPO permissionPO = new PermissionPO();
-        BeanUtil.copyProperties(setApiInUsePLO, permissionPO);
+        BeanUtil.copyProperties(plo, permissionPO);
         permissionPO.setType(PermissionType.BUTTON.getType());
         return permissionService.savePermission(permissionPO);
     }
@@ -139,9 +140,9 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public GetApiListRO getApiList(GetApiListPLO getApiListPLO) {
+    public GetApiListRO getApiList(GetApiListPLO plo) {
         GetApiListRO re = new GetApiListRO();
-        List<PermissionPO> poList = permissionService.queryApiList(getApiListPLO);
+        List<PermissionPO> poList = permissionService.queryApiList(plo);
         poList.forEach(item -> {
             GetApiListRO.Api api = new GetApiListRO.Api();
             BeanUtil.copyProperties(item, api);

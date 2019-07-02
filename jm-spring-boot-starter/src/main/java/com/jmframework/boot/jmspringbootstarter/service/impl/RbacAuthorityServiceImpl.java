@@ -32,7 +32,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Description: Route Authority service
+ * <h1>RbacAuthorityServiceImpl</h1>
+ * <p>Route Authority service implementation</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 14:25
@@ -75,23 +76,23 @@ public class RbacAuthorityServiceImpl implements RbacAuthorityService {
             UserPrincipal principal = (UserPrincipal) userInfo;
             Long userId = principal.getId();
 
-            List<RolePO> rolePOList = roleService.getRolesByUserId(userId);
-            List<Long> roleIds = rolePOList.stream()
-                                           .map(RolePO::getId)
-                                           .collect(Collectors.toList());
-            List<PermissionPO> permissionPOList = permissionService.selectByRoleIdList(roleIds);
+            List<RolePO> rolesByUserId = roleService.getRolesByUserId(userId);
+            List<Long> roleIds = rolesByUserId.stream()
+                                              .map(RolePO::getId)
+                                              .collect(Collectors.toList());
+            List<PermissionPO> permissionsByRoleId = permissionService.selectByRoleIdList(roleIds);
 
             // Filter button permission for frond-end
             List<PermissionPO> btnPerms =
-                    permissionPOList.stream()
-                                    // Sieve out page permissions
-                                    .filter(permission -> Objects.equals(permission.getType(),
-                                                                         PermissionType.BUTTON.getType()))
-                                    // Sieve out permission that has no URL
-                                    .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
-                                    // Sieve out permission that has no method
-                                    .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
-                                    .collect(Collectors.toList());
+                    permissionsByRoleId.stream()
+                                       // Sieve out page permissions
+                                       .filter(permission -> Objects.equals(permission.getType(),
+                                                                            PermissionType.BUTTON.getType()))
+                                       // Sieve out permission that has no URL
+                                       .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
+                                       // Sieve out permission that has no method
+                                       .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
+                                       .collect(Collectors.toList());
 
             for (PermissionPO btnPerm : btnPerms) {
                 AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(btnPerm.getUrl(), btnPerm.getMethod());

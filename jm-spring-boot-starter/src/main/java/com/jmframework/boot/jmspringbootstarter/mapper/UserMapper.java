@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 /**
- * Description: UserMapper, change description here.
+ * <h1>UserMapper</h1>
+ * <p>CRUD operations for table `t_user`</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-02 17:32

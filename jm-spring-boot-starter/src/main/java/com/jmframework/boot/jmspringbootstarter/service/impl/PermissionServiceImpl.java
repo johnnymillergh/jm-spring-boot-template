@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Description: PermissionServiceImpl, change description here.
+ * <h1>PermissionServiceImpl</h1>
+ * <p>Change description here</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-05-10 20:46
@@ -27,8 +28,8 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public boolean savePermission(PermissionPO permissionPO) {
-        return permissionMapper.save(permissionPO) > 0;
+    public boolean savePermission(PermissionPO po) {
+        return permissionMapper.save(po) > 0;
     }
 
     @Override
