@@ -1,4 +1,51 @@
-#  (2019-05-24)
+# [2.0.3](https://github.com/johnnymillergh/jm-spring-boot-template/compare/v2.0.2...v) (2019-07-02)
+
+
+### Bug Fixes
+
+* **$Role:** remove `@NotNull` annotation ([6093a88](https://github.com/johnnymillergh/jm-spring-boot-template/commit/6093a88))
+
+
+### Code Refactoring
+
+* **$HTTPStatus:** rename UniversalStatus.java to HttpStatus.java ([8dc0896](https://github.com/johnnymillergh/jm-spring-boot-template/commit/8dc0896))
+* **$Pagination:** not initialize pagination's fields ([6785d4a](https://github.com/johnnymillergh/jm-spring-boot-template/commit/6785d4a))
+* **$ResponseBody, HTTPStatus:** use generics to constrain the type of response body and redefine HTTP status ([4cfaa44](https://github.com/johnnymillergh/jm-spring-boot-template/commit/4cfaa44))
+
+
+### Features
+
+* **$API:** add an API `/authorization/get-permissions` ([216631a](https://github.com/johnnymillergh/jm-spring-boot-template/commit/216631a))
+* **$API:** add an API `/authorization/get-roles` ([8db2eb7](https://github.com/johnnymillergh/jm-spring-boot-template/commit/8db2eb7))
+* **$API:** add API `/authorization/submit-authorization` ([827c6f9](https://github.com/johnnymillergh/jm-spring-boot-template/commit/827c6f9))
+* **$API:** add API to edit user's basic information ([44ecdad](https://github.com/johnnymillergh/jm-spring-boot-template/commit/44ecdad))
+* **$API:** add API to retrieve roles that user has ([3deef66](https://github.com/johnnymillergh/jm-spring-boot-template/commit/3deef66))
+* **$API:** new API to retrieve user page list ([28cd849](https://github.com/johnnymillergh/jm-spring-boot-template/commit/28cd849))
+* **$FTPStatus:** add FtpStatus.java ([e77441b](https://github.com/johnnymillergh/jm-spring-boot-template/commit/e77441b))
+* **$IgnoredAPI, auth:** update the URLs of ignored API ([e8bf036](https://github.com/johnnymillergh/jm-spring-boot-template/commit/e8bf036))
+* **$JWT:** distribute JWT configuration for different envs ([f4f5aeb](https://github.com/johnnymillergh/jm-spring-boot-template/commit/f4f5aeb))
+* **$pom:** upgrade version to 2.0.3.RELEASE ([666b306](https://github.com/johnnymillergh/jm-spring-boot-template/commit/666b306))
+* **$SpringValidation:** get field error message from exception ([b35267c](https://github.com/johnnymillergh/jm-spring-boot-template/commit/b35267c))
+* **$User:** add API to retrieve user information ([aa1bc05](https://github.com/johnnymillergh/jm-spring-boot-template/commit/aa1bc05))
+* **$User:** add field `usersRoles` for API `/user/get-user-info` ([0519f9e](https://github.com/johnnymillergh/jm-spring-boot-template/commit/0519f9e))
+* **$User:** add gender enumeration ([1e9da59](https://github.com/johnnymillergh/jm-spring-boot-template/commit/1e9da59))
+* **$User:** new API - assign role(s) to user ([dfb5c7b](https://github.com/johnnymillergh/jm-spring-boot-template/commit/dfb5c7b))
+* **$User:** new API `/get-user-list-for-selection` ([5e9671e](https://github.com/johnnymillergh/jm-spring-boot-template/commit/5e9671e))
+* **$User:** new API to search user by username ([20d2f61](https://github.com/johnnymillergh/jm-spring-boot-template/commit/20d2f61))
+* **$WebSecurity:** enable web security ([579f9e6](https://github.com/johnnymillergh/jm-spring-boot-template/commit/579f9e6))
+
+
+### BREAKING CHANGES
+
+* **$Pagination:** not initialize pagination's fields
+* **$WebSecurity:** enable web security
+* **$FTPStatus:** add FtpStatus.java
+* **$HTTPStatus:** rename UniversalStatus.java to HttpStatus.java
+* **$ResponseBody, HTTPStatus:** use generics to constrain the type of response body and redefine HTTP status
+
+
+
+## [2.0.2](https://github.com/johnnymillergh/jm-spring-boot-template/compare/779c070...v2.0.2) (2019-05-24)
 
 
 ### Bug Fixes
