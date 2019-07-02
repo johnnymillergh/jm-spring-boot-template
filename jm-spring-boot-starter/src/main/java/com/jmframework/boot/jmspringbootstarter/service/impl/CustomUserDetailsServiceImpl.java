@@ -9,6 +9,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.Per
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +19,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 /**
  * <h1>CustomUserDetailsServiceImpl</h1>
  * <p>Custom user detail service.</p>
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-03 13:40
  **/
+@Slf4j
 @Service
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
     private final UserMapper userMapper;
@@ -41,10 +44,13 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String usernameOrEmailOrPhone) throws UsernameNotFoundException {
-        UserPO user = userMapper.findByUsernameOrEmailOrPhone(usernameOrEmailOrPhone, usernameOrEmailOrPhone,
-                                                              usernameOrEmailOrPhone)
-                                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + usernameOrEmailOrPhone));
+    public UserDetails loadUserByUsername(String credentials) throws UsernameNotFoundException {
+        UserPO user = userMapper.selectByUsernameOrEmailOrCellphone(credentials, credentials, credentials)
+                                .orElseThrow(() -> {
+                                    String errorMessage = "User's account not found: " + credentials;
+                                    log.error(errorMessage);
+                                    return new UsernameNotFoundException(errorMessage);
+                                });
         List<RolePO> rolesByUserId = roleService.getRolesByUserId(user.getId());
         if (CollectionUtils.isEmpty(rolesByUserId)) {
             throw new SecurityException(HttpStatus.ROLE_NOT_FOUND);

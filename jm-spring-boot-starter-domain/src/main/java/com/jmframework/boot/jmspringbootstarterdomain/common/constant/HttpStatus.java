@@ -80,9 +80,9 @@ public enum HttpStatus implements IUniversalStatus {
      */
     ROLE_NOT_FOUND(552, "Role not found."),
     /**
-     * Username or password error
+     * Username or password is not correct or account error
      */
-    USERNAME_OR_PASSWORD_ERROR(553, "Username or password error."),
+    BAD_CREDENTIALS(553, "Username or password is not correct or account error."),
     /**
      * Token expired
      */
@@ -135,8 +135,7 @@ public enum HttpStatus implements IUniversalStatus {
     }
 
     /**
-     * Whether this status code is in the HTTP series
-     * {@link org.springframework.http.HttpStatus.Series#INFORMATIONAL}.
+     * Whether this status code is in the HTTP series {@link org.springframework.http.HttpStatus.Series#INFORMATIONAL}.
      * This is a shortcut for checking the value of {@link #series()}.
      *
      * @see #series()
@@ -146,8 +145,7 @@ public enum HttpStatus implements IUniversalStatus {
     }
 
     /**
-     * Whether this status code is in the HTTP series
-     * {@link org.springframework.http.HttpStatus.Series#SUCCESSFUL}.
+     * Whether this status code is in the HTTP series {@link org.springframework.http.HttpStatus.Series#SUCCESSFUL}.
      * This is a shortcut for checking the value of {@link #series()}.
      *
      * @see #series()
@@ -157,8 +155,7 @@ public enum HttpStatus implements IUniversalStatus {
     }
 
     /**
-     * Whether this status code is in the HTTP series
-     * {@link org.springframework.http.HttpStatus.Series#REDIRECTION}.
+     * Whether this status code is in the HTTP series {@link org.springframework.http.HttpStatus.Series#REDIRECTION}.
      * This is a shortcut for checking the value of {@link #series()}.
      *
      * @see #series()
@@ -168,8 +165,7 @@ public enum HttpStatus implements IUniversalStatus {
     }
 
     /**
-     * Whether this status code is in the HTTP series
-     * {@link org.springframework.http.HttpStatus.Series#CLIENT_ERROR}.
+     * Whether this status code is in the HTTP series {@link org.springframework.http.HttpStatus.Series#CLIENT_ERROR}.
      * This is a shortcut for checking the value of {@link #series()}.
      *
      * @see #series()
@@ -179,8 +175,7 @@ public enum HttpStatus implements IUniversalStatus {
     }
 
     /**
-     * Whether this status code is in the HTTP series
-     * {@link org.springframework.http.HttpStatus.Series#SERVER_ERROR}.
+     * Whether this status code is in the HTTP series {@link org.springframework.http.HttpStatus.Series#SERVER_ERROR}.
      * This is a shortcut for checking the value of {@link #series()}.
      *
      * @see #series()
@@ -190,10 +185,9 @@ public enum HttpStatus implements IUniversalStatus {
     }
 
     /**
-     * Whether this status code is in the HTTP series
-     * {@link org.springframework.http.HttpStatus.Series#CLIENT_ERROR} or
-     * {@link org.springframework.http.HttpStatus.Series#SERVER_ERROR}.
-     * This is a shortcut for checking the value of {@link #series()}.
+     * Whether this status code is in the HTTP series {@link org.springframework.http.HttpStatus.Series#CLIENT_ERROR} or
+     * {@link org.springframework.http.HttpStatus.Series#SERVER_ERROR}. This is a shortcut for checking the value of
+     * {@link #series()}.
      *
      * @see #is4xxClientError()
      * @see #is5xxServerError()

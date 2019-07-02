@@ -29,7 +29,7 @@
         <result column="status" property="status"/>
     </resultMap>
 
-    <select id="findByUsernameOrEmailOrPhone" resultMap="BaseResultMap">
+    <select id="selectByUsernameOrEmailOrCellphone" resultMap="BaseResultMap">
         SELECT id,
                username,
                email,
@@ -43,15 +43,10 @@
                status
         FROM t_user
         <where>
-            <if test="username != null">
-                username = #{username}
+            <if test="username != null || email != null || cellphone != null">
+                (username = #{username} OR email = #{email} OR cellphone = #{cellphone})
             </if>
-            <if test="email != null">
-                OR email = #{email}
-            </if>
-            <if test="phone != null">
-                OR cellphone = #{phone}
-            </if>
+            AND status = 1
         </where>
     </select>
 

@@ -95,8 +95,8 @@ public class ExceptionControllerAdvice {
             return ResponseBodyBean.ofStatus(HttpStatus.PARAM_NOT_NULL);
         } else if (exception instanceof BadCredentialsException) {
             log.error("[GlobalExceptionCapture] BadCredentialsException: {}", exception.getMessage());
-            response.setStatus(HttpStatus.USERNAME_OR_PASSWORD_ERROR.getCode());
-            return ResponseBodyBean.ofStatus(HttpStatus.USERNAME_OR_PASSWORD_ERROR);
+            response.setStatus(HttpStatus.BAD_CREDENTIALS.getCode());
+            return ResponseBodyBean.ofStatus(HttpStatus.BAD_CREDENTIALS);
         } else if (exception instanceof DisabledException) {
             log.error("[GlobalExceptionCapture] DisabledException: {}", exception.getMessage());
             response.setStatus(HttpStatus.USER_DISABLED.getCode());

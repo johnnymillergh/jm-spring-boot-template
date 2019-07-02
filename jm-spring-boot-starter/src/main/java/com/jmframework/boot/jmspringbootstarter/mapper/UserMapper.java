@@ -21,16 +21,16 @@ import java.util.Optional;
 @Component
 public interface UserMapper extends BaseMapper<UserPO> {
     /**
-     * Find by username, email or Phone.
+     * Find by username, email or cellphone.
      *
-     * @param username Username
-     * @param email    Email
-     * @param phone    phone
+     * @param username  Username
+     * @param email     Email
+     * @param cellphone cellphone number
      * @return User information.
      */
-    Optional<UserPO> findByUsernameOrEmailOrPhone(@Param("username") String username,
-                                                  @Param("email") String email,
-                                                  @Param("phone") String phone);
+    Optional<UserPO> selectByUsernameOrEmailOrCellphone(@Param("username") String username,
+                                                        @Param("email") String email,
+                                                        @Param("cellphone") String cellphone);
 
     /**
      * Count by username.
