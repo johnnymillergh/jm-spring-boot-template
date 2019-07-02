@@ -23,6 +23,8 @@ public interface RoleService {
 
     /**
      * Check the uniqueness of name of role
+     * <p>
+     * If id is null, then check for creating role's name; otherwise, check for created role's name
      *
      * @param po persistence object
      * @return true - available; false - not available

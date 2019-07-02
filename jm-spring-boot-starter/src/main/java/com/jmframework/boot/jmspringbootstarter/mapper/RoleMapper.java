@@ -37,6 +37,8 @@ public interface RoleMapper extends BaseMapper<RolePO> {
 
     /**
      * Check role name's uniqueness
+     * <p>
+     * If id is null, then check for creating role's name; otherwise, check for created role's name
      *
      * @param po persistence object
      * @return the occurrence of the name of role

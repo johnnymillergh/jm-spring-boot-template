@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  * <h1>CheckRoleNamePLO</h1>
@@ -16,7 +15,9 @@ import javax.validation.constraints.NotNull;
  **/
 @Data
 public class CheckRoleNamePLO {
-    @NotNull
+    /**
+     * If id is null, then check for creating role's name; otherwise, check for created role's name
+     */
     @Min(value = 1L)
     private Long id;
     @NotEmpty(message = "name is required")
