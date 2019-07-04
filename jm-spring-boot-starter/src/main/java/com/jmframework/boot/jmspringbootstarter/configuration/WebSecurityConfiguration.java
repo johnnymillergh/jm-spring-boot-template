@@ -4,7 +4,6 @@ import com.jmframework.boot.jmspringbootstarter.filter.JwtAuthenticationFilter;
 import com.jmframework.boot.jmspringbootstarter.service.impl.CustomUserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -28,7 +27,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 @Configuration
 @EnableWebSecurity
-@EnableConfigurationProperties(CustomConfiguration.class)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final CustomConfiguration customConfiguration;
     private final AccessDeniedHandler accessDeniedHandler;

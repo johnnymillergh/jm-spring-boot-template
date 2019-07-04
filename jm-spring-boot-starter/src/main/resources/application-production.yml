@@ -56,3 +56,13 @@ custom:
       pattern:
         - "/druid/**"
     web-security-disabled: false
+
+sftp:
+  configuration:
+    host: 127.0.0.1
+    port: 22
+    user: johnny
+    password: jm@mac
+    directory: /Users/johnny/Public
+    private-key:
+    private-key-pass-phrase:

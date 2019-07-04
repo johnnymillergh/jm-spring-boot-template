@@ -19,6 +19,10 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 logging:
   config: classpath:configuration/logback/logback-@env@.xml

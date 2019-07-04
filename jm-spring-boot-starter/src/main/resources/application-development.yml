@@ -46,7 +46,7 @@ custom:
   configuration:
     # Make `web-security-disabled` equal to true to disable web security. We suggest you do not turn off web security
     # feature unless development environment.
-    web-security-disabled: false
+    web-security-disabled: true
     # Disable web request information log
     web-request-log-disabled: false
     ignores:
@@ -65,3 +65,13 @@ custom:
         - "/v2/api-docs/**"
         - "/webjars/**"
         - "/swagger-ui.html"
+
+sftp:
+  configuration:
+    host: 127.0.0.1
+    port: 22
+    user: johnny
+    password: jm@mac
+    directory: /Users/johnny/Public
+    private-key:
+    private-key-pass-phrase:

@@ -57,3 +57,13 @@ custom:
       # Request need to be ignored that matches pattern.
       pattern:
         - "/druid/**"
+
+sftp:
+  configuration:
+    host: 127.0.0.1
+    port: 22
+    user: johnny
+    password: jm@mac
+    directory: /Users/johnny/Public
+    private-key:
+    private-key-pass-phrase:

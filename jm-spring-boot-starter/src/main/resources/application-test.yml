@@ -61,3 +61,13 @@ custom:
         - "/v2/api-docs/**"
         - "/webjars/**"
         - "/swagger-ui.html"
+
+sftp:
+  configuration:
+    host: 127.0.0.1
+    port: 22
+    user: johnny
+    password: jm@mac
+    directory: /Users/johnny/Public
+    private-key:
+    private-key-pass-phrase:
