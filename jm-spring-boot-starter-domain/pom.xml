@@ -12,7 +12,7 @@
         <artifactId>jm-spring-boot-template</artifactId>
         <groupId>com.jmframework.boot</groupId>
         <!-- The version below should be synchronized with project's version -->
-        <version>2.0.3.RELEASE</version>
+        <version>2.0.4.SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
