@@ -32,6 +32,16 @@ public class SftpSubDirectoryRunner implements ApplicationRunner {
     @Override
     @SuppressWarnings("RedundantThrows")
     public void run(ApplicationArguments args) throws Exception {
+        sftpRemoteFileTemplate.execute(session -> {
+            if (!session.exists(sftpClientConfiguration.getDirectory())) {
+                log.error("Make directories for SFTP server. Directory: {}", sftpClientConfiguration.getDirectory());
+                session.mkdir(sftpClientConfiguration.getDirectory());
+            } else {
+                log.error("SFTP server remote directory exists: {}", sftpClientConfiguration.getDirectory());
+            }
+            return null;
+        });
+
         log.error("Staring to initial SFTP server sub directory.");
         sftpRemoteFileTemplate.execute(session -> {
             for (SftpSubDirectory sftpSubDirectory : SftpSubDirectory.values()) {
