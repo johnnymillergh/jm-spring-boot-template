@@ -26,7 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
- * Description: Authentication and authorization controller for user signing up, login and logout.
+ * <h1>AuthController</h1>
+ * <p>Authentication and authorization controller for user signing up, login and logout.</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 14:54
@@ -111,7 +112,7 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = jwtUtil.createJWT(authentication, plo.getRememberMe());
+        String jwt = jwtUtil.createJwt(authentication, plo.getRememberMe());
         JwtRO ro = new JwtRO(jwt);
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         ro.setFullName(userPrincipal.getFullName());
@@ -122,7 +123,7 @@ public class AuthController {
     @ApiOperation(value = "/logout", notes = "Logout (Sign out)")
     public ResponseBodyBean logout(HttpServletRequest request) {
         try {
-            jwtUtil.invalidateJWT(request);
+            jwtUtil.invalidateJwt(request);
         } catch (SecurityException e) {
             throw new SecurityException(HttpStatus.UNAUTHORIZED);
         }

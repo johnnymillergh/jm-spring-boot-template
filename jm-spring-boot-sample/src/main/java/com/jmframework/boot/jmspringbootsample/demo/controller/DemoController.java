@@ -36,7 +36,7 @@ public class DemoController {
     public ResponseBodyBean getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<>(4);
         String jwtString = jwtUtil.getJwtFromRequest(request);
-        Claims claims = jwtUtil.parseJWT(jwtString);
+        Claims claims = jwtUtil.parseJwt(jwtString);
         resultMap.put("jwtString", jwtString);
         resultMap.put("claims", claims);
         response.setStatus(org.springframework.http.HttpStatus.BAD_REQUEST.value());

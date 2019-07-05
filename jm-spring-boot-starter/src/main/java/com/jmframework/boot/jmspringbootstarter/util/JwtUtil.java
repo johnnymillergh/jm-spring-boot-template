@@ -5,14 +5,14 @@ import cn.hutool.core.util.StrUtil;
 import com.jmframework.boot.jmspringbootstarter.common.constant.Constants;
 import com.jmframework.boot.jmspringbootstarter.configuration.JwtConfiguration;
 import com.jmframework.boot.jmspringbootstarter.exception.SecurityException;
+import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
+import com.jmframework.boot.jmspringbootstarter.service.RedisService;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -24,23 +24,23 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Description: JwtUtil.
+ * <h1>JwtUtil</h1>
+ * <p>JWT util</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-03 13:40
  **/
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(JwtConfiguration.class)
 public class JwtUtil {
     private final JwtConfiguration jwtConfiguration;
-    private final StringRedisTemplate stringRedisTemplate;
+    private final RedisService redisService;
 
     @Autowired
     public JwtUtil(JwtConfiguration jwtConfiguration,
-                   StringRedisTemplate stringRedisTemplate) {
+                   RedisService redisService) {
         this.jwtConfiguration = jwtConfiguration;
-        this.stringRedisTemplate = stringRedisTemplate;
+        this.redisService = redisService;
     }
 
     /**
@@ -53,7 +53,11 @@ public class JwtUtil {
      * @param authorities Granted Authority
      * @return JWT
      */
-    public String createJWT(Boolean rememberMe, Long id, String subject, List<String> roles,
+    @SuppressWarnings("unused")
+    public String createJwt(Boolean rememberMe,
+                            Long id,
+                            String subject,
+                            List<String> roles,
                             Collection<? extends GrantedAuthority> authorities) {
         Date now = new Date();
         JwtBuilder builder = Jwts.builder()
@@ -73,9 +77,11 @@ public class JwtUtil {
 
         String jwt = builder.compact();
         // Store new JWT in Redis
-        stringRedisTemplate.opsForValue()
-                           .set(Constants.REDIS_JWT_KEY_PREFIX + subject, jwt, ttl, TimeUnit.MILLISECONDS);
-        return jwt;
+        Boolean result = redisService.set(Constants.REDIS_JWT_KEY_PREFIX + subject, jwt, ttl, TimeUnit.MILLISECONDS);
+        if (result) {
+            return jwt;
+        }
+        throw new BaseException(HttpStatus.ERROR);
     }
 
     /**
@@ -85,9 +91,9 @@ public class JwtUtil {
      * @param rememberMe     Remember me
      * @return JWT
      */
-    public String createJWT(Authentication authentication, Boolean rememberMe) {
+    public String createJwt(Authentication authentication, Boolean rememberMe) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        return createJWT(rememberMe, userPrincipal.getId(), userPrincipal.getUsername(), userPrincipal.getRoles(),
+        return createJwt(rememberMe, userPrincipal.getId(), userPrincipal.getUsername(), userPrincipal.getRoles(),
                          userPrincipal.getAuthorities());
     }
 
@@ -97,7 +103,7 @@ public class JwtUtil {
      * @param jwt JWT
      * @return {@link Claims}
      */
-    public Claims parseJWT(String jwt) {
+    public Claims parseJwt(String jwt) {
         try {
             Claims claims = Jwts.parser()
                                 .setSigningKey(jwtConfiguration.getSigningKey())
@@ -108,7 +114,7 @@ public class JwtUtil {
             String redisKey = Constants.REDIS_JWT_KEY_PREFIX + username;
 
             // Check if JWT exists
-            Long expire = stringRedisTemplate.getExpire(redisKey, TimeUnit.MILLISECONDS);
+            Long expire = redisService.getExpire(redisKey, TimeUnit.MILLISECONDS);
             if (Objects.isNull(expire) || expire <= 0) {
                 throw new SecurityException(HttpStatus.TOKEN_EXPIRED);
             }
@@ -116,7 +122,7 @@ public class JwtUtil {
             // Check if current JWT is equal to the one in Redis.
             // If it's noe equal, that indicates current user has signed out or logged in before.
             // Both situations reveal the JWT expired.
-            String redisToken = stringRedisTemplate.opsForValue().get(redisKey);
+            String redisToken = redisService.get(redisKey);
             if (!StrUtil.equals(jwt, redisToken)) {
                 throw new SecurityException(HttpStatus.TOKEN_OUT_OF_CONTROL);
             }
@@ -144,12 +150,12 @@ public class JwtUtil {
      *
      * @param request Request
      */
-    public void invalidateJWT(HttpServletRequest request) {
+    public void invalidateJwt(HttpServletRequest request) {
         String jwt = getJwtFromRequest(request);
-        String username = getUsernameFromJWT(jwt);
+        String username = getUsernameFromJwt(jwt);
         // Delete JWT from redis
-        Boolean result = stringRedisTemplate.delete(Constants.REDIS_JWT_KEY_PREFIX + username);
-        log.error("Invalidate JWT. Username = {}, result = {}", username, result);
+        Long deleted = redisService.delete(Constants.REDIS_JWT_KEY_PREFIX + username);
+        log.error("Invalidate JWT. Username = {}, deleted = {}", username, deleted);
     }
 
     /**
@@ -158,8 +164,8 @@ public class JwtUtil {
      * @param jwt JWT
      * @return Username
      */
-    public String getUsernameFromJWT(String jwt) {
-        Claims claims = parseJWT(jwt);
+    public String getUsernameFromJwt(String jwt) {
+        Claims claims = parseJwt(jwt);
         return claims.getSubject();
     }
 
@@ -171,7 +177,7 @@ public class JwtUtil {
      */
     public String getUsernameFromRequest(HttpServletRequest request) {
         String jwt = this.getJwtFromRequest(request);
-        return this.getUsernameFromJWT(jwt);
+        return this.getUsernameFromJwt(jwt);
     }
 
     /**
