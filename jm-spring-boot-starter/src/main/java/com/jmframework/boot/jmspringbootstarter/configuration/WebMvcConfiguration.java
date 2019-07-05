@@ -52,6 +52,11 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         return customMessageSourceConfiguration.getValidator();
     }
 
+    /**
+     * Configure cross origin requests processing.
+     *
+     * @param registry CORS registry
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
