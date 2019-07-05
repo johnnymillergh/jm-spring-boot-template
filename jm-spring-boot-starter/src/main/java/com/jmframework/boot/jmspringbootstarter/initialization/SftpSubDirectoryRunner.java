@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.initialization;
 
-import com.jmframework.boot.jmspringbootstarter.configuration.SftpConfiguration;
+import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.SftpSubDirectory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -21,12 +21,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class SftpSubDirectoryRunner implements ApplicationRunner {
     private final SftpRemoteFileTemplate sftpRemoteFileTemplate;
-    private final SftpConfiguration sftpConfiguration;
+    private final SftpClientConfiguration sftpClientConfiguration;
 
     public SftpSubDirectoryRunner(SftpRemoteFileTemplate sftpRemoteFileTemplate,
-                                  SftpConfiguration sftpConfiguration) {
+                                  SftpClientConfiguration sftpClientConfiguration) {
         this.sftpRemoteFileTemplate = sftpRemoteFileTemplate;
-        this.sftpConfiguration = sftpConfiguration;
+        this.sftpClientConfiguration = sftpClientConfiguration;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class SftpSubDirectoryRunner implements ApplicationRunner {
         log.error("Staring to initial SFTP server sub directory.");
         sftpRemoteFileTemplate.execute(session -> {
             for (SftpSubDirectory sftpSubDirectory : SftpSubDirectory.values()) {
-                String fullPath = sftpConfiguration.getDirectory() + sftpSubDirectory.getSubDirectory();
+                String fullPath = sftpClientConfiguration.getDirectory() + sftpSubDirectory.getSubDirectory();
                 if (!session.exists(fullPath)) {
                     log.error("SFTP server sub directory does not exist. Creating sub directory: {}", fullPath);
                     session.mkdir(fullPath);

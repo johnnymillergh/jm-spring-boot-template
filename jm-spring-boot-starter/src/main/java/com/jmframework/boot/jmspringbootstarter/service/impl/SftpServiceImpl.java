@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
-import com.jmframework.boot.jmspringbootstarter.configuration.SftpConfiguration;
+import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpUploadGateway;
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
 import com.jmframework.boot.jmspringbootstarter.util.FileUtil;
@@ -27,20 +27,20 @@ import java.util.List;
 public class SftpServiceImpl implements SftpService {
     private final SftpRemoteFileTemplate sftpRemoteFileTemplate;
     private final SftpUploadGateway sftpUploadGateway;
-    private final SftpConfiguration sftpConfiguration;
+    private final SftpClientConfiguration sftpClientConfiguration;
 
     public SftpServiceImpl(SftpRemoteFileTemplate sftpRemoteFileTemplate,
                            SftpUploadGateway sftpUploadGateway,
-                           SftpConfiguration sftpConfiguration) {
+                           SftpClientConfiguration sftpClientConfiguration) {
         this.sftpRemoteFileTemplate = sftpRemoteFileTemplate;
         this.sftpUploadGateway = sftpUploadGateway;
-        this.sftpConfiguration = sftpConfiguration;
+        this.sftpClientConfiguration = sftpClientConfiguration;
     }
 
     @Override
     public List<String> listFiles(String relativePath) {
-        String fullPath = sftpConfiguration.getDirectory() + relativePath;
-        log.info("Listing files, path: {}", fullPath);
+        String fullPath = sftpClientConfiguration.getDirectory() + relativePath;
+        log.info("Listing files, full path: {}", fullPath);
         return sftpRemoteFileTemplate.execute(session -> {
             String[] strings = new String[0];
             try {
@@ -54,21 +54,21 @@ public class SftpServiceImpl implements SftpService {
 
     @Override
     public boolean exist(String fileRelativePath) {
-        String fileFullPath = sftpConfiguration.getDirectory() + fileRelativePath;
-        log.info("Checking whether file exists, path: {}", fileFullPath);
+        String fileFullPath = sftpClientConfiguration.getDirectory() + fileRelativePath;
+        log.info("Checking whether file exists in SFTP server, full path: {}", fileFullPath);
         return sftpRemoteFileTemplate.execute(session -> session.exists(fileFullPath));
     }
 
     @Override
     public void upload(File file) {
-        log.info("Upload single file. File name: {}", file.getName());
+        log.info("Uploading single file to SFTP server. File name: {}", file.getName());
         sftpUploadGateway.upload(file);
     }
 
     @Override
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void upload(List<MultipartFile> files, boolean deleteSource) throws IOException {
-        log.info("Upload multipart files (delete source file: {}). Files: {}", deleteSource, files);
+        log.info("Uploading multipart files to SFTP server (delete source file: {}). Files: {}", deleteSource, files);
         for (MultipartFile multipartFile : files) {
             if (multipartFile.isEmpty()) {
                 continue;
@@ -88,21 +88,22 @@ public class SftpServiceImpl implements SftpService {
 
     @Override
     public void upload(MultipartFile multipartFile) throws IOException {
-        log.info("Upload single multipart file. File name: {}", multipartFile.getOriginalFilename());
+        log.info("Uploading single multipart file to SFTP server. File name: {}", multipartFile.getOriginalFilename());
         sftpUploadGateway.upload(FileUtil.convertFrom(multipartFile));
     }
 
     @Override
     public File download(String fileRelativePath) {
-        String fileFullPath = sftpConfiguration.getDirectory() + fileRelativePath;
-        log.info("Downloading file, path: {}", fileFullPath);
+        String fileFullPath = sftpClientConfiguration.getDirectory() + fileRelativePath;
+        log.info("Downloading file from SFTP server, full path: {}", fileFullPath);
         return sftpRemoteFileTemplate.execute(session -> {
             boolean existFile = session.exists(fileFullPath);
             if (existFile) {
                 InputStream is = session.readRaw(fileFullPath);
                 return FileUtil.convertFrom(is, fileFullPath);
             } else {
-                log.info("Cannot download file. Caused by : file does not exist, path: {}", fileFullPath);
+                log.info("Cannot download file from SFTP server. Caused by : file does not exist, full path: {}",
+                         fileFullPath);
                 return null;
             }
         });
@@ -110,14 +111,15 @@ public class SftpServiceImpl implements SftpService {
 
     @Override
     public boolean delete(String fileRelativePath) {
-        String fileFullPath = sftpConfiguration.getDirectory() + fileRelativePath;
-        log.info("Deleting file by path: {}", fileFullPath);
+        String fileFullPath = sftpClientConfiguration.getDirectory() + fileRelativePath;
+        log.info("Deleting SFTP server's file by full path: {}", fileFullPath);
         return sftpRemoteFileTemplate.execute(session -> {
             boolean existFile = session.exists(fileFullPath);
             if (existFile) {
                 return session.remove(fileFullPath);
             } else {
-                log.info("Cannot delete file. Caused by: file does not exist, path: {} ", fileFullPath);
+                log.info("Cannot delete SFTP server's file. Caused by: file does not exist, full path: {} ",
+                         fileFullPath);
                 return false;
             }
         });

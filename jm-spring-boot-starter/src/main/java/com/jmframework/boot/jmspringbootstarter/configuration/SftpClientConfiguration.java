@@ -19,8 +19,8 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 
 /**
- * <h1>SftpConfiguration</h1>
- * <p>SFTP configuration</p>
+ * <h1>SftpClientConfiguration</h1>
+ * <p>SFTP client configuration</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-07-04 18:18
@@ -28,8 +28,8 @@ import java.io.File;
 @Data
 @Slf4j
 @Component
-@ConfigurationProperties(prefix = "sftp.configuration")
-public class SftpConfiguration {
+@ConfigurationProperties(prefix = "sftp.client.configuration")
+public class SftpClientConfiguration {
     /**
      * SFTP server IP
      */
