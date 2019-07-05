@@ -66,6 +66,13 @@ custom:
         - "/webjars/**"
         - "/swagger-ui.html"
 
+logging:
+  # Configure logging level for SFTP/JSCH
+  level:
+    com:
+      jcraft:
+        jsch: INFO
+
 sftp:
   client:
     configuration:
@@ -76,3 +83,5 @@ sftp:
       directory: ENC(Mf+uGv44ofMSEgEB21IzK7jATGWNOCZL1KcqHpDRRcs=)
       private-key:
       private-key-pass-phrase:
+      session-cache-size: 20
+      session-wait-timeout: 15000

@@ -58,6 +58,14 @@ public class SftpClientConfiguration {
      * Private key pass phrase
      */
     private String privateKeyPassPhrase;
+    /**
+     * The maximum cache size of session. Default: 10
+     */
+    private Integer sessionCacheSize = 10;
+    /**
+     * The session wait timeout (time unit: MILLISECONDS). Default: 10 * 1000L (10 seconds)
+     */
+    private Long sessionWaitTimeout = 10 * 1000L;
 
     @Bean
     public SessionFactory<ChannelSftp.LsEntry> sftpSessionFactory() {
@@ -73,7 +81,10 @@ public class SftpClientConfiguration {
         }
         factory.setAllowUnknownKeys(true);
         // We return a caching session factory, so that we don't have to reconnect to SFTP server for each time
-        return new CachingSessionFactory<>(factory);
+        CachingSessionFactory<ChannelSftp.LsEntry> cachingSessionFactory = new CachingSessionFactory<>(factory,
+                                                                                                       sessionCacheSize);
+        cachingSessionFactory.setSessionWaitTimeout(sessionWaitTimeout);
+        return cachingSessionFactory;
     }
 
     @Bean
