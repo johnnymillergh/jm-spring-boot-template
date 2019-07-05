@@ -30,6 +30,8 @@ public class SftpServiceTest {
     public void fileOperationTest() {
         File file = new File("/Users/johnny/Downloads/Git Commit Message Conventions.docx");
         sftpService.upload(file);
+        Long fileSize = sftpService.getFileSize("/Git Commit Message Conventions.docx");
+        log.error("File size: {} byte(s)", fileSize);
         List<String> files = sftpService.listFiles("/11");
         log.error("ls: {}", files);
         boolean existence = sftpService.exist("/Git Commit Message Conventions.docx");

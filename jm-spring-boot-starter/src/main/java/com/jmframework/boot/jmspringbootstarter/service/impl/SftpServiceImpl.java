@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
+import com.jcraft.jsch.ChannelSftp;
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpUploadGateway;
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
@@ -57,6 +58,30 @@ public class SftpServiceImpl implements SftpService {
         String fileFullPath = sftpClientConfiguration.getDirectory() + fileRelativePath;
         log.info("Checking whether file exists in SFTP server, full path: {}", fileFullPath);
         return sftpRemoteFileTemplate.execute(session -> session.exists(fileFullPath));
+    }
+
+    @Override
+    public Long getFileSize(String fileRelativePath) {
+        String fileFullPath = sftpClientConfiguration.getDirectory() + fileRelativePath;
+        if (!exist(fileRelativePath)) {
+            throw new IllegalArgumentException(
+                    "Cannot get file size from SFTP server. Caused by: file does not exist, full path: " + fileFullPath);
+        }
+        String[] splits = fileFullPath.split("/");
+        String fileName = splits[splits.length - 1];
+        String listPath = fileFullPath.substring(0, fileFullPath.lastIndexOf(fileName) - 1);
+        log.info("Retrieve file size from SFTP server, full path: {}", fileFullPath);
+        final Long[] fileSize = new Long[1];
+        sftpRemoteFileTemplate.execute(session -> {
+            ChannelSftp.LsEntry[] lsEntries = session.list(listPath);
+            for (ChannelSftp.LsEntry lsEntry : lsEntries) {
+                if (lsEntry.getFilename().equals(fileName)) {
+                    fileSize[0] = lsEntry.getAttrs().getSize();
+                }
+            }
+            return null;
+        });
+        return fileSize[0];
     }
 
     @Override

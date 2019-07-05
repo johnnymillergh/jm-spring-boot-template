@@ -31,6 +31,14 @@ public interface SftpService {
     boolean exist(String fileRelativePath);
 
     /**
+     * Get file size
+     *
+     * @param fileRelativePath file's relative path
+     * @return file size (size unit: byte). Null if the file does not exist or path refers to a directory
+     */
+    Long getFileSize(String fileRelativePath);
+
+    /**
      * Upload single file
      *
      * @param file file
