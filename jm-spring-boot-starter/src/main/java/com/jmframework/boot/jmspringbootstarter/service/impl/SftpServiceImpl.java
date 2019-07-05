@@ -127,7 +127,7 @@ public class SftpServiceImpl implements SftpService {
                 InputStream is = session.readRaw(fileFullPath);
                 return FileUtil.convertFrom(is, fileFullPath);
             } else {
-                log.info("Cannot download file from SFTP server. Caused by : file does not exist, full path: {}",
+                log.info("Cannot download file from SFTP 'server. Caused by : file does not exist, full path: {}",
                          fileFullPath);
                 return null;
             }
