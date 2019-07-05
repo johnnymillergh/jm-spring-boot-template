@@ -72,6 +72,7 @@ public class SftpConfiguration {
             factory.setPassword(password);
         }
         factory.setAllowUnknownKeys(true);
+        // We return a caching session factory, so that we don't have to reconnect to SFTP server for each time
         return new CachingSessionFactory<>(factory);
     }
 
