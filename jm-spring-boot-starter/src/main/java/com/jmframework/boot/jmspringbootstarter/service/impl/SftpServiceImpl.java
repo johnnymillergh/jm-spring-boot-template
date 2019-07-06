@@ -18,9 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +38,6 @@ public class SftpServiceImpl implements SftpService {
     private final SftpUploadGateway sftpUploadGateway;
     private final SftpClientConfiguration sftpClientConfiguration;
     private final BeanFactory beanFactory;
-    private final Validator validator;
 
     public SftpServiceImpl(SftpRemoteFileTemplate sftpRemoteFileTemplate,
                            SftpUploadGateway sftpUploadGateway,
@@ -50,8 +46,6 @@ public class SftpServiceImpl implements SftpService {
         this.sftpUploadGateway = sftpUploadGateway;
         this.sftpClientConfiguration = sftpClientConfiguration;
         this.beanFactory = beanFactory;
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        this.validator = factory.getValidator();
     }
 
     @Override
