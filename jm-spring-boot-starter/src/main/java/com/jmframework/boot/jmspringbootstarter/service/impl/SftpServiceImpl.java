@@ -144,18 +144,17 @@ public class SftpServiceImpl implements SftpService {
     }
 
     @Override
-    public File download(String fileFullPath) throws IllegalArgumentException {
-        log.info("Downloading file from SFTP server, file full path: {}", fileFullPath);
+    public InputStream read(String fileFullPath) throws IllegalArgumentException {
+        log.info("Read file from SFTP server, file full path: {}", fileFullPath);
         return sftpRemoteFileTemplate.execute(session -> {
             boolean existFile = session.exists(fileFullPath);
             if (existFile) {
-                InputStream is = session.readRaw(fileFullPath);
-                return FileUtil.convertFrom(is, fileFullPath);
+                return session.readRaw(fileFullPath);
             }
-            log.error("Cannot download file from SFTP 'server. Caused by : file does not exist, full path: {}",
+            log.error("Cannot read file from SFTP 'server. Caused by : file does not exist, full path: {}",
                       fileFullPath);
             throw new IllegalArgumentException(
-                    "Cannot download file from SFTP 'server. Caused by : file does not exist, full path: " + fileFullPath);
+                    "Cannot read file from SFTP 'server. Caused by : file does not exist, full path: " + fileFullPath);
         });
     }
 

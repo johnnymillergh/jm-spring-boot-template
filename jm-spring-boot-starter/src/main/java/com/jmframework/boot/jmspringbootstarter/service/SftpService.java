@@ -4,8 +4,8 @@ import com.jmframework.boot.jmspringbootstarterdomain.common.SftpUploadFile;
 import org.springframework.integration.file.support.FileExistsMode;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -80,13 +80,13 @@ public interface SftpService {
     void upload(List<MultipartFile> files, boolean deleteSource) throws IOException;
 
     /**
-     * Download file
+     * Read file from SFTP server
      *
      * @param fileFullPath file's full path
-     * @return file
+     * @return file's stream
      * @throws IllegalArgumentException when file does not exist
      */
-    File download(String fileFullPath) throws IllegalArgumentException;
+    InputStream read(String fileFullPath) throws IllegalArgumentException;
 
     /**
      * Delete file according to file path
