@@ -1,6 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
 import com.jmframework.boot.jmspringbootstarterdomain.common.SftpUploadFile;
+import org.springframework.integration.file.support.FileExistsMode;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -49,13 +50,17 @@ public interface SftpService {
     String upload(SftpUploadFile sftpUploadFile);
 
     /**
-     * Upload files
+     * Upload file
      *
-     * @param files        file list
-     * @param deleteSource true - delete source file; false - not delete source file
+     * @param multipartFile  multipart file
+     * @param subDirectory   SFTP server's sub directory (if sub directory does'nt exist, will be auto created). Not
+     *                       empty and it looks like this: "/some/sub/directory/"
+     * @param fileExistsMode This enumeration indicates what action shall be taken in case the destination file
+     *                       already exists. In default, it should be set as: FileExistsMode.REPLACE
+     * @return file's full path if successful, else null
      * @throws IOException IO exception
      */
-    void upload(List<MultipartFile> files, boolean deleteSource) throws IOException;
+    String upload(MultipartFile multipartFile, String subDirectory, FileExistsMode fileExistsMode) throws IOException;
 
     /**
      * Upload files
@@ -66,12 +71,13 @@ public interface SftpService {
     void upload(List<MultipartFile> files) throws IOException;
 
     /**
-     * Upload file
+     * Upload files
      *
-     * @param multipartFile multipart file
+     * @param files        file list
+     * @param deleteSource true - delete source file; false - not delete source file
      * @throws IOException IO exception
      */
-    void upload(MultipartFile multipartFile) throws IOException;
+    void upload(List<MultipartFile> files, boolean deleteSource) throws IOException;
 
     /**
      * Download file
