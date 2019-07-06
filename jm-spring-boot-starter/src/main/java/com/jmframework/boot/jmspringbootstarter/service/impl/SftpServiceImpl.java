@@ -104,7 +104,9 @@ public class SftpServiceImpl implements SftpService {
         sftpRemoteFileTemplate.setBeanFactory(beanFactory);
         sftpRemoteFileTemplate.setCharset("UTF-8");
         sftpRemoteFileTemplate.afterPropertiesSet();
-        return sftpRemoteFileTemplate.send(message, sftpUploadFile.getSubDirectory(), FileExistsMode.REPLACE);
+        return sftpRemoteFileTemplate.send(message,
+                                           sftpUploadFile.getSubDirectory(),
+                                           sftpUploadFile.getFileExistsMode());
     }
 
     @Override
