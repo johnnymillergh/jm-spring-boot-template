@@ -24,7 +24,7 @@ public class FileUtil {
      * @throws IOException IO exception
      */
     public static File convertFrom(MultipartFile multipartFile) throws IOException {
-        log.info("Convert multipart file: {}", multipartFile.getOriginalFilename());
+        log.info("Converting multipart file, original multipart file name: {}", multipartFile.getOriginalFilename());
         File convertFile = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         FileOutputStream fos = new FileOutputStream(convertFile);
         fos.write(multipartFile.getBytes());
@@ -40,6 +40,7 @@ public class FileUtil {
      * @return file
      */
     public static File convertFrom(InputStream inputStream, String savePath) {
+        log.info("Converting InputStream to file, save path: {}", savePath);
         File file = new File(savePath);
         try (OutputStream outputStream = new FileOutputStream(file)) {
             int read;
@@ -47,17 +48,16 @@ public class FileUtil {
             while ((read = inputStream.read(bytes)) != -1) {
                 outputStream.write(bytes, 0, read);
             }
-            log.info("convert InputStream to file done, savePath is: {}", savePath);
         } catch (IOException e) {
             log.error("Exception occurred when initializing FileOutputStream. Exception message: {}",
                       e.getMessage(),
                       e);
-        }
-
-        try {
-            inputStream.close();
-        } catch (IOException e) {
-            log.error("Exception occurred when closing FileOutputStream. Exception message: {}", e.getMessage(), e);
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                log.error("Exception occurred when closing FileOutputStream. Exception message: {}", e.getMessage(), e);
+            }
         }
 
         return file;
