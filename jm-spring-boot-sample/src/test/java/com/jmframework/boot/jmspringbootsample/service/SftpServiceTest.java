@@ -2,12 +2,14 @@ package com.jmframework.boot.jmspringbootsample.service;
 
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
 import com.jmframework.boot.jmspringbootstarterdomain.common.SftpUploadFile;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.SftpSubDirectory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.integration.file.support.FileExistsMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
@@ -30,7 +32,11 @@ public class SftpServiceTest {
     @Test
     public void fileOperationTest() {
         File file = new File("/Users/johnny/Downloads/Git Commit Message Conventions.docx");
-        SftpUploadFile sftpUploadFile = SftpUploadFile.builder().fileToBeUploaded(file).subDirectory("").build();
+        SftpUploadFile sftpUploadFile = SftpUploadFile.builder()
+                                                      .fileToBeUploaded(file)
+                                                      .subDirectory(SftpSubDirectory.VIDEO.getSubDirectory())
+                                                      .fileExistsMode(FileExistsMode.REPLACE)
+                                                      .build();
         String upload = sftpService.upload(sftpUploadFile);
         log.error("upload: {}", upload);
         Long fileSize = sftpService.getFileSize("/Git Commit Message Conventions.docx");

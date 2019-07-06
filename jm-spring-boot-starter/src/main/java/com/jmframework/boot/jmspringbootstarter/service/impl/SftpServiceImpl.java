@@ -1,7 +1,7 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.jcraft.jsch.ChannelSftp;
+import com.jmframework.boot.jmspringbootstarter.annotation.ValidateArgument;
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpUploadGateway;
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
@@ -17,7 +17,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <h1>SftpServiceImpl</h1>
@@ -99,13 +98,9 @@ public class SftpServiceImpl implements SftpService {
     }
 
     @Override
-    public String upload(SftpUploadFile sftpUploadFile) {
-        Set<ConstraintViolation<SftpUploadFile>> violations = validator.validate(sftpUploadFile);
-        if (CollectionUtil.isNotEmpty(violations)) {
-            throw new IllegalArgumentException("Invalid argument");
-        }
-
-        log.info("Uploading single file to SFTP server. SftpUploadFile: {}, ", sftpUploadFile);
+    @ValidateArgument
+    public String upload(@Valid SftpUploadFile sftpUploadFile) {
+        log.info("Uploading single file to SFTP server. SftpUploadFile: {}", sftpUploadFile);
 
         // sftpUploadGateway.upload(file);
 

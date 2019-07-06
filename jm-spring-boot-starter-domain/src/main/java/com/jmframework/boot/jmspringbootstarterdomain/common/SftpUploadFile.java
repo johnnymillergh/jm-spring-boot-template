@@ -30,8 +30,8 @@ public class SftpUploadFile {
     @NotEmpty
     private String subDirectory;
     /**
-     * This enumeration indicates what action shall be taken in case the destination file already exists. Default:
-     * FileExistsMode.REPLACE
+     * This enumeration indicates what action shall be taken in case the destination file already exists. In default,
+     * it should be set as: FileExistsMode.REPLACE
      */
     @NotNull
     private FileExistsMode fileExistsMode;

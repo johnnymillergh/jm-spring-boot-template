@@ -32,6 +32,7 @@ public class SftpSubDirectoryRunner implements ApplicationRunner {
     @Override
     @SuppressWarnings("RedundantThrows")
     public void run(ApplicationArguments args) throws Exception {
+        sftpRemoteFileTemplate.setAutoCreateDirectory(true);
         sftpRemoteFileTemplate.execute(session -> {
             if (!session.exists(sftpClientConfiguration.getDirectory())) {
                 log.error("Make directories for SFTP server. Directory: {}", sftpClientConfiguration.getDirectory());
