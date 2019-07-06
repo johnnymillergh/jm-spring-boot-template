@@ -6,8 +6,8 @@ import com.jmframework.boot.jmspringbootstarter.service.AuthService;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.auth.payload.LoginPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.auth.payload.RegisterPLO;
+import com.jmframework.boot.jmspringbootstarterdomain.auth.response.JwtRO;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
-import com.jmframework.boot.jmspringbootstarterdomain.common.response.JwtRO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import io.swagger.annotations.Api;
@@ -116,6 +116,7 @@ public class AuthController {
         JwtRO ro = new JwtRO(jwt);
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         ro.setFullName(userPrincipal.getFullName());
+        ro.setUsername(userPrincipal.getUsername());
         return ResponseBodyBean.ofSuccess(ro);
     }
 
