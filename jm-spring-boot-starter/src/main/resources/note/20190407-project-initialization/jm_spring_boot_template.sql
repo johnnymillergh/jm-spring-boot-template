@@ -93,6 +93,7 @@ CREATE TABLE `t_user` (
   `full_name` varchar(255) DEFAULT NULL COMMENT 'Full name',
   `birthday` date DEFAULT NULL COMMENT 'Birthday',
   `gender` enum('Agender','Androgyne','Bigender','Cisgender','Cisgender Female','Cisgender Male','Female to Male','Gender Fluid','Gender Nonconforming','Gender Questioning','Gender Variant','Genderqueer','Intersex','Male to Female','Neither','Neutrois','Non-binary','Other','Pangender','Transfeminine','Transgender','Transgender Female','Transgender Male','Transgender Person','Transmasculine','Two-Spirit') DEFAULT NULL COMMENT '26 gender options',
+  `avatar` varchar(255) NULL COMMENT 'User avatar full path on SFTP server',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT 'Status. 1 - enabled, 2 - disabled',
   `gmt_modified` datetime NOT NULL COMMENT 'Modified time',
   `gmt_created` datetime NOT NULL COMMENT 'Created time',

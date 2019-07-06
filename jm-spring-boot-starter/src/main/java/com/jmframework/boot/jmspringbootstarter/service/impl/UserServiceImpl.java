@@ -8,13 +8,13 @@ import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.SftpSubDirectory;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.StringUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
@@ -105,9 +105,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ByteArrayResource getUserAvatarResource() throws IOException {
-        String avatar = sftpClientConfiguration.getDirectory() + SftpSubDirectory.AVATAR.getSubDirectory() + "JM.png";
-        InputStream stream = sftpService.read(avatar);
+    public ByteArrayResource getUserAvatarResource(String username) throws IOException {
+        UserPO po = userMapper.selectIdAndAvatarByUsername(username);
+        if (StringUtils.isBlank(po.getAvatar())) {
+            return null;
+        }
+        InputStream stream = sftpService.read(po.getAvatar());
         ByteArrayResource resource = new ByteArrayResource(IOUtil.toByteArray(stream));
         stream.close();
         return resource;

@@ -82,5 +82,12 @@ public interface UserService {
      */
     void assignRoleToUser(Long userId, List<Long> roleIdList);
 
-    ByteArrayResource getUserAvatarResource() throws IOException;
+    /**
+     * Get user's avatar resource
+     *
+     * @param username username
+     * @return user's avatar
+     * @throws IOException IO exception
+     */
+    ByteArrayResource getUserAvatarResource(String username) throws IOException;
 }
