@@ -2,6 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.aspect;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmframework.boot.jmspringbootstarter.configuration.CustomConfiguration;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
@@ -82,7 +83,7 @@ public class WebRequestLogAspect {
         }
         log.info("Username       : {}", username);
         log.info("Client IP:Port : {}", RequestUtil.getRequestIpAndPort(request));
-        log.info("Class Method   : {}.{}",
+        log.info("Class Method   : {}#{}",
                  joinPoint.getSignature().getDeclaringTypeName(),
                  joinPoint.getSignature().getName());
         log.info("Request Params :{}{}", LINE_SEPARATOR, JSONUtil.toJsonPrettyStr(joinPoint.getArgs()));
@@ -104,7 +105,11 @@ public class WebRequestLogAspect {
         long startTime = System.currentTimeMillis();
         Object result = proceedingJoinPoint.proceed();
         long elapsedTime = System.currentTimeMillis() - startTime;
-        log.info("Response       :{}{}", LINE_SEPARATOR, JSONUtil.formatJsonStr(mapper.writeValueAsString(result)));
+        try {
+            log.info("Response       :{}{}", LINE_SEPARATOR, JSONUtil.formatJsonStr(mapper.writeValueAsString(result)));
+        } catch (JsonProcessingException e) {
+            log.error("Cannot convert object to JSON string. Exception message: {}", e.getMessage());
+        }
         log.info("Elapsed time   : {} s ({} ms)",
                  NumberUtil.decimalFormat("0.00", elapsedTime / 1000D),
                  elapsedTime);
