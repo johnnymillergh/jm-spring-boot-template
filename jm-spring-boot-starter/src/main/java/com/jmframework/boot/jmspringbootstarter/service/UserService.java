@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
+import org.springframework.core.io.ByteArrayResource;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -79,4 +81,6 @@ public interface UserService {
      * @param roleIdList role ID list
      */
     void assignRoleToUser(Long userId, List<Long> roleIdList);
+
+    ByteArrayResource getUserAvatarResource() throws IOException;
 }

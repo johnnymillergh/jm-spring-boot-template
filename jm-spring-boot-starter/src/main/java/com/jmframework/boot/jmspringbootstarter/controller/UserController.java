@@ -15,9 +15,13 @@ import com.jmframework.boot.jmspringbootstarterdomain.user.response.SearchUserRO
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -120,5 +124,13 @@ public class UserController {
         }
         userService.assignRoleToUser(plo.getUserId(), plo.getRoleIdList());
         return ResponseBodyBean.ofSuccess("Assigned role(s) to user");
+    }
+
+    @GetMapping(value = "/get-avatar", produces = {MediaType.IMAGE_GIF_VALUE,
+                                                   MediaType.IMAGE_JPEG_VALUE,
+                                                   MediaType.IMAGE_PNG_VALUE})
+    public ResponseEntity getAvatar() throws IOException {
+        ByteArrayResource resource = userService.getUserAvatarResource();
+        return ResponseEntity.ok(resource);
     }
 }

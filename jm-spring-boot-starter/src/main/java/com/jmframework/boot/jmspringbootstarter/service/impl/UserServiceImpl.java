@@ -3,16 +3,23 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
+import com.jmframework.boot.jmspringbootstarter.service.SftpService;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.SftpSubDirectory;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
 import lombok.extern.slf4j.Slf4j;
+import org.codehaus.plexus.util.IOUtil;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -27,11 +34,17 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleService roleService;
+    private final SftpService sftpService;
+    private final SftpClientConfiguration sftpClientConfiguration;
 
     public UserServiceImpl(UserMapper userMapper,
-                           RoleService roleService) {
+                           RoleService roleService,
+                           SftpService sftpService,
+                           SftpClientConfiguration sftpClientConfiguration) {
         this.userMapper = userMapper;
         this.roleService = roleService;
+        this.sftpService = sftpService;
+        this.sftpClientConfiguration = sftpClientConfiguration;
     }
 
     @Override
@@ -89,5 +102,14 @@ public class UserServiceImpl implements UserService {
     public void assignRoleToUser(Long userId, List<Long> roleIdList) {
         int affectedRows = userMapper.insertUserIdAndRoleIdList(userId, roleIdList);
         log.error("Assign role(s) to user. Insert user-role relation record, affected rows: {}", affectedRows);
+    }
+
+    @Override
+    public ByteArrayResource getUserAvatarResource() throws IOException {
+        String avatar = sftpClientConfiguration.getDirectory() + SftpSubDirectory.AVATAR.getSubDirectory() + "JM.png";
+        InputStream stream = sftpService.read(avatar);
+        ByteArrayResource resource = new ByteArrayResource(IOUtil.toByteArray(stream));
+        stream.close();
+        return resource;
     }
 }
