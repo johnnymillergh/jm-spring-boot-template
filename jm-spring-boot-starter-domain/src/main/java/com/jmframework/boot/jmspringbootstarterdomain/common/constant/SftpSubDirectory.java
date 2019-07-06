@@ -14,11 +14,11 @@ public enum SftpSubDirectory {
     /**
      * Sub directory for video
      */
-    VIDEO("video", "/video"),
+    VIDEO("video", "/video/"),
     /**
      * Sub directory for avatar
      */
-    AVATAR("avatar", "/avatar");
+    AVATAR("avatar", "/avatar/");
 
     private String directoryName;
     private String subDirectory;

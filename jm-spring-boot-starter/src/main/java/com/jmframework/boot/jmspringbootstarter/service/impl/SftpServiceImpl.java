@@ -1,20 +1,32 @@
 package com.jmframework.boot.jmspringbootstarter.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.jcraft.jsch.ChannelSftp;
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpUploadGateway;
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
 import com.jmframework.boot.jmspringbootstarter.util.FileUtil;
+import com.jmframework.boot.jmspringbootstarterdomain.common.SftpUploadFile;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.expression.common.LiteralExpression;
+import org.springframework.integration.file.support.FileExistsMode;
 import org.springframework.integration.sftp.session.SftpRemoteFileTemplate;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <h1>SftpServiceImpl</h1>
@@ -29,18 +41,22 @@ public class SftpServiceImpl implements SftpService {
     private final SftpRemoteFileTemplate sftpRemoteFileTemplate;
     private final SftpUploadGateway sftpUploadGateway;
     private final SftpClientConfiguration sftpClientConfiguration;
+    private final BeanFactory beanFactory;
+    private final Validator validator;
 
     public SftpServiceImpl(SftpRemoteFileTemplate sftpRemoteFileTemplate,
                            SftpUploadGateway sftpUploadGateway,
-                           SftpClientConfiguration sftpClientConfiguration) {
+                           SftpClientConfiguration sftpClientConfiguration, BeanFactory beanFactory) {
         this.sftpRemoteFileTemplate = sftpRemoteFileTemplate;
         this.sftpUploadGateway = sftpUploadGateway;
         this.sftpClientConfiguration = sftpClientConfiguration;
+        this.beanFactory = beanFactory;
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        this.validator = factory.getValidator();
     }
 
     @Override
-    public List<String> listFiles(String relativePath) {
-        String fullPath = sftpClientConfiguration.getDirectory() + relativePath;
+    public List<String> listFiles(String fullPath) {
         log.info("Listing files, full path: {}", fullPath);
         return sftpRemoteFileTemplate.execute(session -> {
             String[] strings = new String[0];
@@ -54,16 +70,14 @@ public class SftpServiceImpl implements SftpService {
     }
 
     @Override
-    public boolean exist(String fileRelativePath) {
-        String fileFullPath = sftpClientConfiguration.getDirectory() + fileRelativePath;
-        log.info("Checking whether file exists in SFTP server, full path: {}", fileFullPath);
+    public boolean exist(String fileFullPath) {
+        log.info("Checking whether file exists in SFTP server, file full path: {}", fileFullPath);
         return sftpRemoteFileTemplate.execute(session -> session.exists(fileFullPath));
     }
 
     @Override
-    public Long getFileSize(String fileRelativePath) {
-        String fileFullPath = sftpClientConfiguration.getDirectory() + fileRelativePath;
-        if (!exist(fileRelativePath)) {
+    public Long getFileSize(String fileFullPath) throws IllegalArgumentException {
+        if (!exist(fileFullPath)) {
             throw new IllegalArgumentException(
                     "Cannot get file size from SFTP server. Caused by: file does not exist, full path: " + fileFullPath);
         }
@@ -85,9 +99,23 @@ public class SftpServiceImpl implements SftpService {
     }
 
     @Override
-    public void upload(File file) {
-        log.info("Uploading single file to SFTP server. File name: {}", file.getName());
-        sftpUploadGateway.upload(file);
+    public String upload(SftpUploadFile sftpUploadFile) {
+        Set<ConstraintViolation<SftpUploadFile>> violations = validator.validate(sftpUploadFile);
+        if (CollectionUtil.isNotEmpty(violations)) {
+            throw new IllegalArgumentException("Invalid argument");
+        }
+
+        log.info("Uploading single file to SFTP server. SftpUploadFile: {}, ", sftpUploadFile);
+
+        // sftpUploadGateway.upload(file);
+
+        Message<File> message = MessageBuilder.withPayload(sftpUploadFile.getFileToBeUploaded()).build();
+        sftpRemoteFileTemplate.setRemoteDirectoryExpression(new LiteralExpression(sftpClientConfiguration.getDirectory()));
+        sftpRemoteFileTemplate.setAutoCreateDirectory(true);
+        sftpRemoteFileTemplate.setBeanFactory(beanFactory);
+        sftpRemoteFileTemplate.setCharset("UTF-8");
+        sftpRemoteFileTemplate.afterPropertiesSet();
+        return sftpRemoteFileTemplate.send(message, sftpUploadFile.getSubDirectory(), FileExistsMode.REPLACE);
     }
 
     @Override
@@ -118,26 +146,24 @@ public class SftpServiceImpl implements SftpService {
     }
 
     @Override
-    public File download(String fileRelativePath) {
-        String fileFullPath = sftpClientConfiguration.getDirectory() + fileRelativePath;
-        log.info("Downloading file from SFTP server, full path: {}", fileFullPath);
+    public File download(String fileFullPath) throws IllegalArgumentException {
+        log.info("Downloading file from SFTP server, file full path: {}", fileFullPath);
         return sftpRemoteFileTemplate.execute(session -> {
             boolean existFile = session.exists(fileFullPath);
             if (existFile) {
                 InputStream is = session.readRaw(fileFullPath);
                 return FileUtil.convertFrom(is, fileFullPath);
-            } else {
-                log.info("Cannot download file from SFTP 'server. Caused by : file does not exist, full path: {}",
-                         fileFullPath);
-                return null;
             }
+            log.error("Cannot download file from SFTP 'server. Caused by : file does not exist, full path: {}",
+                      fileFullPath);
+            throw new IllegalArgumentException(
+                    "Cannot download file from SFTP 'server. Caused by : file does not exist, full path: " + fileFullPath);
         });
     }
 
     @Override
-    public boolean delete(String fileRelativePath) {
-        String fileFullPath = sftpClientConfiguration.getDirectory() + fileRelativePath;
-        log.info("Deleting SFTP server's file by full path: {}", fileFullPath);
+    public boolean delete(String fileFullPath) {
+        log.info("Deleting SFTP server's file by file full path: {}", fileFullPath);
         return sftpRemoteFileTemplate.execute(session -> {
             boolean existFile = session.exists(fileFullPath);
             if (existFile) {

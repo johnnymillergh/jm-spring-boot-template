@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.service;
 
+import com.jmframework.boot.jmspringbootstarterdomain.common.SftpUploadFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -15,35 +16,37 @@ import java.util.List;
  **/
 public interface SftpService {
     /**
-     * List all files under the relative path
+     * List all files under the full path
      *
-     * @param relativePath relative path
+     * @param fullPath directory full path
      * @return file names
      */
-    List<String> listFiles(String relativePath);
+    List<String> listFiles(String fullPath);
 
     /**
      * Check whether file exists according to file path
      *
-     * @param fileRelativePath file's relative path
+     * @param fileFullPath file's full path
      * @return true - file exists; false - file not exists
      */
-    boolean exist(String fileRelativePath);
+    boolean exist(String fileFullPath);
 
     /**
      * Get file size
      *
-     * @param fileRelativePath file's relative path
+     * @param fileFullPath file's full path
      * @return file size (size unit: byte). Null if the file does not exist or path refers to a directory
+     * @throws IllegalArgumentException when file does not exist
      */
-    Long getFileSize(String fileRelativePath);
+    Long getFileSize(String fileFullPath) throws IllegalArgumentException;
 
     /**
      * Upload single file
      *
-     * @param file file
+     * @param sftpUploadFile encapsulated object
+     * @return file's full path if successful, else null
      */
-    void upload(File file);
+    String upload(SftpUploadFile sftpUploadFile);
 
     /**
      * Upload files
@@ -73,16 +76,17 @@ public interface SftpService {
     /**
      * Download file
      *
-     * @param fileRelativePath file's relative path
+     * @param fileFullPath file's full path
      * @return file
+     * @throws IllegalArgumentException when file does not exist
      */
-    File download(String fileRelativePath);
+    File download(String fileFullPath) throws IllegalArgumentException;
 
     /**
      * Delete file according to file path
      *
-     * @param fileRelativePath file's relative path
+     * @param fileFullPath file's full path
      * @return true - file deleted; false - file not deleted
      */
-    boolean delete(String fileRelativePath);
+    boolean delete(String fileFullPath);
 }
