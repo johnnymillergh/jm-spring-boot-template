@@ -14,7 +14,6 @@ import java.util.Objects;
  * @date 2019-07-04 20:12
  **/
 @Slf4j
-@SuppressWarnings("unused")
 public class FileUtil {
     /**
      * Convert multipart file to file
@@ -59,7 +58,6 @@ public class FileUtil {
                 log.error("Exception occurred when closing FileOutputStream. Exception message: {}", e.getMessage(), e);
             }
         }
-
         return file;
     }
 }
