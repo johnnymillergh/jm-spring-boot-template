@@ -17,7 +17,14 @@ import java.util.Set;
 
 /**
  * <h1>ValidateMethodArgumentAspect</h1>
- * <p>Change description here</p>
+ * <p><span>This class is an aspect class that validates method&#39;s argument(s).</span></p>
+ * <h2>USAGE (Must Do's)</h2>
+ * <ol>
+ * <li><span>Annotate the method which argument we need to validate by </span><code>@ValidateArgument</code></li>
+ * <li><span>Annotate the argument(s) that we need to validate by </span><code>@javax.validation.Valid</code></li>
+ * <li><span>The field(s) of the argument(s) could be annotated by the constraint annotation provided by Spring
+ * Security</span></li>
+ * </ol>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-07-06 12:17
@@ -45,7 +52,8 @@ public class ValidateMethodArgumentAspect {
     }
 
     /**
-     * Before handle method's argument. In this phrase, we're going to take some logs.
+     * Before handle method's argument. This method will be executed after called `proceedingJoinPoint.proceed()`. In
+     * this phrase, we're going to take some logs.
      * <p>
      * `@Before` annotated methods run exactly before the all methods matching with pointcut expression.
      *
@@ -69,9 +77,12 @@ public class ValidateMethodArgumentAspect {
     @Around("validateMethodArgumentPointcut()")
     public Object aroundMethodHandleArgument(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         log.info("=========================== METHOD'S ARGUMENT VALIDATION START ===========================");
+
         Object[] args = proceedingJoinPoint.getArgs();
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
         Annotation[][] parameterAnnotations = signature.getMethod().getParameterAnnotations();
+        // argumentIndexes is the array list that stores the index of argument we need to validate (the argument
+        // annotated by `@Valid`)
         List<Integer> argumentIndexes = new ArrayList<>();
         for (Annotation[] parameterAnnotation : parameterAnnotations) {
             int paramIndex = ArrayUtil.indexOf(parameterAnnotations, parameterAnnotation);
@@ -81,6 +92,7 @@ public class ValidateMethodArgumentAspect {
                 }
             }
         }
+
         for (Integer index : argumentIndexes) {
             Set<ConstraintViolation<Object>> validates = validator.validate(args[index]);
             if (CollectionUtil.isNotEmpty(validates)) {
@@ -94,6 +106,7 @@ public class ValidateMethodArgumentAspect {
                 throw new IllegalArgumentException(message);
             }
         }
+
         log.info("Validation result: Validation passed");
         return proceedingJoinPoint.proceed();
     }
