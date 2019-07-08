@@ -48,6 +48,7 @@ custom:
       post:
         - "/auth/register"
         - "/auth/login"
+        - "/auth/logout"
       get:
         - "/auth/check-username-uniqueness"
         - "/auth/check-email-uniqueness"

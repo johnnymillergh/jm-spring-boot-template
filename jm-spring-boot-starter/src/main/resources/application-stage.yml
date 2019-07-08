@@ -48,8 +48,9 @@ custom:
     ignores:
       # POST Requests need to be ignored.
       post:
-      - "/auth/register"
-      - "/auth/login"
+        - "/auth/register"
+        - "/auth/login"
+        - "/auth/logout"
       get:
         - "/auth/check-username-uniqueness"
         - "/auth/check-email-uniqueness"
