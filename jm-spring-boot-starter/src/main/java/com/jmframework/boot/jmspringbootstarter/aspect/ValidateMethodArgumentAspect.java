@@ -25,6 +25,9 @@ import java.util.Set;
  * <li><span>The field(s) of the argument(s) could be annotated by the constraint annotation provided by Spring
  * Security</span></li>
  * </ol>
+ * <h2>ATTENTION</h2>
+ * <p><span>If the argument doesn&#39;t pass validation, an IllegalArgumentException will be thrown, and not proceed
+ * the target method.</span></p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-07-06 12:17
@@ -103,6 +106,8 @@ public class ValidateMethodArgumentAspect {
                          proceedingJoinPoint.getSignature().getName());
                 log.info("Argument         : {}", args);
                 log.info("Validation result: {}", message);
+                // If the argument doesn't pass validation, an IllegalArgumentException will be thrown, and not
+                // proceed the target method
                 throw new IllegalArgumentException(message);
             }
         }
