@@ -129,6 +129,7 @@ public class UserController {
     @GetMapping(value = "/get-avatar", produces = {MediaType.IMAGE_GIF_VALUE,
                                                    MediaType.IMAGE_JPEG_VALUE,
                                                    MediaType.IMAGE_PNG_VALUE})
+    @ApiOperation(value = "/get-avatar", notes = "Get user's avatar picture")
     public ResponseEntity getAvatar(@Valid GetAvatarPLO plo) throws IOException {
         ByteArrayResource resource = userService.getUserAvatarResource(plo.getUsername());
         return ResponseEntity.ok(resource);

@@ -53,6 +53,7 @@ custom:
         - "/auth/check-username-uniqueness"
         - "/auth/check-email-uniqueness"
         - "/auth/validate-username/**"
+        - "/user/get-avatar"
       # Request need to be ignored that matches pattern.
       pattern:
         - "/druid/**"
