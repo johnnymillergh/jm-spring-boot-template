@@ -18,3 +18,7 @@ script:
 # This is to enable Codecov's coverage. If a build is successful, the code is submitted for code coverage analysis.
 #after_success:
 #  - bash <(curl -s https://codecov.io/bash)
+
+# https://docs.travis-ci.com/user/notifications#default-notification-settings
+notifications:
+  email: false
