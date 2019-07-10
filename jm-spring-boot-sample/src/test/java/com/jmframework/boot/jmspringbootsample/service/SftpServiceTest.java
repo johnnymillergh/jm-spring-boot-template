@@ -1,6 +1,7 @@
 package com.jmframework.boot.jmspringbootsample.service;
 
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
+import com.jmframework.boot.jmspringbootstarter.util.FileUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.common.SftpUploadFile;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.SftpSubDirectory;
 import lombok.extern.slf4j.Slf4j;
@@ -49,5 +50,11 @@ public class SftpServiceTest {
         log.error("File deleted: {}", deleted);
         Assert.assertTrue(existence);
         Assert.assertTrue(deleted);
+    }
+
+    @Test
+    public void generateFilePathTest() {
+        String path = FileUtil.generateDateFormatStoragePath(SftpSubDirectory.VIDEO);
+        log.error("Path: {}", path);
     }
 }

@@ -1,10 +1,15 @@
 package com.jmframework.boot.jmspringbootstarter.util;
 
+import cn.hutool.core.date.DateUtil;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.SftpSubDirectory;
 import lombok.extern.slf4j.Slf4j;
+import org.codehaus.plexus.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * <h1>FileUtil</h1>
@@ -59,5 +64,38 @@ public class FileUtil {
             }
         }
         return file;
+    }
+
+    /**
+     * Generate date-format storage path (relative path, w/o SFTP's server directory)
+     *
+     * @param sftpSubDirectory SFTP server's sub directory
+     * @return full storage path (absolute path). Null if file name is empty.
+     */
+    public static String generateDateFormatStoragePath(SftpSubDirectory sftpSubDirectory) {
+        Date today = new Date();
+        String year = DateUtil.format(today, "yyyy");
+        String month = DateUtil.format(today, "MM");
+        String day = DateUtil.format(today, "dd");
+        return sftpSubDirectory.getSubDirectory()
+                + year
+                + "/" + month
+                + "/" + day
+                + "/";
+    }
+
+    /**
+     * Generate unique file name for file
+     *
+     * @param file file
+     * @return unique file name (UUID.fileExtension)
+     */
+    public static String generateUniqueFileName(File file) {
+        String fileName = file.getName();
+        if (StringUtils.isBlank(fileName)) {
+            return null;
+        }
+        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+        return UUID.randomUUID() + "." + fileExtension;
     }
 }
