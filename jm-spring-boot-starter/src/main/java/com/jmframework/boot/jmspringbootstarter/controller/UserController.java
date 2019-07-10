@@ -132,11 +132,15 @@ public class UserController {
     public ResponseBodyBean updateAvatar(@RequestPart MultipartFile avatar, @Valid UpdateAvatarPLO plo) {
         UserPO po = new UserPO();
         po.setUsername(plo.getUsername());
+        boolean result;
         try {
-            userService.updateAvatar(avatar, po);
-        } catch (Exception e) {
+            result = userService.updateAvatar(avatar, po);
+        } catch (IOException e) {
             log.error("Exception occurred when update user's avatar. Exception message: {}", e.getMessage(), e);
             return ResponseBodyBean.ofError();
+        }
+        if (!result) {
+            return ResponseBodyBean.ofFailure("Failed to update avatar");
         }
         return ResponseBodyBean.ofSuccess("Update avatar successfully");
     }

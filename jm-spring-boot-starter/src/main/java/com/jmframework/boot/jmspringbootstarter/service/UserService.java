@@ -88,9 +88,10 @@ public interface UserService {
      *
      * @param avatar user's avatar file
      * @param po     persistence object
-     * @throws Exception update avatar failed
+     * @return true - updated avatar successfully; false - updating avatar failed
+     * @throws IOException update avatar failed
      */
-    void updateAvatar(MultipartFile avatar, UserPO po) throws Exception;
+    boolean updateAvatar(MultipartFile avatar, UserPO po) throws IOException;
 
     /**
      * Get user's avatar resource

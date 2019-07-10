@@ -4,7 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
-import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
@@ -112,14 +111,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public void updateAvatar(MultipartFile avatar, UserPO po) throws Exception {
+    public boolean updateAvatar(MultipartFile avatar, UserPO po) throws IOException {
         String avatarSubDirectory = FileUtil.generateDateFormatStoragePath(SftpSubDirectory.AVATAR);
         String avatarFullPath = sftpService.upload(avatar, avatarSubDirectory, FileExistsMode.REPLACE, true);
         po.setAvatar(avatarFullPath);
         int affectedRows = userMapper.updateAvatarByUsername(po);
-        if (affectedRows == 0) {
-            throw new BizException("Updating avatar failed");
+        if (affectedRows == 1) {
+            return true;
         }
+        sftpService.delete(avatarFullPath);
+        return false;
     }
 
     @Override
