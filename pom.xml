@@ -8,7 +8,7 @@
     <groupId>com.jmframework.boot</groupId>
     <!-- artifactId is the unique symbol for every project -->
     <artifactId>jm-spring-boot-template</artifactId>
-    <version>2.0.4.SNAPSHOT</version>
+    <version>2.0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>JM Spring Boot Template</name>
     <description>Demo project for Spring Boot</description>
