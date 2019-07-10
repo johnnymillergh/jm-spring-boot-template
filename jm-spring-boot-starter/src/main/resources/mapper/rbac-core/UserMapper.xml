@@ -178,4 +178,11 @@
         FROM t_user
         WHERE username = #{username}
     </select>
+
+    <update id="updateAvatarByUsername">
+        UPDATE t_user
+        SET avatar       = #{updated.avatar},
+            gmt_modified = now()
+        WHERE username = #{updated.username}
+    </update>
 </mapper>

@@ -53,14 +53,18 @@ public interface SftpService {
      * Upload file
      *
      * @param multipartFile  multipart file
-     * @param subDirectory   SFTP server's sub directory (if sub directory does'nt exist, will be auto created). Not
+     * @param subDirectory   SFTP server's sub directory (if sub directory doesn't exist, will be auto created). Not
      *                       empty and it looks like this: "/some/sub/directory/"
      * @param fileExistsMode This enumeration indicates what action shall be taken in case the destination file
      *                       already exists. In default, it should be set as: FileExistsMode.REPLACE
+     * @param deleteSource true - delete source file; false - not delete source file
      * @return file's full path if successful, else null
      * @throws IOException IO exception
      */
-    String upload(MultipartFile multipartFile, String subDirectory, FileExistsMode fileExistsMode) throws IOException;
+    String upload(MultipartFile multipartFile,
+                  String subDirectory,
+                  FileExistsMode fileExistsMode,
+                  boolean deleteSource) throws IOException;
 
     /**
      * Upload files

@@ -21,8 +21,16 @@ spring:
     time-zone: GMT+8
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
+      # `location` specifies the directory where uploaded files will be stored. When not specified,
+      # a temporary directory will be used. ATTENTION: it may differ due to OS.
+      location: /Users/johnny/Documents/@parent.artifactId@/temp
+      # `max-file-size` specifies the maximum size permitted for uploaded files. The default is 1MB. We set it as 64 MB.
+      max-file-size: 64MB
+      # `max-request-size` specifies the maximum size allowed for multipart/form-data requests. The default is 10MB.
+      max-request-size: 70MB
+      # `file-size-threshold` specifies the size threshold after which files will be written to disk.
+      # The default is 0. We set it as 0 too.
+      file-size-threshold: 0
 
 logging:
   config: classpath:configuration/logback/logback-@env@.xml

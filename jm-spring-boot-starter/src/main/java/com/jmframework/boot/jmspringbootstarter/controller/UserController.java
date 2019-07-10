@@ -19,6 +19,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -124,6 +125,20 @@ public class UserController {
         }
         userService.assignRoleToUser(plo.getUserId(), plo.getRoleIdList());
         return ResponseBodyBean.ofSuccess("Assigned role(s) to user");
+    }
+
+    @PostMapping(value = "/update-avatar")
+    @ApiOperation(value = "/update-avatar", notes = "Update user's avatar picture")
+    public ResponseBodyBean updateAvatar(@RequestPart MultipartFile avatar, @Valid UpdateAvatarPLO plo) {
+        UserPO po = new UserPO();
+        po.setUsername(plo.getUsername());
+        try {
+            userService.updateAvatar(avatar, po);
+        } catch (Exception e) {
+            log.error("Exception occurred when update user's avatar. Exception message: {}", e.getMessage(), e);
+            return ResponseBodyBean.ofError();
+        }
+        return ResponseBodyBean.ofSuccess("Update avatar successfully");
     }
 
     @GetMapping(value = "/get-avatar", produces = {MediaType.IMAGE_GIF_VALUE,

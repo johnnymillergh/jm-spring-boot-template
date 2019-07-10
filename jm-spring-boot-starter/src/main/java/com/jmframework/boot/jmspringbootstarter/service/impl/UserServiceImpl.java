@@ -4,10 +4,13 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
+import com.jmframework.boot.jmspringbootstarter.exception.BizException;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
+import com.jmframework.boot.jmspringbootstarter.util.FileUtil;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.SftpSubDirectory;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
@@ -16,7 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.integration.file.support.FileExistsMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,6 +108,18 @@ public class UserServiceImpl implements UserService {
     public void assignRoleToUser(Long userId, List<Long> roleIdList) {
         int affectedRows = userMapper.insertUserIdAndRoleIdList(userId, roleIdList);
         log.error("Assign role(s) to user. Insert user-role relation record, affected rows: {}", affectedRows);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public void updateAvatar(MultipartFile avatar, UserPO po) throws Exception {
+        String avatarSubDirectory = FileUtil.generateDateFormatStoragePath(SftpSubDirectory.AVATAR);
+        String avatarFullPath = sftpService.upload(avatar, avatarSubDirectory, FileExistsMode.REPLACE, true);
+        po.setAvatar(avatarFullPath);
+        int affectedRows = userMapper.updateAvatarByUsername(po);
+        if (affectedRows == 0) {
+            throw new BizException("Updating avatar failed");
+        }
     }
 
     @Override

@@ -126,6 +126,14 @@ public interface UserMapper extends BaseMapper<UserPO> {
     int insertUserIdAndRoleIdList(@Param("userId") Long userId, @Param("roleIdList") List<Long> roleIdList);
 
     /**
+     * Update avatar by user's ID
+     *
+     * @param po persistence object
+     * @return affected rows
+     */
+    int updateAvatarByUsername(@Param("updated") UserPO po);
+
+    /**
      * Select user's ID and avatar by username
      *
      * @param username username

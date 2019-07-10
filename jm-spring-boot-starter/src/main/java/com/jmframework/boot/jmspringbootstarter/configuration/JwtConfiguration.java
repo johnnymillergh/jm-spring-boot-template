@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "jwt.configuration")
 public class JwtConfiguration {
-
     public JwtConfiguration(ProjectProperty projectProperty) {
         this.signingKey = projectProperty.getProjectArtifactId();
         log.error("JWT signing key: {}", this.signingKey);

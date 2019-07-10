@@ -110,16 +110,23 @@ public class SftpServiceImpl implements SftpService {
     }
 
     @Override
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public String upload(MultipartFile multipartFile,
                          String subDirectory,
-                         FileExistsMode fileExistsMode) throws IOException {
+                         FileExistsMode fileExistsMode,
+                         boolean deleteSource) throws IOException {
         log.info("Uploading single multipart file to SFTP server. File name: {}", multipartFile.getOriginalFilename());
+        File file = FileUtil.convertFrom(multipartFile);
         SftpUploadFile sftpUploadFile = SftpUploadFile.builder()
-                                                      .fileToBeUploaded(FileUtil.convertFrom(multipartFile))
+                                                      .fileToBeUploaded(file)
                                                       .subDirectory(subDirectory)
                                                       .fileExistsMode(fileExistsMode)
                                                       .build();
-        return this.upload(sftpUploadFile);
+        String fileFullPath = this.upload(sftpUploadFile);
+        if (deleteSource) {
+            file.delete();
+        }
+        return fileFullPath;
     }
 
     @Override
