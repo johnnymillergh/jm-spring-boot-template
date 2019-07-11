@@ -72,8 +72,8 @@ sftp:
       host: ENC(1XwJZpHiJTHb9lwN1E4dIsK4b2hYUkub)
       port: 22
       user: ENC(GYQSxdqkQuwd+7n46ICczw==)
-      password: ENC(KrwHjLICKJTgt7+Oye6VlQ==)
-      directory: ENC(Mf+uGv44ofMSEgEB21IzK7jATGWNOCZL1KcqHpDRRcs=)
+      password: ENC(pXovKinIbzgayLL4v8udQVAohCTpr7WI)
+      directory: ENC(CNacxZaIjifaSGZe2G7BTw==)
       private-key:
       private-key-pass-phrase:
       session-cache-size: 20
