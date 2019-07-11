@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ByteArrayResource getUserAvatarResource(String username) throws IOException {
         UserPO po = userMapper.selectIdAndAvatarByUsername(username);
-        if (StringUtils.isBlank(po.getAvatar())) {
+        if (po == null || StringUtils.isBlank(po.getAvatar())) {
             return null;
         }
         InputStream stream = sftpService.read(po.getAvatar());

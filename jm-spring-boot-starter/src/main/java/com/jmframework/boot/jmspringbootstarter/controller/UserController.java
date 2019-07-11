@@ -151,6 +151,9 @@ public class UserController {
     @ApiOperation(value = "/get-avatar", notes = "Get user's avatar picture")
     public ResponseEntity getAvatar(@Valid GetAvatarPLO plo) throws IOException {
         ByteArrayResource resource = userService.getUserAvatarResource(plo.getUsername());
+        if (resource == null) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(resource);
     }
 }
