@@ -84,7 +84,13 @@ public interface UserService {
     void assignRoleToUser(Long userId, List<Long> roleIdList);
 
     /**
-     * Update user's avatar
+     * <p>Update user&#39;s avatar. When user uploads an avatar picture, we&#39;re going to do the following
+     * processes:</p>
+     * <ol>
+     * <li>Get user&#39;s previous avatar information by username, and delete that avatar if it exists;</li>
+     * <li>Upload user&#39;s new avatar to SFTP server;</li>
+     * <li>Update user&#39;s avatar information to MySQL database by username.</li>
+     * </ol>
      *
      * @param avatar user's avatar file
      * @param po     persistence object

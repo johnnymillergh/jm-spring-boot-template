@@ -3,7 +3,6 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
@@ -40,16 +39,11 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleService roleService;
     private final SftpService sftpService;
-    private final SftpClientConfiguration sftpClientConfiguration;
 
-    public UserServiceImpl(UserMapper userMapper,
-                           RoleService roleService,
-                           SftpService sftpService,
-                           SftpClientConfiguration sftpClientConfiguration) {
+    public UserServiceImpl(UserMapper userMapper, RoleService roleService, SftpService sftpService) {
         this.userMapper = userMapper;
         this.roleService = roleService;
         this.sftpService = sftpService;
-        this.sftpClientConfiguration = sftpClientConfiguration;
     }
 
     @Override
@@ -112,6 +106,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public boolean updateAvatar(MultipartFile avatar, UserPO po) throws IOException {
+        UserPO userInDatabase = userMapper.selectIdAndAvatarByUsername(po.getUsername());
+        // user doesn't exist
+        if (userInDatabase == null) {
+            return false;
+        }
+
+        if (StringUtils.isNotBlank(userInDatabase.getAvatar())) {
+            sftpService.delete(userInDatabase.getAvatar());
+        }
+
         String avatarSubDirectory = FileUtil.generateDateFormatStoragePath(SftpSubDirectory.AVATAR);
         String avatarFullPath = sftpService.upload(avatar, avatarSubDirectory, FileExistsMode.REPLACE, true);
         po.setAvatar(avatarFullPath);

@@ -95,9 +95,6 @@ public class SftpServiceImpl implements SftpService {
     @ValidateArgument
     public String upload(@Valid SftpUploadFile sftpUploadFile) {
         log.info("Uploading single file to SFTP server. SftpUploadFile: {}", sftpUploadFile);
-
-        // sftpUploadGateway.upload(file);
-
         Message<File> message = MessageBuilder.withPayload(sftpUploadFile.getFileToBeUploaded()).build();
         sftpRemoteFileTemplate.setRemoteDirectoryExpression(new LiteralExpression(sftpClientConfiguration.getDirectory()));
         sftpRemoteFileTemplate.setAutoCreateDirectory(true);
