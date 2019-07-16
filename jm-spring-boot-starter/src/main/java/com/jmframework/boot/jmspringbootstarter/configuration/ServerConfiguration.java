@@ -2,6 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import com.jmframework.boot.jmspringbootstarter.common.constant.ProjectProperty;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
@@ -24,14 +25,11 @@ import java.util.Enumeration;
 @Slf4j
 @Getter
 @Component
+@RequiredArgsConstructor
 public class ServerConfiguration implements ApplicationListener<WebServerInitializedEvent> {
     public static final String DEVELOPMENT_ENVIRONMENT_ALIAS = "dev";
     private final ProjectProperty projectProperty;
     private int serverPort;
-
-    public ServerConfiguration(ProjectProperty projectProperty) {
-        this.projectProperty = projectProperty;
-    }
 
     @Override
     public void onApplicationEvent(WebServerInitializedEvent event) {

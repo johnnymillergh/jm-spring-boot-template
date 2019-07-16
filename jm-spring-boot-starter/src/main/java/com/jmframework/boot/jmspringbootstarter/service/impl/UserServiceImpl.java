@@ -13,6 +13,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
@@ -35,16 +36,11 @@ import java.util.List;
  **/
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleService roleService;
     private final SftpService sftpService;
-
-    public UserServiceImpl(UserMapper userMapper, RoleService roleService, SftpService sftpService) {
-        this.userMapper = userMapper;
-        this.roleService = roleService;
-        this.sftpService = sftpService;
-    }
 
     @Override
     public List<UserPO> getUserPageList(Page page) {

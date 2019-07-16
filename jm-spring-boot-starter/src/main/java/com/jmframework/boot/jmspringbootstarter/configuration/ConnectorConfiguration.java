@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -22,12 +23,9 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019-05-03 14:39
  **/
 @Configuration
+@RequiredArgsConstructor
 public class ConnectorConfiguration {
     private final ServerConfiguration serverConfiguration;
-
-    public ConnectorConfiguration(ServerConfiguration serverConfiguration) {
-        this.serverConfiguration = serverConfiguration;
-    }
 
     /**
      * Redirect all traffic to HTTPS.

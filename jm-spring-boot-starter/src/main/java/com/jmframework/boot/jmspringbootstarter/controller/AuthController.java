@@ -12,9 +12,9 @@ import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.plexus.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,22 +36,12 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 @Api(tags = {"/auth"})
+@RequiredArgsConstructor
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder encoder;
     private final AuthService authService;
-
-    @Autowired
-    public AuthController(AuthenticationManager authenticationManager,
-                          JwtUtil jwtUtil,
-                          BCryptPasswordEncoder encoder,
-                          AuthService authService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
-        this.encoder = encoder;
-        this.authService = authService;
-    }
 
     @GetMapping("/check-username-uniqueness")
     @ApiOperation(value = "/check-username-uniqueness", notes = "Check username uniqueness")

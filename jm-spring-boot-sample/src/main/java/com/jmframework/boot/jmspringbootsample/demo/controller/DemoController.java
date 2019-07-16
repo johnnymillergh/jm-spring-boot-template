@@ -6,6 +6,7 @@ import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +25,9 @@ import java.util.Map;
  **/
 @RestController
 @RequestMapping("/demo")
+@RequiredArgsConstructor
 public class DemoController {
     private final JwtUtil jwtUtil;
-
-    public DemoController(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-    }
 
     @GetMapping("/get-current-user")
     @ApiOperation(value = "Get current user", notes = "Get current user from JWT")

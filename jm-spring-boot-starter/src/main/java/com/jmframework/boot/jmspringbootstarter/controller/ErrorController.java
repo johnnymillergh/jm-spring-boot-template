@@ -1,6 +1,5 @@
 package com.jmframework.boot.jmspringbootstarter.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
@@ -22,8 +21,8 @@ import java.util.Map;
  **/
 @RestController
 public class ErrorController extends BasicErrorController {
-    @Autowired
-    public ErrorController(ErrorAttributes errorAttributes, ServerProperties serverProperties,
+    public ErrorController(ErrorAttributes errorAttributes,
+                           ServerProperties serverProperties,
                            List<ErrorViewResolver> errorViewResolvers) {
         super(errorAttributes, serverProperties.getError(), errorViewResolvers);
     }

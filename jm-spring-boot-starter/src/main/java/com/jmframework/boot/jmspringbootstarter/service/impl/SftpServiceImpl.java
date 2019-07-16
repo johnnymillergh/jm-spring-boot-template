@@ -7,6 +7,7 @@ import com.jmframework.boot.jmspringbootstarter.configuration.SftpUploadGateway;
 import com.jmframework.boot.jmspringbootstarter.service.SftpService;
 import com.jmframework.boot.jmspringbootstarter.util.FileUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.common.SftpUploadFile;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.expression.common.LiteralExpression;
@@ -33,20 +34,12 @@ import java.util.List;
  **/
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SftpServiceImpl implements SftpService {
     private final SftpRemoteFileTemplate sftpRemoteFileTemplate;
     private final SftpUploadGateway sftpUploadGateway;
     private final SftpClientConfiguration sftpClientConfiguration;
     private final BeanFactory beanFactory;
-
-    public SftpServiceImpl(SftpRemoteFileTemplate sftpRemoteFileTemplate,
-                           SftpUploadGateway sftpUploadGateway,
-                           SftpClientConfiguration sftpClientConfiguration, BeanFactory beanFactory) {
-        this.sftpRemoteFileTemplate = sftpRemoteFileTemplate;
-        this.sftpUploadGateway = sftpUploadGateway;
-        this.sftpClientConfiguration = sftpClientConfiguration;
-        this.beanFactory = beanFactory;
-    }
 
     @Override
     public List<String> listFiles(String fullPath) {

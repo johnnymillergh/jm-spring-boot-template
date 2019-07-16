@@ -2,6 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.initialization;
 
 import com.jmframework.boot.jmspringbootstarter.configuration.SftpClientConfiguration;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.SftpSubDirectory;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -19,15 +20,10 @@ import org.springframework.stereotype.Component;
  **/
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class SftpSubDirectoryRunner implements ApplicationRunner {
     private final SftpRemoteFileTemplate sftpRemoteFileTemplate;
     private final SftpClientConfiguration sftpClientConfiguration;
-
-    public SftpSubDirectoryRunner(SftpRemoteFileTemplate sftpRemoteFileTemplate,
-                                  SftpClientConfiguration sftpClientConfiguration) {
-        this.sftpRemoteFileTemplate = sftpRemoteFileTemplate;
-        this.sftpClientConfiguration = sftpClientConfiguration;
-    }
 
     @Override
     @SuppressWarnings("RedundantThrows")

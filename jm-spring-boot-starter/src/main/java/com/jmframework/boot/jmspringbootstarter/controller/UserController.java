@@ -14,6 +14,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserPageL
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.SearchUserRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
@@ -36,12 +37,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Api(tags = {"/user"})
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
 //    TODO: ROADMAP
 //     1. Get user page list. (done)

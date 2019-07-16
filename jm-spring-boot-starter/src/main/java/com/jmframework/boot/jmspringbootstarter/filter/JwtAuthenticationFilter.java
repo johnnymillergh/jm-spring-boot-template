@@ -11,8 +11,8 @@ import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarter.util.RequestUtil;
 import com.jmframework.boot.jmspringbootstarter.util.ResponseUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,19 +38,11 @@ import java.util.Set;
  **/
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
     private final JwtUtil jwtUtil;
     private final CustomConfiguration customConfiguration;
-
-    @Autowired
-    public JwtAuthenticationFilter(CustomUserDetailsServiceImpl customUserDetailsServiceImpl,
-                                   JwtUtil jwtUtil,
-                                   CustomConfiguration customConfiguration) {
-        this.customUserDetailsServiceImpl = customUserDetailsServiceImpl;
-        this.jwtUtil = jwtUtil;
-        this.customConfiguration = customConfiguration;
-    }
 
     @Override
     @SuppressWarnings("NullableProblems")

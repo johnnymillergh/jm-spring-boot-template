@@ -8,6 +8,7 @@ import com.jmframework.boot.jmspringbootstarter.configuration.CustomConfiguratio
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
 import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarter.util.RequestUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -33,16 +34,12 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class WebRequestLogAspect {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private final CustomConfiguration customConfiguration;
     private final JwtUtil jwtUtil;
     private final ObjectMapper mapper = new ObjectMapper();
-
-    public WebRequestLogAspect(CustomConfiguration customConfiguration, JwtUtil jwtUtil) {
-        this.customConfiguration = customConfiguration;
-        this.jwtUtil = jwtUtil;
-    }
 
     /**
      * Define pointcut. Pointcut is a predicate or expression that matches join points. In WebRequestLogAspect, we need

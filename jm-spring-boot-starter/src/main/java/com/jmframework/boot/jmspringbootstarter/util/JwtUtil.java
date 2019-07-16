@@ -10,8 +10,8 @@ import com.jmframework.boot.jmspringbootstarter.service.RedisService;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
 import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,16 +32,10 @@ import java.util.concurrent.TimeUnit;
  **/
 @Slf4j
 @Configuration
+@RequiredArgsConstructor
 public class JwtUtil {
     private final JwtConfiguration jwtConfiguration;
     private final RedisService redisService;
-
-    @Autowired
-    public JwtUtil(JwtConfiguration jwtConfiguration,
-                   RedisService redisService) {
-        this.jwtConfiguration = jwtConfiguration;
-        this.redisService = redisService;
-    }
 
     /**
      * Create JWT.

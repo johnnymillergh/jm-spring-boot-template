@@ -2,6 +2,7 @@ package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.jmframework.boot.jmspringbootstarter.common.constant.ProjectProperty;
+import lombok.RequiredArgsConstructor;
 import org.apache.maven.model.Developer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +23,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-02-07 16:15
  **/
-@EnableSwagger2
 @Configuration
+@EnableSwagger2
+@RequiredArgsConstructor
 public class Swagger2Configuration {
     private final ProjectProperty projectProperty;
-
-    public Swagger2Configuration(ProjectProperty projectProperty) {
-        this.projectProperty = projectProperty;
-    }
 
     @Bean
     public Docket createRestApi() {
