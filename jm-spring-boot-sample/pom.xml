@@ -4,6 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jm-spring-boot-sample</artifactId>
+    <!--
+        Sub module version is specified in root's (parent's) POM, and inherited from root (parent).
+        So we don't have to maintain sub module's version here.
+    -->
     <packaging>jar</packaging>
     <name>JM Spring Boot Sample</name>
     <description>JM Spring Boot Sample</description>

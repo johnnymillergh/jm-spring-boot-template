@@ -8,6 +8,11 @@
     <groupId>com.jmframework.boot</groupId>
     <!-- artifactId is the unique symbol for every project -->
     <artifactId>jm-spring-boot-template</artifactId>
+    <!--
+        Use Maven plugin CLI: `org.codehaus.mojo:versions-maven-plugin:2.7:set`
+        to upgrade version of root (parent) and sub module projects.
+        Sub module version is inherited from root (parent).
+    -->
     <version>2.0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>JM Spring Boot Template</name>
@@ -39,6 +44,10 @@
         <url>https://github.com/johnnymillergh/SpringBootTemplate/issues</url>
     </issueManagement>
 
+    <!--
+        Use Maven plugin CLI: `org.codehaus.mojo:versions-maven-plugin:2.7:update-parent`
+        to check and update parent's version
+    -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -96,16 +105,19 @@
             <dependency>
                 <groupId>com.jmframework.boot</groupId>
                 <artifactId>jm-spring-boot-sample</artifactId>
+                <!-- Sub module version is inherited from root (parent). -->
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.jmframework.boot</groupId>
                 <artifactId>jm-spring-boot-starter</artifactId>
+                <!-- Sub module version is inherited from root (parent). -->
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.jmframework.boot</groupId>
                 <artifactId>jm-spring-boot-starter-domain</artifactId>
+                <!-- Sub module version is inherited from root (parent). -->
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
@@ -138,6 +150,10 @@
         </plugins>
     </build>
 
+    <!--
+        Use Maven plugin CLI: `org.codehaus.mojo:versions-maven-plugin:2.7:use-latest-releases`
+        to check and update dependency version to latest release version
+    -->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
