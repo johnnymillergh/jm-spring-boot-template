@@ -1,7 +1,9 @@
 # SpringBootTemplate
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-> 🛠 Template project for Spring Boot
+[![GitHub release](https://img.shields.io/github/release/johnnymillergh/jm-spring-boot-template.svg)](https://github.com/johnnymillergh/jm-spring-boot-template/releases)
+[![GitHub stars](https://img.shields.io/github/stars/johnnymillergh/jm-vue-admin-template.svg?style=social&label=Stars)](https://github.com/johnnymillergh/jm-vue-admin-template)
+[![Build Status](https://travis-ci.org/johnnymillergh/jm-vue-admin-template.svg?branch=master)](https://travis-ci.org/johnnymillergh/jm-vue-admin-template)
+[![license](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/johnnymillergh/jm-vue-admin-template/blob/master/LICENSE)
 
 **SpringBootTemplate** is a Spring Boot based scaffolding project which integrated some awesome features - multi-environment support, Redis, Redis Session, Redis Cache, Spring Validation, Spring Security... More funny features will come soon! 
 
@@ -19,8 +21,15 @@ Here is the highlights of **SpringBootTemplate**:
 1. Multi-environment support for project deployment: development, test and production.
 2. Customized banner for Spring Boot startup.
 3. Enabled logging SQL statement, user's request information.
-4. Integrated Redis, Redis Session, Redis Cache.
-5. Integrated Spring Validation, Spring Security
+4. Integrated Data Store Middleware:
+   - MySQL
+   - Redis
+   - Atmoz SFTP
+5. Other interesting integration:
+   - Spring Validation
+   - Spring Security
+   - Swagger 2
+   - Lombok
 6. **SpringBootTemplate** is actively developed. More features will come soon!
 
 ## Usage
@@ -36,39 +45,6 @@ This project uses [Java 8](http://nodejs.org). Go check them out if you don't ha
 2. Build with IntelliJ IDEA or Eclipse.
 
 3. Click the green triangle to Run.
-
-## Standard Controller Template
-
-A standard controller should be simple, good to read and maintain. It's  just a data transfer bridge for front-end and back-end and exposures APIs. Here is a standard controller template.
-
-```java
-/**
- * Description: StandardController, change description here.
- *
- * @author: Johnny Miller (鍾俊)
- * @email: johnnysviva@outlook.com
- * @date: 2019-04-11
- * @time: 13:36
- **/
-@RestController
-@RequestMapping("/standard")
-@Api(tags = {"/standard"})
-public class StandardController {
-    private final DemoService demoService;
-
-    public StandardController(DemoService demoService) {
-        this.demoService = demoService;
-    }
-
-    @GetMapping("/some-path")
-    @ApiOperation(value = "somePath", notes = "Notes for some path")
-    public ResponseBodyBean somePath(String param) {
-        return ResponseBodyBean.ofSuccess("Response message" + param);
-    }
-}
-```
-
-
 
 ## Related Efforts
 
