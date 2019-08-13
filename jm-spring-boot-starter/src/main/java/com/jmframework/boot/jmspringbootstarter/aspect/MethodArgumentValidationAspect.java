@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * <h1>ValidateMethodArgumentAspect</h1>
+ * <h1>MethodArgumentValidationAspect</h1>
  * <p><span>This class is an aspect class that validates method&#39;s argument(s).</span></p>
  * <h2>USAGE (Must Do's)</h2>
  * <ol>
@@ -35,10 +35,10 @@ import java.util.Set;
 @Slf4j
 @Aspect
 @Component
-public class ValidateMethodArgumentAspect {
+public class MethodArgumentValidationAspect {
     private final Validator validator;
 
-    public ValidateMethodArgumentAspect() {
+    public MethodArgumentValidationAspect() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         this.validator = factory.getValidator();
     }
