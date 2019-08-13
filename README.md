@@ -36,6 +36,10 @@ Here is the highlights of **JM Spring Boot Starter**:
    - Lombok
 6. **JM Spring Boot Starter** is actively developed. More features will come soon!
 
+## Blueprint
+
+Project will be Integrated with Spring Cloud.
+
 ## Usage
 
 This project uses [Java 8](http://nodejs.org). Go check them out if you don't have them locally installed.
