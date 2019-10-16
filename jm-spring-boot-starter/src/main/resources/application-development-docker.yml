@@ -1,0 +1,89 @@
+server:
+  port: 8443
+  # Comment following ssl configuration to DISABLE HTTPS in development environment.
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore.p12
+    key-store-password: ENC(Llhd3pDTnL4x1BmFutqGNJ2h3M/fw5OpKCDACf3vztgW/B2mtjle0SHqDE4XETHT)
+    key-alias: tomcat
+
+spring:
+  cache:
+    cache-names: c1,c2
+    redis:
+      time-to-live: 1800s
+  datasource:
+    name: datasource-one
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://172.16.238.10:3306/jm_spring_boot_template?useSSL=true&useUnicode=true&characterEncoding=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    username: ENC(4lska00DO+25XyMZdKMuxHQ+J92OkgENbKR39qoZW+6ivJvpeFYlMQ==)
+    password: ENC(MWH3LrbDDSXIvUpT/WLbvofKW2x/nxr/)
+  devtools:
+    restart:
+      enabled: true
+  redis:
+    database: 0
+    host: 172.16.238.11
+    port: 6379
+    password: ENC(lGKu2PTxVNCE8WQGPC0z2g==)
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+
+# Customize JWT configuration for development environment.
+jwt:
+  configuration:
+    # an hour
+    ttl: 3600000
+    ttl-for-remember-me: 604800000
+
+custom:
+  configuration:
+    # Make `web-security-disabled` equal to true to disable web security. We suggest you do not turn off web security
+    # feature unless development environment.
+    web-security-disabled: false
+    # Disable web request information log
+    web-request-log-disabled: false
+    ignores:
+      # POST Requests need to be ignored.
+      post:
+        - "/auth/register"
+        - "/auth/login"
+        - "/auth/logout"
+      get:
+        - "/auth/check-username-uniqueness"
+        - "/auth/check-email-uniqueness"
+        - "/auth/validate-username/**"
+        - "/user/get-avatar"
+      # Request need to be ignored that matches pattern.
+      pattern:
+        - "/druid/**"
+        - "/swagger-resources/**"
+        - "/v2/api-docs/**"
+        - "/webjars/**"
+        - "/swagger-ui.html"
+
+logging:
+  # Configure logging level for SFTP/JSCH
+  level:
+    com:
+      jcraft:
+        jsch: INFO
+
+sftp:
+  client:
+    configuration:
+      host: 172.16.238.12
+      port: 22
+      user: ENC(GYQSxdqkQuwd+7n46ICczw==)
+      password: ENC(pXovKinIbzgayLL4v8udQVAohCTpr7WI)
+      directory: ENC(CNacxZaIjifaSGZe2G7BTw==)
+      private-key:
+      private-key-pass-phrase:
+      session-cache-size: 20
+      session-wait-timeout: 15000

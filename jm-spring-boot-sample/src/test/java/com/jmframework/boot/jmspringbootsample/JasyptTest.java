@@ -28,13 +28,13 @@ public class JasyptTest {
     private class EncryptedInformation {
         // MySQL
         String urlOfDataSource = encryptor.encrypt(
-                "jdbc:mysql://127.0.0.1:3306/jm_spring_boot_template?useSSL=true&useUnicode=true&characterEncoding" +
+                "jdbc:mysql://172.16.238.10:3306/jm_spring_boot_template?useSSL=true&useUnicode=true&characterEncoding" +
                         "=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8");
         String usernameForMySQL = encryptor.encrypt("jm_spring_boot_template_w");
         String passwordForMySQL = encryptor.encrypt("H'Tkh9@!*_/B'_j");
 
         // Redis
-        String hostOfRedis = encryptor.encrypt("192.168.158.136");
+        String hostOfRedis = encryptor.encrypt("172.16.238.11");
         String passwordForRedis = encryptor.encrypt("123456");
 
         // Druid
@@ -43,7 +43,7 @@ public class JasyptTest {
         String keystoreForSSL = encryptor.encrypt("keystoreforprojectname");
 
         // SFTP
-        String sftpHost = encryptor.encrypt("sftpHostHere");
+        String sftpHost = encryptor.encrypt("172.16.238.12");
         String sftpUser = encryptor.encrypt("sftpUserHere");
         String sftpPassword = encryptor.encrypt("sftpPasswordHere");
         String sftpDirectory = encryptor.encrypt("sftpDirectoryHere");

@@ -68,14 +68,21 @@
 
     <profiles>
         <profile>
-            <id>development</id>
+            <id>development-local</id>
             <properties>
-                <env>development</env>
-                <envAlias>dev</envAlias>
+                <env>development-local</env>
+                <envAlias>dev_loc</envAlias>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+        </profile>
+        <profile>
+            <id>development-docker</id>
+            <properties>
+                <env>development-docker</env>
+                <envAlias>dev_dkr</envAlias>
+            </properties>
         </profile>
         <profile>
             <id>test</id>
