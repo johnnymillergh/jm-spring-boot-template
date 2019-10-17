@@ -42,7 +42,7 @@ services:
     volumes:
       - /usr/local/docker-file-mapping/atmoz-sftp:/home/johnny/upload
     ports:
-      - 22:22
+      - 23:23
     networks:
       jm_spring_boot_and_vue_template_network:
         ipv4_address: 172.16.238.12
