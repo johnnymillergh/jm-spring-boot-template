@@ -3,7 +3,7 @@
     <include resource="configuration/logback/logback-base.xml"/>
 
     <!-- Log Level -->
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="DEBUG"/>
         <appender-ref ref="INFO"/>
