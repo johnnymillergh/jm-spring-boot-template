@@ -55,7 +55,7 @@ services:
       - redis-server
       - atmoz-sftp-server
     ports:
-      - 8443:8443
+      - 8080:8080
     networks:
       jm_spring_boot_and_vue_template_network:
         ipv4_address: 172.16.238.13

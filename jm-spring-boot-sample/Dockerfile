@@ -7,4 +7,4 @@ COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java", "-Xmx200m", "-jar", "app.jar"]
 # Debugging the application in a Docker container
 # ENTRYPOINT ["java", "-Xmx200m", "-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=XXXX", "-jar", "app.jar"]
-EXPOSE 443
+EXPOSE 8080
