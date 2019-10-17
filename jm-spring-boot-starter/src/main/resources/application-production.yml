@@ -69,11 +69,11 @@ logging:
 sftp:
   client:
     configuration:
-      host: ENC(FXQvpsxN4AmAyGHWKcXDSvt9moel46qO)
+      host: 172.16.238.12
       port: 22
-      user: ENC(GYQSxdqkQuwd+7n46ICczw==)
-      password: ENC(pXovKinIbzgayLL4v8udQVAohCTpr7WI)
-      directory: ENC(CNacxZaIjifaSGZe2G7BTw==)
+      user: johnny
+      password: atmoz@sftp
+      directory: upload
       private-key:
       private-key-pass-phrase:
       session-cache-size: 20

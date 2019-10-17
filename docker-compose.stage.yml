@@ -7,7 +7,7 @@ services:
     image: "mysql:latest"
     restart: always
     environment:
-      MYSQL_DATABASE: "jm-spring-boot-template"
+      MYSQL_DATABASE: "jm_spring_boot_template"
       # So you don't have to use root, but you can if you like
       MYSQL_USER: "root"
       # You can use whatever password you like
