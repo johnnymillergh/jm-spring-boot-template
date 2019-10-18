@@ -16,6 +16,8 @@ services:
       MYSQL_ROOT_PASSWORD: "jm@mysql"
     ports:
       - 3306:3306
+    volumes:
+      - /Users/johnny/DockerFileMapping/mysql-server-jm-spring-boot-template-dev_dkr:/var/lib/mysql
     networks:
       jm_spring_boot_and_vue_template_network:
         ipv4_address: 172.16.238.10
