@@ -3,7 +3,7 @@ version: "3.7"
 services:
   # https://medium.com/@chrischuck35/how-to-create-a-mysql-instance-with-docker-compose-1598f3cc1bee
   mysql-server:
-    container_name: mysql-server
+    container_name: mysql-server-jm-spring-boot-template-stage
     image: "mysql:latest"
     restart: always
     environment:
@@ -21,7 +21,7 @@ services:
         ipv4_address: 172.16.238.10
 
   redis-server:
-    container_name: redis-server
+    container_name: redis-server-jm-spring-boot-template-stage
     image: "redis:latest"
     restart: always
     command: "redis-server /usr/local/etc/redis/redis.conf"
@@ -35,7 +35,7 @@ services:
         ipv4_address: 172.16.238.11
 
   atmoz-sftp-server:
-    container_name: atmoz-sftp-server
+    container_name: atmoz-sftp-server-jm-spring-boot-template-stage
     image: "atmoz/sftp:latest"
     restart: always
     command: "johnny:atmoz@sftp:::upload"
@@ -48,7 +48,7 @@ services:
         ipv4_address: 172.16.238.12
 
   jm-spring-boot-template:
-    container_name: jm-spring-boot-template
+    container_name: jm-spring-boot-template-stage
     image: "ijohnnymiller/jm-spring-boot-template-stage:${TAG}"
     depends_on:
       - mysql-server
