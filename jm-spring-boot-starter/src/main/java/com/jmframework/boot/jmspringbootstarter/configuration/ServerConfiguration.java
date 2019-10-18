@@ -49,10 +49,7 @@ public class ServerConfiguration implements ApplicationListener<WebServerInitial
      * @date 2019-05-03 16:05
      */
     public String getBaseUrl() {
-        if (DEVELOPMENT_ENVIRONMENT_ALIAS.equals(projectProperty.getEnvironmentAlias())) {
-            return "https://" + this.getPublicIp() + ":" + serverPort + projectProperty.getContextPath();
-        }
-        return "https://" + this.getPublicIp() + projectProperty.getContextPath();
+        return "http://" + this.getPublicIp() + ":" + serverPort + projectProperty.getContextPath();
     }
 
     /**
