@@ -1,3 +1,95 @@
+# [v2.0.4](https://github.com/johnnymillergh/jm-spring-boot-template/compare/v2.0.3...v2.0.4) (2019-10-18)
+
+
+### Bug Fixes
+
+* **$Docker, MySQL:** correct MySQL database name ([523d368](https://github.com/johnnymillergh/jm-spring-boot-template/commit/523d368))
+* **$Role:** remove `@NotNull` annotation ([6093a88](https://github.com/johnnymillergh/jm-spring-boot-template/commit/6093a88))
+
+
+### Build System
+
+* **$POM:** update version tag to avoid warning when maven builds project ([c570717](https://github.com/johnnymillergh/jm-spring-boot-template/commit/c570717))
+* **$POM:** upgrade project version to 2.0.4.SNAPSHOT ([975d4be](https://github.com/johnnymillergh/jm-spring-boot-template/commit/975d4be))
+
+
+### Code Refactoring
+
+* **$DependencyInjection:** use Lombok annotation `@RequiredArgsConstructor` to inject dependency ([3294cc5](https://github.com/johnnymillergh/jm-spring-boot-template/commit/3294cc5))
+* **$HTTPStatus:** rename UniversalStatus.java to HttpStatus.java ([8dc0896](https://github.com/johnnymillergh/jm-spring-boot-template/commit/8dc0896))
+* **$Pagination:** not initialize pagination's fields ([6785d4a](https://github.com/johnnymillergh/jm-spring-boot-template/commit/6785d4a))
+* **$ResponseBody, HTTPStatus:** use generics to constrain the type of response body and redefine HTTP status ([4cfaa44](https://github.com/johnnymillergh/jm-spring-boot-template/commit/4cfaa44))
+
+
+### Features
+
+* **$$AOP, SFTP:** add method's argument validation aspect ([ba9db71](https://github.com/johnnymillergh/jm-spring-boot-template/commit/ba9db71))
+* **$API:** add an API `/authorization/get-permissions` ([216631a](https://github.com/johnnymillergh/jm-spring-boot-template/commit/216631a))
+* **$API:** add an API `/authorization/get-roles` ([8db2eb7](https://github.com/johnnymillergh/jm-spring-boot-template/commit/8db2eb7))
+* **$API:** add API `/authorization/submit-authorization` ([827c6f9](https://github.com/johnnymillergh/jm-spring-boot-template/commit/827c6f9))
+* **$API:** add API to edit user's basic information ([44ecdad](https://github.com/johnnymillergh/jm-spring-boot-template/commit/44ecdad))
+* **$API:** add API to retrieve roles that user has ([3deef66](https://github.com/johnnymillergh/jm-spring-boot-template/commit/3deef66))
+* **$API:** new API to retrieve user page list ([28cd849](https://github.com/johnnymillergh/jm-spring-boot-template/commit/28cd849))
+* **$Auth:** add ignored URL `/auth/logout` ([7eac73b](https://github.com/johnnymillergh/jm-spring-boot-template/commit/7eac73b))
+* **$Auth:** response username after user signed in ([9f00c21](https://github.com/johnnymillergh/jm-spring-boot-template/commit/9f00c21))
+* **$Docker:** dockerize application ([33ee303](https://github.com/johnnymillergh/jm-spring-boot-template/commit/33ee303))
+* **$File:** add a file util method - generate date-format storage path ([c7ff635](https://github.com/johnnymillergh/jm-spring-boot-template/commit/c7ff635))
+* **$FTPStatus:** add FtpStatus.java ([e77441b](https://github.com/johnnymillergh/jm-spring-boot-template/commit/e77441b))
+* **$IgnoredAPI, auth:** update the URLs of ignored API ([e8bf036](https://github.com/johnnymillergh/jm-spring-boot-template/commit/e8bf036))
+* **$JWT:** distribute JWT configuration for different envs ([f4f5aeb](https://github.com/johnnymillergh/jm-spring-boot-template/commit/f4f5aeb))
+* **$pom:** upgrade version to 2.0.3.RELEASE ([666b306](https://github.com/johnnymillergh/jm-spring-boot-template/commit/666b306))
+* **$SFTP:** add configuration for caching SFTP connection ([085be1d](https://github.com/johnnymillergh/jm-spring-boot-template/commit/085be1d))
+* **$SFTP:** add method to get file size from SFTP server ([7627c63](https://github.com/johnnymillergh/jm-spring-boot-template/commit/7627c63))
+* **$SFTP:** init SFTP server's sub directory ([1f8868d](https://github.com/johnnymillergh/jm-spring-boot-template/commit/1f8868d))
+* **$SFTP:** make directories for SFTP server if remote directory doesn't exist ([ce09ee7](https://github.com/johnnymillergh/jm-spring-boot-template/commit/ce09ee7))
+* **$SFTP:** reuse SFTP session by using CachingSessionFactory ([efca03d](https://github.com/johnnymillergh/jm-spring-boot-template/commit/efca03d))
+* **$SFTP:** support SFTP basic operations ([bd42f37](https://github.com/johnnymillergh/jm-spring-boot-template/commit/bd42f37))
+* **$SFTP:** use Message to upload file ([26991d4](https://github.com/johnnymillergh/jm-spring-boot-template/commit/26991d4))
+* **$SpringValidation:** get field error message from exception ([b35267c](https://github.com/johnnymillergh/jm-spring-boot-template/commit/b35267c))
+* **$User:** add a field `avatar` in table `t_user` ([db372ba](https://github.com/johnnymillergh/jm-spring-boot-template/commit/db372ba))
+* **$User:** add API operation annotation ([596bade](https://github.com/johnnymillergh/jm-spring-boot-template/commit/596bade))
+* **$User:** add API to retrieve user information ([aa1bc05](https://github.com/johnnymillergh/jm-spring-boot-template/commit/aa1bc05))
+* **$User:** add field `usersRoles` for API `/user/get-user-info` ([0519f9e](https://github.com/johnnymillergh/jm-spring-boot-template/commit/0519f9e))
+* **$User:** add gender enumeration ([1e9da59](https://github.com/johnnymillergh/jm-spring-boot-template/commit/1e9da59))
+* **$User:** new API - assign role(s) to user ([dfb5c7b](https://github.com/johnnymillergh/jm-spring-boot-template/commit/dfb5c7b))
+* **$User:** new API `/get-user-list-for-selection` ([5e9671e](https://github.com/johnnymillergh/jm-spring-boot-template/commit/5e9671e))
+* **$User:** new API for updating user's avatar `/user/update-avatar` ([784b6cd](https://github.com/johnnymillergh/jm-spring-boot-template/commit/784b6cd))
+* **$User:** new API to search user by username ([20d2f61](https://github.com/johnnymillergh/jm-spring-boot-template/commit/20d2f61))
+* **$User, Stream:** add API `/user/get-avatar` to get user's avatar ([91cbcca](https://github.com/johnnymillergh/jm-spring-boot-template/commit/91cbcca))
+* **$WebSecurity:** enable web security ([579f9e6](https://github.com/johnnymillergh/jm-spring-boot-template/commit/579f9e6))
+
+
+### Performance Improvements
+
+* **$HTTPS:** disable HTTPS feature for all environments ([260992a](https://github.com/johnnymillergh/jm-spring-boot-template/commit/260992a))
+* **$POM:** upgrade dependencies ([9893cd2](https://github.com/johnnymillergh/jm-spring-boot-template/commit/9893cd2))
+* **$SpringBoot:** upgrade Spring Boot version to 2.2.0.RELEASE ([e9bcb43](https://github.com/johnnymillergh/jm-spring-boot-template/commit/e9bcb43))
+
+
+### BREAKING CHANGES
+
+* **$DependencyInjection:** use Lombok annotation `@RequiredArgsConstructor` to
+inject dependency
+* **$ResponseBody, HTTPStatus:** use generics to constrain the type of response body and redefine HTTP status
+* **$$AOP, SFTP:** add method's argument validation aspect
+* **$SFTP:** reuse SFTP session by using CachingSessionFactory
+
+Closes https://app.clickup.com/t/13g8eh
+* **$SFTP:** init SFTP server's sub directory
+
+Closes https://app.clickup.com/t/13g8n3
+* **$SFTP:** support SFTP basic operations
+* **$POM:** POM's version should be `*-SNAPSHOT`
+* **$Pagination:** not initialize pagination's fields
+* **$WebSecurity:** enable web security
+* **$FTPStatus:** add FtpStatus.java
+* **$HTTPStatus:** rename UniversalStatus.java to HttpStatus.java
+* **$POM:** SFTP integration
+
+Closes https://app.clickup.com/t/162mf4
+
+
+
 # [2.0.3](https://github.com/johnnymillergh/jm-spring-boot-template/compare/v2.0.2...v) (2019-07-02)
 
 
