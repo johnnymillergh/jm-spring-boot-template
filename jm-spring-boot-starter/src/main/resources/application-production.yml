@@ -15,7 +15,7 @@ spring:
     name: datasource-one
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: ENC(3VHs/XUINqpJMDUmRKqUj4HQmlS9U+iNAMMEthwiygB+feY9Dqz/BQ4Yb8DpqBfBjZnAhOUb7zywbplfXFYH0MOjFew0g9Dz7q7t5Y268mVbEChst8iaUFZI2Oo59c+DXDvpD3TaEMrPjsObiTuF2Orj7vk6VpulMp2CJBX1YXDqRV3i9UuOwjDDNHQYlJqse/LOO5fc6MbcAzcnldIHOxQBwwVWiwzUgKgdq4QEnc+qPGFEWWlq5UFjJs3OZxNydh8L2qugou44c20ItPqsuw==)
+    url: jdbc:mysql://cdb-12mi7v72.bj.tencentcdb.com:10112/jm_spring_boot_template?useSSL=true&useUnicode=true&characterEncoding=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
     username: ENC(u+d031ary1vBWmoHxS32Uie6e3Sx3g18jQRrjnoNBsxGyu/lgM2kDw==)
     password: ENC(8H2ArHlSXKW7R+R5sbOS7E8ItUI+EPjU)
   devtools:
