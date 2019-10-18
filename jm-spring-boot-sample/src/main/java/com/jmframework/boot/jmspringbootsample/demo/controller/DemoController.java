@@ -6,6 +6,7 @@ import com.jmframework.boot.jmspringbootstarter.util.JwtUtil;
 import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,19 +25,16 @@ import java.util.Map;
  **/
 @RestController
 @RequestMapping("/demo")
+@RequiredArgsConstructor
 public class DemoController {
     private final JwtUtil jwtUtil;
-
-    public DemoController(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-    }
 
     @GetMapping("/get-current-user")
     @ApiOperation(value = "Get current user", notes = "Get current user from JWT")
     public ResponseBodyBean getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<>(4);
         String jwtString = jwtUtil.getJwtFromRequest(request);
-        Claims claims = jwtUtil.parseJWT(jwtString);
+        Claims claims = jwtUtil.parseJwt(jwtString);
         resultMap.put("jwtString", jwtString);
         resultMap.put("claims", claims);
         response.setStatus(org.springframework.http.HttpStatus.BAD_REQUEST.value());

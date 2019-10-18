@@ -1,10 +1,10 @@
 server:
-  port: 443
-  ssl:
-    key-store-type: PKCS12
-    key-store: classpath:keystore.p12
-    key-store-password: ENC(Llhd3pDTnL4x1BmFutqGNJ2h3M/fw5OpKCDACf3vztgW/B2mtjle0SHqDE4XETHT)
-    key-alias: tomcat
+  port: 8080
+#  ssl:
+#    key-store-type: PKCS12
+#    key-store: classpath:keystore.p12
+#    key-store-password: ENC(Llhd3pDTnL4x1BmFutqGNJ2h3M/fw5OpKCDACf3vztgW/B2mtjle0SHqDE4XETHT)
+#    key-alias: tomcat
 
 spring:
   cache:
@@ -50,10 +50,12 @@ custom:
       post:
         - "/auth/register"
         - "/auth/login"
+        - "/auth/logout"
       get:
         - "/auth/check-username-uniqueness"
         - "/auth/check-email-uniqueness"
         - "/auth/validate-username/**"
+        - "/user/get-avatar"
       # Request need to be ignored that matches pattern.
       pattern:
         - "/druid/**"
@@ -61,3 +63,23 @@ custom:
         - "/v2/api-docs/**"
         - "/webjars/**"
         - "/swagger-ui.html"
+
+logging:
+  # Configure logging level for SFTP/JSCH
+  level:
+    com:
+      jcraft:
+        jsch: WARN
+
+sftp:
+  client:
+    configuration:
+      host: ENC(1XwJZpHiJTHb9lwN1E4dIsK4b2hYUkub)
+      port: 22
+      user: ENC(GYQSxdqkQuwd+7n46ICczw==)
+      password: ENC(pXovKinIbzgayLL4v8udQVAohCTpr7WI)
+      directory: ENC(CNacxZaIjifaSGZe2G7BTw==)
+      private-key:
+      private-key-pass-phrase:
+      session-cache-size: 20
+      session-wait-timeout: 15000

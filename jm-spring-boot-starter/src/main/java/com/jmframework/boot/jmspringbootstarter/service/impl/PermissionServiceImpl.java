@@ -6,6 +6,7 @@ import com.jmframework.boot.jmspringbootstarter.service.PermissionService;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.ApiStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.payload.GetApiListPLO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,9 @@ import java.util.List;
  **/
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PermissionServiceImpl implements PermissionService {
     private final PermissionMapper permissionMapper;
-
-    public PermissionServiceImpl(PermissionMapper permissionMapper) {
-        this.permissionMapper = permissionMapper;
-    }
 
     @Override
     public boolean savePermission(PermissionPO po) {

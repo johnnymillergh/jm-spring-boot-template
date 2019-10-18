@@ -14,6 +14,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.Permis
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,12 +33,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/authorization")
 @Api(tags = {"/authorization"})
+@RequiredArgsConstructor
 public class AuthorizationController {
     private final AuthorizationService authorizationService;
-
-    public AuthorizationController(AuthorizationService authorizationService) {
-        this.authorizationService = authorizationService;
-    }
 
     @PostMapping("/get-roles")
     @ApiOperation(value = "/get-roles", notes = "Get roles (support lazy loading)")

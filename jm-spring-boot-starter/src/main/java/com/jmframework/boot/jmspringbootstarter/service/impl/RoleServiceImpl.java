@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.mapper.RoleMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
+import lombok.RequiredArgsConstructor;
 import org.codehaus.plexus.util.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +18,9 @@ import java.util.List;
  * @date 2019-05-18 12:03
  **/
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
     private final RoleMapper roleMapper;
-
-    public RoleServiceImpl(RoleMapper roleMapper) {
-        this.roleMapper = roleMapper;
-    }
 
     @Override
     public List<RolePO> getList(Page page) {

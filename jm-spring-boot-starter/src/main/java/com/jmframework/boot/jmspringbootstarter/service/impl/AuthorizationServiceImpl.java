@@ -12,6 +12,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.authorization.response.Get
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePermissionPO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.plexus.util.StringUtils;
 import org.springframework.stereotype.Service;
@@ -30,18 +31,11 @@ import java.util.List;
  **/
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class AuthorizationServiceImpl implements AuthorizationService {
     private final RoleService roleService;
     private final PermissionService permissionService;
     private final RolePermissionMapper rolePermissionMapper;
-
-    public AuthorizationServiceImpl(RoleService roleService,
-                                    PermissionService permissionService,
-                                    RolePermissionMapper rolePermissionMapper) {
-        this.roleService = roleService;
-        this.permissionService = permissionService;
-        this.rolePermissionMapper = rolePermissionMapper;
-    }
 
     @Override
     public List<RolePO> getRoleListForSelection(Page page) {

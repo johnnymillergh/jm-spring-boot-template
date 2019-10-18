@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,15 +18,12 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * @date 2019-05-11 11:45
  **/
 @Configuration
+@RequiredArgsConstructor
 public class CustomMessageSourceConfiguration {
     /**
      * messageSource is instanced by Spring from application.yml
      */
     private final MessageSource messageSource;
-
-    public CustomMessageSourceConfiguration(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
 
     /**
      * <p>Define a <strong>LocalValidatorFactoryBean</strong> and register the <strong>messageSource</strong>. Now we

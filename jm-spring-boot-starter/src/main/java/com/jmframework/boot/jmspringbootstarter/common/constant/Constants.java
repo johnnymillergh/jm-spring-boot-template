@@ -12,15 +12,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class Constants {
-
     public Constants(ProjectProperty projectProperty) {
         Constants.REDIS_JWT_KEY_PREFIX = projectProperty.getProjectArtifactId() + ":jwt:";
     }
 
-    /**
-     * Super user
-     */
-    public static final String SU = "root";
     /**
      * Key prefix of JWT stored in Redis.
      */
@@ -41,16 +36,4 @@ public class Constants {
      * At sign
      */
     public static final String AT_SIGN = "@";
-    /**
-     * Default current page
-     */
-    public static final Integer DEFAULT_CURRENT_PAGE = 1;
-    /**
-     * Default page size
-     */
-    public static final Integer DEFAULT_PAGE_SIZE = 10;
-    /**
-     * Anonymous user's username
-     */
-    public static final String ANONYMOUS_NAME = "Anonymous User";
 }

@@ -1,12 +1,11 @@
 package com.jmframework.boot.jmspringbootstarter.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * Description: ConnectorConfiguration
@@ -21,13 +20,10 @@ import org.springframework.context.annotation.Configuration;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-05-03 14:39
  **/
-@Configuration
+//@Configuration
+@RequiredArgsConstructor
 public class ConnectorConfiguration {
     private final ServerConfiguration serverConfiguration;
-
-    public ConnectorConfiguration(ServerConfiguration serverConfiguration) {
-        this.serverConfiguration = serverConfiguration;
-    }
 
     /**
      * Redirect all traffic to HTTPS.
@@ -37,7 +33,7 @@ public class ConnectorConfiguration {
      *
      * @return HTTP connector
      */
-    @Bean
+//    @Bean
     public Connector connector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");
@@ -52,7 +48,7 @@ public class ConnectorConfiguration {
         return connector;
     }
 
-    @Bean
+//    @Bean
     public TomcatServletWebServerFactory tomcatServletWebServerFactory(Connector connector) {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
             @Override

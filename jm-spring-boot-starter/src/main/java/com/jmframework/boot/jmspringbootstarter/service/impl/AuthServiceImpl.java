@@ -3,8 +3,8 @@ package com.jmframework.boot.jmspringbootstarter.service.impl;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.AuthService;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
+import lombok.RequiredArgsConstructor;
 import org.codehaus.plexus.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 2019-03-28 20:25
  **/
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
-
-    @Autowired
-    public AuthServiceImpl(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
 
     @Override
     public boolean checkUsernameUniqueness(String username) {

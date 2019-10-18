@@ -4,6 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jm-spring-boot-sample</artifactId>
+    <!--
+        Sub module version is specified in root's (parent's) POM, and inherited from root (parent).
+        So we don't have to maintain sub module's version here.
+    -->
     <packaging>jar</packaging>
     <name>JM Spring Boot Sample</name>
     <description>JM Spring Boot Sample</description>
@@ -12,7 +16,7 @@
         <groupId>com.jmframework.boot</groupId>
         <artifactId>jm-spring-boot-template</artifactId>
         <!-- The version below should be synchronized with project's version -->
-        <version>2.0.3.RELEASE</version>
+        <version>2.0.4</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
@@ -23,6 +27,33 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- https://github.com/spotify/dockerfile-maven/tree/master/docs -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.12</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <!-- <goal>push</goal> -->
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <contextDirectory>${project.basedir}</contextDirectory>
+                    <buildDirectory>${project.basedir}/target</buildDirectory>
+                    <dockerfile>${project.basedir}/Dockerfile</dockerfile>
+                    <repository>ijohnnymiller/${project.parent.artifactId}-${envAlias}</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>

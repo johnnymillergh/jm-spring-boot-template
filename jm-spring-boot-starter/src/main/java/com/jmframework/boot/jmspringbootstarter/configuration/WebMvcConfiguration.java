@@ -1,5 +1,6 @@
 package com.jmframework.boot.jmspringbootstarter.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,13 +14,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2019-03-02 12:34
  **/
 @Configuration
+@RequiredArgsConstructor
 public class WebMvcConfiguration implements WebMvcConfigurer {
     private static final long MAX_AGE_SECS = 3600;
     private final CustomMessageSourceConfiguration customMessageSourceConfiguration;
-
-    public WebMvcConfiguration(CustomMessageSourceConfiguration customMessageSourceConfiguration) {
-        this.customMessageSourceConfiguration = customMessageSourceConfiguration;
-    }
 
     /**
      * 1. Config static path pattern
@@ -52,6 +50,11 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         return customMessageSourceConfiguration.getValidator();
     }
 
+    /**
+     * Configure cross origin requests processing.
+     *
+     * @param registry CORS registry
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")

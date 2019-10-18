@@ -14,11 +14,11 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.constant.Permis
 import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.PermissionPO;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -38,26 +38,14 @@ import java.util.stream.Collectors;
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 14:25
  **/
-@Component
+@Service
+@RequiredArgsConstructor
 public class RbacAuthorityServiceImpl implements RbacAuthorityService {
     private final RoleService roleService;
     private final PermissionService permissionService;
     private final RequestMappingHandlerMapping mapping;
     private final CustomConfiguration customConfiguration;
     private final JwtUtil jwtUtil;
-
-    @Autowired
-    public RbacAuthorityServiceImpl(RoleService roleService,
-                                    PermissionService permissionService,
-                                    RequestMappingHandlerMapping mapping,
-                                    CustomConfiguration customConfiguration,
-                                    JwtUtil jwtUtil) {
-        this.roleService = roleService;
-        this.permissionService = permissionService;
-        this.mapping = mapping;
-        this.customConfiguration = customConfiguration;
-        this.jwtUtil = jwtUtil;
-    }
 
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
