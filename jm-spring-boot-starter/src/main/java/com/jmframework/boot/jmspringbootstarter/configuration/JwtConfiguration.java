@@ -4,6 +4,7 @@ import com.jmframework.boot.jmspringbootstarter.common.constant.ProjectProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * Description: JWT configuration
@@ -13,9 +14,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  **/
 @Data
 @Slf4j
+@Component
 @ConfigurationProperties(prefix = "jwt.configuration")
 public class JwtConfiguration {
-
     public JwtConfiguration(ProjectProperty projectProperty) {
         this.signingKey = projectProperty.getProjectArtifactId();
         log.error("JWT signing key: {}", this.signingKey);

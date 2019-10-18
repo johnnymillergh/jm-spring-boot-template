@@ -1,10 +1,10 @@
 server:
-  port: 443
-  ssl:
-    key-store-type: PKCS12
-    key-store: classpath:keystore.p12
-    key-store-password: ENC(Llhd3pDTnL4x1BmFutqGNJ2h3M/fw5OpKCDACf3vztgW/B2mtjle0SHqDE4XETHT)
-    key-alias: tomcat
+  port: 8080
+#  ssl:
+#    key-store-type: PKCS12
+#    key-store: classpath:keystore.p12
+#    key-store-password: ENC(Llhd3pDTnL4x1BmFutqGNJ2h3M/fw5OpKCDACf3vztgW/B2mtjle0SHqDE4XETHT)
+#    key-alias: tomcat
 
 spring:
   cache:
@@ -15,15 +15,15 @@ spring:
     name: datasource-one
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: ENC(OUl07S4rDzruzf9pf6xuSPSC8vrqgAXSo6hCv3JR48DXxDDQ6q3YbVqUYHPf7zB6Wimlwc/6BD9c5UUusFYOz5HhoSpQ0LYpYcAJ47z9wUAU8i697d4WywZibSzo2OotVmiKZ9mDAXObFe5q6xL6dLzYaVHTkxLzVmGfkPtGcI3IsXsRxCJJlbmOh2tD+BONv+Y6o5Xh/H7vNQjAEQqWCaTJRp1+d4H8j8g+cYPHxa2wuJPqZqejtSkQ+9oRXFKJoNIsrTdo749GO+PH579PkVApEMSbUM3s6qRG3UGXFX0=)
-    username: ENC(XIDh8RzZoA/R8/1DUCMYhDyV6N7jqlCSCHDgg2CjbGPz7dA3yWHCLQ==)
-    password: ENC(m5mZkr93kta3P3230Rcr2qyxYlx3zRIjufbzHLY5m2s=)
+    url: jdbc:mysql://cdb-12mi7v72.bj.tencentcdb.com:10112/jm_spring_boot_template?useSSL=true&useUnicode=true&characterEncoding=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    username: ENC(u+d031ary1vBWmoHxS32Uie6e3Sx3g18jQRrjnoNBsxGyu/lgM2kDw==)
+    password: ENC(8H2ArHlSXKW7R+R5sbOS7E8ItUI+EPjU)
   devtools:
     restart:
       enabled: false
   redis:
     database: 0
-    host: ENC(NCJGHasDqzQCvOhNZWKzGGnbsuSKEEok)
+    host: ENC(eDjbZ3ILecSAMjvqd+DtzfB8z0Al+D37)
     port: 6379
     password: ENC(aIqOVSt1Lsw/k1RN0RPPMQ==)
     timeout: 10000ms
@@ -48,11 +48,33 @@ custom:
       post:
         - "/auth/register"
         - "/auth/login"
+        - "/auth/logout"
       get:
         - "/auth/check-username-uniqueness"
         - "/auth/check-email-uniqueness"
         - "/auth/validate-username/**"
+        - "/user/get-avatar"
       # Request need to be ignored that matches pattern.
       pattern:
         - "/druid/**"
     web-security-disabled: false
+
+logging:
+  # Configure logging level for SFTP/JSCH
+  level:
+    com:
+      jcraft:
+        jsch: WARN
+
+sftp:
+  client:
+    configuration:
+      host: 172.16.238.12
+      port: 22
+      user: johnny
+      password: atmoz@sftp
+      directory: upload
+      private-key:
+      private-key-pass-phrase:
+      session-cache-size: 20
+      session-wait-timeout: 15000

@@ -13,6 +13,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApi
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.plexus.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +30,9 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api-management")
 @Api(tags = {"/api-management"})
+@RequiredArgsConstructor
 public class ApiManagementController {
     private final ApiService apiService;
-
-    public ApiManagementController(ApiService apiService) {
-        this.apiService = apiService;
-    }
 
     @GetMapping("/get-controller")
     @ApiOperation(value = "/get-controller", notes = "Get controller list")

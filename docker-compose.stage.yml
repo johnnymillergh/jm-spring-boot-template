@@ -1,0 +1,68 @@
+version: "3.7"
+
+services:
+  # https://medium.com/@chrischuck35/how-to-create-a-mysql-instance-with-docker-compose-1598f3cc1bee
+  mysql-server:
+    container_name: mysql-server
+    image: "mysql:latest"
+    restart: always
+    environment:
+      MYSQL_DATABASE: "jm_spring_boot_template"
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: "root"
+      # You can use whatever password you like
+      MYSQL_PASSWORD: "jm@mysql"
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: "jm@mysql"
+    ports:
+      - 3306:3306
+    networks:
+      jm_spring_boot_and_vue_template_network:
+        ipv4_address: 172.16.238.10
+
+  redis-server:
+    container_name: redis-server
+    image: "redis:latest"
+    restart: always
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+    volumes:
+      - /Users/johnny/DockerFileMapping/redis-5.0.6/data:/data
+      - /Users/johnny/DockerFileMapping/redis-5.0.6/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - 6379:6379
+    networks:
+      jm_spring_boot_and_vue_template_network:
+        ipv4_address: 172.16.238.11
+
+  atmoz-sftp-server:
+    container_name: atmoz-sftp-server
+    image: "atmoz/sftp:latest"
+    restart: always
+    command: "johnny:atmoz@sftp:::upload"
+    volumes:
+      - /Users/johnny/DockerFileMapping/atmoz-sftp:/home/johnny/upload
+    ports:
+      - 22:22
+    networks:
+      jm_spring_boot_and_vue_template_network:
+        ipv4_address: 172.16.238.12
+
+  jm-spring-boot-template:
+    container_name: jm-spring-boot-template
+    image: "ijohnnymiller/jm-spring-boot-template-stage:${TAG}"
+    depends_on:
+      - mysql-server
+      - redis-server
+      - atmoz-sftp-server
+    ports:
+      - 8080:8080
+    networks:
+      jm_spring_boot_and_vue_template_network:
+        ipv4_address: 172.16.238.13
+
+networks:
+  jm_spring_boot_and_vue_template_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"

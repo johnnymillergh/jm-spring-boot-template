@@ -9,8 +9,8 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.persistence.Per
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.UserPrincipal;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,19 +29,11 @@ import java.util.stream.Collectors;
  **/
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
     private final UserMapper userMapper;
     private final RoleService roleService;
     private final PermissionMapper permissionMapper;
-
-    @Autowired
-    public CustomUserDetailsServiceImpl(UserMapper userMapper,
-                                        RoleService roleService,
-                                        PermissionMapper permissionMapper) {
-        this.userMapper = userMapper;
-        this.roleService = roleService;
-        this.permissionMapper = permissionMapper;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String credentials) throws UsernameNotFoundException {

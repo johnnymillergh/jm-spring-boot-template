@@ -10,9 +10,10 @@
             full_name,
             birthday,
             gender,
+            avatar,
+            `status`,
             gmt_created,
-            gmt_modified,
-            `status`
+            gmt_modified
     </sql>
 
     <resultMap id="BaseResultMap" type="com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO">
@@ -24,11 +25,13 @@
         <result column="full_name" property="fullName"/>
         <result column="birthday" property="birthday"/>
         <result column="gender" property="gender"/>
+        <result column="avatar" property="avatar"/>
+        <result column="status" property="status"/>
         <result column="gmt_created" property="gmtCreated"/>
         <result column="gmt_modified" property="gmtModified"/>
-        <result column="status" property="status"/>
     </resultMap>
 
+    <!-- TODO: do not retrieve useless fields -->
     <select id="selectByUsernameOrEmailOrCellphone" resultMap="BaseResultMap">
         SELECT id,
                username,
@@ -168,4 +171,18 @@
             (#{userId}, #{item})
         </foreach>
     </insert>
+
+    <select id="selectIdAndAvatarByUsername" resultMap="BaseResultMap">
+        SELECT id,
+               avatar
+        FROM t_user
+        WHERE username = #{username}
+    </select>
+
+    <update id="updateAvatarByUsername">
+        UPDATE t_user
+        SET avatar       = #{updated.avatar},
+            gmt_modified = now()
+        WHERE username = #{updated.username}
+    </update>
 </mapper>

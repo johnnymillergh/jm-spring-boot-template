@@ -14,6 +14,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.role.response.GetRoleListR
 import com.jmframework.boot.jmspringbootstarterdomain.role.response.SearchRoleRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.plexus.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +33,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 @Api(tags = {"/role"})
+@RequiredArgsConstructor
 public class RoleController {
     private final RoleService roleService;
-
-    public RoleController(RoleService roleService) {
-        this.roleService = roleService;
-    }
 
     @PostMapping("/get-list")
     @ApiOperation(value = "/get-list", notes = "Get role page list")

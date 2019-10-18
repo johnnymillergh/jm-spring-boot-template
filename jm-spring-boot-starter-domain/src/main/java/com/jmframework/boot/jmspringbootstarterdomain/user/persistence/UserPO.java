@@ -46,6 +46,10 @@ public class UserPO {
      */
     private String gender;
     /**
+     * User avatar full path on SFTP server
+     */
+    private String avatar;
+    /**
      * Status. 1 - enabled, 2 - disabled
      */
     private Integer status;

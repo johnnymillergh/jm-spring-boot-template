@@ -8,10 +8,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
- * Description: JasyptTest, change description here.
+ * <h1>JasyptTest</h1>
+ * <p>Encrypt configuration value for application.yml</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 4/25/2019 7:53 PM
@@ -19,25 +19,34 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@WebAppConfiguration
 public class JasyptTest {
     @Autowired
+    @SuppressWarnings("SpellCheckingInspection")
     StringEncryptor encryptor;
 
     @ToString
     private class EncryptedInformation {
         // MySQL
         String urlOfDataSource = encryptor.encrypt(
-                "jdbc:mysql://127.0.0.1:3306/jm_spring_boot_template?useSSL=true&useUnicode=true&characterEncoding=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8");
+                "jdbc:mysql://172.16.238.10:3306/jm_spring_boot_template?useSSL=true&useUnicode=true&characterEncoding" +
+                        "=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8");
         String usernameForMySQL = encryptor.encrypt("jm_spring_boot_template_w");
         String passwordForMySQL = encryptor.encrypt("H'Tkh9@!*_/B'_j");
+
         // Redis
-        String hostOfRedis = encryptor.encrypt("192.168.158.136");
+        String hostOfRedis = encryptor.encrypt("172.16.238.11");
         String passwordForRedis = encryptor.encrypt("123456");
+
         // Druid
         String druidLoginName = encryptor.encrypt("johnny");
         String druidPassword = encryptor.encrypt("123456");
         String keystoreForSSL = encryptor.encrypt("keystoreforprojectname");
+
+        // SFTP
+        String sftpHost = encryptor.encrypt("172.16.238.12");
+        String sftpUser = encryptor.encrypt("sftpUserHere");
+        String sftpPassword = encryptor.encrypt("sftpPasswordHere");
+        String sftpDirectory = encryptor.encrypt("sftpDirectoryHere");
     }
 
     @Test

@@ -2,14 +2,18 @@ package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
- * Description: Custom config
+ * <h1>CustomConfiguration</h1>
+ * <p>Custom configurations which are written in .yml files, containing a variety of fragmentary configs. Such as,
+ * Druid login info, web security switch, web log and so on.</p>
  *
  * @author Johnny Miller (鍾俊), email: johnnysviva@outlook.com
  * @date 2019-03-23 14:24
  **/
 @Data
+@Component
 @ConfigurationProperties(prefix = "custom.configuration")
 public class CustomConfiguration {
     /**

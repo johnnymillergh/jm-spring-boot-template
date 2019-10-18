@@ -14,10 +14,16 @@ import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserPageL
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.SearchUserRO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,12 +37,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Api(tags = {"/user"})
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
 //    TODO: ROADMAP
 //     1. Get user page list. (done)
@@ -120,5 +123,35 @@ public class UserController {
         }
         userService.assignRoleToUser(plo.getUserId(), plo.getRoleIdList());
         return ResponseBodyBean.ofSuccess("Assigned role(s) to user");
+    }
+
+    @PostMapping(value = "/update-avatar")
+    @ApiOperation(value = "/update-avatar", notes = "Update user's avatar picture")
+    public ResponseBodyBean updateAvatar(@RequestPart MultipartFile avatar, @Valid UpdateAvatarPLO plo) {
+        UserPO po = new UserPO();
+        po.setUsername(plo.getUsername());
+        boolean result;
+        try {
+            result = userService.updateAvatar(avatar, po);
+        } catch (IOException e) {
+            log.error("Exception occurred when update user's avatar. Exception message: {}", e.getMessage(), e);
+            return ResponseBodyBean.ofError();
+        }
+        if (!result) {
+            return ResponseBodyBean.ofFailure("Failed to update avatar");
+        }
+        return ResponseBodyBean.ofSuccess("Update avatar successfully");
+    }
+
+    @GetMapping(value = "/get-avatar", produces = {MediaType.IMAGE_GIF_VALUE,
+                                                   MediaType.IMAGE_JPEG_VALUE,
+                                                   MediaType.IMAGE_PNG_VALUE})
+    @ApiOperation(value = "/get-avatar", notes = "Get user's avatar picture")
+    public ResponseEntity getAvatar(@Valid GetAvatarPLO plo) throws IOException {
+        ByteArrayResource resource = userService.getUserAvatarResource(plo.getUsername());
+        if (resource == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(resource);
     }
 }

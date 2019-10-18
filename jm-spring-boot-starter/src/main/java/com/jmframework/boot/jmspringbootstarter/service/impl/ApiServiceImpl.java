@@ -14,6 +14,7 @@ import com.jmframework.boot.jmspringbootstarterdomain.permission.response.ApiCon
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiByControllerClassRO;
 import com.jmframework.boot.jmspringbootstarterdomain.permission.response.GetApiListRO;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.plexus.util.StringUtils;
 import org.springframework.stereotype.Service;
@@ -41,15 +42,10 @@ import java.util.*;
  **/
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ApiServiceImpl implements ApiService {
     private final WebApplicationContext webApplicationContext;
     private final PermissionService permissionService;
-
-    public ApiServiceImpl(WebApplicationContext webApplicationContext,
-                          PermissionService permissionService) {
-        this.webApplicationContext = webApplicationContext;
-        this.permissionService = permissionService;
-    }
 
     @Override
     public ApiControllerRO getAllControllerClass() {

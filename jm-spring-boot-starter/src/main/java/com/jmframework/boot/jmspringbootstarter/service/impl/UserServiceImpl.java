@@ -5,14 +5,26 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarter.mapper.UserMapper;
 import com.jmframework.boot.jmspringbootstarter.service.RoleService;
+import com.jmframework.boot.jmspringbootstarter.service.SftpService;
 import com.jmframework.boot.jmspringbootstarter.service.UserService;
+import com.jmframework.boot.jmspringbootstarter.util.FileUtil;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.SftpSubDirectory;
 import com.jmframework.boot.jmspringbootstarterdomain.role.persistence.RolePO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.StringUtils;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.integration.file.support.FileExistsMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -24,15 +36,11 @@ import java.util.List;
  **/
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleService roleService;
-
-    public UserServiceImpl(UserMapper userMapper,
-                           RoleService roleService) {
-        this.userMapper = userMapper;
-        this.roleService = roleService;
-    }
+    private final SftpService sftpService;
 
     @Override
     public List<UserPO> getUserPageList(Page page) {
@@ -89,5 +97,41 @@ public class UserServiceImpl implements UserService {
     public void assignRoleToUser(Long userId, List<Long> roleIdList) {
         int affectedRows = userMapper.insertUserIdAndRoleIdList(userId, roleIdList);
         log.error("Assign role(s) to user. Insert user-role relation record, affected rows: {}", affectedRows);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public boolean updateAvatar(MultipartFile avatar, UserPO po) throws IOException {
+        UserPO userInDatabase = userMapper.selectIdAndAvatarByUsername(po.getUsername());
+        // user doesn't exist
+        if (userInDatabase == null) {
+            return false;
+        }
+
+        if (StringUtils.isNotBlank(userInDatabase.getAvatar())) {
+            sftpService.delete(userInDatabase.getAvatar());
+        }
+
+        String avatarSubDirectory = FileUtil.generateDateFormatStoragePath(SftpSubDirectory.AVATAR);
+        String avatarFullPath = sftpService.upload(avatar, avatarSubDirectory, FileExistsMode.REPLACE, true);
+        po.setAvatar(avatarFullPath);
+        int affectedRows = userMapper.updateAvatarByUsername(po);
+        if (affectedRows == 1) {
+            return true;
+        }
+        sftpService.delete(avatarFullPath);
+        return false;
+    }
+
+    @Override
+    public ByteArrayResource getUserAvatarResource(String username) throws IOException {
+        UserPO po = userMapper.selectIdAndAvatarByUsername(username);
+        if (po == null || StringUtils.isBlank(po.getAvatar())) {
+            return null;
+        }
+        InputStream stream = sftpService.read(po.getAvatar());
+        ByteArrayResource resource = new ByteArrayResource(IOUtil.toByteArray(stream));
+        stream.close();
+        return resource;
     }
 }

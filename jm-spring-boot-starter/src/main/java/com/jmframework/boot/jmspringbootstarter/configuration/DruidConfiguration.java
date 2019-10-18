@@ -3,7 +3,7 @@ package com.jmframework.boot.jmspringbootstarter.configuration;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -20,13 +20,9 @@ import javax.sql.DataSource;
  * @date 2019-03-24 13:31
  **/
 @Configuration
+@RequiredArgsConstructor
 public class DruidConfiguration {
     private final CustomConfiguration customConfiguration;
-
-    @Autowired
-    public DruidConfiguration(CustomConfiguration customConfiguration) {
-        this.customConfiguration = customConfiguration;
-    }
 
     @Bean
     public ServletRegistrationBean<StatViewServlet> druidServlet() {

@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jmframework.boot.jmspringbootstarterdomain.user.constant.UserStatus;
 import com.jmframework.boot.jmspringbootstarterdomain.user.persistence.UserPO;
 import com.jmframework.boot.jmspringbootstarterdomain.user.response.GetUserInfoRO;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -79,4 +82,29 @@ public interface UserService {
      * @param roleIdList role ID list
      */
     void assignRoleToUser(Long userId, List<Long> roleIdList);
+
+    /**
+     * <p>Update user&#39;s avatar. When user uploads an avatar picture, we&#39;re going to do the following
+     * processes:</p>
+     * <ol>
+     * <li>Get user&#39;s previous avatar information by username, and delete that avatar if it exists;</li>
+     * <li>Upload user&#39;s new avatar to SFTP server;</li>
+     * <li>Update user&#39;s avatar information to MySQL database by username.</li>
+     * </ol>
+     *
+     * @param avatar user's avatar file
+     * @param po     persistence object
+     * @return true - updated avatar successfully; false - updating avatar failed
+     * @throws IOException update avatar failed
+     */
+    boolean updateAvatar(MultipartFile avatar, UserPO po) throws IOException;
+
+    /**
+     * Get user's avatar resource
+     *
+     * @param username username
+     * @return user's avatar
+     * @throws IOException IO exception
+     */
+    ByteArrayResource getUserAvatarResource(String username) throws IOException;
 }

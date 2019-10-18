@@ -8,7 +8,12 @@
     <groupId>com.jmframework.boot</groupId>
     <!-- artifactId is the unique symbol for every project -->
     <artifactId>jm-spring-boot-template</artifactId>
-    <version>2.0.3.RELEASE</version>
+    <!--
+        Use Maven plugin CLI: `org.codehaus.mojo:versions-maven-plugin:2.7:set`
+        to upgrade version of root (parent) and sub module projects.
+        Sub module version is inherited from root (parent).
+    -->
+    <version>2.0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>JM Spring Boot Template</name>
     <description>Demo project for Spring Boot</description>
@@ -39,10 +44,14 @@
         <url>https://github.com/johnnymillergh/SpringBootTemplate/issues</url>
     </issueManagement>
 
+    <!--
+        Use Maven plugin CLI: `org.codehaus.mojo:versions-maven-plugin:2.7:update-parent`
+        to check and update parent's version
+    -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
+        <version>2.1.9.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -59,14 +68,21 @@
 
     <profiles>
         <profile>
-            <id>development</id>
+            <id>development-local</id>
             <properties>
-                <env>development</env>
-                <envAlias>dev</envAlias>
+                <env>development-local</env>
+                <envAlias>dev_loc</envAlias>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+        </profile>
+        <profile>
+            <id>development-docker</id>
+            <properties>
+                <env>development-docker</env>
+                <envAlias>dev_dkr</envAlias>
+            </properties>
         </profile>
         <profile>
             <id>test</id>
@@ -96,21 +112,55 @@
             <dependency>
                 <groupId>com.jmframework.boot</groupId>
                 <artifactId>jm-spring-boot-sample</artifactId>
+                <!-- Sub module version is inherited from root (parent). -->
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.jmframework.boot</groupId>
                 <artifactId>jm-spring-boot-starter</artifactId>
+                <!-- Sub module version is inherited from root (parent). -->
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.jmframework.boot</groupId>
                 <artifactId>jm-spring-boot-starter-domain</artifactId>
+                <!-- Sub module version is inherited from root (parent). -->
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <excludes>
+                        <exclude>org.apache.commons:commons-collections4</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                    <check/>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--
+        Use Maven plugin CLI: `org.codehaus.mojo:versions-maven-plugin:2.7:use-latest-releases`
+        to check and update dependency version to latest release version
+    -->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -133,10 +183,6 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
@@ -150,14 +196,8 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-sftp</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -165,9 +205,23 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.1.2</version>
+            <version>3.2.0</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -177,12 +231,12 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.1.17</version>
+            <version>1.1.20</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-model</artifactId>
-            <version>3.6.1</version>
+            <version>3.6.2</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -198,17 +252,17 @@
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
-            <version>RELEASE</version>
+            <version>1.9.6</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>4.5.15</version>
+            <version>4.6.10</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>28.0-jre</version>
+            <version>28.1-jre</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -218,7 +272,7 @@
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>2.1.1</version>
+            <version>2.1.2</version>
         </dependency>
     </dependencies>
 </project>

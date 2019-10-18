@@ -2,9 +2,8 @@ package com.jmframework.boot.jmspringbootstarter.configuration;
 
 import com.jmframework.boot.jmspringbootstarter.filter.JwtAuthenticationFilter;
 import com.jmframework.boot.jmspringbootstarter.service.impl.CustomUserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -28,23 +27,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 @Configuration
 @EnableWebSecurity
-@EnableConfigurationProperties(CustomConfiguration.class)
+@RequiredArgsConstructor
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final CustomConfiguration customConfiguration;
     private final AccessDeniedHandler accessDeniedHandler;
     private final CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    @Autowired
-    public WebSecurityConfiguration(CustomConfiguration customConfiguration,
-                                    AccessDeniedHandler accessDeniedHandler,
-                                    CustomUserDetailsServiceImpl customUserDetailsServiceImpl,
-                                    JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.customConfiguration = customConfiguration;
-        this.accessDeniedHandler = accessDeniedHandler;
-        this.customUserDetailsServiceImpl = customUserDetailsServiceImpl;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-    }
 
     @Bean
     public BCryptPasswordEncoder encoder() {

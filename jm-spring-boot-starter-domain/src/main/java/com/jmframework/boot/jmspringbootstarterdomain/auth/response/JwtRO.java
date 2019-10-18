@@ -1,8 +1,6 @@
-package com.jmframework.boot.jmspringbootstarterdomain.common.response;
+package com.jmframework.boot.jmspringbootstarterdomain.auth.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Description: JWT response
@@ -11,8 +9,6 @@ import lombok.NoArgsConstructor;
  * @date 2019-03-23 20:52
  **/
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class JwtRO {
     /**
      * Token
@@ -22,6 +18,7 @@ public class JwtRO {
      * Token type
      */
     private String tokenType = "Bearer";
+    private String username;
     private String fullName;
 
     public JwtRO(String token) {
