@@ -15,7 +15,7 @@ services:
       # Password for root access
       MYSQL_ROOT_PASSWORD: "jm@mysql"
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - /usr/local/docker-file-mapping/mysql-server-jm-spring-boot-template-prod:/var/lib/mysql
     networks:
@@ -31,7 +31,7 @@ services:
       - /usr/local/docker-file-mapping/redis-5.0.6/data:/data
       - /usr/local/docker-file-mapping/redis-5.0.6/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - 6379:6379
+      - "6379:6379"
     networks:
       jm_spring_boot_and_vue_template_network:
         ipv4_address: 172.16.238.11
@@ -44,7 +44,7 @@ services:
     volumes:
       - /usr/local/docker-file-mapping/atmoz-sftp:/home/johnny/upload
     ports:
-      - 23:23
+      - "23:23"
     networks:
       jm_spring_boot_and_vue_template_network:
         ipv4_address: 172.16.238.12
@@ -57,7 +57,7 @@ services:
       - redis-server
       - atmoz-sftp-server
     ports:
-      - 8080:8080
+      - "8080:8080"
     networks:
       jm_spring_boot_and_vue_template_network:
         ipv4_address: 172.16.238.13
