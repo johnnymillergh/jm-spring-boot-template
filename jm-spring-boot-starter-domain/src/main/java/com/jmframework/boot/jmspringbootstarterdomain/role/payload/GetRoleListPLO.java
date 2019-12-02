@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarterdomain.role.payload;
 
-import com.jmframework.boot.jmspringbootstarterdomain.common.base.payload.PaginationBase;
+import com.jmframework.boot.jmspringbootstarterdomain.common.base.pagination.PaginationBase;
 import lombok.Data;
 
 /**
