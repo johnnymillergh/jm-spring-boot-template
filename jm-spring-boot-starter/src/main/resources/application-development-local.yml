@@ -79,7 +79,7 @@ sftp:
   client:
     configuration:
       host: ENC(1XwJZpHiJTHb9lwN1E4dIsK4b2hYUkub)
-      port: 22
+      port: 23
       user: ENC(GYQSxdqkQuwd+7n46ICczw==)
       password: ENC(pXovKinIbzgayLL4v8udQVAohCTpr7WI)
       directory: ENC(CNacxZaIjifaSGZe2G7BTw==)

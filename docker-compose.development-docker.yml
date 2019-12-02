@@ -17,7 +17,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /Users/johnny/DockerFileMapping/mysql-server-jm-spring-boot-template-dev_dkr:/var/lib/mysql
+      - /Users/johnny/docker-file-mapping/mysql-server-jm-spring-boot-template-dev_dkr:/var/lib/mysql
     networks:
       jm_spring_boot_and_vue_template_network:
         ipv4_address: 172.16.238.10
@@ -28,8 +28,8 @@ services:
     restart: always
     command: "redis-server /usr/local/etc/redis/redis.conf"
     volumes:
-      - /Users/johnny/DockerFileMapping/redis-5.0.6/data:/data
-      - /Users/johnny/DockerFileMapping/redis-5.0.6/redis.conf:/usr/local/etc/redis/redis.conf
+      - /Users/johnny/docker-file-mapping/redis-5.0.6/data:/data
+      - /Users/johnny/docker-file-mapping/redis-5.0.6/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379"
     networks:
@@ -42,7 +42,7 @@ services:
     restart: always
     command: "johnny:atmoz@sftp:::upload"
     volumes:
-      - /Users/johnny/DockerFileMapping/atmoz-sftp:/home/johnny/upload
+      - /Users/johnny/docker-file-mapping/atmoz-sftp:/home/johnny/upload
     ports:
       - "22:22"
     networks:
