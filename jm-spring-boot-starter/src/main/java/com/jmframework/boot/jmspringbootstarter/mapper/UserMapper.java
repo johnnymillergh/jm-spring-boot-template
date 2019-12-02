@@ -24,7 +24,7 @@ public interface UserMapper extends BaseMapper<UserPO> {
     /**
      * Find by username, email or cellphone.
      * <p>
-     * TODO: do not retrieve useless field on result map
+     * TODO: do not retrieve useless fields on result map
      *
      * @param username  Username
      * @param email     Email
@@ -73,7 +73,7 @@ public interface UserMapper extends BaseMapper<UserPO> {
      * @param page pagination object
      * @return user page list
      */
-    IPage<UserPO> selectUserPageList(Page page);
+    IPage<UserPO> selectUserPageList(Page<UserPO> page);
 
     /**
      * Select user by ID and status
@@ -105,7 +105,7 @@ public interface UserMapper extends BaseMapper<UserPO> {
      * @param page pagination object
      * @return user page list
      */
-    IPage<UserPO> selectUserListForSelection(Page page);
+    IPage<UserPO> selectUserListForSelection(Page<UserPO> page);
 
     /**
      * Select user status by ID and username

@@ -3,7 +3,7 @@ package com.jmframework.boot.jmspringbootstarter.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmframework.boot.jmspringbootstarter.exception.base.BaseException;
 import com.jmframework.boot.jmspringbootstarter.response.ResponseBodyBean;
-import com.jmframework.boot.jmspringbootstarterdomain.common.constant.IUniversalStatus;
+import com.jmframework.boot.jmspringbootstarterdomain.common.constant.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,17 +22,19 @@ public class ResponseUtil {
     /**
      * Write data JSON to response.
      *
-     * @param response Response
-     * @param status   Status
-     * @param data     Data
+     * @param response   Response
+     * @param httpStatus HTTP status
+     * @param data       Data
      */
-    public static void renderJson(HttpServletResponse response, IUniversalStatus status, Object data) {
+    public static void renderJson(HttpServletResponse response, HttpStatus httpStatus, Object data) {
         try {
-            ResponseBodyBean responseBodyBean = ResponseBodyBean.ofStatus(status.getCode(), status.getMessage(), data);
+            ResponseBodyBean responseBodyBean = ResponseBodyBean.ofStatus(httpStatus.getCode(),
+                                                                          httpStatus.getMessage(),
+                                                                          data);
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Methods", "*");
             response.setContentType("application/json;charset=UTF-8");
-            response.setStatus(status.getCode());
+            response.setStatus(httpStatus.getCode());
             response.getWriter().write(MAPPER.writeValueAsString(responseBodyBean));
         } catch (IOException e) {
             log.error("Error occurred when responding a data JSON.", e);

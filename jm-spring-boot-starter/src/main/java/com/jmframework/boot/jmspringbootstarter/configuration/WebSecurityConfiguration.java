@@ -65,11 +65,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin().disable()
             .httpBasic().disable()
 
-            // 认证请求
+            // Allows restricting access based upon the HttpServletRequest
             .authorizeRequests()
-            // Any requests need to be authenticated
-            .anyRequest()
-            .authenticated()
             // RBAC URL authorization
             .anyRequest()
             .access("@rbacAuthorityServiceImpl.hasPermission(request,authentication)")
@@ -83,46 +80,46 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             // Exception handling
             .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
-        // 添加自定义 JWT 过滤器
+        // Add customized JWT filter
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     /**
-     * 放行所有不需要登录就可以访问的请求，参见 AuthController
-     * 也可以在 {@link #configure(HttpSecurity)} 中配置
+     * Add ignored HTTP request list
+     * Same as {@link #configure(HttpSecurity)}
      * {@code http.authorizeRequests().antMatchers("/api/auth/**").permitAll()}
      */
     @Override
     public void configure(WebSecurity web) {
         WebSecurity and = web.ignoring().and();
 
-        // 忽略 GET
+        // GET ignored list
         customConfiguration.getIgnores().getGet().forEach(url -> and.ignoring().antMatchers(HttpMethod.GET, url));
 
-        // 忽略 POST
+        // POST ignored list
         customConfiguration.getIgnores().getPost().forEach(url -> and.ignoring().antMatchers(HttpMethod.POST, url));
 
-        // 忽略 DELETE
+        // DELETE ignored list
         customConfiguration.getIgnores().getDelete().forEach(url -> and.ignoring().antMatchers(HttpMethod.DELETE,
                                                                                                url));
 
-        // 忽略 PUT
+        // PUT ignored list
         customConfiguration.getIgnores().getPut().forEach(url -> and.ignoring().antMatchers(HttpMethod.PUT, url));
 
-        // 忽略 HEAD
+        // HEAD ignored list
         customConfiguration.getIgnores().getHead().forEach(url -> and.ignoring().antMatchers(HttpMethod.HEAD, url));
 
-        // 忽略 PATCH
+        // PATCH ignored list
         customConfiguration.getIgnores().getPatch().forEach(url -> and.ignoring().antMatchers(HttpMethod.PATCH, url));
 
-        // 忽略 OPTIONS
+        // OPTIONS ignored list
         customConfiguration.getIgnores().getOptions().forEach(url -> and.ignoring().antMatchers(HttpMethod.OPTIONS,
                                                                                                 url));
 
-        // 忽略 TRACE
+        // TRACE ignored list
         customConfiguration.getIgnores().getTrace().forEach(url -> and.ignoring().antMatchers(HttpMethod.TRACE, url));
 
-        // 按照请求格式忽略
+        // Pattern ignored list
         customConfiguration.getIgnores().getPattern().forEach(url -> and.ignoring().antMatchers(url));
     }
 }
