@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarterdomain.authorization.payload;
 
-import com.jmframework.boot.jmspringbootstarterdomain.common.base.payload.Pagination;
+import com.jmframework.boot.jmspringbootstarterdomain.common.base.payload.PaginationBase;
 import lombok.Data;
 
 /**
@@ -11,5 +11,5 @@ import lombok.Data;
  * @date 2019-05-25 09:34
  **/
 @Data
-public class GetRolesPLO extends Pagination {
+public class GetRolesPLO extends PaginationBase {
 }

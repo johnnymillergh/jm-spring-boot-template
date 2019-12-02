@@ -1,6 +1,6 @@
 package com.jmframework.boot.jmspringbootstarterdomain.user.payload;
 
-import com.jmframework.boot.jmspringbootstarterdomain.common.base.payload.Pagination;
+import com.jmframework.boot.jmspringbootstarterdomain.common.base.payload.PaginationBase;
 import lombok.Data;
 
 /**
@@ -11,5 +11,5 @@ import lombok.Data;
  * @date 2019-06-29 16:45
  **/
 @Data
-public class GetUserPageListPLO extends Pagination {
+public class GetUserPageListPLO extends PaginationBase {
 }
