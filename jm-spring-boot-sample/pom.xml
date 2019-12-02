@@ -17,7 +17,7 @@
         <artifactId>jm-spring-boot-template</artifactId>
         <!-- The version below should be synchronized with project's version -->
         <version>2.0.5-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <build>
